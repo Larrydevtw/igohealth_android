@@ -1,0 +1,120 @@
+ul {
+    margin: 0;
+    list-style-type: none;
+    padding: 0
+}
+
+.tab-justified {
+    overflow-x: auto;
+    white-space:nowrap;  
+}
+
+.tab-justified::-webkit-scrollbar {
+    display: none;
+}
+
+.tab-justified>li {
+    display: inline-block;
+    margin-left:0.5%;
+    width: 24%;
+}
+
+.tab-style2 {
+    position: relative;
+    z-index: 0;
+    height: 100%
+}
+
+.tab-style2 .tab-group {
+    border-spacing: 4px;
+    border-collapse: separate;
+    padding: 6px 0;
+    border-bottom: 1px solid #ddd
+}
+
+.tab-style2 .tab-group a {
+    border-width: 0 0 3px !important;
+    padding: 7px 5px;
+    text-align: center;
+    white-space: normal;
+    word-break: break-all;
+    position: relative;
+    z-index: 0;
+    display: block;
+    font-size: 16px;
+    color: #878787;
+    border-radius: 33px !important;
+    overflow: hidden
+}
+
+.tab-style2 .tab-group a:active:hover {
+    border-color: #ECECEC
+}
+
+.tab-style2 span {
+    display: inline-block
+}
+
+.tab-style2 i {
+    font-size: 20px
+}
+
+.tab-style2 .TabScroll .active,
+.tab-style2 .tab-group .active a {
+    color: #fff;
+    font-weight: 700
+}
+
+.tab-style2 .TabScroll .active:hover,
+.tab-style2 .tab-group .active a:hover {
+    color: #fff !important
+}
+
+.tab-style2 .tab-content {
+    height: calc(100% - 59px);
+    overflow: auto;
+    padding-bottom: 40px
+}
+
+.tab-style2 .tab-group a::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background: 0 0;
+    content: '';
+    transition: background-color .3s, transform .3s;
+    transition-timing-function: ease, cubic-bezier(.7, 0, .3, 1);
+    transform: translate3d(0, 100%, 0) translate3d(0, -3px, 0)
+}
+
+.tab-style2 .tab-group .active a::after {
+    transform: translate3d(0, 0, 0)
+}
+
+.tab-style2.tab-wise .tab-group li:hover {
+    border-color: #A07C52;
+    color: #A07C52
+}
+
+.tab-style2.tab-wise .tab-group .active a {
+    border-color: #A07C52
+}
+
+.tab-style2.tab-wise .tab-group .active a:after {
+    border-top-color: #A07C52
+}
+
+.tab-style2.tab-wise .tab-group .active a:hover {
+    background-color: #A07C52
+}
+
+.tab-style2.tab-wise .tab-group .active a::after {
+    background: #A07C52
+}
+
+.tab-custom-style{
+    font-size: 15px;
+}

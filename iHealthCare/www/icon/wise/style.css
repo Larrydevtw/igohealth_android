@@ -1,0 +1,114 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('fonts/icomoon.eot?8oaeal');
+  src:  url('fonts/icomoon.eot?8oaeal#iefix') format('embedded-opentype'),
+    url('fonts/icomoon.ttf?8oaeal') format('truetype'),
+    url('fonts/icomoon.woff?8oaeal') format('woff'),
+    url('fonts/icomoon.svg?8oaeal#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="wis"], [class*=" wis"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.wise_scan:before {
+  content: "\e91d";
+}
+.wise_H1:before {
+  content: "\e916";
+}
+.wise_H2:before {
+  content: "\e917";
+}
+.wise_H3:before {
+  content: "\e918";
+}
+.wise_H4:before {
+  content: "\e919";
+}
+.wise_H5:before {
+  content: "\e91a";
+}
+.wise_H6:before {
+  content: "\e91b";
+}
+.wise_H7:before {
+  content: "\e91c";
+}
+.wise_m5:before {
+  content: "\e915";
+}
+.wise_back:before {
+  content: "\e900";
+}
+.wise_champion:before {
+  content: "\e901";
+}
+.wise_close:before {
+  content: "\e902";
+}
+.wise_id:before {
+  content: "\e903";
+}
+.wise_key:before {
+  content: "\e904";
+}
+.wise_L1:before {
+  content: "\e905";
+}
+.wise_L2:before {
+  content: "\e906";
+}
+.wise_m1:before {
+  content: "\e907";
+}
+.wise_m2:before {
+  content: "\e908";
+}
+.wise_m3:before {
+  content: "\e909";
+}
+.wise_m4:before {
+  content: "\e90a";
+}
+.wise_member:before {
+  content: "\e90b";
+}
+.wise_menuA:before {
+  content: "\e90c";
+}
+.wise_menuB:before {
+  content: "\e90d";
+}
+.wise_next:before {
+  content: "\e90e";
+}
+.wise_set:before {
+  content: "\e90f";
+}
+.wise_m12:before {
+  content: "\e910";
+}
+.wise_m22:before {
+  content: "\e911";
+}
+.wise_m32:before {
+  content: "\e912";
+}
+.wise_m42:before {
+  content: "\e913";
+}
+

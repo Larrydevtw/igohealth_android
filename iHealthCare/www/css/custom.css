@@ -1,0 +1,101 @@
+/*THLEE added*/
+/*--- table ---*/
+.Listbox {
+    width: 99%;
+    background-color: #ffffff;
+    font-size: 20px;
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
+  .Listbox th {
+    background-color: #dbb38f;
+    color: #6c4d2e;
+    font-weight: normal;
+    white-space: nowrap;
+    text-align: center;
+    word-wrap: break-word;
+    font-size:14px;
+  }
+  .Listbox th a {
+    color: #2A2A2A;
+  }
+  .Listbox th,
+  .Listbox td {
+    padding: 8px 10px;
+    border: 1px solid #AB6C24 !important;
+    text-align: left;
+  }
+  .Listbox i {
+    font-size: 22px;
+  }
+  .Listbox tr:nth-of-type(4n+1),.Listbox tr:nth-of-type(4n+2) {
+    background-color: #ece0d4;
+  }
+  .table-overflow {
+    overflow-x: auto;
+  }
+  table td label {
+    margin: 2px 15px 5px 5px;
+  }
+  .modal-body .Accordions .Listbox td {
+    min-width: 120px;
+  }
+  .profile-head {
+    width: 100%;
+    text-align: center;
+  }
+  .profile-head img {
+    width: 80%;
+    max-width: 150px;
+  }
+  
+  .cir{
+      margin-right: 30px;
+      width: 50px;
+      height: 50px;
+      display: inline-block;
+      position: relative;
+      line-height: 50px;
+      background-color: #eaeaea;
+      background-image: -webkit-gradient(linear, left top, left bottom, from(#f6f6f6), to(#eaeaea));
+      background-image: -webkit-linear-gradient(top, #f6f6f6, #eaeaea);
+      background-image: -moz-linear-gradient(top, #f6f6f6, #eaeaea); 
+      background-image: -ms-linear-gradient(top, #f6f6f6, #eaeaea); 
+      background-image: -o-linear-gradient(top, #f6f6f6, #eaeaea);
+      background-image: linear-gradient(top, #f6f6f6, #eaeaea);
+      -moz-border-radius: 25px;
+      -webkit-border-radius: 25px;
+      border-radius: 25px;
+      -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, .25), 0 2px 3px rgba(0, 0, 0, .1);
+      -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, .25), 0 2px 3px rgba(0, 0, 0, .1);
+      box-shadow: 0 1px 1px rgba(0, 0, 0, .25), 0 2px 3px rgba(0, 0, 0, .1);
+      font-size:large;
+      text-align:center;
+  }
+  .PopWin {
+          width: 50%;
+          height:50%;
+          /*background-color: blue;*/
+  
+          position:absolute; /*it can be fixed too*/
+          left:0; right:0;
+          top:0; bottom:0;
+          margin:auto;
+  
+          z-index:99;
+  
+          /*this to solve "the content will not be cut when the window is smaller than the content": */
+          max-width:100%;
+          max-height:100%;
+          overflow:auto;
+      }
+  
+  .PopWin_Style1 {
+      border-radius: 25px;
+      /*
+      border-top-left-radius: 50px;
+      border-bottom-right-radius: 50px;
+      */
+  }
+  
+  /*-----------*/

@@ -1,0 +1,110 @@
+var CustomInfo = {
+    PID_Validate: "N", //註冊時身分證字號是否必填(N:選填，Y:必填)
+    EMail_Validate: "N", //註冊時EMail是否必填(N:選填，Y:必填)
+    Member_CheckType: "03", //01:生日 02:EMail 03:手機號碼
+    switchByDomain: function () {
+        return new Promise(function (resolve, reject) {
+
+            var lFunction = Domain.lFunction;
+            var lDevFunction = Domain.lDevFunction;
+            lFunction.forEach(function (item, idx) {
+                var isEnabled = true;
+                if (lDevFunction.indexOf(item) > -1) {
+                    isEnabled = false;
+                }
+                CustomInfo.enableFunction(item, isEnabled);
+            });
+
+            switch (Domain.Address) {
+                case "ocics.cn/Beta":
+                case "test.ocics.cn":
+                case "ocics.cn":
+                    Lang.locale = "zh-hans";
+                    WiseScripts.Validate.region = "zh-hans";
+                    CustomInfo.PID_Validate = "Y";
+                    CustomInfo.EMail_Validate = "N";
+                    CustomInfo.Member_CheckType = "01"; //01:生日 02:EMail 03:手機號碼
+                    break;
+                case "ethink.ocics.tw":
+                case "test.ocics.tw":
+                case "ocics.tw":
+                    Lang.locale = "zh-hant";
+                    WiseScripts.Validate.region = "zh-hant";
+                    CustomInfo.PID_Validate = "N";
+                    CustomInfo.EMail_Validate = "Y";
+                    CustomInfo.Member_CheckType = "02"; //01:生日 02:EMail 03:手機號碼
+                    break;
+            }
+            resolve();
+        });
+    },
+    setValidate: function () {
+        return new Promise(function (resolve, reject) {
+            if (CustomInfo.PID_Validate === "Y") {
+                $("#txtSignup_PID").html("<b style='color:red;'> *</b>");
+            } else {
+                $("#txtSignup_PID").html("(<span data-i18n='選填'></span>)");
+            }
+
+            if (CustomInfo.EMail_Validate === "Y") {
+                $("#txtSignup_Mail").html("<b style='color:red;'> *</b>");
+            } else {
+                $("#txtSignup_Mail").html("(<span data-i18n='選填'></span>)");
+            }
+
+            //01:生日 02:EMail 03:手機號碼
+            $("#divForget_mail").hide();
+            $("#divForget_bir").hide();
+            switch (CustomInfo.Member_CheckType) {
+                case "01":
+                    $("#divForget_bir").show();
+                    break;
+                case "02":
+                    $("#divForget_mail").show();
+                    break;
+                case "03":
+                    break;
+            }
+            resolve();
+        });
+    },
+    enableFunction: function (functionType, isEnabled) {
+
+        Log.write(functionType + ":" + isEnabled, 'CustomInfo');
+
+        if (isEnabled && functionType != "Product") {
+            $("#li" + functionType).show();
+            localStorage["isEnabled" + functionType] = "Y";
+        } else {
+            $("#li" + functionType).hide();
+            localStorage["isEnabled" + functionType] = "N";
+        }
+
+        switch (functionType) {
+            case "Point":
+                if (isEnabled) {
+                    $("#aPointTotal").show();
+                    $("#liPoint_History").show();
+                } else {
+                    $("#aPointTotal").hide();
+                    $("#liPoint_History").hide();
+                }
+                break;
+            case "Product":
+                if (isEnabled) {
+                    $("#aProduct").show();
+                    $("#liPoint_Product").show();
+                } else {
+                    $("#aProduct").hide();
+                    $("#liPoint_Product").hide();
+                }
+                break;
+            case "MeasureScan":
+
+                break;
+            case "SyncAppInfo":
+
+                break;
+        }
+    },
+};

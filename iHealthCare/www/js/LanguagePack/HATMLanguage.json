@@ -1,0 +1,2306 @@
+[
+    {
+        "LCode": "000000000",
+        "#comment": "日文",
+        "TW": "吾齡無齡",
+        "CN": "健康便利站",
+        "EN": "Wise ATM",
+        "JP": "Wise ATM"
+    },
+    {
+        "LCode": "000000001",
+        "#comment": null,
+        "TW": "站點註冊",
+        "CN": "站点注册",
+        "EN": "Register Site",
+        "JP": "设备登録"
+    },
+    {
+        "LCode": "000000002",
+        "#comment": null,
+        "TW": "授權帳號",
+        "CN": "授权帐号",
+        "EN": "Authorized Account",
+        "JP": "公認アカウント"
+    },
+    {
+        "LCode": "000000003",
+        "#comment": null,
+        "TW": "註冊碼",
+        "CN": "注册码",
+        "EN": "License",
+        "JP": "ライセンス"
+    },
+    {
+        "LCode": "000000004",
+        "#comment": null,
+        "TW": "站點代碼",
+        "CN": "站点代码",
+        "EN": "Site code",
+        "JP": "サイトコード"
+    },
+    {
+        "LCode": "000000005",
+        "#comment": null,
+        "TW": "確定",
+        "CN": "确定",
+        "EN": "OK",
+        "JP": "決定"
+    },
+    {
+        "LCode": "000000006",
+        "#comment": null,
+        "TW": "機碼認證失敗",
+        "CN": "机码认证失败",
+        "EN": "Registration Failed",
+        "JP": "登録に失敗"
+    },
+    {
+        "LCode": "000000007",
+        "#comment": null,
+        "TW": "系統訊息",
+        "CN": "系统讯息",
+        "EN": "System Message",
+        "JP": "システムメッセージ"
+    },
+    {
+        "LCode": "000000008",
+        "#comment": null,
+        "TW": "服務呼叫失敗！請稍後再試。",
+        "CN": "服务呼叫失败！请稍后再试。",
+        "EN": "Service Call failed! Please try again later.",
+        "JP": "サービスコールに失敗しました！後ほどおかけ直しください。"
+    },
+    {
+        "LCode": "000000009",
+        "#comment": null,
+        "TW": "同步成功，歡迎使用。",
+        "CN": "同步成功，欢迎使用。",
+        "EN": "Synchronous success, welcome to use.",
+        "JP": "同期はようこそ、成功しています"
+    },
+    {
+        "LCode": "HatmFN0002_02",
+        "#comment": null,
+        "TW": "資料驗證錯誤",
+        "CN": "数据验证错误",
+        "EN": "Data validation error",
+        "JP": "データ検証エラー"
+    },
+    {
+        "LCode": "HatmFN0002_04",
+        "#comment": null,
+        "TW": "此機碼已認證",
+        "CN": "此机码已认证",
+        "EN": "This site has been registered",
+        "JP": "このサイトでは、登録されている"
+    },
+    {
+        "LCode": "HatmFN0001_04",
+        "#comment": null,
+        "TW": "查無授權資料",
+        "CN": "查无授权资料",
+        "EN": "Unlicensed Information",
+        "JP": "無免許の情報"
+    },
+    {
+        "LCode": "HatmFN0001_06",
+        "#comment": null,
+        "TW": "查無機碼或無效授權",
+        "CN": "查无机码或无效授权",
+        "EN": "No site or invalid authorization",
+        "JP": "サイトないか、または無効の許可なし"
+    },
+    {
+        "LCode": "HatmFN0002_05",
+        "#comment": null,
+        "TW": "授權資料錯誤",
+        "CN": "授权资料错误",
+        "EN": "Authorization data error",
+        "JP": "認可データエラー"
+    },
+    {
+        "LCode": "HatmFN0001_08",
+        "#comment": null,
+        "TW": "機碼已停用",
+        "CN": "机码已停用",
+        "EN": "The site has been disabled",
+        "JP": "サイトが無効になっています"
+    },
+    {
+        "LCode": "HatmFN0001_03",
+        "#comment": null,
+        "TW": "查無版本資料",
+        "CN": "查无版本数据",
+        "EN": "No check version data",
+        "JP": "いいえ、チェックバージョンのデータがありません"
+    },
+    {
+        "LCode": "尚未開放此功能",
+        "#comment": null,
+        "TW": "尚未開放此功能",
+        "CN": "尚未开放此功能",
+        "EN": "This feature is unavailable",
+        "JP": "この機能はまだ開いていません"
+    },
+    {
+        "LCode": "000000010",
+        "#comment": null,
+        "TW": "您的識別碼",
+        "CN": "您的识别码",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000012",
+        "#comment": null,
+        "TW": "量測資料歸戶",
+        "CN": "量测资料归户",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000013",
+        "#comment": null,
+        "TW": "歷次量測資料",
+        "CN": "历次量测资料",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000014",
+        "#comment": null,
+        "TW": "儀器說明",
+        "CN": "仪器说明",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000015",
+        "#comment": null,
+        "TW": "會員申請",
+        "CN": "会员申请",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000016",
+        "#comment": null,
+        "TW": "登出",
+        "CN": "注销",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000017",
+        "#comment": null,
+        "TW": "將於",
+        "CN": "将于",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000018",
+        "#comment": null,
+        "TW": "後回到首頁",
+        "CN": "后回到首页",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000019",
+        "#comment": null,
+        "TW": "重新計時",
+        "CN": "重新计时",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000020",
+        "#comment": null,
+        "TW": "血壓",
+        "CN": "血压",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000021",
+        "#comment": null,
+        "TW": "體溫",
+        "CN": "体温",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000022",
+        "#comment": null,
+        "TW": "體重",
+        "CN": "体重",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000023",
+        "#comment": null,
+        "TW": "血氧",
+        "CN": "血氧",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000024",
+        "#comment": null,
+        "TW": "血糖",
+        "CN": "血糖",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000025",
+        "#comment": null,
+        "TW": "握力",
+        "CN": "握力",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000026",
+        "#comment": null,
+        "TW": "體組成分析儀",
+        "CN": "体组成分析仪",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000027",
+        "#comment": null,
+        "TW": "30秒坐站",
+        "CN": "30秒坐站",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000028",
+        "#comment": null,
+        "TW": "2分鐘抬腿",
+        "CN": "2分钟抬腿",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000029",
+        "#comment": null,
+        "TW": "藍牙尚未啟用",
+        "CN": "蓝牙尚未启用",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "Retry",
+        "#comment": null,
+        "TW": "重試",
+        "CN": "重试",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "Cancel",
+        "#comment": null,
+        "TW": "取消",
+        "CN": "取消",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BackgroundTEXT",
+        "#comment": null,
+        "TW": "等待量測資料中..",
+        "CN": "等待量测资料中..",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000030",
+        "#comment": null,
+        "TW": "選擇量測身份",
+        "CN": "选择量测身份",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000031",
+        "#comment": null,
+        "TW": "未選擇量測身份，此量測將不被記錄！",
+        "CN": "未选择量测身份，此量测将不被记录！ ",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000032",
+        "#comment": null,
+        "TW": "尚未量測",
+        "CN": "尚未量测",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BP_v1",
+        "#comment": null,
+        "TW": "舒張壓",
+        "CN": "舒张压",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BP_v2",
+        "#comment": null,
+        "TW": "收縮壓",
+        "CN": "收缩压",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BP_v3",
+        "#comment": null,
+        "TW": "脈搏",
+        "CN": "脉搏",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BP_unit",
+        "#comment": null,
+        "TW": "次/分",
+        "CN": "次/分",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BT_v1",
+        "#comment": null,
+        "TW": "溫度",
+        "CN": "温度",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BW_v1",
+        "#comment": null,
+        "TW": "身高",
+        "CN": "身高",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BW_v2",
+        "#comment": null,
+        "TW": "體重",
+        "CN": "体重",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BO_v1",
+        "#comment": null,
+        "TW": "血氧濃度",
+        "CN": "血氧浓度",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BG_v1",
+        "#comment": null,
+        "TW": "飯前",
+        "CN": "饭前",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BG_v2",
+        "#comment": null,
+        "TW": "飯後",
+        "CN": "饭后",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BF_v1",
+        "#comment": null,
+        "TW": "體脂肪率",
+        "CN": "体脂肪率",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BC_unit",
+        "#comment": null,
+        "TW": "次",
+        "CN": "次",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BL",
+        "#comment": null,
+        "TW": "2分鐘抬腿",
+        "CN": "2分钟抬腿",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000033",
+        "#comment": null,
+        "TW": "若您未進行操作，將會於",
+        "CN": "若您未进行操作，将会于",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000034",
+        "#comment": null,
+        "TW": "後回到首頁",
+        "CN": "后回到首页",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000035",
+        "#comment": null,
+        "TW": "畫面已超過閒置時間<br>是否繼續操作?",
+        "CN": "画面已超过闲置时间<br>是否继续操作?",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "YES",
+        "#comment": null,
+        "TW": "是",
+        "CN": "是",
+        "EN": "YES",
+        "JP": ""
+    },
+    {
+        "LCode": "NO",
+        "#comment": null,
+        "TW": "否",
+        "CN": "否",
+        "EN": "NO",
+        "JP": ""
+    },
+    {
+        "LCode": "YouAreFine",
+        "#comment": null,
+        "TW": "正常",
+        "CN": "正常",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BT_Sv1",
+        "#comment": null,
+        "TW": "體溫偏低",
+        "CN": "体温偏低",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BT_Sv2",
+        "#comment": null,
+        "TW": "可能發燒",
+        "CN": "可能发烧",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BT_Sv3",
+        "#comment": null,
+        "TW": "已達發燒標準",
+        "CN": "已达发烧标准",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BP_Sv1",
+        "#comment": null,
+        "TW": "血壓偏低",
+        "CN": "血压偏低",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BP_Sv2",
+        "#comment": null,
+        "TW": "高血壓前期",
+        "CN": "高血压前期",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BP_Sv3",
+        "#comment": null,
+        "TW": "第一期高血壓",
+        "CN": "第一期高血压",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BP_Sv4",
+        "#comment": null,
+        "TW": "第二期高血壓",
+        "CN": "第二期高血压",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BO_Sv1",
+        "#comment": null,
+        "TW": "輕微血氧不足",
+        "CN": "轻微血氧不足",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BO_Sv2",
+        "#comment": null,
+        "TW": "中度血氧不足",
+        "CN": "中度血氧不足",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BO_Sv3",
+        "#comment": null,
+        "TW": "嚴重血氧不足",
+        "CN": "严重血氧不足",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000036",
+        "#comment": null,
+        "TW": "量測前請先過卡",
+        "CN": "量测前请先过卡",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000037",
+        "#comment": null,
+        "TW": "登入",
+        "CN": "登入",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000038",
+        "#comment": null,
+        "TW": "已感應到卡片，請取回您的卡片",
+        "CN": "已感应到卡片，请取回您的卡片",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000039",
+        "#comment": null,
+        "TW": "已發現裝置，但無法連線…重新嘗試中…",
+        "CN": "已发现装置，但无法连线…重新尝试中…",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000040",
+        "#comment": null,
+        "TW": "感應卡號",
+        "CN": "感应卡号",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000041",
+        "#comment": null,
+        "TW": "健保卡號",
+        "CN": "健保卡号",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000042",
+        "#comment": null,
+        "TW": "會員帳號",
+        "CN": "会员帐号",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000043",
+        "#comment": null,
+        "TW": "裝置機碼",
+        "CN": "装置机码",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000044",
+        "#comment": null,
+        "TW": "自訂身份",
+        "CN": "自订身份",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000045",
+        "#comment": null,
+        "TW": "過去14天量測資料",
+        "CN": "过去14天量测资料",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000046",
+        "#comment": null,
+        "TW": "無法連線到網路！此功能需使用到網路。",
+        "CN": "无法连线到网路！此功能需使用到网路。",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000047",
+        "#comment": null,
+        "TW": "請稍後，正在從雲端下載量測資料中",
+        "CN": "请稍后，正在从云端下载量测资料中",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000048",
+        "#comment": null,
+        "TW": "無法上傳量測資料，請檢查網路是否順暢，將於三秒後重試。",
+        "CN": "无法上传量测资料，请检查网路是否顺畅，将于三秒后重试。",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000049",
+        "#comment": null,
+        "TW": "查無量測資料",
+        "CN": "查无量测资料",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000050",
+        "#comment": null,
+        "TW": "量測時間",
+        "CN": "量测时间",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000051",
+        "#comment": null,
+        "TW": "檢測結果",
+        "CN": "检测结果",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000052",
+        "#comment": null,
+        "TW": "[感應卡] 讀卡機無法啟用，請檢查讀卡機。",
+        "CN": "[感应卡] 读卡机无法启用，请检查读卡机。",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000053",
+        "#comment": null,
+        "TW": "[晶片卡] 讀卡機無法啟用，請檢查讀卡機。",
+        "CN": "[晶片卡] 读卡机无法启用，请检查读卡机。",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000054",
+        "#comment": null,
+        "TW": "更新失敗：查無網路",
+        "CN": "站点回报失败：查无网路",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000055",
+        "#comment": null,
+        "TW": "設備時間可能錯誤，無法通過伺服器驗證",
+        "CN": "设备时间可能错误，无法通过伺服器验证",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000056",
+        "#comment": null,
+        "TW": "發現更新檔，是否進行更新？",
+        "CN": "发现更新档，是否进行更新？",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000057",
+        "#comment": null,
+        "TW": "請選擇連線設備",
+        "CN": "请选择连线设备",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000058",
+        "#comment": null,
+        "TW": "此站點無該類型設備",
+        "CN": "此站点无该类型设备",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000059",
+        "#comment": null,
+        "TW": "正在連線到",
+        "CN": "正在连线到",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000060",
+        "#comment": null,
+        "TW": "帳號",
+        "CN": "帐号",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000061",
+        "#comment": null,
+        "TW": "密碼",
+        "CN": "密码",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000062",
+        "#comment": null,
+        "TW": "忘記密碼",
+        "CN": "忘记密码",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000063",
+        "#comment": null,
+        "TW": "帳號登入",
+        "CN": "帐号登录",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000064",
+        "#comment": null,
+        "TW": "會員註冊",
+        "CN": "会员注册",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000065",
+        "#comment": null,
+        "TW": "電子信箱",
+        "CN": "电子信箱",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000066",
+        "#comment": null,
+        "TW": "手機號碼",
+        "CN": "手机号码",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000067",
+        "#comment": null,
+        "TW": "生日",
+        "CN": "生日",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000068",
+        "#comment": null,
+        "TW": "性別",
+        "CN": "性别",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000069",
+        "#comment": null,
+        "TW": "註冊",
+        "CN": "注册",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000070",
+        "#comment": null,
+        "TW": "<font color=gray>( <font color=red>手機</font>或<font color=red>信箱</font>至少需填一項 )</font>",
+        "CN": "<font color=gray>( <font color=red>手机</font>或<font color=red>信箱</font>至少需填一项)</font>",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "male",
+        "#comment": null,
+        "TW": "男",
+        "CN": "男",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "female",
+        "#comment": null,
+        "TW": "女",
+        "CN": "女",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000071",
+        "#comment": null,
+        "TW": "請輸入帳號",
+        "CN": "请输入帐号",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000072",
+        "#comment": null,
+        "TW": "電子信箱或手機號碼未填寫",
+        "CN": "电子信箱或手机号码未填写",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000073",
+        "#comment": null,
+        "TW": "請輸入生日",
+        "CN": "请输入生日",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000074",
+        "#comment": null,
+        "TW": "請選擇性別",
+        "CN": "请选择性别",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000075",
+        "#comment": null,
+        "TW": "無法接受的帳號格式",
+        "CN": "无法接受的帐号格式",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000076",
+        "#comment": null,
+        "TW": "無法接受的手機號碼",
+        "CN": "无法接受的手机号码",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000077",
+        "#comment": null,
+        "TW": "無法接受的電子信箱",
+        "CN": "无法接受的电子信箱",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000078",
+        "#comment": null,
+        "TW": "出生日期錯誤",
+        "CN": "出生日期错误",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000079",
+        "#comment": null,
+        "TW": "<font color=gray>( 僅限使用台灣門號 )</font>",
+        "CN": "<font color=gray>( 仅限使用台湾门号)</font>",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000080",
+        "#comment": null,
+        "TW": " <font color=gray>(帳號可由英、數組成，最少三個字元 )</font>",
+        "CN": " <font color=gray>(帐号可由英、数组成，最少三个字元)</font>",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000081",
+        "#comment": null,
+        "TW": "無法呼叫到服務，請檢查網路，並稍後再試。",
+        "CN": "无法呼叫到服务，请检查网路，并稍后再试。",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000082",
+        "#comment": null,
+        "TW": "預設密碼送出失敗",
+        "CN": "预设密码送出失败",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000083",
+        "#comment": null,
+        "TW": "帳號已被註冊",
+        "CN": "帐号已被注册",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000084",
+        "#comment": null,
+        "TW": "寄送密碼",
+        "CN": "寄送密码",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000085",
+        "#comment": null,
+        "TW": "新密碼發送成功",
+        "CN": "新密码发送成功",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000086",
+        "#comment": null,
+        "TW": "簡訊重送密碼次數已超過3次，請輸入電子信箱",
+        "CN": "简讯重送密码次数已超过3次，请输入电子信箱",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000087",
+        "#comment": null,
+        "TW": "帳號已停用",
+        "CN": "帐号已停用",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000088",
+        "#comment": null,
+        "TW": "密碼錯誤超過3次，帳號已被鎖定，請稍後再登入。",
+        "CN": "密码错误超过3次，帐号已被锁定，请稍后再登入。",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000089",
+        "#comment": null,
+        "TW": "填寫資訊與註冊時不符合",
+        "CN": "填写资讯与与注册时不符合",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000090",
+        "#comment": null,
+        "TW": "查無此帳號",
+        "CN": "查无此帐号",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000091",
+        "#comment": null,
+        "TW": "帳號或密碼不正確",
+        "CN": "帐号或密码不正确",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000092",
+        "#comment": null,
+        "TW": "登入異常",
+        "CN": "登入异常",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000093",
+        "#comment": null,
+        "TW": "修改密碼",
+        "CN": "修改密码",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000094",
+        "#comment": null,
+        "TW": "請輸入新密碼",
+        "CN": "请输入新密码",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000095",
+        "#comment": null,
+        "TW": "再次確認新密碼",
+        "CN": "再次确认新密码",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000096",
+        "#comment": null,
+        "TW": "※注意：密碼允許8~14碼，包含英、數字組合",
+        "CN": "※注意：密码允许8~14码，包含英、数字组合",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "StrTooLong",
+        "#comment": null,
+        "TW": "字元數過多，請重新輸入",
+        "CN": "字元数过多，请重新输入",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000097",
+        "#comment": null,
+        "TW": "登入失敗，取消設定預設密碼。",
+        "CN": "登入失败，取​​消设定预设密码。",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000098",
+        "#comment": null,
+        "TW": "兩次密碼輸入不一致",
+        "CN": "两次密码输入不一致",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "000000099",
+        "#comment": null,
+        "TW": "密碼格式不正確",
+        "CN": "密码格式不正确",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000100",
+        "#comment": null,
+        "TW": "密碼修改成功",
+        "CN": "密码修改成功",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000101",
+        "#comment": null,
+        "TW": "密碼修改失敗",
+        "CN": "密码修改失败",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000102",
+        "#comment": null,
+        "TW": "載具歸戶",
+        "CN": "载具归户",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000103",
+        "#comment": null,
+        "TW": "載具歸戶成功",
+        "CN": "载具归户成功",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000104",
+        "#comment": null,
+        "TW": "歸戶資料檢查中",
+        "CN": "归户资料检查中",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000105",
+        "#comment": null,
+        "TW": "無法取得歸戶資料",
+        "CN": "无法取得归户资料",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000106",
+        "#comment": null,
+        "TW": "無法辨識的健保卡",
+        "CN": "无法辨识的健保卡",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000107",
+        "#comment": null,
+        "TW": "回首頁",
+        "CN": "回首页",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000108",
+        "#comment": null,
+        "TW": "開始量測",
+        "CN": "开始量测",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000109",
+        "#comment": null,
+        "TW": "儀器操作",
+        "CN": "仪器操作",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000110",
+        "#comment": null,
+        "TW": "健康識能",
+        "CN": "健康识能",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000111",
+        "#comment": null,
+        "TW": "歷次量測",
+        "CN": "历次量测",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000112",
+        "#comment": null,
+        "TW": "請選擇血糖量測時間",
+        "CN": "请选择血糖量测时间",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000113",
+        "#comment": null,
+        "TW": "請選擇性別",
+        "CN": "请选择性别",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000114",
+        "#comment": null,
+        "TW": "請輸入年齡",
+        "CN": "请输入年龄",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000115",
+        "#comment": null,
+        "TW": "請輸入身高",
+        "CN": "请输入身高",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000116",
+        "#comment": null,
+        "TW": "上一步",
+        "CN": "上一步",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000117",
+        "#comment": null,
+        "TW": "年齡",
+        "CN": "年龄",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000118",
+        "#comment": null,
+        "TW": "清除",
+        "CN": "清除",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000119",
+        "#comment": null,
+        "TW": "歲",
+        "CN": "岁",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000120",
+        "#comment": null,
+        "TW": "公分",
+        "CN": "公分",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000121",
+        "#comment": null,
+        "TW": "很抱歉，設備可接受年齡範圍為5~99歲",
+        "CN": "很抱歉，设备可接受年龄范围为5~99岁",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000122",
+        "#comment": null,
+        "TW": "很抱歉，設備可接受身高範圍為99~249.9公分",
+        "CN": "很抱歉，设备可接受身高范围为99~249.9公分",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BW_SV1",
+        "#comment": null,
+        "TW": "BMI正常",
+        "CN": "BMI正常",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BW_SV2",
+        "#comment": null,
+        "TW": "體重過輕",
+        "CN": "体重过轻",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BW_SV3",
+        "#comment": null,
+        "TW": "脂肪過低",
+        "CN": "脂肪过低",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BW_SV4",
+        "#comment": null,
+        "TW": "輕度肥胖",
+        "CN": "轻度肥胖",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BW_SV5",
+        "#comment": null,
+        "TW": "中度肥胖",
+        "CN": "中度肥胖",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BW_SV6",
+        "#comment": null,
+        "TW": "病態肥胖",
+        "CN": "病态肥胖",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000135",
+        "#comment": null,
+        "TW": "記住帳密",
+        "CN": "记住帐密",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000123",
+        "#comment": null,
+        "TW": "記憶清單",
+        "CN": "记忆清单",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BG_SV1",
+        "#comment": null,
+        "TW": "血糖偏低",
+        "CN": "血糖偏低",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BG_SV2",
+        "#comment": null,
+        "TW": "糖尿病前期",
+        "CN": "糖尿病前期",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BG_SV3",
+        "#comment": null,
+        "TW": "糖尿病",
+        "CN": "糖尿病",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000124",
+        "#comment": null,
+        "TW": "量測時段",
+        "CN": "量测时段",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000125",
+        "#comment": null,
+        "TW": "刪除",
+        "CN": "删除",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000126",
+        "#comment": null,
+        "TW": "設備無資料",
+        "CN": "设备无资料",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000127",
+        "#comment": null,
+        "TW": "身份名稱",
+        "CN": "身份名称",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000128",
+        "#comment": null,
+        "TW": "請選擇身份圖示",
+        "CN": "请选择身份图示",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000129",
+        "#comment": null,
+        "TW": "新增",
+        "CN": "新增",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000130",
+        "#comment": null,
+        "TW": "新增成功",
+        "CN": "新增成功",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000131",
+        "#comment": null,
+        "TW": "請輸入身份名稱",
+        "CN": "请输入身份名称",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000132",
+        "#comment": null,
+        "TW": "修改",
+        "CN": "修改",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000133",
+        "#comment": null,
+        "TW": "修改成功",
+        "CN": "修改成功",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000134",
+        "#comment": null,
+        "TW": "每日可上傳30筆量測值，目前已超過#COUNT#筆，量測值將在明日上傳。",
+        "CN": "每日可上传30笔量测值，目前已超过#COUNT#笔，量测值将在明日上传。",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BG_v1_unit",
+        "#comment": null,
+        "TW": "mg/dL",
+        "CN": "mmol/L",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BTPair",
+        "#comment": null,
+        "TW": "藍牙設定",
+        "CN": "蓝牙配置",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BT30",
+        "#comment": null,
+        "TW": "設定3.0配對",
+        "CN": "设定3.0配对",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BT40",
+        "#comment": null,
+        "TW": "搜尋4.0設備",
+        "CN": "搜寻4.0设备",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "DoPair",
+        "#comment": null,
+        "TW": "配對",
+        "CN": "配对",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "RmPair",
+        "#comment": null,
+        "TW": "解除",
+        "CN": "解除",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "PairHelp",
+        "#comment": null,
+        "TW": "4.0已配對設備",
+        "CN": "4.0已配对设备",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "PairHelp2",
+        "#comment": null,
+        "TW": "4.0強制配對",
+        "CN": "4.0强制配对",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "Pairing",
+        "#comment": null,
+        "TW": "搜尋中",
+        "CN": "搜寻中",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "UnknowDevice",
+        "#comment": null,
+        "TW": "未知設備",
+        "CN": "未知设备",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "ScanOK",
+        "#comment": null,
+        "TW": "掃描結束",
+        "CN": "扫描结束",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "No40",
+        "#comment": null,
+        "TW": "尚未配對4.0設備",
+        "CN": "尚未配对4.0设备",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "PairOK",
+        "#comment": null,
+        "TW": "配對成功",
+        "CN": "配对成功",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "DisPairOK",
+        "#comment": null,
+        "TW": "已解除配對",
+        "CN": "已解除配对",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "PairReJect",
+        "#comment": null,
+        "TW": "此設備已配對過",
+        "CN": "此设备已配对过",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "NoAllowDevice",
+        "#comment": null,
+        "TW": "目前不支援此設備",
+        "CN": "目前不支援此设备",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "UpQn",
+        "#comment": null,
+        "TW": "待上傳資料筆數：",
+        "CN": "待上传资料笔数：",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "NotAllow",
+        "#comment": null,
+        "TW": "很抱歉，活力站暫不支援此設備",
+        "CN": "很抱歉，便利站暂不支援此设备",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "ConfirmExit",
+        "#comment": null,
+        "TW": "是否要關閉程式？",
+        "CN": "是否要关闭程式？",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "Exit1",
+        "#comment": null,
+        "TW": "離開",
+        "CN": "离开",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "Exit2",
+        "#comment": null,
+        "TW": "離開並關閉藍牙",
+        "CN": "离开并关闭蓝牙",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "SiteCloseInDay",
+        "#comment": null,
+        "TW": "此站點將於#DAY天後停用",
+        "CN": "此站点将于#DAY天后停用",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "RegisterStationNow",
+        "#comment": null,
+        "TW": "抓取雲端設定中，請稍待..",
+        "CN": "抓取云端设定中，请稍待..",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000136",
+        "#comment": null,
+        "TW": "確認",
+        "CN": "确认",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000139",
+        "#comment": null,
+        "TW": "同意",
+        "CN": "同意",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000140",
+        "#comment": null,
+        "TW": "<p class='MsoNormal'>\r\n<b><span>會員註冊<span lang='EN-US'><o:p></o:p></span></span></b></p>\r\n<p class='MsoNormal'style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>壹、<span></span></span><![endif]><span>「中保健康<span lang='EN-US'>+</span>」<span lang='EN-US'>(</span>下稱本平台<span lang='EN-US'>)</span>為中興保全股份有限公司</span><span lang='EN-US'>(</span><span>地址：</span><span lang='EN-US'>103</span><span>台北市鄭州路</span><span lang='EN-US'>139</span><span>號</span><span lang='EN-US'>4</span><span>樓，電話：</span><a><span lang='EN-US'>0800-095-119</span></a><span class='MsoCommentReference'><span lang='EN-US'><![if!supportAnnotations]></span></span><span>，下稱本公司</span><span lang='EN-US'>)</span><span>所有及管理，當您成為本平台會員時，即當然成為本公司所有並管理之「中保無限<span lang='EN-US'>+</span>」之會員<span lang='EN-US'>(</span>網址：\r\n<span lang='EN-US'>\r\n<a onclick='OpenURL('http://www.myvita.com.tw');'><u><font color='blue'>http://www.myvita.com.tw</font></u></a>)</span>。<b><u>您願同時成為本平台及「中保無限<span lang='EN-US'>+</span>」之會員，並遵守本平台及「中保無限<span lang='EN-US'>+</span>」對於會員之相關規定<span lang='EN-US'>(</span>包含未來之所有增補、修改規定<span lang='EN-US'>)\r\n</span>，您已確認填寫之會員個人資料正確無誤。</u></b>如您未遵守本平台及「中保無限<span lang='EN-US'>+</span>」對於會員之相關規定，本公司除得暫停您在本平台及「中保無限<span lang='EN-US'>+</span>」對於會員提供之全部或部份服務外，並得終止您在本平台及「中保無限<span lang='EN-US'>+</span>」之會員資格。<span lang='EN-US'><o:p></o:p></span></span>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>貳、<span></span></span><![endif]><b><u><span>您知悉本平台之服務範圍僅協助會員「自主性健康管理」之用途。本平台係由您上傳所量測之生理數值，記錄其量測時間並保存您上傳之量測資料後便於您查詢。</span></u></b><span>本公司不擔保會員上傳之所有生理量測數值之正確性，亦不判斷該會員生理量測數值異常所生原因。當您有生理量測數值異常之狀況，或身體不適之情形，應自行盡速就醫並配合治療。<span lang='EN-US'><o:p></o:p></span></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>參、<span></span></span><![endif]><span>除另行購買之服務外<span lang='EN-US'>(</span>會標示收費<span lang='EN-US'>)</span>，成為本平台及「中保無限<span lang='EN-US'>+</span>」之會員，不會向您收取任何費用。經由您使用本平台之連結，本公司及其關係企業與合作公司<span lang='EN-US'>/</span>政府機關，會向您發送服務公告、管理訊息和其他資訊。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>肆、<span></span></span><![endif]><span>本平台所提供之生理量測數值目前暫時僅為血壓、血糖、體溫等，本平台將適時增加或刪減所提供之服務</span><span lang='EN-US'>(</span><span>包含但不限於生理量測之服務項目</span><span lang='EN-US'>)</span><span>。因本平台不一定會提前通知您欲增加或刪減之服務項目，<b><u>為確保您之生理量測數值能長期保存，請您隨時另行儲存您所有之生理量測數值</u></b>。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>伍、<span></span></span><![endif]><span>本平台之「雲端資料分享」服務，係與台北市政府「健康雲」</span><span lang='EN-US'>(</span><span>網址：</span><span lang='EN-US'>\r\n<a onclick='OpenURL('https://cloud.health.gov.tw');'><u><font color='blue'>https://cloud.health.gov.tw</font></u></a>)</span><span>中，您已儲存之生理量測數值進行資料交換聯結，但本平台與台北市政府「健康雲」交換聯結之資料內容</span><span lang='EN-US'>(</span><span>目前台北市政府僅開放本平台資料上傳至台北市政府「健康雲」，但「健康雲」資料仍不能上傳至本平台</span><span lang='EN-US'>)</span><span>，僅限於本平台所提供之生理量測服務項目為限。您需已成為台北市政府「健康雲」之會員，並在本平台輸入您的「健康雲」之帳號、密碼後，本平台使能進行「雲端資料分享」服務。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>陸、<span></span></span><![endif]><span>關於個人資料之規定：</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:56.25pt;text-indent:-23.25pt;mso-list:\r\nl1level2lfo1;tab-stops:list56.25pt'>\r\n<span lang='EN-US'>一、<span></span></span><![endif]><span>蒐集目的：履行本平台提供之服務、會員管理與服務、行銷及其他經營合於本公司營業登記項目或組職章程所定之業務目的。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:56.25pt;text-indent:-23.25pt;mso-list:\r\nl1level2lfo1;tab-stops:list56.25pt'>\r\n<span lang='EN-US'>二、<span></span></span><![endif]><span>蒐集個資類別：本公司於本平台蒐集您之個人資料有您的電子信箱、生日及您所上傳之生理量測數值等。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:56.25pt;text-indent:-23.25pt;mso-list:\r\nl1level2lfo1;tab-stops:list56.25pt'>\r\n<span lang='EN-US'>三、<span></span></span><![endif]><span>利用期間、地區、對象及方式：</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:81.0pt;mso-para-margin-left:3.75gd;\r\ntext-indent:-36.0pt;mso-char-indent-count:-3.0;line-height:21.0pt;mso-line-height-rule:\r\nexactly;layout-grid-mode:char'>\r\n<span>（一）利用期間：<a>個人資料蒐集之特定目的存續期間或本公司因履行本服務所必須之保存期間</a><span lang='EN-US'>(</span>含台北市政府健康雲所需之保存期間<span lang='EN-US'>)</span>。</span><span class='MsoCommentReference'><span lang='EN-US'><![if!supportAnnotations]></span></span></p>\r\n<p class='MsoNormal' style='margin-left:21.6pt;mso-para-margin-left:1.8gd;\r\ntext-indent:24.0pt;mso-char-indent-count:2.0;line-height:21.0pt;mso-line-height-rule:\r\nexactly;layout-grid-mode:char'>\r\n<span>（二）利用地區：本國地區。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:81.6pt;mso-para-margin-left:4.3gd;\r\ntext-indent:-30.0pt;mso-char-indent-count:-2.5;line-height:21.0pt;mso-line-height-rule:\r\nexactly;layout-grid-mode:char'>\r\n<span lang='EN-US'>(</span><span>三）利用對象、方式：</span><span>供本公司、本公司關係企業及本公司基於蒐集目的所配合</span><span lang='EN-US'>/</span><span>合作之第三方</span><span lang='EN-US'>(</span><span>含政府機關</span><span lang='EN-US'>)</span><span>，在符合蒐集個資目的之前提下處理或利用。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:36.0pt;mso-para-margin-left:2.3gd;\r\ntext-indent:-8.4pt;mso-char-indent-count:-.7;line-height:21.0pt;mso-line-height-rule:\r\nexactly;layout-grid-mode:char'>\r\n<span>四、您得依據個資法第三條以書面主張下列權利：</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoListParagraph' style='margin-left:0cm;mso-para-margin-left:0gd;\r\ntext-align:justify;text-justify:inter-ideograph;text-indent:45.0pt;mso-char-indent-count:\r\n3.75'>\r\n<span>（一）您得對本公司行使之權利如下：</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:81.0pt;mso-para-margin-left:6.75gd'>\r\n<span>查詢、請求閱覽個人資料；請求製給個人資料複製本</span><span lang='EN-US'>(</span><span>需給付工本費</span><span lang='EN-US'>)</span><span>；請求補充、更正個人資料；請求停止蒐集、處理或利用個人資料；請求刪除個人資料。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:81.0pt;mso-para-margin-left:4.0gd;\r\ntext-indent:-33.0pt;mso-char-indent-count:-2.75;line-height:21.0pt;mso-line-height-rule:\r\nexactly;layout-grid-mode:char'>\r\n<span>（二）您若欲行使如上權利，請於人事行政局公告之上班日</span><span lang='EN-US'>(</span><span>上午八點半至下午五點半</span><span lang='EN-US'>)</span><span>播打免付費電話</span><a><span lang='EN-US'>0800-095-119</span></a><span class='MsoCommentReference'><span lang='EN-US'><![if!supportAnnotations]><span></span></span></span><span>。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:51.0pt;mso-para-margin-left:2.25gd;\r\ntext-indent:-24.0pt;mso-char-indent-count:-2.0'>\r\n<span>五、您若拒絕或提供不正確之個人資料，本公司將無法對您本平台之服務，本公司並得終止您在本平台及「中保無限<span lang='EN-US'>+</span>」之會員資格。<span lang='EN-US'><o:p></o:p></span></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>柒、<span></span></span><![endif]><span>本公司不會就「本平台」之所有內容、其特定功能之可靠性、可用性和符合您的需求的能力，做出任何承諾及保證。本公司僅以現狀提供本平台服務。在法律准許範圍內，本公司均排除一切擔保責任。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>捌、<span></span></span><![endif]><span>完成本平台之註冊流程後，您將收到一組預設密碼之簡訊。第一次於入口網登入本平台時，會強制要求更改密碼。您所輸入之帳號及密碼應妥善保存，若第三人獲悉您之帳號與密碼，所生之不利益將由您自行承擔。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal'>\r\n<span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal'>\r\n<span lang='EN-US'><o:p></o:p></span></p>\r\n",
+        "CN": "<p class='MsoNormal'>\r\n<b><span>会员注册<span lang='EN-US'><o:p></o:p></span></span></b></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>壹、<span></span></span><span>「中保健康<span lang='EN-US'>+</span>」<span lang='EN-US'>(</span>下称本平台<span lang='EN- US'>)</span>为中兴保全股份有限公司</span><span lang='EN-US'>(</span><span>地址：</span><span lang='EN-US'> 103</span><span>台北市郑州路</span><span lang='EN-US'>139</span><span>号</span><span lang='EN-US'>4</ span><span>楼，电话：</span><a><span lang='EN-US'>0800-095-119</span></a><span class='MsoCommentReference'><span lang='EN -US'><![if!supportAnnotations]></span></span><span>，下称本公司</span><span lang='EN-US'>)</span><span>所有及管理，当您成为本平台会员时，即当然成为本公司所有并管理之「中保无限<span lang='EN-US'>+</span>」之会员<span lang='EN-US'> (</span>网址：<span lang='EN-US'>\r\n<a onclick='OpenURL('http://www.myvita.com.tw');'><u><font color='blue'>http://www.myvita.com.tw</font></u></a>)</span>。 <b><u>您愿同时成为本平台及「中保无限<span lang='EN-US'>+</span>」之会员，并遵守本平台及「中保无限<span lang='EN- US'>+</span>」对于会员之相关规定<span lang='EN-US'>(</span>包含未来之所有增补、修改规定<span lang='EN-US'>)\r\n</span>，您已确认填写之会员个人资料正确无误。 </u></b>如您未遵守本平台及「中保无限<span lang='EN-US'>+</span>」对于会员之相关规定，本公司除得暂停您在本平台及「中保无限<span lang='EN-US'>+</span>」对于会员提供之全部或部份服务外，并得终止您在本平台及「中保无限<span lang='EN-US' >+</span>」之会员资格。 <span lang='EN-US'><o:p></o:p></span></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>贰、<span></span></span><b><u><span>您知悉本平台之服务范围仅协助会员「自主性健康管理」之用途。本平台系由您上传所量测之生理数值，记录其量测时间并保存您上传之量测资料后便于您查询。 </span></u></b><span>本公司不担保会员上传之所有生理量测数值之正确性，亦不判断该会员生理量测数值异常所生原因。当您有生理量测数值异常之状况，或身体不适之情形，应自行尽速就医并配合治疗。 <span lang='EN-US'><o:p></o:p></span></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>参、<span></span></span><span>除另行购买之服务外<span lang='EN-US'>(</span>会标示收费<span lang='EN-US'>)</span>，成为本平台及「中保无限<span lang='EN-US'>+</span>」之会员，不会向您收取任何费用。经由您使用本平台之连结，本公司及其关系企业与合作公司<span lang='EN-US'>/</span>政府机关，会向您发送服务公告、管理讯息和其他资讯。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>肆、<span></span></span><span>本平台所提供之生理量测数值目前暂时仅为血压、血糖、体温等，本平台将适时增加或删减所提供之服务</span><span lang='EN-US '>(</span><span>包含但不限于生理量测之服务项目</span><span lang='EN-US'>)</span><span>。因本平台不一定会提前通知您欲增加或删减之服务项目，<b><u>为确保您之生理量测数值能长期保存，请您随时另行储存您所有之生理量测数值</ u></b>。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>伍、<span></span></span><span>本平台之「云端资料分享」服务，系与台北市政府「健康云」</span><span lang='EN-US'>(</span><span>网址：< /span><span lang='EN-US'>\r\n<a onclick='OpenURL('https://cloud.health.gov.tw');'><u><font color='blue'>https://cloud.health.gov.tw</font></u></a>)</span><span>中，您已储存之生理量测数值进行资料交换联结，但本平台与台北市政府「健康云」交换联结之资料内容</span><span lang='EN-US'>(</span><span>目前台北市政府仅开放本平台资料上传至台北市政府「健康云」，但「健康云」资料仍不能上传至本平台</span><span lang='EN-US'>)</span><span>，仅限于本平台所提供之生理量测服务项目为限。您需已成为台北市政府「健康云」之会员，并在本平台输入您的「健康云」之帐号、密码后，本平台使能进行「云端资料分享」服务。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>陆、<span></span></span><span>关于个人资料之规定：</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:56.25pt;text-indent:-23.25pt;mso-list:\r\nl1level2lfo1;tab-stops:list56.25pt'>\r\n<span lang='EN-US'>一、<span></span></span><span>搜集目的：履行本平台提供之服务、会员管理与服务、行销及其他经营合于​​本公司营业登记项目或组职章程所定之业务目的。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:56.25pt;text-indent:-23.25pt;mso-list:\r\nl1level2lfo1;tab-stops:list56.25pt'>\r\n<span lang='EN-US'>二、<span></span></span><span>搜集个资类别：本公司于本平台搜集您之个人资料有您的电子信箱、生日及您所上传之生理量测数值等。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:56.25pt;text-indent:-23.25pt;mso-list:\r\nl1level2lfo1;tab-stops:list56.25pt'>\r\n<span lang='EN-US'>三、<span></span></span><span>利用期间、地区、对象及方式：</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:81.0pt;mso-para-margin-left:3.75gd;\r\ntext-indent:-36.0pt;mso-char-indent-count:-3.0;line-height:21.0pt;mso-line-height-rule:\r\nexactly;layout-grid-mode:char'>\r\n<span>（一）利用期间：<a>个人资料搜集之特定目的存续期间或本公司因履行本服务所必须之保存期间</a><span lang='EN-US'>(</span>含台北市政府健康云所需之保存期间<span lang='EN-US'>)</span>。 </span><span class='MsoCommentReference'><span lang='EN-US'><![if!supportAnnotations]></span></span></p>\r\n<p class='MsoNormal' style='margin-left:21.6pt;mso-para-margin-left:1.8gd;\r\ntext-indent:24.0pt;mso-char-indent-count:2.0;line-height:21.0pt;mso-line-height-rule:\r\nexactly;layout-grid-mode:char'>\r\n<span>（二）利用地区：本国地区。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:81.6pt;mso-para-margin-left:4.3gd;\r\ntext-indent:-30.0pt;mso-char-indent-count:-2.5;line-height:21.0pt;mso-line-height-rule:\r\nexactly;layout-grid-mode:char'>\r\n<span lang='EN-US'>(</span><span>三）利用对象、方式：</span><span>供本公司、本公司关系企业及本公司基于搜集目的所配合</span ><span lang='EN-US'>/</span><span>合作之第三方</span><span lang='EN-US'>(</span><span>含政府机关</span> <span lang='EN-US'>)</span><span>，在符合搜集个资目的之前提下处理或利用。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:36.0pt;mso-para-margin-left:2.3gd;\r\ntext-indent:-8.4pt;mso-char-indent-count:-.7;line-height:21.0pt;mso-line-height-rule:\r\nexactly;layout-grid-mode:char'>\r\n<span>四、您得依据个资法第三条以书面主张下列权利：</span><span lang='EN-US'><o:p></o:p></span></ p>\r\n<p class='MsoListParagraph' style='margin-left:0cm;mso-para-margin-left:0gd;\r\ntext-align:justify;text-justify:inter-ideograph;text-indent:45.0pt;mso-char-indent-count:\r\n3.75'>\r\n<span>（一）您得对本公司行使之权利如下：</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:81.0pt;mso-para-margin-left:6.75gd'>\r\n<span>查询、请求阅览个人资料；请求制给个人资料复制本</span><span lang='EN-US'>(</span><span>需给付工本费</span><span lang=' EN-US'>)</span><span>；请求补充、更正个人资料；请求停止搜集、处理或利用个人资料；请求删除个人资料。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:81.0pt;mso-para-margin-left:4.0gd;\r\ntext-indent:-33.0pt;mso-char-indent-count:-2.75;line-height:21.0pt;mso-line-height-rule:\r\nexactly;layout-grid-mode:char'>\r\n<span>（二）您若欲行使如上权利，请于人事行政局公告之上班日</span><span lang='EN-US'>(</span><span>上午八点半至下午五点半</span><span lang='EN-US'>)</span><span>播打免付费电话</span><a><span lang='EN-US'>0800-095-119< /span></a><span class='MsoCommentReference'><span lang='EN-US'><![if!supportAnnotations]><span></span></span></span><span >。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:51.0pt;mso-para-margin-left:2.25gd;\r\ntext-indent:-24.0pt;mso-char-indent-count:-2.0'>\r\n<span>五、您若拒绝或提供不正确之个人资料，本公司将无法对您本平台之服务，本公司并得终止您在本平台及「中保无限<span lang='EN-US'> +</span>」之会员资格。 <span lang='EN-US'><o:p></o:p></span></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>柒、<span></span></span><span>本公司不会就「本平台」之所有内容、其特定功能之可靠性、可用性和符合您的需求的能力，做出任何承诺及保证。本公司仅以现状提供本平台服务。在法律准许范围内，本公司均排除一切担保责任。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:31.5pt;text-indent:-22.5pt;mso-list:l1level1lfo1;\r\ntab-stops:list31.5pt'>\r\n<span lang='EN-US'>捌、<span></span></span><span>完成本平台之注册流程后，您将收到一组预设密码之简讯。第一次于入口网登入本平台时，会强制要求更改密码。您所输入之帐号及密码应妥善保存，若第三人获悉您之帐号与密码，所生之不利益将由您自行承担。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal'>\r\n<span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal'>\r\n<span lang='EN-US'><o:p></o:p></span></p>\r\n",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "CloudHelp",
+        "#comment": null,
+        "TW": "<p class='MsoNormal'>\r\n<b><span>雲端資料分享</span><span lang='EN-US'><o:p></o:p></span></b></p>\r\n<p class='MsoNormal' style='margin-left:23.25pt;text-indent:-23.25pt;mso-list:\r\nl0level1lfo2;tab-stops:list23.25pt'>\r\n<span lang='EN-US'>壹、<span></span></span><![endif]><span>您需已成為台北市政府「健康雲」之會員，並輸入您在台北市政府「健康雲」之會員帳號、密碼，才能使用「雲端資料分享」之服務。若您尚未成為台北市政府「健康雲」之會員，請先辦理註冊</span><span lang='EN-US'>(</span><span>台北市政府「健康雲」網址：</span><span lang='EN-US'><a onclick='parent.OpenURL('https://cloud.health.gov.tw/App_Prog/RegisterInfo.aspx');'><u><font color='blue'>https://cloud.health.gov.tw/App_Prog/RegisterInfo.aspx</font></u></a>)</span><span>，並遵守台北市政府「健康雲」對於會員之相關規定。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:23.25pt;text-indent:-23.25pt;mso-list:\r\nl0level1lfo2;tab-stops:list23.25pt'>\r\n<span lang='EN-US'>貳、<span></span></span><![endif]><span>本平台之「雲端資料分享」服務，係與台北市政府「健康雲」中您已儲存之生理量測數值進行資料交換聯結</span><span lang='EN-US'>(</span><span>您在本平台之生理數值將上傳之台北市政府「健康雲」，但您在台北市政府「健康雲」之生理數值目前未經台北市政府開放可上傳於本平台</span><span lang='EN-US'>)</span><span>，但本平台與台北市政府「健康雲」交換聯結之資料內容，僅限於本平台所提供之生理量測服務項目為限。</span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:23.25pt;text-indent:-23.25pt;mso-list:\r\nl0level1lfo2;tab-stops:list23.25pt'>\r\n<span lang='EN-US'>參、<span></span></span><![endif]><span>當您輸入台北市政府「健康雲」之會員帳號、密碼後，將來您使用「雲端資料分享」時，將無庸輸入台北市政府「健康雲」之會員帳號、密碼，本服務將自動與台北市政府「健康雲」進行資料上傳。</span><span lang='EN-US'><o:p></o:p></span></p>",
+        "CN": "<p class='MsoNormal'>\r\n<b><span>云端资料分享</span><span lang='EN-US'><o:p></o:p></span></b></p>\r\n<p class='MsoNormal' style='margin-left:23.25pt;text-indent:-23.25pt;mso-list:\r\nl0level1lfo2;tab-stops:list23.25pt'>\r\n<span lang='EN-US'>壹、<span> </span></span><![endif]><span>您需已成为台北市政府「健康云」之会员，并输入您在台北市政府「健康云」之会员帐号、密码，才能使用「云端资料分享」之服务。若您尚未成为台北市政府「健康云」之会员，请先办理注册</span><span lang='EN-US'>(</span><span>台北市政府「健康云」网址：</ span><span lang='EN-US'><a onclick='parent.OpenURL('https://cloud.health.gov.tw/App_Prog/RegisterInfo.aspx');'><u><font color='blue'>https://cloud.health.gov.tw/App_Prog/RegisterInfo.aspx</font></u></a>)</span><span>，并遵守台北市政府「健康云」对于会员之相关规定。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:23.25pt;text-indent:-23.25pt;mso-list:\r\nl0level1lfo2;tab-stops:list23.25pt'>\r\n<span lang='EN-US'>贰、<span> </span></span><![endif]><span>本平台之「云端资料分享」服务，系与台北市政府「健康云」中您已储存之生理量测数值进行资料交换联结</span><span lang='EN-US'>(</span><span>您在本平台之生理数值将上传之台北市政府「健康云」，但您在台北市政府「健康云」之生理数值目前未经台北市政府开放可上传于本平台</span><span lang='EN-US'>)</span><span>，但本平台与台北市政府「健康云」交换联结之资料内容，仅限于本平台所提供之生理量测服务项目为限。 </span><span lang='EN-US'><o:p></o:p></span></p>\r\n<p class='MsoNormal' style='margin-left:23.25pt;text-indent:-23.25pt;mso-list:\r\nl0level1lfo2;tab-stops:list23.25pt'>\r\n<span lang='EN-US'>参、<span> </span></span><![endif]><span>当您输入台北市政府「健康云」之会员帐号、密码后，将来您使用「云端资料分享」时，将无庸输入台北市政府「健康云」之会员帐号、密码，本服务将自动与台北市政府「健康云」进行资料上传。 </span><span lang='EN-US'><o:p></o:p></span></p>",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000141",
+        "#comment": null,
+        "TW": "基於遵守「個人資料保護法」及相關法令，不得侵犯個人隱私權。本服務平台提供之各項加值應用服務，會員享有個人健康紀錄整合之權利。會員之個人基本資料、生理量測紀錄，提供個人健康查詢紀錄，目的促進會員健康之行為，並同意授權相關單位之特定目的內蒐集、處理及利用。本平台服務期間內會員可查詢個人健康量測記錄，亦得隨時停止蒐集會員相關健康紀錄，不影響會員之既有權益。",
+        "CN": "基于遵守「个人资料保护法」及相关法令，不得侵犯个人隐私权。本服务平台提供之各项加值应用服务，会员享有个人健康纪录整合之权利。会员之个人基本资料、生理量测纪录，提供个人健康查询纪录，目的促进会员健康之行为，并同意授权相关单位之特定目的内搜集、处理及利用。本平台服务期间内会员可查询个人健康量测记录，亦得随时停止搜集会员相关健康纪录，不影响会员之既有权益。",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000142",
+        "#comment": null,
+        "TW": "完成本服務之註冊流程後，申請人將收到一組預設密碼之簡訊。第一次於入口網登入本系統時，會強制要求更改密碼。",
+        "CN": "完成本服务之注册流程后，申请人将收到一组预设密码之简讯。第一次于入口网登入本系统时，会强制要求更改密码。",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000143",
+        "#comment": null,
+        "TW": "切換身分",
+        "CN": "切换身分",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000144",
+        "#comment": null,
+        "TW": "確定要登出嗎?",
+        "CN": "确定要登出吗?",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000145",
+        "#comment": null,
+        "TW": "是否關閉系統？",
+        "CN": "是否关闭系统？",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000146",
+        "#comment": null,
+        "TW": "是否刪除資料？",
+        "CN": "是否删除资料？",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "CloseSys",
+        "#comment": null,
+        "TW": "關閉系統",
+        "CN": "关闭系统",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000147",
+        "#comment": null,
+        "TW": "生理量測",
+        "CN": "生理量测",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000148",
+        "#comment": null,
+        "TW": "健康雲",
+        "CN": "健康云",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000149",
+        "#comment": null,
+        "TW": "查詢",
+        "CN": "查询",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000150",
+        "#comment": null,
+        "TW": "血壓分類",
+        "CN": "血压分类",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000151",
+        "#comment": null,
+        "TW": "單位",
+        "CN": "单位",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000152",
+        "#comment": null,
+        "TW": "脈搏過慢",
+        "CN": "脉搏过慢",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000153",
+        "#comment": null,
+        "TW": "脈搏過快",
+        "CN": "脉搏过快",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000154",
+        "#comment": null,
+        "TW": "空腹8小時(飯前)血糖值",
+        "CN": "空腹8小时(饭前)血糖值",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000155",
+        "#comment": null,
+        "TW": "高於",
+        "CN": "高于",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000156",
+        "#comment": null,
+        "TW": "飯後2小時血糖值",
+        "CN": "饭后2小时血糖值",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000157",
+        "#comment": null,
+        "TW": "睡前血糖值",
+        "CN": "睡前血糖值",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000158",
+        "#comment": null,
+        "TW": "開始日期",
+        "CN": "开始日期",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000159",
+        "#comment": null,
+        "TW": "結束日期",
+        "CN": "结束日期",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000160",
+        "#comment": null,
+        "TW": "開啟藍牙",
+        "CN": "开启蓝牙",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000161",
+        "#comment": null,
+        "TW": "連接設備",
+        "CN": "连接设备",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000162",
+        "#comment": null,
+        "TW": "接收數據",
+        "CN": "接收数据",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000163",
+        "#comment": null,
+        "TW": "量測完成",
+        "CN": "量测完成",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000164",
+        "#comment": null,
+        "TW": "設備量測",
+        "CN": "设备量测",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000165",
+        "#comment": null,
+        "TW": "藍牙傳輸",
+        "CN": "蓝牙传输",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000166",
+        "#comment": null,
+        "TW": "手動輸入",
+        "CN": "手动输入",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000167",
+        "#comment": null,
+        "TW": "輸入範例",
+        "CN": "输入范例",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000168",
+        "#comment": null,
+        "TW": "時",
+        "CN": "时",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000169",
+        "#comment": null,
+        "TW": "請輸入",
+        "CN": "请输入",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000170",
+        "#comment": null,
+        "TW": "輸入量測時間有誤",
+        "CN": "输入量测时间有误",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000171",
+        "#comment": null,
+        "TW": "檢測時段",
+        "CN": "检测时段",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000172",
+        "#comment": null,
+        "TW": "不分時段",
+        "CN": "不分时段",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000173",
+        "#comment": null,
+        "TW": "顯示",
+        "CN": "显示",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000174",
+        "#comment": null,
+        "TW": "筆",
+        "CN": "笔",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000175",
+        "#comment": null,
+        "TW": "跳頁",
+        "CN": "跳页",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000176",
+        "#comment": null,
+        "TW": "頁",
+        "CN": "页",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000177",
+        "#comment": null,
+        "TW": "查詢日期區間需在三個月內",
+        "CN": "查询日期区间需在三个月内",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000178",
+        "#comment": null,
+        "TW": "資料最後更新時間",
+        "CN": "资料最后更新时间",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000179",
+        "#comment": null,
+        "TW": "<font color=blue>※長按3秒可刪除本機使用者</font>",
+        "CN": "<font color=blue>※长按3秒可删除本机使用者</font>",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000180",
+        "#comment": null,
+        "TW": "<font color=gray>(起訖皆為空白，只取前30筆)</font>",
+        "CN": "<font color=gray>(起讫皆为空白，只取前30笔)</font>",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000181",
+        "#comment": null,
+        "TW": "帳號註冊成功，請至簡訊或信箱，收取您的驗證碼",
+        "CN": "账号注册成功，請至簡訊或信箱，收取您的驗證碼",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000182",
+        "#comment": null,
+        "TW": "雲端資料分享",
+        "CN": "云端资料分享",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000183",
+        "#comment": null,
+        "TW": "數值不正確",
+        "CN": "数值不正确",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000184",
+        "#comment": null,
+        "TW": "感應到卡片，是否切換？",
+        "CN": "感应到卡片，是否切换？",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000185",
+        "#comment": null,
+        "TW": "★ 此裝置支援NFC感應登入 ★",
+        "CN": "★ 此装置支援NFC感应登入 ★",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000186",
+        "#comment": null,
+        "TW": "雲端位置",
+        "CN": "云端位置",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000187",
+        "#comment": null,
+        "TW": "臺北市政府衛生局-健康雲",
+        "CN": "台北市政府卫生局-健康云",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "0000000188",
+        "#comment": null,
+        "TW": "資料同步成功",
+        "CN": "资料同步成功",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BTErrCode01",
+        "#comment": null,
+        "TW": "藍牙功能無法正常運作！",
+        "CN": "蓝芽功能无法正常运作！",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BTErrCode02",
+        "#comment": null,
+        "TW": "藍牙無法連線，已有其它設備連線中..",
+        "CN": "无法连机，正有其它设备联机中..",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BTErrCode05",
+        "#comment": null,
+        "TW": "無法連線..",
+        "CN": "无法联机..",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BTErrCode09",
+        "#comment": null,
+        "TW": "藍牙資料傳輸發生異常！若設備無法關機，請手動關機，在排除干擾可能，再重新傳送！",
+        "CN": "数据传输过程中发生异常！若设备无法关机，请手动关机，并排除干扰可能，再重新传送！",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "DPS",
+        "#comment": null,
+        "TW": "衛教宣導",
+        "CN": "卫教宣导",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "DPS_OffLine",
+        "#comment": null,
+        "TW": "無法連線，顯示離線宣導",
+        "CN": "无法连线，显示离线宣导",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "watch",
+        "#comment": null,
+        "TW": "觀看",
+        "CN": "观看",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "QC_Reject",
+        "#comment": null,
+        "TW": "已排除「質控模式」數值",
+        "CN": "已排除「质控模式」数值",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "DeviceTimeError",
+        "#comment": null,
+        "TW": "已捨棄量測資料中，過久或錯誤的量測時間資料，並已自動校正設備時間，如有需要，請再次量測。",
+        "CN": "已舍弃量测资料中，过久或错误的量测时间资料，并已自动校正设备时间，如有需要，请再次量测。",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "DeviceDouble",
+        "#comment": null,
+        "TW": "此次量測值已在記錄內",
+        "CN": "此次量测值已在记录内",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "B2",
+        "#comment": null,
+        "TW": "已配對可用之設備",
+        "CN": "已配对可用之设备",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "B3",
+        "#comment": null,
+        "TW": "可用設備",
+        "CN": "可用设备",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "B4",
+        "#comment": null,
+        "TW": "可用設備-重新掃瞄",
+        "CN": "可用設備-重新搜索",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "DeviceTimeSet",
+        "#comment": null,
+        "TW": "設備時間校正中..",
+        "CN": "设备时间校正中..",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "DeviceTimeSetOK",
+        "#comment": null,
+        "TW": "設備時間校正成功",
+        "CN": "设备时间校正成功",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "DeviceTimeSetNG",
+        "#comment": null,
+        "TW": "設備時間校正失敗..",
+        "CN": "设备时间校正失败",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "DeviceDisPairOK",
+        "#comment": null,
+        "TW": "已解除配對",
+        "CN": "已解除匹配",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "DeviceDisPair",
+        "#comment": null,
+        "TW": "是否移除「#DevName#」此配對？",
+        "CN": "是否移除「#DevName#」此匹配？",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "FirstUseDevice",
+        "#comment": null,
+        "TW": "發現新的設備，是否上傳設備中舊有資料？",
+        "CN": "发现新的设备，是否上传设备中旧有资料？",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "FirstUseDevice_1",
+        "#comment": null,
+        "TW": "只上傳最新資料",
+        "CN": "只上传最新资料",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "FirstUseDevice_2",
+        "#comment": null,
+        "TW": "上傳所有資料",
+        "CN": "上传所有资料",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "FirstUseDevice_3",
+        "#comment": null,
+        "TW": "取消連線",
+        "CN": "取消连线",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "BTProcess",
+        "#comment": null,
+        "TW": "已接收##筆",
+        "CN": "已接收##笔",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "Device",
+        "#comment": null,
+        "TW": "設備",
+        "CN": "设备",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "MValue",
+        "#comment": null,
+        "TW": "量測值",
+        "CN": "量测值",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "UD_Title",
+        "#comment": null,
+        "TW": "個人資料",
+        "CN": "个人资料",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "UD_1",
+        "#comment": null,
+        "TW": "身高",
+        "CN": "身高",
+        "EN": "",
+        "JP": ""
+    },
+    {
+        "LCode": "anonymous",
+        "#comment": null,
+        "TW": "暱名",
+        "CN": "暱名",
+        "EN": "",
+        "JP": ""
+    }
+]
