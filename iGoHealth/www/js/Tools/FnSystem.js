@@ -172,7 +172,7 @@ var FnSystem = {
                     if (OS === "iOS") {
                         window.open("https://apps.apple.com/us/app/%E5%90%BE%E9%BD%A1%E7%84%A1%E9%BD%A1-%E6%A8%82%E6%B4%BB%E7%A4%BE%E5%8D%80-%E5%81%A5%E5%BA%B7%E6%88%91%E7%85%A7%E4%BD%A0/id1513507523");
                     } else {
-                        window.open("https://play.google.com/store/apps/details?id=tw.com.ethink.iHealthCare");
+                        window.open("https://play.google.com/store/apps/details?id=tw.com.ethink.iGoHealth");
                     }
                     break;
                 case 0:

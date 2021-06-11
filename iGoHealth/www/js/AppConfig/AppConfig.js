@@ -83,7 +83,7 @@ var AppConfig = {
     //行動版每日上傳筆數
     MobileUpCount: 1000,
     //資料庫名稱
-    DbName: "iHealthCare.db",
+    DbName: "iGoHealth.db",
     //資料庫版本
     DBVersion: 1.0,
     //語言包版本
