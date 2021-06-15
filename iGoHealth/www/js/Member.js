@@ -5,8 +5,8 @@ var Member = {
     Login: function () {
         // NowCardID = "";
         isBounding = false;
-        var UserID = document.getElementById("member").value;
-        var Pwd = document.getElementById("password").value;
+        var UserID = document.getElementById("login_userId").value;
+        var Pwd = document.getElementById("login_userPwd").value;
 
         Login.checkService(UserID, Pwd, function () { //切換服務功能
             Member.LoginCheck(UserID, Pwd); //進入登入流程
@@ -76,8 +76,8 @@ var Member = {
         }
     },
     LoginCallBack: function (result) {
-        var UserID = document.getElementById("member").value;
-        var Pwd = document.getElementById("password").value;
+        var UserID = document.getElementById("login_userId").value;
+        var Pwd = document.getElementById("login_userPwd").value;
 
         switch (result) {
             case "MemberFN0009_00": //登入成功
@@ -117,8 +117,8 @@ var Member = {
     LoginSuccess: function () {
         Log.write("登入成功", "Login");
         WiseScripts.Tool.ShowLoading(false, '', '', function () {
-            var UserID = document.getElementById("member").value;
-            var Pwd = document.getElementById("password").value;
+            var UserID = document.getElementById("login_userId").value;
+            var Pwd = document.getElementById("login_userPwd").value;
             //如密碼只有四位數，強制更改密碼
             if (Pwd.length == 4) {
                 //密碼4位為驗證碼，代表剛註冊完第一次登入
@@ -233,8 +233,8 @@ var Member = {
 
                         WiseScripts.Tool.BackPop(null, function () {
                             Member.GoToLogin(function () {
-                                $("#member").val(UserID);
-                                FnCtrl.focus("password");
+                                $("#login_userId").val(UserID);
+                                FnCtrl.focus("login_userPwd");
                             });
                         });
                         break;
@@ -263,16 +263,16 @@ var Member = {
         $("#signup_s1").prop('checked', true);
         $("#signup_mail").val('');
 
-        WiseScripts.Tool.NextPop('signup', function () {
+        WiseScripts.Tool.NextPop('reg_page', function () {
             FnCtrl.focus('signup_ID');
         }, null, 'T');
     },
     GoToLogin: function (successFn) {
-        $("#member").val('');
-        $("#password").val('');
+        $("#login_userId").val('');
+        $("#login_userPwd").val('');
 
-        WiseScripts.Tool.NextPop('MemberLogin', function () {
-            FnCtrl.focus("member");
+        WiseScripts.Tool.NextPop('login_page', function () {
+            FnCtrl.focus("login_userId");
             if (successFn) {
                 successFn();
             }
@@ -284,7 +284,7 @@ var Member = {
         $("#forget_mail").val('');
         $("#forget_bir").val('');
         // $("#forget_phone").val('');
-        WiseScripts.Tool.NextPop('forget', function () {
+        WiseScripts.Tool.NextPop('forget_page', function () {
             FnCtrl.focus('forget_ID');
         }, null, 'T');
     },
@@ -378,8 +378,8 @@ var Member = {
                 WiseScripts.Tool.BackPop(function () {
                     Member.GoToLogin(function () {
                         var UserID = document.getElementById("forget_ID").value;
-                        $("#member").val(UserID);
-                        FnCtrl.focus('password');
+                        $("#login_userId").val(UserID);
+                        FnCtrl.focus('login_userPwd');
                     });
                 }, null);
                 break;
@@ -431,8 +431,8 @@ var Member = {
         }
     },
     ChgPassword: function () {
-        var UserID = document.getElementById("member").value;
-        var Pwd = document.getElementById("password").value;
+        var UserID = document.getElementById("login_userId").value;
+        var Pwd = document.getElementById("login_userPwd").value;
 
         if (document.getElementById("Reset_PS1").value != document.getElementById("Reset_PS2").value) {
             navigator.notification.alert($.i18n('兩次密碼輸入不一致'), null, $.i18n('系統訊息'), $.i18n('確定'));
@@ -468,7 +468,7 @@ var Member = {
                         navigator.notification.alert($.i18n('密碼修改成功'), null, $.i18n('系統訊息'), $.i18n('確定'));
 
                         Pwd = document.getElementById("Reset_PS1").value;
-                        //Member.DoLoginSuccessWork(document.getElementById("member").value, document.getElementById("password").value);
+                        //Member.DoLoginSuccessWork(document.getElementById("login_userId").value, document.getElementById("login_userPwd").value);
                         WiseScripts.Tool.BackPop(function () {
                             Log.write(UserID + Pwd, "ChgPassword");
                             Member.DoLoginSuccessWork(UserID, Pwd);

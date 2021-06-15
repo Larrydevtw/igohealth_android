@@ -34,34 +34,35 @@ var Project = Project || {}, Project =
 
             RecView.push('login');
             sessionStorage.WhereAmI = 'login';
-  
-            //畫面初始化調整
-            $("#menu").hide(); //選單
-            $(".MegCount").hide(); //TODO 訊息通知
             sessionStorage.mainHomeLocation = 'Home'; //畫面導覽 站存目前所在頁面
 
-            $("body").disableSelection(); //讓網頁內的文字無法被選取
-            Log.alert("判斷是否自動登入");
+            //畫面初始化調整
+            // $("#menu").hide(); //選單
+            // $(".MegCount").hide(); //TODO 訊息通知
+
+            //$("body").disableSelection(); //讓網頁內的文字無法被選取 //2021.06.15移除，因為需使用JqueryUI
+            
+            Log.write("判斷是否自動登入","Project.js AppInit");
             //判斷是否自動登入
             if (localStorage.UserID) {
                 //RecView.push('MainHome');
                 var Pwd = localStorage.UserPS;
                 var UserID=localStorage.UserID;
 
-                document.getElementById("member").value = UserID;
-                document.getElementById("password").value = Pwd;
+                document.getElementById("login_userId").value = UserID;
+                document.getElementById("login_userPwd").value = Pwd;
 
-                WiseScripts.Tool.NextPop('MemberLogin', function () {
+                WiseScripts.Tool.NextPop('login_page', function () {
                     Member.Login();
                 }, null, 'T');
                 // WiseAES.decryptAES(Pwd, AppConfig.ASKey1, AppConfig.ASKey2, "T",
                 //     function (result) {
                 //         Pwd = result;
                 //         Log.write(Pwd,"解密後 local Pwd");
-                //         document.getElementById("member").value = UserID;
-                //         document.getElementById("password").value = Pwd;
+                //         document.getElementById("login_userId").value = UserID;
+                //         document.getElementById("login_userPwd").value = Pwd;
 
-                //         WiseScripts.Tool.NextPop('MemberLogin', function () {
+                //         WiseScripts.Tool.NextPop('login_page', function () {
                 //             Member.Login();
                 //         }, null, 'T');
                 //     },

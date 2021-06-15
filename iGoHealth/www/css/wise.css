@@ -197,7 +197,7 @@ select,
 }
 /* Login */
 #login,
-#MemberLogin {
+#login_page {
   width: 100%;
   height: 100%;
   position: relative;

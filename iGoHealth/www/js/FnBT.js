@@ -17,24 +17,6 @@ var FnBT = {
                         'DeviceName': '三合一量測設備',
                         'DeviceBrand': 'Bioptik'
                     },
-                    { //泰博血壓/血糖二合一  
-                        'DeviceReceiveItem': 'BP,BG',
-                        'DeviceModel': 'FORA D40',
-                        'DeviceName': 'FORA 二合一血壓、血糖機',
-                        'DeviceBrand': 'FORA'
-                    },
-                    { //阿泰貼牌血壓/血糖二合一
-                        'DeviceReceiveItem': 'BP,BG',
-                        'DeviceModel': 'UniTai TD3261',
-                        'DeviceName': 'UniTai 二合一血壓、血糖機',
-                        'DeviceBrand': 'UniTai'
-                    },
-                    { //泰博血壓(綁臂式一體機)
-                        'DeviceReceiveItem': 'BP',
-                        'DeviceModel': 'DIAMOND CUFF BP',
-                        'DeviceName': 'FORA 綁臂式血壓機',
-                        'DeviceBrand': 'FORA'
-                    },
                     { //泰博體溫(TAIDOC TD1261)
                         'DeviceReceiveItem': 'BT',
                         'DeviceModel': 'FORA IR20',
@@ -52,111 +34,6 @@ var FnBT = {
                         'DeviceModel': 'TAIDOC TD1261',
                         'DeviceName': 'FORA 耳溫槍',
                         'DeviceBrand': 'FORA'
-                    },
-                    { //泰博血糖
-                        'DeviceReceiveItem': 'BG',
-                        'DeviceModel': 'TAIDOC TD4286',
-                        'DeviceName': 'FORA 血糖機',
-                        'DeviceBrand': 'FORA'
-                    },
-                    { //泰博血糖
-                        'DeviceReceiveItem': 'BG',
-                        'DeviceModel': 'TAIDOC TD4231',
-                        'DeviceName': '血糖機',
-                        'DeviceBrand': 'FORA'
-                    },
-                    { //泰博血糖
-                        'DeviceReceiveItem': 'BG',
-                        'DeviceModel': 'TAIDOC TD4289',
-                        'DeviceName': '血糖機',
-                        'DeviceBrand': 'FORA'
-                    },
-                    { //泰博血糖(TAIDOC TD4231的前身樣品機)
-                        'DeviceReceiveItem': 'BG',
-                        'DeviceModel': 'TAIDOC BG',
-                        'DeviceName': '血糖機',
-                        'DeviceBrand': 'FORA'
-                    },
-                    { //泰博血糖
-                        'DeviceReceiveItem': 'BG',
-                        'DeviceModel': 'FORA GD40',
-                        'DeviceName': 'FORA 血糖機',
-                        'DeviceBrand': 'FORA'
-                    },
-                    { //泰博血壓(2018 新款機型)
-                        'DeviceReceiveItem': 'BP',
-                        'DeviceModel': 'FORA P30 PLUS',
-                        'DeviceName': 'FORA 血壓機',
-                        'DeviceBrand': 'FORA'
-                    },
-                    { //台欣血糖
-                        'DeviceReceiveItem': 'BG',
-                        'DeviceModel': 'Tysonbio_BGM',
-                        'DeviceName': '台欣 血糖機',
-                        'DeviceBrand': 'Tysonbio'
-                    },
-                    { //台欣血壓
-                        'DeviceReceiveItem': 'BP',
-                        'DeviceModel': 'Tysonbio_BPM',
-                        'DeviceName': '台欣 血壓機',
-                        'DeviceBrand': 'Tysonbio'
-                    },
-                    { //台欣血壓
-                        'DeviceReceiveItem': 'BP',
-                        'DeviceModel': 'Tyson bio_BPM',
-                        'DeviceName': '台欣 血壓機',
-                        'DeviceBrand': 'Tysonbio'
-                    },
-                    { //台欣體溫
-                        'DeviceReceiveItem': 'BT',
-                        'DeviceModel': 'Tyson bio_NCIT',
-                        'DeviceName': '台欣 耳溫槍',
-                        'DeviceBrand': 'Tysonbio'
-                    },
-                    { //歐瑟若體脂
-                        'DeviceReceiveItem': 'BW',
-                        'DeviceModel': 'FLG-756',
-                        'DeviceName': '歐瑟若體脂機',
-                        'DeviceBrand': 'Oserio'
-                    },
-                    { //台欣體溫(2018 新款機型)
-                        'DeviceReceiveItem': 'BT',
-                        'DeviceModel': 'Tyson_NC100',
-                        'DeviceName': '台欣 耳溫槍',
-                        'DeviceBrand': 'Tysonbio'
-                    },
-                    { //Loson
-                        'DeviceReceiveItem': 'BG',
-                        'DeviceModel': 'DS3',
-                        'DeviceName': 'Loson 血糖機',
-                        'DeviceBrand': 'Loson'
-                    },
-                    {
-                        'DeviceReceiveItem': 'STEP,BO,BP,HR',
-                        'DeviceModel': 'MATE1',
-                        'DeviceName': 'MATE1 智能手環',
-                        'DeviceBrand': 'MATE1'
-                    },
-                    {
-                        'DeviceReceiveItem': 'STEP,BO,HR',
-                        'DeviceModel': 'GOLiFE CARE Xe',
-                        'DeviceName': 'GOLiFE CARE Xe 智能手環',
-                        'DeviceBrand': 'GOLiFE'
-                    },
-                    //---------------------------------------------------
-                    //如果設備的廣播名是屬於模糊藍牙名這一類的,就不用在這裡加入,
-                    //在 MSCordovaBLE.inDeviceList() 檢查 deviceName 是否在設備清單(db)中時,就不實際檢查,則一概回 true!    
-                    { //華廣血糖(GM282)
-                        'DeviceReceiveItem': 'BG',
-                        'DeviceModel': '2282RAA0429',
-                        'DeviceName': '血糖機',
-                        'DeviceBrand': 'Rightest'
-                    },
-                    { //華廣血糖(GM282)
-                        'DeviceReceiveItem': 'BG',
-                        'DeviceModel': '2282RAA0426',
-                        'DeviceName': '血糖機',
-                        'DeviceBrand': 'Rightest'
                     }
                 ];
 

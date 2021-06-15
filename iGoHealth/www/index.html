@@ -22,17 +22,42 @@
     <title>i顧健康</title>
 
     <link rel="stylesheet" href="css/index.css">
+    <!-- else icon TODO-->
+    <link href="icon/Feather/style.css" rel="stylesheet">
+    <link href="icon/Custom/style.css" rel="stylesheet">
+    <!-- Custom Style  -->
+    <script type="text/javascript" src="js/Custom/CustomUI.js"></script>
+    <link href="css/customStyle.css" rel="stylesheet">
+    <link href="css/custom.css" rel="stylesheet">
+
+    <!-- Cordova 主要js -->
     <script type="text/javascript" src="cordova.js"></script>
-    <!-- <script src="scripts/platformOverrides.js"></script> -->
 
     <!-- jQuery -->
     <script type="text/javascript" src="js/Component/jquery.min.js"></script>
+    <!-- jQuery isLoading -->
+    <script src="js/Component/isLoading/jquery.isloading.min.js"></script>
+    <link href="js/Component/isLoading/isLoading.css" rel="stylesheet" />
+
+    <!-- CSS3 動態效果 -->
+    <link href="css/animate.css" rel="stylesheet">
+    <script src="js/Component/animateCss.js" type="text/javascript"></script>
+
+    <!--手勢滑動-->
+    <script type="text/javascript" src="js/Component/hammer.min.js"></script>
+
+    <!--懸浮球-->
+    <link rel="stylesheet" href="js/Component/Ball/ball.css" />
+    <script type="text/javascript" src="js/Component/Ball/mTouch.js"></script>
+    <script type="text/javascript" src="js/Component/Ball/FnBall.js"></script>
+
     <!--系統設定檔-->
     <script type="text/javascript" src="js/AppConfig/AppConfig.js"></script>
     <!--時間使用-->
     <script type="text/javascript" src="js/Component/moment.js"></script>
     <!--寫Log-->
     <script src="js/Component/WriteLog.js" type="text/javascript"></script>
+
     <!-- Source of jquery.i18n libs -->
     <script src="js/LanguagePack/jquery.i18n.js"></script>
     <script src="js/LanguagePack/jquery.i18n.messagestore.js"></script>
@@ -52,6 +77,9 @@
     <script src="js/Component/DAOFn.js" type="text/javascript"></script>
     <!--裝置-->
     <script src="js/DeviceInfo.js"></script>
+    <!--sweetalert-->
+    <script src="js/Component/sweetalert.min.js" type="text/javascript"></script>
+
     <!--共用函數-->
     <script src="js/FnCtrl.js" type="text/javascript"></script>
     <script src="js/Project.js" type="text/javascript"></script>
@@ -61,6 +89,35 @@
     <!--時間Function TODO-->
     <script src="js/Component/DateTimeFun.js" type="text/javascript"></script>
     <script src="js/FnDateTime.js" type="text/javascript"></script>
+
+    <!--App系統相關函數-->
+    <script src="js/Tools/FnSystem.js" type="text/javascript"></script>
+
+    <!--★ 藍牙模組-->
+    <script type="text/javascript" src="js/WiseBLE/Core/es6-promise.min.js"></script>
+    <script type="text/javascript" src="js/WiseBLE/Core/uuids.js"></script>
+
+    <script type="text/javascript" src="js/WiseBLE/Core/BTSetting.js"></script>
+    <script type="text/javascript" src="js/WiseBLE/Core/MSCordovaBLE.js"></script>
+    <script type="text/javascript" src="js/WiseBLE/Core/SetPeripheralTimeAlone.js"></script>
+    <script type="text/javascript" src="js/WiseBLE/Core/SingleDevicePooling.js"></script>
+    <script type="text/javascript" src="js/WiseBLE/Bioptik.js"></script>
+    <script type="text/javascript" src="js/WiseBLE/Bioptik_ETB04_BP.js"></script>
+    <script type="text/javascript" src="js/WiseBLE/Bioptik_ETB05.js"></script>
+    <script type="text/javascript" src="js/WiseBLE/Bioptik_MultiRecord_BP.js"></script>
+    <script type="text/javascript" src="js/WiseBLE/Band/BandMate.js"></script>
+    <!-- <script type="text/javascript" src="js/WiseBLE/Band/FnBTPairBand.js"></script>
+    <script type="text/javascript" src="js/WiseBLE/Band/DeviceCordova.js"></script> -->
+
+    <script type="text/javascript" src="js/FnBT.js"></script>
+    <script type="text/javascript" src="js/FnBTPair.js"></script>
+
+    <!--AES-->
+    <script src="js/AES/md5.js"></script>
+    <script src="js/AES/aes.js"></script>
+    <script src="js/AES/WiseAES.js"></script>
+    <script src="js/AES/jquery.base64.min.js"></script>
+
     <!--網路狀態-->
     <script src="js/Component/NetStatus.js"></script>
     <!--處理顯示樣式函數-->
@@ -71,16 +128,87 @@
     <script src="js/AppConfig/CustomInfo.js"></script>
     <script src="js/Custom/Custom.js"></script>
 
+    <!-- 本機提醒設定 -->
+    <script src="js/LocalNotify/LocalNotify.js"></script>
+
     <!--echarts 圖表-->
     <script src="js/chart/echarts/echarts.min.js"></script>
 
-  
+    <!-- Chart -->
+    <script type="text/javascript" src="js/chart/morris/raphael-min.js"></script>
+    <script type="text/javascript" src="js/chart/morris/morris.js"></script>
+    <link rel="stylesheet" href="js/chart/morris/morris.css"/>
+
+    <script type="text/javascript" src="js/chart/ChartInfo.js"></script>
+    <script type="text/javascript" src="js/chart/morris/morrisChart.js"></script>
+    <!-- jQuery 動態Table TODO-->
+    <!-- <link href="js/DynamicPlugin/jquery.dynatable.css" rel="stylesheet">
+    <script src="js/DynamicPlugin/jquery.dynatable.js"></script> -->
+    <script src="js/DynamicPlugin/FnDynamic.js"></script>
+
+    <script src="js/index.js" type="text/javascript"></script>
+
+    <!--HATMService服務-->
+    <script src="js/HATMService.js"></script>
+
+    <!-- 點數 -->
+    <script src="js/Points/FnPoint.js"></script>
+    <!-- 商品 -->
+    <script src="js/Points/FnProduct.js"></script>
+
+    <!--APP各程式-->
+    <script src="js/Login.js"></script>
+    <script src="js/LoginQR.js"></script>
+    <script src="js/Measure/MeasureInfo.js"></script>
+    <script src="js/Measure/Measure.js"></script>
+    <script src="js/Measure/MeasureManual.js"></script>
+    <script src="js/Measure/MeasureScan.js"></script>
+    <script src="js/Member.js"></script>
+    <script src="js/MainHome.js"></script>
+    <script src="js/WaitQueue.js"></script>
+    <script src="js/FnDeviceINS.js"></script>
+    <script>
+        $(function(){
+            //CustomStyle.adjustStatus_H();
+        })
+    </script>
 </head>
 <body style="height:100vh;">
     <div class="app">
         <!--進入頁-->
-        <div id="main_page" class="block h-center-center">
+        <div id="main_page" class="block h-center-center" style="display:none;">
             <img class="logo gotoPage" src="./images/logo_main.svg" data-pagename="#privacy_page" />
+        </div>
+
+        <!-- 登入-->
+        <div id="login_page" class="block">
+            <div class="h-center-center">
+                <img class="logo" src="./images/logo_2.svg" />
+                <div class="input login-input">
+                    <span>手機號碼（帳號）</span>
+                    <input type="text" id="login_userId" class="mt-1" placeholder="請輸入手機號碼，如：0988000888" />
+                </div>
+                <div class="input login-input">
+                    <span>密碼（預設為i顧健康識別碼）</span>
+                    <input type="password" id="login_userPwd" class="mt-1" placeholder="請輸入6位數密碼" />
+                </div>
+                <div class="w-100 mt-1">
+                    <button class="IPbtn full gotoPage round " data-pagename="#index">
+                        送出
+                    </button>
+                </div>
+                <div class="f-center-between w-100 mt-1">
+                    <div>
+                        <a class="gotoPage" data-pagename="#privacy_page">註冊帳號</a>
+                    </div>
+                    <div>
+                        <a class="gotoPage" data-pagename="#forget_page">忘記密碼</a>
+                    </div>
+                </div>
+            </div>
+            <div class="fixed-bottom" style="text-align: right; margin:7px;">
+                <div id="txtReleaseVer" class="release">V------</div>
+            </div>
         </div>
 
         <!--保密條款-->
@@ -92,54 +220,22 @@
                 </div>
                 <div class="privacy_content">
                     <ul>
-                        <li>
-                            申請人使用本系統加入會員時，已確認填寫之個人基本資料無誤，並視為您本人同意加入本服務平台會員，於平台服務範圍協助會員作自主性健康管理用途。
+                        <li data-i18n="[html]加入會員條款_1_Info">
+                            申請人使用本系統加入會員時，已確認填寫之個人基本資料無誤，並視為您本人同意加入本服務平台會員，於平台服務範圍協助會員作自主性健康管理之用途。
                         </li>
-                        <li>
-                            基於遵守「個人資料保護法」及相關法令，不得侵犯個人隱私權。本服務平台提供之各項加值應用服務，會s員享有個人健康紀錄整合之權利。
+                        <li data-i18n="[html]加入會員條款_2_Info">
+                            基於遵守「個人資料保護法」及相關法令，不得侵犯個人隱私權。本服務平台提供之各項加值應用服務，會員享有個人健康紀錄整合之權利。會員之個人基本資料、生理量測
+                            紀錄，提供個人健康查詢紀錄，目的促進會員健康之行為，並同意授權相關單位之特定 目的內蒐集、處理及利用。本平台服務期間內會員可查詢個人健康量測記錄，亦得隨時
+                            停止蒐集會員相關健康紀錄，不影響會員之 既有權益。
                         </li>
-                        <li>
-                            會員之個人基本資料、生理量測紀錄，提供個人健康查詢紀錄，目的促進會員健康之行為，並同意授權相關單位之特定目的內蒐集、處理及利用。
-                        </li>
-                        <li>
-                            本平台服務期間內，會員可查詢個人健康量測紀錄，亦得隨時停止蒐集會員相關健康紀錄，不影響會員之權利。
-                        </li>
-                        <li>
-                            測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章測試文章
+                        <li data-i18n="[html]加入會員條款_3_Info">
+                            完成本服務之註冊流程後，申請人將收到一組預設密碼之簡訊。第一次於入口網登入本系統時，會強制要求更改密碼。
                         </li>
                     </ul>
                 </div>
-                <button class="IPbtn full gotoPage fixed-bottom" data-pagename="#login_page">
+                <button class="IPbtn full gotoPage fixed-bottom" data-pagename="#reg_page">
                     同意
                 </button>
-            </div>
-        </div>
-
-        <!-- 登入-->
-        <div id="login_page" class="block" style="display:none;">
-            <div class="h-center-center">
-                <img class="logo" src="./images/logo_2.svg" />
-                <div class="input login-input">
-                    <span>手機號碼（帳號）</span>
-                    <input class="mt-1" placeholder="請輸入手機號碼，如：0988000888" />
-                </div>
-                <div class="input login-input">
-                    <span>密碼（預設為i顧健康識別碼）</span>
-                    <input class="mt-1" placeholder="請輸入6位數密碼" />
-                </div>
-                <div class="w-100 mt-1">
-                    <button class="IPbtn full gotoPage round " data-pagename="#index">
-                        送出
-                    </button>
-                </div>
-                <div class="f-center-between w-100 mt-1">
-                    <div>
-                        <a class="gotoPage" data-pagename="#reg_page">註冊帳號</a>
-                    </div>
-                    <div>
-                        <a class="gotoPage" data-pagename="#forget_page">忘記密碼</a>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -148,33 +244,33 @@
             <div class="h-center-center">
                 <div class="input login-input">
                     <span>手機號碼（帳號）</span>
-                    <input class="mt-1" placeholder="請輸入手機號碼，如：0988000888" />
+                    <input id="signup_ID" type="number"  class="mt-1" placeholder="請輸入手機號碼，如：0988000888" />
                 </div>
                 <div class="input login-input">
                     <span>姓名</span>
-                    <input class="mt-1" placeholder="請輸入姓名" />
+                    <input id="signup_Nick" type="text" class="mt-1" placeholder="請輸入姓名" />
                 </div>
                 <div class="input login-input">
                     <span>性別</span>
                     <div class="btn-group mt-1">
-                        <button value="male">男</button>
-                        <button value="female">女</button>
+                        <button value="male"  id="signup_s1">男</button>
+                        <button value="female" id="signup_s2">女</button>
                     </div>
                 </div>
                 <div class="input login-input">
                     <span>出生年月日</span>
-                    <input class="mt-1" placeholder="請輸入出生年月日，如：19460822" />
+                    <input id="signup_BIR" type="date" class="mt-1" placeholder="請輸入出生年月日，如：19460822" />
                 </div>
 
                 <div class="input login-input">
                     <span>居住縣市及鄉鎮</span>
                     <div class="mt-1 f-center-between">
-                        <select>
+                        <select id="signup_City">
                             <option>台北市</option>
                             <option>新北市</option>
                             <option>桃園市</option>
                         </select>
-                        <select>
+                        <select id="signup_Chiu">
                             <option>第一區</option>
                             <option>第二區</option>
                             <option>第三區</option>
@@ -182,7 +278,7 @@
                     </div>
                 </div>
                 <div class="w-100">
-                    <button class="IPbtn full gotoPage round" data-pagename="#login_page">
+                    <button type="submit" class="IPbtn full gotoPage round"  data-pagename="#login_page">
                         我要註冊
                     </button>
                 </div>
@@ -234,7 +330,7 @@
                 </div>
 
                 <div class="MD_header f-center-center">
-                    <img class="gotoPage modalClose" data-pagename="#index" src="img/logo_3.svg" />
+                    <img class="gotoPage modalClose" data-pagename="#index" src="images/logo_3.svg" />
                 </div>
 
                 <!-- 測試 -->
@@ -685,101 +781,106 @@
                 <div class="rData">
                     <label>空腹血糖 (飯前/餐前血糖)</label>
                     <span>
-                        < 95 mg/dL </span> </div> <div class="rData">
-                            <label>餐後1小時血糖</label>
-                            <span>
-                                < 140 mg/dL </span> </div> <div class="rData">
-                                    <label>餐後2小時血糖</label>
-                                    <span>
-                                        < 120 mg/dL </span> </div> </div> <h3>血糖（老年人—超過65歲）</h3>
-                                            <div class="h-center-center">
-                                                <div class="rData">
-                                                    <label>空腹血糖</label>
-                                                    <span>90 - 130 mg/dL</span>
-                                                </div>
-                                                <div class="rData">
-                                                    <label>睡前血糖</label>
-                                                    <span>90 - 150 mg/dL</span>
-                                                </div>
-                                            </div>
-                                            <h3>血壓</h3>
-                                            <div class="h-center-center">
-                                                <div class="rData">
-                                                    <label>收縮壓</label>
-                                                    <span>90 - 119 mmHg</span>
-                                                </div>
-                                                <div class="rData">
-                                                    <label>舒張壓</label>
-                                                    <span>60 - 79 mmHg</span>
-                                                </div>
-                                                <div class="rData">
-                                                    <label>脈搏</label>
-                                                    <span>60 - 100 次/分</span>
-                                                </div>
-                                            </div>
-                                            <h3>膽固醇</h3>
-                                            <div class="h-center-center">
-                                                <div class="rData">
-                                                    <label>膽固醇</label>
-                                                    <span>120 - 199 mmHg</span>
-                                                </div>
-                                            </div>
-                                            <div class="h-center-center">
-                                                <h4>資料來源：2018 糖尿病臨床照護指引</h4>
-                                            </div>
+                        < 95 mg/dL 
+                    </span> 
                 </div>
-
-                <!--個人資料-->
-                <div id="userInfo" class="block" data-navname="個人資料" style="display:none;">
-                    <div class="h-center-center">
-                        <div class="input login-input">
-                            <span>手機號碼（帳號）</span>
-                            <input class="mt-1" placeholder="請輸入手機號碼，如：0988000888" />
-                        </div>
-                        <div class="input login-input">
-                            <span>姓名</span>
-                            <input class="mt-1" placeholder="請輸入姓名" />
-                        </div>
-                        <div class="input login-input">
-                            <span>性別</span>
-                            <div class="btn-group mt-1">
-                                <button value="male">男</button>
-                                <button value="female">女</button>
-                            </div>
-                        </div>
-                        <div class="input login-input">
-                            <span>出生年月日</span>
-                            <input class="mt-1" placeholder="請輸入出生年月日，如：19460822" />
-                        </div>
-
-                        <div class="input login-input">
-                            <span>居住縣市及鄉鎮</span>
-                            <div class="mt-1 f-center-between">
-                                <select>
-                                    <option>台北市</option>
-                                    <option>新北市</option>
-                                    <option>桃園市</option>
-                                </select>
-                                <select>
-                                    <option>第一區</option>
-                                    <option>第二區</option>
-                                    <option>第三區</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="w-100 mt-1">
-                        <button class="IPbtn full round ">
-                            確認修改
-                        </button>
-                    </div>
+                <div class="rData">
+                    <label>餐後1小時血糖</label>
+                    <span>
+                        < 140 mg/dL 
+                    </span>
+                </div> 
+                <div class="rData">
+                    <label>餐後2小時血糖</label>
+                    <span>
+                        < 120 mg/dL 
+                    </span> 
                 </div>
-
             </div>
-            <!--
-        <script src="cordova.js"></script>
-    -->
-            <script src="js/index.js"></script>
+            <h3>血糖（老年人—超過65歲）</h3>
+            <div class="h-center-center">
+                <div class="rData">
+                    <label>空腹血糖</label>
+                    <span>90 - 130 mg/dL</span>
+                </div>
+                <div class="rData">
+                    <label>睡前血糖</label>
+                    <span>90 - 150 mg/dL</span>
+                </div>
+            </div>
+            <h3>血壓</h3>
+            <div class="h-center-center">
+                <div class="rData">
+                    <label>收縮壓</label>
+                    <span>90 - 119 mmHg</span>
+                </div>
+                <div class="rData">
+                    <label>舒張壓</label>
+                    <span>60 - 79 mmHg</span>
+                </div>
+                <div class="rData">
+                    <label>脈搏</label>
+                    <span>60 - 100 次/分</span>
+                </div>
+            </div>
+            <h3>膽固醇</h3>
+            <div class="h-center-center">
+                <div class="rData">
+                    <label>膽固醇</label>
+                    <span>120 - 199 mmHg</span>
+                </div>
+            </div>
+            <div class="h-center-center">
+                <h4>資料來源：2018 糖尿病臨床照護指引</h4>
+            </div>
+        </div>
 
+        <!--個人資料-->
+        <div id="userInfo" class="block" data-navname="個人資料" style="display:none;">
+            <div class="h-center-center">
+                <div class="input login-input">
+                    <span>手機號碼（帳號）</span>
+                    <input class="mt-1" placeholder="請輸入手機號碼，如：0988000888" />
+                </div>
+                <div class="input login-input">
+                    <span>姓名</span>
+                    <input class="mt-1" placeholder="請輸入姓名" />
+                </div>
+                <div class="input login-input">
+                    <span>性別</span>
+                    <div class="btn-group mt-1">
+                        <button value="male">男</button>
+                        <button value="female">女</button>
+                    </div>
+                </div>
+                <div class="input login-input">
+                    <span>出生年月日</span>
+                    <input class="mt-1" placeholder="請輸入出生年月日，如：19460822" />
+                </div>
+
+                <div class="input login-input">
+                    <span>居住縣市及鄉鎮</span>
+                    <div class="mt-1 f-center-between">
+                        <select>
+                            <option>台北市</option>
+                            <option>新北市</option>
+                            <option>桃園市</option>
+                        </select>
+                        <select>
+                            <option>第一區</option>
+                            <option>第二區</option>
+                            <option>第三區</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="w-100 mt-1">
+                <button class="IPbtn full round ">
+                    確認修改
+                </button>
+            </div>
+        </div>
+
+    </div>
 </body>
 </html>

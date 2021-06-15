@@ -14,7 +14,7 @@ var FnDT = {
         
         //alert("FnDT init");
         //alert("初始化檔案上傳下載模組");
-        localStorage.setItem("SP_RestURL","http://"+Domain.Address+"/OCICS_WS/taskhub.aspx")//"http://"+Domain.Address+Domain.ServiceRoot+"/HATM_Services/api/ApkDownload/Check" ); //114.55.104.189"http://192.168.0.112/OCICS_WS/"
+        localStorage.setItem("SP_RestURL","http://"+Domain.Address+"/OCICS_WS/taskhub.aspx");//"http://"+Domain.Address+Domain.ServiceRoot+"/HATM_Services/api/ApkDownload/Check" ); //114.55.104.189"http://192.168.0.112/OCICS_WS/"
         localStorage.setItem("AesKey", "WiseOCICS");
         localStorage.setItem("AesIv", "mHealth");
         localStorage.setItem("ApkPath", "file:///sdcard/Download"); //APK下載路徑

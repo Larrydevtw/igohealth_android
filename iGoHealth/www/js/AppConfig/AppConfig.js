@@ -1,9 +1,9 @@
 var Domain = {
     //Address如為http需調整AndroidMainfest中 <application android:usesCleartextTraffic = "true"
-    Address: "https://apps.5050.tw", //"ocics.tw",ethink.ocics.tw,ocics.cn/Beta 192.168.0.112
+    Address: "", //"ocics.tw",ethink.ocics.tw,ocics.cn/Beta 192.168.0.112
     ServiceRoot: "/Wise_Cloud_Service/AppCloudServices",
     ServiceApi: "/HATM_Services/api/HATMApp",
-    Version: "HC_5050", //6 版本號: tw:HC_x.x.x cn:HCCN_x.x.x HC_TEST_ HC_eThink_
+    Version: "IGH_Wifi", //6 版本號: tw:IGH_x.x.x cn:HCCN_x.x.x IGH_TEST_ IGH_eThink_
     VersionNo: "", //版本號(只有號碼部分)
 
     //App功能
@@ -24,56 +24,64 @@ var Domain = {
     Chk_AddressCN: "Z0pHekFXRWRZZTRHMWZ0T01hRlRwSlhNUU1JQ3R5ZE5SSm1PK2lHbklyTT0=",
 
     CheckDomain:function(){
-        switch(Domain.Version){
-            case "HC_5050":
+        switch (Domain.Version) {
+            case "IGH":
                 Domain.Address = "https://apps.5050.tw";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
 
                 Domain.lDevFunction = ["Point", "Product"];
                 break;
-            case "HC_5050_eThink":
+            case "IGH_eThink":
                 Domain.Address = "http://ethink.ocics.tw";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services_Bioptik/api/HATMApp";
 
                 Domain.lDevFunction = [];
                 break;
-            case "HC_5050_137":
+            case "IGH_137":
                 Domain.Address = "http://192.168.137.1";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
 
                 Domain.lDevFunction = [];
-                break;    
-            case "HC_5050_127":
+                break;
+            case "IGH_127":
                 Domain.Address = "http://127.0.0.1";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
 
                 Domain.lDevFunction = [];
-                break;      
-            case "HC_5050_112":
+                break;
+            case "IGH_112":
                 Domain.Address = "http://192.168.1.112";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
 
                 Domain.lDevFunction = [];
-                break;     
-            case "HC_5050_133":
+                break;
+            case "IGH_133":
                 Domain.Address = "http://192.168.0.133";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
 
                 Domain.lDevFunction = [];
-                break; 
-            case "HC_5050_150":
+                break;
+            case "IGH_Wifi":
+                Domain.Address = "http://172.27.80.1";
+                Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
+                Domain.ServiceApi = "/HATM_Services/api/HATMApp";
+
+                Domain.lDevFunction = [];
+                break;
+
+            case "IGH_150":
                 Domain.Address = "http://10.168.199.150";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
 
                 Domain.lDevFunction = [];
-            break;
+                break;
         }
     }
 };

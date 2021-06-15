@@ -59,41 +59,46 @@ var ProjectFn = ProjectFn || {},
             FnBT.StopScan();
             SidebarCustom.toggleMenu();
         },
-        gestureInit:function(){
-            // use hammer.js
-            var myElement = document.getElementById('MainHomeDiv');
+        gestureInit: function (ElementId) {
+            try {
+                // use hammer.js
+                var myElement = document.getElementById(ElementId);
 
-            // create a simple instance
-            // by default, it only adds horizontal recognizers
-            var mc = new Hammer(myElement);
+                // create a simple instance
+                // by default, it only adds horizontal recognizers
+                var mc = new Hammer(myElement);
 
-            // listen to events...
-            mc.on("swiperight", function (ev) { //tap press
-                ev.preventDefault();
-                Log.write(ev.type + " gesture detected.", "Hammer");
-                SidebarCustom.openMenu();
-            });
-            mc.on("panleft", function (ev) { //tap press
-                ev.preventDefault();
-                Log.write(ev.type + " gesture detected.", "Hammer");
-                SidebarCustom.closeMenu();
-            });
+                // listen to events...
+                mc.on("swiperight", function (ev) { //tap press
+                    ev.preventDefault();
+                    Log.write(ev.type + " gesture detected.", "Hammer");
+                    SidebarCustom.openMenu();
+                });
+                mc.on("panleft", function (ev) { //tap press
+                    ev.preventDefault();
+                    Log.write(ev.type + " gesture detected.", "Hammer");
+                    SidebarCustom.closeMenu();
+                });
 
-            var mcHistiry = new Hammer(document.getElementById('tabHistory'));
+                var mcHistiry = new Hammer(document.getElementById('tabHistory'));
 
-            mcHistiry.on("swiperight", function (ev) { //tap press
-                ev.preventDefault();
-                Log.write(ev.type + " gesture detected. tabHistory app.onBack", "Hammer");
-                app.onBack();
-            });
+                mcHistiry.on("swiperight", function (ev) { //tap press
+                    ev.preventDefault();
+                    Log.write(ev.type + " gesture detected. tabHistory app.onBack", "Hammer");
+                    app.onBack();
+                });
 
-            var mcAdd = new Hammer(document.getElementById('tabMeasurePage_Manual'));
+                var mcAdd = new Hammer(document.getElementById('tabMeasurePage_Manual'));
 
-            mcAdd.on("swiperight", function (ev) { //tap press
-                ev.preventDefault();
-                Log.write(ev.type + " gesture detected. tabMeasurePage_Manual app.onBack", "Hammer");
-                Measure.backToHistory();
-            });
+                mcAdd.on("swiperight", function (ev) { //tap press
+                    ev.preventDefault();
+                    Log.write(ev.type + " gesture detected. tabMeasurePage_Manual app.onBack", "Hammer");
+                    Measure.backToHistory();
+                });
+            } catch (error) {
+                Log.write('Error! ElementId: ' + ElementId + ' is Wrong. Change ProjectFn.gestureInit ElementId', 'ProjectFn.gestureInit');
+                Log.write(error, 'ProjectFn.gestureInit');
+            }
         },
         ballAddInit:function(){
             FnBall.init(function(){
