@@ -32,9 +32,9 @@ var Project = Project || {}, Project =
                 $("#sysCloseMenu").hide();
             }
 
-            RecView.push('login');
-            sessionStorage.WhereAmI = 'login';
-            sessionStorage.mainHomeLocation = 'Home'; //畫面導覽 站存目前所在頁面
+            RecView.push("login_page");
+            sessionStorage.WhereAmI = 'login_page';
+            sessionStorage.mainHomeLocation = 'login_page'; //畫面導覽 站存目前所在頁面
 
             //畫面初始化調整
             // $("#menu").hide(); //選單

@@ -332,11 +332,11 @@ input:checked + .slider:before {
 
 
 /*主頁*/
-#index .card{font-weight: bolder;border-width:1px;border-style: solid;border-radius: 10px;margin: 5px 10px;padding: 10px;width:100%;flex: 1 0 180px;}
-#index .card .title {font-size: 2em;font-weight: bolder;margin-bottom: 10px;align-self: flex-start;-webkit-writing-mode: vertical-lr;writing-mode: vertical-lr }
-#index .card .card-left {flex: 0 0 80px;}
-#index .card .card-right{flex: 1 0 auto}
-#index .card .value{font-size: 3em;}
+#MainHome .card{font-weight: bolder;border-width:1px;border-style: solid;border-radius: 10px;margin: 5px 10px;padding: 10px;width:100%;flex: 1 0 180px;}
+#MainHome .card .title {font-size: 2em;font-weight: bolder;margin-bottom: 10px;align-self: flex-start;-webkit-writing-mode: vertical-lr;writing-mode: vertical-lr }
+#MainHome .card .card-left {flex: 0 0 80px;}
+#MainHome .card .card-right{flex: 1 0 auto}
+#MainHome .card .value{font-size: 3em;}
 #diabetesTest{border-color:#0BA29A ;}
 #bloodPressure{border-color:#FF7E86}
 #cholesterol{border-color:#3797F0}

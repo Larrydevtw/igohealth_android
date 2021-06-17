@@ -141,8 +141,7 @@ var Member = {
         try { //註冊推播(暫無使用)
             PushMsg.init(_UserID);
         } catch (e) {
-            //Log.write
-            alert("註冊推播 失敗" + e.toString(), "RegisterPush");
+            Log.write("註冊推播 失敗" + e.toString(), "RegisterPush");
         }
         //先將密碼加密在儲存
         WiseAES.enpryptAES(_UserPS, AppConfig.ASKey1, AppConfig.ASKey2, "T",
@@ -155,8 +154,11 @@ var Member = {
                     WiseScripts.Tool.NextPop('MainHome', null, function () {
                         RecView = [];
                         RecView.push("MainHome");
-
-                        MainHome.onLoad(); //TODO 登入成功在進行各種初始化動作
+                        try {
+                            MainHome.onLoad(); //TODO 登入成功在進行各種初始化動作
+                        } catch (error) {
+                            Log.write(error,"MainHome.onLoad");
+                        }
                     }, 'T');
                 });
             }
@@ -266,6 +268,10 @@ var Member = {
         WiseScripts.Tool.NextPop('reg_page', function () {
             FnCtrl.focus('signup_ID');
         }, null, 'T');
+    },
+    GoToPrivacy: function () {
+        WiseScripts.Tool.NextPop('privacy_page', function () {
+        }, null, 'F');
     },
     GoToLogin: function (successFn) {
         $("#login_userId").val('');
@@ -497,9 +503,9 @@ var Member = {
                     Log.write("localStorage.UserID:" + localStorage.UserID + "\nRecView:" + RecView, "Logout");
                     localStorage.UserID = "";
                     localStorage.UserPS = "";
-                    WiseScripts.Tool.NextPop('login', '', '');
+                    WiseScripts.Tool.NextPop("login_page", '', '');
                     RecView = [];
-                    RecView.push('login');
+                    RecView.push("login_page");
                 });
             } else {
 

@@ -1,5 +1,10 @@
 var CustomUI = {
+    /*Modal 視窗操作*/
+    page: "",
+    userState: "",
+    parentPage: "",
     init: function (successFn) {
+
         const $$ = str => document.querySelector(str);
         const $$all = str => document.querySelectorAll(str);
 
@@ -28,11 +33,6 @@ var CustomUI = {
             myChart.setOption(option);
         };
 
-        /*Modal 視窗操作*/
-        let page = "";
-        let userState = "";
-        let parentPage = "";
-
         //表單資料更新
         const setUserState = state => {
             if (state) {
@@ -53,62 +53,7 @@ var CustomUI = {
                 target.classList.add("active");
                 chartValues = target.dataset.chartvalues.split(",");
             }
-        }
-
-
-        const closeAllPage = () => {
-            [...$$all(".block, #app-nav")].map(page => {
-                page.style.display = "none";
-            });
         };
-
-        const openPage = page => {
-            if (page == "#main_page" || page == "#privacy_page" || page == "#login_page") {
-                $$("#app-nav").style.display = "none";
-            } else {
-                if (page == "#userState") {
-                    setUserState(userState);
-                    renderChart(chartDays, chartValues);
-                    // $$("#navPlus."+userState).style.display = "inline";
-                    $$("#navPlus").style.display = "inline";
-                } else {
-                    $$("#navPlus").style.display = "none";
-                }
-
-                //手動轉址
-                if (page == "#stateManual") {
-                    if (userState) {
-                        page = page + userState;
-                        console.log(page);
-                    } else {
-                        page = "#index";
-                    }
-                }
-
-                //nav顯示
-                $$("#app-nav").style.display = "block";
-                // console.log( $$(page).dataset.navname);
-                if ($$(page)) {
-                    $$("#navTitle").innerHTML = $$(page).dataset.navname;
-                    //回上頁設定
-                    parentPage = $$(page).dataset.parent;
-                    if ($$(page).dataset.parent) {
-                        $$("#backBtn").style.display = "inline";
-                        $$("#mainMenu").style.display = "none";
-                    } else {
-                        $$("#backBtn").style.display = "none";
-                        $$("#mainMenu").style.display = "inline";
-                    }
-                }
-            }
-            if ($$(page)) {
-                $$(page).style.display = "block";
-                document.documentElement.scrollTop = 0;
-            } else {
-                console.log("沒有此分頁:" + page);
-            }
-        };
-
 
         //圖表天數 & 圖表數值
         [...$$all(".chartvalues, .chartxaxis")].map(btn => {
@@ -123,7 +68,7 @@ var CustomUI = {
                 if (t.dataset.chartxaxis) chartDays = t.dataset.chartxaxis.split(",");
                 if (t.dataset.chartvalues) chartValues = t.dataset.chartvalues.split(",");
                 t.classList.add("active");
-                userState = t.classList.item(0); //取得代號        
+                CustomUI.userState = t.classList.item(0); //取得代號        
                 renderChart(chartDays, chartValues);
             });
         });
@@ -153,29 +98,97 @@ var CustomUI = {
         /*按鈕連結 */
         [...$$all(".gotoPage")].map(btn => {
             btn.addEventListener('click', event => {
-                closeAllPage();
-                page = event.currentTarget.dataset.pagename;
+                CustomUI.closeAllPage();
+                CustomUI.page = event.currentTarget.dataset.pagename;
                 if (event.currentTarget.dataset.state) {
-                    userState = event.currentTarget.dataset.state;
+                    CustomUI.userState = event.currentTarget.dataset.state;
                 }
-                openPage(page);
-            })
+                CustomUI.openPage(CustomUI.page);
+            });
         });
 
         //回上一頁
         $$('#backBtn').addEventListener('click', () => {
-            closeAllPage();
-            openPage(parentPage)
+            CustomUI.closeAllPage();
+            CustomUI.openPage(CustomUI.parentPage);
         });
 
         //回上一頁
         $$('.IPbtn.parent').addEventListener('click', event => {
             //event.currentTarget.nextElementSibling.classList.toggle('on')
-            event.currentTarget.classList.toggle('on')
+            event.currentTarget.classList.toggle('on');
+        });
+
+        if (successFn) {
+            successFn();
+        }
+    },
+    openPage: function (page, successFn) {
+
+        page = "#" + page;
+        page = page.replace(/##/g, '#');
+
+        var $$ = str => document.querySelector(str);
+
+        if (page == "#main_page" || page == "#privacy_page" || page == "#login_page") {
+            $$("#app-nav").style.display = "none";
+        } else {
+            if (page == "#CustomUI.userState") {
+                setUserState(CustomUI.userState);
+                renderChart(chartDays, chartValues);
+                // $$("#navPlus."+CustomUI.userState).style.display = "inline";
+                $$("#navPlus").style.display = "inline";
+            } else {
+                $$("#navPlus").style.display = "none";
+            }
+
+            //手動轉址
+            if (page == "#stateManual") {
+                if (CustomUI.userState) {
+                    page = page + CustomUI.userState;
+                    console.log(page);
+                } else {
+                    page = "#MainHome";
+                }
+            }
+
+            //nav顯示
+            $$("#app-nav").style.display = "block";
+            // console.log( $$(page).dataset.navname);
+            if ($$(page)) {
+                $$("#navTitle").innerHTML = $$(page).dataset.navname;
+                //回上頁設定
+                CustomUI.parentPage = $$(page).dataset.parent;
+                if ($$(page).dataset.parent) {
+                    $$("#backBtn").style.display = "inline";
+                    $$("#mainMenu").style.display = "none";
+                } else {
+                    $$("#backBtn").style.display = "none";
+                    $$("#mainMenu").style.display = "inline";
+                }
+            }
+        }
+        if ($$(page)) {
+            $$(page).style.display = "block";
+            document.documentElement.scrollTop = 0;
+        } else {
+            console.log("沒有此分頁:" + page);
+        }
+
+        if(successFn){
+            successFn();
+        }
+    },
+    closeAllPage: function (successFn) {
+
+        var $$all = str => document.querySelectorAll(str);
+
+        [...$$all(".block, #app-nav")].map(page => {
+            page.style.display = "none";
         });
 
         if(successFn){
             successFn();
         }
-    }
+    },
 };

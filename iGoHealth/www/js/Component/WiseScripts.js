@@ -486,21 +486,49 @@ var WiseScripts = WiseScripts || {}, WiseScripts = {
                         //return; 
                     }//相同畫面不能SHOW第二次，第二次擋掉
                 }
+
+                var fadeInPage = "";
+                var fadeOutPage = "";
+
                 if (IsRec == "T") {
 
                     RecView.push(EtID);
                     // alert("sessionStorage.WhereAmI: " + sessionStorage.WhereAmI);
 
-                    $("#" + sessionStorage.WhereAmI).fadeOut(OutTime, closeCallback);
-                    $("#" + RecView[RecView.length - 1]).fadeIn(InTime, callback);
+                    fadeOutPage = sessionStorage.WhereAmI;
+                    fadeInPage = RecView[RecView.length - 1];
+
                     sessionStorage.WhereAmI = EtID;
+
                 }
                 else
                 {
-                    $("#" + sessionStorage.WhereAmI).fadeOut(OutTime, closeCallback);
-                    sessionStorage.WhereAmI = EtID;
+                    
+                    fadeOutPage = sessionStorage.WhereAmI;
+                    fadeInPage = EtID;
 
-                    $("#" + EtID).fadeIn(InTime, callback);
+                    sessionStorage.WhereAmI = EtID;
+                    
+                }
+
+                if(CustomUI){
+
+                    CustomUI.closeAllPage(function(){
+                        if(closeCallback){
+                            closeCallback();
+                        }
+                    });
+                    CustomUI.openPage(fadeInPage, function(){
+                        if(callback){
+                            callback();
+                        }
+                    });
+
+                }else{
+                    
+                    $("#" + fadeOutPage).fadeOut(OutTime, closeCallback);
+                    $("#" + fadeInPage).fadeIn(InTime, callback);
+
                 }
             },
             BackPop: function (closeCallback,callback)
@@ -547,28 +575,50 @@ var WiseScripts = WiseScripts || {}, WiseScripts = {
                 // }
                 // else
                 // {
+
+                    var fadeInPage = "";
+                    var fadeOutPage = "";
+
                     if (RecView.length > 1) {
                         //先關原本的畫面
                         // alert(sessionStorage.WhereAmI+" sessionStorage['WhereAmI']");
                         // alert(RecView[RecView.length - 1]+" RecView[RecView.length - 1]");
                         if (sessionStorage.WhereAmI == RecView[RecView.length - 1]) {
-                            $("#" + RecView[RecView.length - 1]).fadeOut(OutTime, closeCallback);
+                            fadeOutPage = RecView[RecView.length - 1];
                             RecView.pop();
-                        }
-                        else {
-                            $("#" + sessionStorage.WhereAmI).fadeOut(OutTime, closeCallback);
+                        } else {
+                            fadeOutPage = sessionStorage.WhereAmI;
                         }
 
                         //再開上一頁
                         sessionStorage.WhereAmI = RecView[RecView.length - 1];
-                        $("#" + sessionStorage.WhereAmI).fadeIn(InTime, callback);
-                    }else if(RecView.length === 1){
-                        Log.write(sessionStorage.WhereAmI,'BackPop sessionStorage.WhereAmI');
-                        $("#" + sessionStorage.WhereAmI).fadeOut(OutTime, closeCallback);
-                        $("#MainHome").fadeIn(InTime, callback);
-                        sessionStorage.WhereAmI = "MainHome";
-                        RecView.push("MainHome");
+                        fadeInPage = sessionStorage.WhereAmI;
+                    } else if (RecView.length === 1) {
+                        Log.write(sessionStorage.WhereAmI, 'BackPop sessionStorage.WhereAmI');
+                        fadeOutPage = sessionStorage.WhereAmI;
+                        fadeInPage = "login_page";
+                        sessionStorage.WhereAmI = fadeInPage;
+                        RecView.push(fadeInPage);
                     }
+
+                    if (CustomUI) {
+
+                        CustomUI.closeAllPage(function(){
+                            if(closeCallback){
+                                closeCallback();
+                            }
+                        });
+                        CustomUI.openPage(fadeInPage, function(){
+                            if(callback){
+                                callback();
+                            }
+                        });
+
+                    } else {
+                        $("#" + fadeOutPage).fadeOut(OutTime, closeCallback);
+                        $("#" + fadeInPage).fadeIn(InTime, callback);
+                    }
+                    
                 //}
                                      
                 //} else {

@@ -134,6 +134,9 @@
     <!--echarts 圖表-->
     <script src="js/chart/echarts/echarts.min.js"></script>
 
+    <!--自製 jqueryFlot延伸模組 -->
+    <script src="js/WiseFlot.js"></script>
+
     <!-- Chart -->
     <script type="text/javascript" src="js/chart/morris/raphael-min.js"></script>
     <script type="text/javascript" src="js/chart/morris/morris.js"></script>
@@ -193,16 +196,16 @@
                     <input type="password" id="login_userPwd" class="mt-1" placeholder="請輸入6位數密碼" />
                 </div>
                 <div class="w-100 mt-1">
-                    <button class="IPbtn full gotoPage round " data-pagename="#index">
+                    <button class="IPbtn full gotoPage round" onclick="Member.Login();">
                         送出
                     </button>
                 </div>
                 <div class="f-center-between w-100 mt-1">
                     <div>
-                        <a class="gotoPage" data-pagename="#privacy_page">註冊帳號</a>
+                        <a class="gotoPage" onclick="Member.GoToPrivacy();">註冊帳號</a>
                     </div>
                     <div>
-                        <a class="gotoPage" data-pagename="#forget_page">忘記密碼</a>
+                        <a class="gotoPage" onclick="Member.GoToForget();">忘記密碼</a>
                     </div>
                 </div>
             </div>
@@ -233,7 +236,7 @@
                         </li>
                     </ul>
                 </div>
-                <button class="IPbtn full gotoPage fixed-bottom" data-pagename="#reg_page">
+                <button class="IPbtn full gotoPage fixed-bottom" onclick="Member.GoToSingup();">
                     同意
                 </button>
             </div>
@@ -253,8 +256,8 @@
                 <div class="input login-input">
                     <span>性別</span>
                     <div class="btn-group mt-1">
-                        <button value="male"  id="signup_s1">男</button>
-                        <button value="female" id="signup_s2">女</button>
+                        <button value="M"  id="signup_s1">男</button>
+                        <button value="F" id="signup_s2">女</button>
                     </div>
                 </div>
                 <div class="input login-input">
@@ -278,7 +281,7 @@
                     </div>
                 </div>
                 <div class="w-100">
-                    <button type="submit" class="IPbtn full gotoPage round"  data-pagename="#login_page">
+                    <button type="submit" onclick="Member.Apply();" class="IPbtn full gotoPage round">
                         我要註冊
                     </button>
                 </div>
@@ -290,7 +293,15 @@
             <div class="h-center-center">
                 <div class="input login-input">
                     <span>手機號碼（帳號）</span>
-                    <input placeholder="請輸入手機號碼，如：0988000888" />
+                    <input id="forget_ID" type="number" placeholder="請輸入手機號碼，如：0988000888" />
+                </div>
+                <div class="input login-input" id="divForget_mail" >
+                    <span>電子信箱</span>
+                    <input id="forget_mail" type="text" placeholder="請輸入電子信箱，如：xxxx@xxx.com" />
+                </div>
+                <div class="input login-input" id="divForget_bir">
+                    <span>生日</span>
+                    <input id="forget_bir" type="number" maxlength="8" placeholder="請輸入生日，如19750606" />
                 </div>
                 <div class="input login-input">
                     <h3>
@@ -299,7 +310,7 @@
                     </h3>
                 </div>
                 <div class="w-100">
-                    <button class="IPbtn full gotoPage round" data-pagename="#login_page">
+                    <button type="submit" class="IPbtn full gotoPage round" data-pagename="#login_page" onclick="Member.SendPassword();">
                         送出
                     </button>
                 </div>
@@ -311,7 +322,7 @@
             <div class="f-center-between">
                 <div>
                     <img id="mainMenu" class="menu modalOpen" data-modalcontent="#MD_Test" src="./images/Menu.svg" />
-                    <img class="" id="backBtn" data-modalcontent="" src="./images/back-arrow.svg" />
+                    <img class="" id="backBtn" onclick="app.onBack();" data-modalcontent="" src="./images/back-arrow.svg" />
                 </div>
                 <div>
                     <h2 id="navTitle">標頭</h2>
@@ -330,7 +341,7 @@
                 </div>
 
                 <div class="MD_header f-center-center">
-                    <img class="gotoPage modalClose" data-pagename="#index" src="images/logo_3.svg" />
+                    <img class="gotoPage modalClose" data-pagename="#MainHome" src="images/logo_3.svg" />
                 </div>
 
                 <!-- 測試 -->
@@ -349,7 +360,7 @@
         </div>
 
         <!--主頁-->
-        <div id="index" class="block" data-navname="首頁" style="display:none;">
+        <div id="MainHome" class="block" data-navname="首頁" style="display:none;">
             <div class="h-center-center">
                 <div id="diabetesTest" class="card gotoPage" data-pagename="#userState" data-state="D">
                     <div class="f-start-center card-left">
@@ -427,7 +438,7 @@
                         這兩個皆由【,逗號】分隔，JS部分會處理成陣列
                         當使用者點選以下chartvalues, chartvalues的按鈕時後會自動刷新圖表的內容                         
         -->
-        <div id="userState" class="block" data-navname="測量記錄" data-parent="#index" style="display:none;">
+        <div id="userState" class="block" data-navname="測量記錄" data-parent="#MainHome" style="display:none;">
             <div class="chartType f-center-center">
                 <div><a class="D chartvalues btn active"
                         data-chartvalues="100,102,103,95,96,110,108,103,92,94,96,111,107,102">血壓</a></div>
@@ -840,33 +851,33 @@
             <div class="h-center-center">
                 <div class="input login-input">
                     <span>手機號碼（帳號）</span>
-                    <input class="mt-1" placeholder="請輸入手機號碼，如：0988000888" />
+                    <input id="profile_ID" type="text" value="" class="mt-1" disabled />
                 </div>
                 <div class="input login-input">
                     <span>姓名</span>
-                    <input class="mt-1" placeholder="請輸入姓名" />
+                    <input id="txtNickName" type="text" class="mt-1" />
                 </div>
                 <div class="input login-input">
                     <span>性別</span>
                     <div class="btn-group mt-1">
-                        <button value="male">男</button>
-                        <button value="female">女</button>
+                        <button id="profile_s1" value="M">男</button>
+                        <button id="profile_s2" value="F">女</button>
                     </div>
                 </div>
                 <div class="input login-input">
                     <span>出生年月日</span>
-                    <input class="mt-1" placeholder="請輸入出生年月日，如：19460822" />
+                    <input id="profile_BIR" type="date" class="mt-1" />
                 </div>
 
                 <div class="input login-input">
                     <span>居住縣市及鄉鎮</span>
                     <div class="mt-1 f-center-between">
-                        <select>
+                        <select id="profile_City">
                             <option>台北市</option>
                             <option>新北市</option>
                             <option>桃園市</option>
                         </select>
-                        <select>
+                        <select id="profile_Chiu">
                             <option>第一區</option>
                             <option>第二區</option>
                             <option>第三區</option>
