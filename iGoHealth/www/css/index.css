@@ -375,19 +375,19 @@ input:checked + .slider:before {
 /*#optometry table td{padding: 2px;}*/
 
 /*血糖量測提醒*/
-#bloodNotice label{white-space: nowrap;}
-#bloodNotice select{max-width: 200px;}
-#bloodNotice .rData{border-bottom: 1px solid #ccc;margin-bottom: 10px;padding-bottom: 20px;}
-#bloodNotice .rData:last-child{border-bottom:none;}
+#Timenotice label{white-space: nowrap;}
+#Timenotice select{max-width: 200px;}
+#Timenotice .rData{border-bottom: 1px solid #ccc;margin-bottom: 10px;padding-bottom: 20px;}
+#Timenotice .rData:last-child{border-bottom:none;}
 
 /*三高機操作說明*/
 #Instructions ul{list-style-type:decimal;}
 #Instructions ul li{margin-bottom: 20px;}
 
 /*三高量測標準值範圍*/
-#standardInfo .rData{display:flex;width: 96%;border-bottom: 1px solid #aaa;margin-bottom: 10px;padding-bottom: 10px;}
-#standardInfo .rData label{flex:0 0 200px;}
-#standardInfo .rData span{flex:1 0  auto;text-align: right;}
+#StandardInfo .rData{display:flex;width: 96%;border-bottom: 1px solid #aaa;margin-bottom: 10px;padding-bottom: 10px;}
+#StandardInfo .rData label{flex:0 0 200px;}
+#StandardInfo .rData span{flex:1 0  auto;text-align: right;}
 
 /*眼鏡地圖*/
 .glassMap{ position: relative;}

@@ -56,10 +56,9 @@ var app = {
         }
 
         ProjectFn.Wait([function (next) {
-            Log.write("單純查看UI導覽使用，正式上線不使用相關程式碼",'CustomUI init');
-            //CustomUI.init(function () {
+            CustomUI.init(function () {
                 next();
-            //});
+            });
         }, function (next) {
             Custom.init(function () {
                 next();

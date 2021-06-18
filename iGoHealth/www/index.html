@@ -346,15 +346,26 @@
 
                 <!-- 測試 -->
                 <div id="MD_Test" class="MD_content" style="display:none;">
-                    <button class="IPbtn gotoPage modalClose" data-pagename="#bloodNotice">血糖量測提醒</button>
-                    <button class="IPbtn gotoPage modalClose" data-pagename="#Instructions">三高機操作說明</button>
-                    <button class="IPbtn gotoPage modalClose" data-pagename="#standardInfo">三高量測標準值範圍</button>
-                    <button class="IPbtn parent">林小花（顯示姓名）</button>
+                    <button class="IPbtn gotoPage modalClose" onclick="MainHome.goToTimenotice();"
+                        data-pagename="#Timenotice">血糖量測提醒</button>
+
+                    <button class="IPbtn gotoPage modalClose" onclick="MainHome.goToDeviceINS();"
+                        data-pagename="#Instructions">三高機操作說明</button>
+
+                    <button class="IPbtn gotoPage modalClose" onclick="MainHome.goToStandardInfo();"
+                        data-pagename="#StandardInfo">三高量測標準值範圍</button>
+
+                    <button class="IPbtn gotoPage modalClose" onclick="MainHome.goToMeasureScan();"
+                        data-pagename="#Instructions">藥師量測三高</button>
+
+                    <button class="IPbtn parent" id="txtDisplayName">林小花（顯示姓名）</button>
+
                     <ul>
-                        <li><button class="IPbtn gotoPage modalClose" data-pagename="#userInfo">個人資料</button></li>
-                        <li><button class="IPbtn ">登出</button></li>
+                        <li><button class="IPbtn gotoPage modalClose" onclick="MainHome.goToProfile();" data-pagename="#profile">個人資料</button></li>
+                        <li><button onclick="Member.Logout();" class="IPbtn ">登出</button></li>
                     </ul>
-                    <button class="IPbtn gotoPage">版本序號</button>
+
+                    <button id="txtReleaseVer_Menu" class="IPbtn gotoPage">版本序號</button>
                 </div>
             </div>
         </div>
@@ -629,7 +640,7 @@
         </div>
 
         <!--血糖量測提醒-->
-        <div id="bloodNotice" class="block" data-navname="血糖量測提醒" style="display:none;">
+        <div id="Timenotice" class="block" data-navname="血糖量測提醒" style="display:none;">
             <div class="rData h-center-center">
                 <h3>早餐</h3>
                 <div class="f-center-center w-100">
@@ -764,7 +775,7 @@
         </div>
 
         <!--三高量測標準值範圍-->
-        <div id="standardInfo" class="block" data-navname="三高量測標準值範圍" style="display:none;">
+        <div id="StandardInfo" class="block" data-navname="三高量測標準值範圍" style="display:none;">
             <h3>血糖（兒童及青少年第 1 型糖尿病）</h3>
             <div class="h-center-center">
                 <div class="rData">
@@ -847,7 +858,7 @@
         </div>
 
         <!--個人資料-->
-        <div id="userInfo" class="block" data-navname="個人資料" style="display:none;">
+        <div id="profile" class="block" data-navname="個人資料" style="display:none;">
             <div class="h-center-center">
                 <div class="input login-input">
                     <span>手機號碼（帳號）</span>

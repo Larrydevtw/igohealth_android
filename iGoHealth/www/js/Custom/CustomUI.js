@@ -1,12 +1,55 @@
+var $$ = str => document.querySelector(str);
+var $$all = str => document.querySelectorAll(str);
+
 var CustomUI = {
     /*Modal 視窗操作*/
     page: "",
     userState: "",
     parentPage: "",
-    init: function (successFn) {
+    init: function(successFn){
 
-        const $$ = str => document.querySelector(str);
-        const $$all = str => document.querySelectorAll(str);
+        //開啟modal視窗
+        [...$$all('.modalOpen')].map(btn => {
+            btn.addEventListener('click', event => {
+                var _modal = $$("#IP_Modal");
+                _modal.style.display = "block";
+                //console.log(event.target.dataset.modalcontent)
+                if (event.target.dataset.modalcontent != undefined) {
+                    _modal.querySelector(event.target.dataset.modalcontent).style.display = "block";
+                }
+            });
+        });
+
+        //關閉視窗
+        [...$$all('.modalClose')].map(btn => {
+            btn.addEventListener('click', event => {
+                $$("#IP_Modal").style.display = "none";
+                [...$$all('.MD_content')].map(content => {
+                    content.style.display = "none"
+                }); //關閉所有MD_content
+            });
+        });
+
+        //回上一頁
+        $$('#backBtn').addEventListener('click', () => {
+            app.onBack();
+        });
+
+        //左側選單收合
+        $$('.IPbtn.parent').addEventListener('click', event => {
+            //event.currentTarget.nextElementSibling.classList.toggle('on')
+            event.currentTarget.classList.toggle('on');
+        });
+
+        if(successFn){
+            successFn();
+        }
+
+        //CustomUI.Demo();
+    },
+    Demo: function (successFn) {
+
+        Log.write("單純查看UI導覽使用，正式上線不使用相關程式碼",'CustomUI Demo');
 
         //圖表
         let chartDom = $$("#chart");
@@ -191,4 +234,25 @@ var CustomUI = {
             successFn();
         }
     },
+    setUserState: function (state) {//量測資料更新
+
+        if (state) {
+            CustomUI.userState = state;
+            $$("#userState .chartvalues.active").classList.remove("active");
+            var target;
+            switch (state) {
+                case "D":
+                    target = $$("#userState .chartvalues.D");
+                    break;
+                case "B":
+                    target = $$("#userState .chartvalues.B");
+                    break;
+                case "C":
+                    target = $$("#userState .chartvalues.C");
+                    break;
+            }
+            target.classList.add("active");
+            chartValues = target.dataset.chartvalues.split(",");
+        }
+    }
 };
