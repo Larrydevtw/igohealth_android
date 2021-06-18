@@ -193,7 +193,7 @@ var Member = {
             }
         } else {
             if (!WiseScripts.Validate.isID(document.getElementById("signup_PID").value)) {
-                navigator.notification.alert($.i18n("不正確的身證"), null, $.i18n('系統訊息'), $.i18n('確定'));
+                navigator.notification.alert($.i18n("不正確的身分證"), null, $.i18n('系統訊息'), $.i18n('確定'));
                 return;
             }
         }
@@ -494,6 +494,11 @@ var Member = {
 
         function confirmCallback(btnIndex) {
             if (btnIndex == 1) {
+
+                if($$){ //選單收合
+                    $$("#IP_Modal").style.display = "none";     
+                }
+
                 //TODO 登出後將帳號表中的密碼即登入記錄去除去除
                 var Params = {
                     '_Psd': '',
@@ -503,9 +508,10 @@ var Member = {
                     Log.write("localStorage.UserID:" + localStorage.UserID + "\nRecView:" + RecView, "Logout");
                     localStorage.UserID = "";
                     localStorage.UserPS = "";
-                    WiseScripts.Tool.NextPop("login_page", '', '');
-                    RecView = [];
-                    RecView.push("login_page");
+                    Member.GoToLogin(function(){
+                        RecView = [];
+                        RecView.push("login_page");
+                    });             
                 });
             } else {
 
@@ -676,24 +682,25 @@ var Member = {
             return;
         }
 
-        if ($("#profile_tall").val() == "") {
-            navigator.notification.alert("請輸入身高", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
-            return;
+        if(AppConfig.lMType.indexOf("BW") > -1){
+            if ($("#profile_tall").val() == "") {
+                navigator.notification.alert("請輸入身高", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
+                return;
+            }
+            if (!$.isNumeric($("#profile_tall").val())) {
+                navigator.notification.alert("身高不正確", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
+                return;
+            } else {
+                if (parseInt($("#profile_tall").val()) > 250 || parseInt($("#profile_tall").val()) < 30) {
+                    navigator.notification.alert("身高不正確", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
+                    return;
+                }
+            }
         }
 
         if (!$("#profile_s1").prop("checked") && !$("#profile_s2").prop("checked")) {
             navigator.notification.alert("請選擇性別", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
             return;
-        }
-
-        if (!$.isNumeric($("#profile_tall").val())) {
-            navigator.notification.alert("身高不正確", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
-            return;
-        } else {
-            if (parseInt($("#profile_tall").val()) > 250 || parseInt($("#profile_tall").val()) < 30) {
-                navigator.notification.alert("身高不正確", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
-                return;
-            }
         }
 
         //TODO 20180418 目標體重不一定要輸入

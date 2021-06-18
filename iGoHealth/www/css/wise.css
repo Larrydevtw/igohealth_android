@@ -358,7 +358,7 @@ select,
 /* Layout */
 #wrapper,
 #MainHome,
-#History,
+#userHistory,
 #MeasurePage_Manual {
   height: 100%;
 }

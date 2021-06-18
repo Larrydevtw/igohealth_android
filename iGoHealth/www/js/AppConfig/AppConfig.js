@@ -106,14 +106,14 @@ var AppConfig = {
     //藍牙模組使用開關
     isAutoConnect: true, //是否自動連線
     //站點類別
-    SystemModel: "HC5050", //5050 App
-    HRSSNo: "999",         //量測資料介接系統註冊編號
-    StationNo: "999",      //站點編號
+    SystemModel: "IGH", //5050 App
+    HRSSNo: "1000",         //量測資料介接系統註冊編號
+    StationNo: "1000",      //站點編號
 
     //會員帳號類別
     UserKind: "7",
     //有使用的量測功能
-    lMType: ["BG", "BP", "BT", "BW", "CHOL","UA"], //, "BO","HR","STEP"
+    lMType: ["BG", "BP", "CHOL"], //, "BO","HR","STEP", "BT", "BW", "UA", 
     //第一次載入資料的起始日期(為確保載入所有量測資料)
     //DateS: "2018-01-01",
     //第一次載入資料的距今天數(載入雲端所有端點一個月的量測資料) //未來會有頁面給使用者選擇下載的區間

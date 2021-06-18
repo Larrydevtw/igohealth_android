@@ -241,7 +241,7 @@ var app = {
             FnBT.GetBTMode(function (BTMode) {
                 Log.write("BTMode: " + BTMode + " ,backPage: " + backPage + ",currentPage: " + currentPage, "index BTMode");
                 switch (currentPage) { //判斷是否為首頁
-                    case "History":
+                    case "userHistory":
                         Measure.showHistory(MeasureInfo.MType, "N");
                         break;
                     case "MainHome":

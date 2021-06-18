@@ -296,6 +296,10 @@ input:checked + .slider:before {
     color:#fff;
     background-color: #F4C21E;
 }
+.btn-group .active {
+    color:#fff;
+    background-color: #F4C21E;
+}
 /*button group end*/
 
 #navTitle{color: #fff;}
@@ -337,15 +341,15 @@ input:checked + .slider:before {
 #MainHome .card .card-left {flex: 0 0 80px;}
 #MainHome .card .card-right{flex: 1 0 auto}
 #MainHome .card .value{font-size: 3em;}
-#diabetesTest{border-color:#0BA29A ;}
-#bloodPressure{border-color:#FF7E86}
+#MBG{border-color:#0BA29A ;}
+#MBP{border-color:#FF7E86}
 #cholesterol{border-color:#3797F0}
-#diabetesTest .title{color:#0BA29A ;}
-#bloodPressure .title{color:#FF7E86}
+#MBG .title{color:#0BA29A ;}
+#MBP .title{color:#FF7E86}
 #cholesterol .title{color:#3797F0}
-#bloodPressure .subCard {padding: 10px;}
-#bloodPressure .subCard label{color: #FF7E86;}
-#bloodPressure .subCard .value{font-size: 2em;}
+#MBP .subCard {padding: 10px;}
+#MBP .subCard label{color: #FF7E86;}
+#MBP .subCard .value{font-size: 2em;}
 
 /*測量記錄*/
 .chartType{margin-bottom: 30px;}

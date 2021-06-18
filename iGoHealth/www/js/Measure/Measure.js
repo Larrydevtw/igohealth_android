@@ -27,7 +27,7 @@ var Measure = {
             $("#flot_placeholder").html(""); //一開始就將繪圖區塊清除
             $("#History_DataGridView").hide();
             WiseScripts.Tool.ShowLoading(true, $.i18n('查詢歷史資料..'));
-            WiseScripts.Tool.NextPop('History', function () {
+            WiseScripts.Tool.NextPop('userHistory', function () {
                 Measure.searchByInterval(MeasureInfo.Interval);
                 document.getElementById("tabHistory_btn" + MType).scrollIntoView();
             }, null, 'T');
@@ -843,7 +843,9 @@ var Measure = {
         //alert(ValueArr+"Measure showValue " + MType+isAnimate+MTimeStamp);
 
         //移至量測項目
-        document.getElementById("M" + MType).scrollIntoView();
+        if(CustomInfo.MainHome_scrollIntoView === "Y"){
+            document.getElementById("M" + MType).scrollIntoView();
+        }
 
         var Start_i = 0;
         var End_i = ValueArr.length;

@@ -21,6 +21,9 @@
 
     <title>i顧健康</title>
 
+    <!-- Bootstrap Core CSS 會影響到現有切版，暫不使用-->
+    <!-- <link href="css/bootstrap.min.css" rel="stylesheet"> -->
+    <!-- Main CSS-->
     <link rel="stylesheet" href="css/index.css">
     <!-- else icon TODO-->
     <link href="icon/Feather/style.css" rel="stylesheet">
@@ -35,6 +38,8 @@
 
     <!-- jQuery -->
     <script type="text/javascript" src="js/Component/jquery.min.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/Component/bootstrap.min.js" type="text/javascript"></script>
     <!-- jQuery isLoading -->
     <script src="js/Component/isLoading/jquery.isloading.min.js"></script>
     <link href="js/Component/isLoading/isLoading.css" rel="stylesheet" />
@@ -253,18 +258,33 @@
                     <span>姓名</span>
                     <input id="signup_Nick" type="text" class="mt-1" placeholder="請輸入姓名" />
                 </div>
+                <div class="input login-input" style="display:none;">
+                    <span data-i18n="身分證字號">身分證字號</span>
+                    <input id="signup_PID" type="text" value="" class="mt-1" maxlength="18">
+                </div>
                 <div class="input login-input">
                     <span>性別</span>
-                    <div class="btn-group mt-1">
-                        <button value="M"  id="signup_s1">男</button>
-                        <button value="F" id="signup_s2">女</button>
+                    <div class="btn-group mt-1" data-toggle="buttons">
+                        <button class="btn btn-set">
+                            <input type="radio" style="display:none;" name="register_sex" id="signup_s1"
+                                autocomplete="off" value="M" checked>
+                            <span data-i18n="男">男</span>
+                        </button>
+                        <button class="btn btn-set">
+                            <input type="radio" style="display:none;" name="register_sex" id="signup_s2"
+                                autocomplete="off" value="F">
+                            <span data-i18n="女">女</span>
+                        </button>
                     </div>
                 </div>
                 <div class="input login-input">
                     <span>出生年月日</span>
                     <input id="signup_BIR" type="date" class="mt-1" placeholder="請輸入出生年月日，如：19460822" />
                 </div>
-
+                <div class="input login-input" style="display:none;">
+                    <span>信箱</span><span id="txtSignup_Mail"></span>
+                    <input id="signup_mail" type="email" value="" class="mt-1">
+                </div>
                 <div class="input login-input">
                     <span>居住縣市及鄉鎮</span>
                     <div class="mt-1 f-center-between">
@@ -372,8 +392,8 @@
 
         <!--主頁-->
         <div id="MainHome" class="block" data-navname="首頁" style="display:none;">
-            <div class="h-center-center">
-                <div id="diabetesTest" class="card gotoPage" data-pagename="#userState" data-state="D">
+            <div id="MainHomeDiv" class="h-center-center">
+                <div id="MBG" class="card gotoPage" onclick="Measure.showHistory('BG');" data-pagename="#userHistory" data-state="D">
                     <div class="f-start-center card-left">
                         <div class="h-start-center">
                             <div class="title">
@@ -383,15 +403,15 @@
                         </div>
                         <div class="h-start-center card-right">
                             <div>
-                                <label class="value">120</label>mg/dl
+                                <label id="MBG_Value1" class="value">--</label><span id="BG_Unit"> mg/dL</span>
                             </div>
-                            <h3>午餐後</h3>
-                            <p>2021-10-18(五) 18:24</p>
+                            <h3 id="MBG_Value2">午餐後</h3>
+                            <p id="MP_NDate_BG">----/--/-- --:--</p>
                         </div>
                     </div>
                 </div>
 
-                <div id="bloodPressure" class="card gotoPage" data-pagename="#userState" data-state="B">
+                <div id="MBP" class="card gotoPage" onclick="Measure.showHistory('BP');" data-pagename="#userHistory" data-state="B">
                     <div class="f-start-center">
                         <div class="h-start-center card-left">
                             <div class="title">
@@ -403,26 +423,26 @@
                             <div class="f-center-between">
                                 <div class="h-center-center subCard">
                                     <label>收縮壓</label>
-                                    <span class="value">139</span>
+                                    <span id="MBP_Value1" class="value">--</span>
                                     <span>mg/dl</span>
                                 </div>
                                 <div class="h-center-center subCard">
                                     <label>舒張壓</label>
-                                    <span class="value">80</span>
+                                    <span id="MBP_Value2" class="value">--</span>
                                     <span>mg/dl</span>
                                 </div>
                                 <div class="h-center-center subCard">
                                     <label>脈搏</label>
-                                    <span class="value">2</span>
+                                    <span id="MBP_Value3" class="value">--</span>
                                     <span>次/分</span>
                                 </div>
                             </div>
-                            <p>2021-10-18(五) 18:24</p>
+                            <p id="MP_NDate_BP">----/--/-- --:--</p>
                         </div>
                     </div>
                 </div>
 
-                <div id="cholesterol" class="card gotoPage" data-pagename="#userState" data-state="C">
+                <div id="MCHOL" class="card gotoPage" onclick="Measure.showHistory('CHOL');" data-pagename="#userHistory" data-state="C">
                     <div class="f-start-center">
                         <div class="h-start-center card-left">
                             <div class="title">
@@ -432,9 +452,9 @@
                         </div>
                         <div class="h-start-center card-right">
                             <div>
-                                <label class="value">160</label>mg/dl
+                                <label class="value" id="MCHOL_Value1">--</label><span  id="CHOL_Unit">mg/dl</span>
                             </div>
-                            <p>2021-10-18(五) 18:24</p>
+                            <p id="MP_NDate_CHOL">----/--/-- --:--</p>
                         </div>
                     </div>
                 </div>
@@ -449,7 +469,7 @@
                         這兩個皆由【,逗號】分隔，JS部分會處理成陣列
                         當使用者點選以下chartvalues, chartvalues的按鈕時後會自動刷新圖表的內容                         
         -->
-        <div id="userState" class="block" data-navname="測量記錄" data-parent="#MainHome" style="display:none;">
+        <div id="userHistory" class="block" data-navname="測量記錄" data-parent="#MainHome" style="display:none;">
             <div class="chartType f-center-center">
                 <div><a class="D chartvalues btn active"
                         data-chartvalues="100,102,103,95,96,110,108,103,92,94,96,111,107,102">血壓</a></div>
@@ -519,7 +539,7 @@
         </div>
 
         <!--新增備註-->
-        <div id="addRemarks" class="block" data-navname="新增備註" data-parent="#userState" style="display:none;">
+        <div id="addRemarks" class="block" data-navname="新增備註" data-parent="#userHistory" style="display:none;">
             <div class="info ">
                 <div class="f-center-center mb-1">
                     <label>量測時間：</label>
@@ -549,7 +569,7 @@
         </div>
 
         <!--新增手動輸入紀錄 血壓-->
-        <div id="stateManualD" class="block" data-navname="新增手動輸入紀錄" data-parent="#userState" style="display:none;">
+        <div id="stateManualD" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
             <div class="chartType f-center-center">
                 <div><a class="btn active">血壓</a></div>
                 <div><a class="btn gotoPage" data-pagename="#stateManualB">血糖</a></div>
@@ -582,7 +602,7 @@
         </div>
 
         <!--新增手動輸入紀錄 血糖-->
-        <div id="stateManualB" class="block" data-navname="新增手動輸入紀錄" data-parent="#userState" style="display:none;">
+        <div id="stateManualB" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
             <div class="chartType f-center-center">
                 <div><a class="btn gotoPage" data-pagename="#stateManualD">血壓</a></div>
                 <div><a class="btn active">血糖</a></div>
@@ -615,7 +635,7 @@
         </div>
 
         <!--新增手動輸入紀錄 膽固醇-->
-        <div id="stateManualC" class="block" data-navname="新增手動輸入紀錄" data-parent="#userState" style="display:none;">
+        <div id="stateManualC" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
             <div class="chartType f-center-center">
                 <div><a class="btn gotoPage" data-pagename="#stateManualD">血壓</a></div>
                 <div><a class="btn gotoPage" data-pagename="#stateManualB">血糖</a></div>
@@ -870,9 +890,17 @@
                 </div>
                 <div class="input login-input">
                     <span>性別</span>
-                    <div class="btn-group mt-1">
-                        <button id="profile_s1" value="M">男</button>
-                        <button id="profile_s2" value="F">女</button>
+                    <div class="btn-group mt-1" data-toggle="buttons">
+                        <button class="btn btn-set">
+                            <input type="radio" style="display:none;" name="profile_sex" id="profile_s1"
+                                autocomplete="off" value="M" checked>
+                            <span data-i18n="男">男</span>
+                        </button>
+                        <button class="btn btn-set">
+                            <input type="radio" style="display:none;" name="profile_sex" id="profile_s2"
+                                autocomplete="off" value="F">
+                            <span data-i18n="女">女</span>
+                        </button>
                     </div>
                 </div>
                 <div class="input login-input">
@@ -897,7 +925,7 @@
                 </div>
             </div>
             <div class="w-100 mt-1">
-                <button class="IPbtn full round ">
+                <button type="button" onclick="Member.SaveUserData();" class="IPbtn full round ">
                     確認修改
                 </button>
             </div>

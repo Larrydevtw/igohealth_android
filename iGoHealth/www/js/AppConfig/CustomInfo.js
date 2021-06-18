@@ -2,6 +2,7 @@ var CustomInfo = {
     PID_Validate: "N", //註冊時身分證字號是否必填(N:選填，Y:必填)
     EMail_Validate: "N", //註冊時EMail是否必填(N:選填，Y:必填)
     Member_CheckType: "03", //01:生日 02:EMail 03:手機號碼
+    MainHome_scrollIntoView: "N", //是否自動移至量測項目區塊(三個以上量測項目使用)
     switchByDomain: function () {
         return new Promise(function (resolve, reject) {
 

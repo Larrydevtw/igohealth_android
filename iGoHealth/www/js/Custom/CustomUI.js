@@ -4,7 +4,7 @@ var $$all = str => document.querySelectorAll(str);
 var CustomUI = {
     /*Modal 視窗操作*/
     page: "",
-    userState: "",
+    userHistory: "",
     parentPage: "",
     init: function(successFn){
 
@@ -54,8 +54,8 @@ var CustomUI = {
         //圖表
         let chartDom = $$("#chart");
         var myChart = echarts.init(chartDom);
-        let chartValues = $$("#userState .chartvalues").dataset.chartvalues.split(",");
-        let chartDays = $$("#userState .chartxaxis").dataset.chartxaxis.split(",");
+        let chartValues = $$("#userHistory .chartvalues").dataset.chartvalues.split(",");
+        let chartDays = $$("#userHistory .chartxaxis").dataset.chartxaxis.split(",");
 
         const renderChart = () => {
             //xData = days?days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -79,18 +79,18 @@ var CustomUI = {
         //表單資料更新
         const setUserState = state => {
             if (state) {
-                userState = state;
-                $$("#userState .chartvalues.active").classList.remove("active");
+                userHistory = state;
+                $$("#userHistory .chartvalues.active").classList.remove("active");
                 let target;
                 switch (state) {
                     case "D":
-                        target = $$("#userState .chartvalues.D");
+                        target = $$("#userHistory .chartvalues.D");
                         break;
                     case "B":
-                        target = $$("#userState .chartvalues.B");
+                        target = $$("#userHistory .chartvalues.B");
                         break;
                     case "C":
-                        target = $$("#userState .chartvalues.C");
+                        target = $$("#userHistory .chartvalues.C");
                         break;
                 }
                 target.classList.add("active");
@@ -111,7 +111,7 @@ var CustomUI = {
                 if (t.dataset.chartxaxis) chartDays = t.dataset.chartxaxis.split(",");
                 if (t.dataset.chartvalues) chartValues = t.dataset.chartvalues.split(",");
                 t.classList.add("active");
-                CustomUI.userState = t.classList.item(0); //取得代號        
+                CustomUI.userHistory = t.classList.item(0); //取得代號        
                 renderChart(chartDays, chartValues);
             });
         });
@@ -133,7 +133,7 @@ var CustomUI = {
             btn.addEventListener('click', event => {
                 $$("#IP_Modal").style.display = "none";
                 [...$$all('.MD_content')].map(content => {
-                    content.style.display = "none"
+                    content.style.display = "none";
                 }); //關閉所有MD_content
             });
         });
@@ -144,7 +144,7 @@ var CustomUI = {
                 CustomUI.closeAllPage();
                 CustomUI.page = event.currentTarget.dataset.pagename;
                 if (event.currentTarget.dataset.state) {
-                    CustomUI.userState = event.currentTarget.dataset.state;
+                    CustomUI.userHistory = event.currentTarget.dataset.state;
                 }
                 CustomUI.openPage(CustomUI.page);
             });
@@ -176,10 +176,10 @@ var CustomUI = {
         if (page == "#main_page" || page == "#privacy_page" || page == "#login_page") {
             $$("#app-nav").style.display = "none";
         } else {
-            if (page == "#CustomUI.userState") {
-                setUserState(CustomUI.userState);
+            if (page == "#CustomUI.userHistory") {
+                setUserState(CustomUI.userHistory);
                 renderChart(chartDays, chartValues);
-                // $$("#navPlus."+CustomUI.userState).style.display = "inline";
+                // $$("#navPlus."+CustomUI.userHistory).style.display = "inline";
                 $$("#navPlus").style.display = "inline";
             } else {
                 $$("#navPlus").style.display = "none";
@@ -187,8 +187,8 @@ var CustomUI = {
 
             //手動轉址
             if (page == "#stateManual") {
-                if (CustomUI.userState) {
-                    page = page + CustomUI.userState;
+                if (CustomUI.userHistory) {
+                    page = page + CustomUI.userHistory;
                     console.log(page);
                 } else {
                     page = "#MainHome";
@@ -237,18 +237,18 @@ var CustomUI = {
     setUserState: function (state) {//量測資料更新
 
         if (state) {
-            CustomUI.userState = state;
-            $$("#userState .chartvalues.active").classList.remove("active");
+            CustomUI.userHistory = state;
+            $$("#userHistory .chartvalues.active").classList.remove("active");
             var target;
             switch (state) {
                 case "D":
-                    target = $$("#userState .chartvalues.D");
+                    target = $$("#userHistory .chartvalues.D");
                     break;
                 case "B":
-                    target = $$("#userState .chartvalues.B");
+                    target = $$("#userHistory .chartvalues.B");
                     break;
                 case "C":
-                    target = $$("#userState .chartvalues.C");
+                    target = $$("#userHistory .chartvalues.C");
                     break;
             }
             target.classList.add("active");
