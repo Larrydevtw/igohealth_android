@@ -52,7 +52,7 @@ var CustomUI = {
         Log.write("單純查看UI導覽使用，正式上線不使用相關程式碼",'CustomUI Demo');
 
         //圖表
-        let chartDom = $$("#chart");
+        let chartDom = $$("#History_Chart");
         var myChart = echarts.init(chartDom);
         let chartValues = $$("#userHistory .chartvalues").dataset.chartvalues.split(",");
         let chartDays = $$("#userHistory .chartxaxis").dataset.chartxaxis.split(",");
@@ -176,10 +176,9 @@ var CustomUI = {
         if (page == "#main_page" || page == "#privacy_page" || page == "#login_page") {
             $$("#app-nav").style.display = "none";
         } else {
-            if (page == "#CustomUI.userHistory") {
-                setUserState(CustomUI.userHistory);
-                renderChart(chartDays, chartValues);
-                // $$("#navPlus."+CustomUI.userHistory).style.display = "inline";
+            if (page == "#userHistory") {
+                CustomUI.setUserState(CustomUI.userHistory);
+                // CustomUI.renderChart(chartDays, chartValues);
                 $$("#navPlus").style.display = "inline";
             } else {
                 $$("#navPlus").style.display = "none";
@@ -234,7 +233,7 @@ var CustomUI = {
             successFn();
         }
     },
-    setUserState: function (state) {//量測資料更新
+    setUserState: function (state, successFn) { //量測資料更新
 
         if (state) {
             CustomUI.userHistory = state;
@@ -252,7 +251,13 @@ var CustomUI = {
                     break;
             }
             target.classList.add("active");
-            chartValues = target.dataset.chartvalues.split(",");
+
+            var chartValues = target.dataset.chartvalues.split(",");
+
+            if(successFn){
+                successFn(chartValues);
+            }
+
         }
     }
 };

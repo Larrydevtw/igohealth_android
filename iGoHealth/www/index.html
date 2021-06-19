@@ -342,13 +342,14 @@
             <div class="f-center-between">
                 <div>
                     <img id="mainMenu" class="menu modalOpen" data-modalcontent="#MD_Test" src="./images/Menu.svg" />
-                    <img class="" id="backBtn" onclick="app.onBack();" data-modalcontent="" src="./images/back-arrow.svg" />
+                    <img class="" id="backBtn" data-modalcontent="" src="./images/back-arrow.svg" />
                 </div>
                 <div>
                     <h2 id="navTitle">標頭</h2>
                 </div>
                 <div class="f-center-center">
-                    <img id="navPlus" class="gotoPage" data-pagename="#stateManual" src="./images/plus.svg" />
+                    <img id="navPlus" class="gotoPage" onclick="MeasureManual.show();" data-pagename="#stateManual"
+                        src="./images/plus.svg" />
                 </div>
             </div>
         </div>
@@ -471,31 +472,47 @@
         -->
         <div id="userHistory" class="block" data-navname="測量記錄" data-parent="#MainHome" style="display:none;">
             <div class="chartType f-center-center">
-                <div><a class="D chartvalues btn active"
-                        data-chartvalues="100,102,103,95,96,110,108,103,92,94,96,111,107,102">血壓</a></div>
-                <div><a class="B chartvalues btn" data-chartvalues="91,95,96,110,108,89,92,94,96,111">血糖</a></div>
-                <div><a class="C chartvalues btn"
-                        data-chartvalues="160,155,162,159,154,161,165,168,177,173,171,168,165">膽固醇</a></div>
+                <div><a id="tabHistory_btnBP" onclick="Measure.showHistory('BP','N');" class="D chartvalues btn" data-chartvalues="100,102,103,95,96,110,108,103,92,94,96,111,107,102">血壓</a></div>
+                <div><a id="tabHistory_btnBG" onclick="Measure.showHistory('BG','N');" class="B chartvalues btn" data-chartvalues="91,95,96,110,108,89,92,94,96,111">血糖</a></div>
+                <div><a id="tabHistory_btnCHOL" onclick="Measure.showHistory('CHOL','N');" class="C chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">膽固醇</a></div>
             </div>
             <div class="chartDays">
-                <div class="f-start-center">
-                    <div><a class="chartxaxis active" data-chartxaxis="6/1 星期二, 6/2 星期三">2天</a></div>
-                    <div><a class="chartxaxis" data-chartxaxis="6/1 二,6/2 三,6/3 四,6/4 五,6/5 六,6/6 日,6/7 一">7天</a>
+                <div class="f-start-center" id="History_Time">
+                    <div><a id="History_Time_2D" onclick="Measure.searchByInterval('2','D');" class="chartxaxis btnSearchDate" >2天</a></div>
+                    <div><a class="chartxaxis btnSearchDate" id="History_Time_7D" onclick="Measure.searchByInterval('7','D');" data-chartxaxis="6/1 二,6/2 三,6/3 四,6/4 五,6/5 六,6/6 日,6/7 一">7天</a>
                     </div>
-                    <div><a class="chartxaxis"
-                            data-chartxaxis="6/1,6/2,6/3,6/4,6/5,6/6,6/7,6/8,6/9,6/10,6/11,6/12,6/13,6/14">14天</a>
+                    <div><a class="chartxaxis btnSearchDate" id="History_Time_14D" onclick="Measure.searchByInterval('14','D');" data-chartxaxis="6/1 二">14天</a>
                     </div>
-                    <div><a class="chartxaxis"
-                            data-chartxaxis="6/1,6/2,6/3,6/4,6/5,6/6,6/7,6/8,6/9,6/10,6/11,6/12,6/13,6/14,6/15,6/16,6/17,6/18,6/19,6/20,6/21,6/22,6/23,6/24,6/25,6/26,6/27,6/28,6/29,6/30">30天</a>
+                    <div><a class="chartxaxis btnSearchDate" id="History_Time_30D" onclick="Measure.searchByInterval('30','D');" data-chartxaxis="6/1 二">30天</a>
                     </div>
-                    <div><a class="chartxaxis active" data-chartxaxis="6/1 星期二, 6/2 星期三">60天</a></div>
-                    <div><a class="chartxaxis" data-chartxaxis="6/1 二,6/2 三,6/3 四,6/4 五,6/5 六,6/6 日,6/7 一">120天</a>
+                    <div><a class="chartxaxis btnSearchDate" id="History_Time_60D" onclick="Measure.searchByInterval('60','D');" data-chartxaxis="6/1 二">60天</a></div>
+                    <div><a class="chartxaxis btnSearchDate" id="History_Time_120D" onclick="Measure.searchByInterval('120','D');" data-chartxaxis="6/1 二">120天</a>
                     </div>
                 </div>
             </div>
-            <div id="chart" style="width: 375px; height:400px;"></div>
-            <h3>量測時間數值後的*<br />
-                代表該筆數值是透過聿新三高機藍牙接收</h3>
+            <div class="chartDays" id="divHistory_Time_Custom" style="text-align: center;display:none;">
+                <div class="row">
+                    <div class="col-5">
+                        <input id="History_DateS" type="date" class="form-control date">
+                    </div>
+                    <div class="col-5">
+                        <input id="History_DateE" type="date" class="form-control date">
+                    </div>
+                    <div class="text-align:center;vertical-align:middle;">
+                        <button type="button" style="margin:0 5px;width:50px;color:#AB6C24;" class="btn" id="btnSearch"
+                            onclick="Measure.bindPersonalData();"><i class="wise_search"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="History_Chart">
+                <div id="flot_placeholder" style="margin-top:1em;"></div>
+            </div>
+            <div id="History_DataGridView" class="stateTable h-center-center text-center">
+                <h3>量測時間數值後的*<br />
+                    代表該筆數值是透過聿新三高機藍牙接收</h3>
+            </div>
+            <div id="History_page"></div>
             <div class="stateTable h-center-center text-center">
                 <div class="header ">
                     <div>量測時間</div>
@@ -660,7 +677,7 @@
         </div>
 
         <!--血糖量測提醒-->
-        <div id="Timenotice" class="block" data-navname="血糖量測提醒" style="display:none;">
+        <div id="Timenotice" class="block" data-navname="血糖量測提醒" data-parent="#MainHome" style="display:none;">
             <div class="rData h-center-center">
                 <h3>早餐</h3>
                 <div class="f-center-center w-100">
@@ -774,7 +791,7 @@
         </div>
 
         <!--三高機操作說明-->
-        <div id="Instructions" class="block" data-navname="三高機操作說明" style="display:none;">
+        <div id="Instructions" class="block" data-navname="三高機操作說明" data-parent="#MainHome" style="display:none;">
             <div class="h-center-center">
                 <img src="./images/step1.png" />
                 <h3>血壓/血糖/膽固醇監測系統</h3>
@@ -795,7 +812,7 @@
         </div>
 
         <!--三高量測標準值範圍-->
-        <div id="StandardInfo" class="block" data-navname="三高量測標準值範圍" style="display:none;">
+        <div id="StandardInfo" class="block" data-navname="三高量測標準值範圍" data-parent="#MainHome" style="display:none;">
             <h3>血糖（兒童及青少年第 1 型糖尿病）</h3>
             <div class="h-center-center">
                 <div class="rData">
@@ -878,7 +895,7 @@
         </div>
 
         <!--個人資料-->
-        <div id="profile" class="block" data-navname="個人資料" style="display:none;">
+        <div id="profile" class="block" data-navname="個人資料" data-parent="#MainHome" style="display:none;">
             <div class="h-center-center">
                 <div class="input login-input">
                     <span>手機號碼（帳號）</span>

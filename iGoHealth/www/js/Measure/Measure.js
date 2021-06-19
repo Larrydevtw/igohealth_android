@@ -10,9 +10,20 @@ var Measure = {
         }
         FnBT.StopScan();
         MeasureInfo.MType = MType;
+
+        try {
+            Measure.showHistoryMain(MType, isSwitchPage);
+        } catch (error) {
+            Log.write(error, 'Measure showHistoryMain');
+        }
+
+    },
+    showHistoryMain: function (MType, isSwitchPage) {
+
+        MeasureInfo.MType = MType;
         $("#History_Title").html($.i18n("量測記錄"));
 
-        //上方tab按鈕樣式切換
+        // //上方tab按鈕樣式切換
         var lMType = AppConfig.lMType; //抓取AppConfig中目前有設定的量測項目
         for (var i = 0; i < lMType.length; i++) {
             document.getElementById("tabHistory_btn" + lMType[i]).classList.remove("active");
@@ -23,13 +34,13 @@ var Measure = {
         }
 
         if (isSwitchPage == "Y") {
-            $("#History_Time .btnDate").removeClass("active"); //初始化歷史資料查詢畫面
+            $("#History_Time div .btnSearchDate").removeClass("active"); //初始化歷史資料查詢畫面
             $("#flot_placeholder").html(""); //一開始就將繪圖區塊清除
             $("#History_DataGridView").hide();
             WiseScripts.Tool.ShowLoading(true, $.i18n('查詢歷史資料..'));
             WiseScripts.Tool.NextPop('userHistory', function () {
                 Measure.searchByInterval(MeasureInfo.Interval);
-                document.getElementById("tabHistory_btn" + MType).scrollIntoView();
+                //document.getElementById("tabHistory_btn" + MType).scrollIntoView();
             }, null, 'T');
         } else {
             Measure.bindPersonalData();
@@ -41,7 +52,7 @@ var Measure = {
     },
     showHistoryTimeCustom: function () {
         $('#divHistory_Time_Custom').show();
-        $("#History_Time .btnDate").removeClass("active");
+        $("#History_Time .btnSearchDate").removeClass("active");
         $("#History_Time_Custom").addClass("active");
     },
     //查詢歷次量測資料
@@ -53,7 +64,7 @@ var Measure = {
         var setMode = "D"; //M月/D日
         day = (day - 1) * (-1);
 
-        $("#History_Time .btnDate").removeClass("active");
+        $("#History_Time .btnSearchDate").removeClass("active");
         $("#History_Time_" + _day + setMode).addClass("active");
         //set:設定模式(M月/D日),days:天數,YN:是否呈現時分(Y/N),isBR:在時間部分是否換行
         var dateS = ProjectFn.currentDate('', setMode, day, 'N').replace(/\//g, "-");
@@ -81,7 +92,7 @@ var Measure = {
         } else {
             DS = $('#History_DateS').val();
             DE = $('#History_DateE').val();
-            //$("#History_Time .btnDate").removeClass("active");
+            //$("#History_Time .btnSearchDate").removeClass("active");
         }
 
         DS = DS.replaceAll('/', '-') + " 00:00:00";
@@ -297,7 +308,7 @@ var Measure = {
             var MTimeStamp = objRow.MTimeStamp;
             var MRowKey = objRow.MRowKey;
             var UploadStatus = objRow.UploadStatus;
-            var Memo = objRow.Memo;
+            var Memo = objRow.Memo == null ? "" : objRow.Memo;
             var M_UP_Date = objRow.M_UP_Date;
             var MRowSId = objRow.MRowSId;
             var arrWar = []; //
@@ -342,7 +353,7 @@ var Measure = {
                         HtmlStr += '<td>' + DBP + '</td>';
                         HtmlStr += '<td>' + HR + '</td>';
 
-                                    
+
                         if (TheWar !== '') {
                             Memo += "</br>" + TheWar;
                         }
@@ -843,7 +854,7 @@ var Measure = {
         //alert(ValueArr+"Measure showValue " + MType+isAnimate+MTimeStamp);
 
         //移至量測項目
-        if(CustomInfo.MainHome_scrollIntoView === "Y"){
+        if (CustomInfo.MainHome_scrollIntoView === "Y") {
             document.getElementById("M" + MType).scrollIntoView();
         }
 
