@@ -362,6 +362,8 @@ input:checked + .slider:before {
 .chartType .btn{font-size: 2em;color:#aaa;transition: .4s;}
 .chartType .btn.active{color:#0BA29A;border-color:#0BA29A;}
 .row3 input{width: 90px;margin: 0 5px; padding: 10px;}
+.row3 .date{width: 114px;margin: 0 5px; padding: 10px;}
+.row3 .time{width: 100px;margin: 0 5px; padding: 10px;}
 .stateTable {padding-bottom: 20px;}
 .stateTable .header{background-color: #ccc;}
 .stateTable .header, .stateTable .row{display:flex;justify-content: center;align-items: center;width: 100%;padding: 10px 0;}

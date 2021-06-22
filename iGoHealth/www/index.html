@@ -508,11 +508,11 @@
             <div id="History_Chart">
                 <div id="flot_placeholder" style="margin-top:1em;"></div>
             </div>
-            <div id="History_DataGridView" class="stateTable h-center-center text-center">
-                <h3>量測時間數值後的*<br />
-                    代表該筆數值是透過聿新三高機藍牙接收</h3>
+            <div id="History_DataGridView">
             </div>
             <div id="History_page"></div>
+            <!-- <h3>量測時間數值後的*<br />
+                代表該筆數值是透過聿新三高機藍牙接收</h3>
             <div class="stateTable h-center-center text-center">
                 <div class="header ">
                     <div>量測時間</div>
@@ -552,7 +552,7 @@
                         <span>備註：午餐的飯量為半碗飯
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <!--新增備註-->
@@ -585,41 +585,70 @@
             </div>
         </div>
 
-        <!--新增手動輸入紀錄 血壓-->
-        <div id="stateManualD" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
+        <!--新增手動輸入紀錄 血壓、血糖、膽固醇-->
+        <div id="MeasurePage_Manual" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
             <div class="chartType f-center-center">
-                <div><a class="btn active">血壓</a></div>
-                <div><a class="btn gotoPage" data-pagename="#stateManualB">血糖</a></div>
-                <div><a class="btn gotoPage" data-pagename="#stateManualC">膽固醇</a></div>
+                <div><a id="tabManual_btnBP" onclick="MeasureManual.showByMType('BP');" class="btn">血壓</a></div>
+                <div><a id="tabManual_btnBG" onclick="MeasureManual.showByMType('BG');" class="btn">血糖</a></div>
+                <div><a id="tabManual_btnCHOL" onclick="MeasureManual.showByMType('CHOL');" class="btn">膽固醇</a></div>
             </div>
             <div class="info h-center-center">
                 <h3 class="text-center  mb-1">請留意手動輸入之量測數值，<br />
                     不納入本服務平台激勵點數之計算範圍。</h3>
                 <div class="input f-center-center row3 mb-1">
                     <span>測量時間：</span>
-                    <input placeholder="2021-05-14" />
-                    <input placeholder="下午  3:30" />
+                    <input class="date" id="MPM_Date">
+                    <input class="time" id="MPM_Time">
                 </div>
+                <hr>
+                <div id="tabManualSection">
+                    <div id="tabManual_BP" style="display:none">
+                        <div class="input login-input mb-1">
+                            <span>收縮壓 mmHg：</span>
+                            <input class="mt-1" id="txtMPM_SBP" placeholder="請輸入收縮壓值" />
+                        </div>
+                        <div class="input login-input mb-1">
+                            <span>舒張壓 mmHg：</span>
+                            <input class="mt-1" id="txtMPM_DBP" placeholder="請輸入舒張壓值" />
+                        </div>
+                        <div class="input login-input mb-1">
+                            <span>脈膊 次/分：</span>
+                            <input class="mt-1" id="txtMPM_BPHR" placeholder="請輸入脈膊值" />
+                        </div>
+                    </div>
+                    <div id="tabManual_BG" style="display:none">
+                        <div class="input login-input mb-1">
+                            <span>測量時段：</span>
+                            <select style="width:80px;margin:0px 5px;padding:10px;" id="MPM_TimeGroup_BG" onchange="Display.showTimeType('BG');">
+                                <option value="AC" data-i18n="飯前">飯前</option>
+                                <option value="PC" data-i18n="飯後">飯後</option>
+                                <option value="7" data-i18n="睡前">睡前</option>
+                                <option value="0" data-i18n="隨機">隨機</option>
+                            </select>
+                            <select style="width:80px;margin:0px 5px;padding:10px;" id="MPM_TimeType_BG" style="display:none;">
+                            </select>
+                        </div>
 
-                <div class="input f-center-center row3 mb-1">
-                    <span>測量時段：</span>
-                    <input placeholder="飯前" />
-                    <input placeholder="午餐" />
-                </div>
-
-
-                <div class="input login-input">
-                    <span>血糖值 mg/dl：</span>
-                    <input class="mt-1" placeholder="請輸入血糖值" />
+                        <div class="input login-input">
+                            <span>血糖值 mg/dl：</span>
+                            <input class="mt-1" id="txtMPM_BG" placeholder="請輸入血糖值" />
+                        </div>
+                    </div>
+                    <div id="tabManual_CHOL" style="display:none">
+                        <div class="input login-input mb-1">
+                            <span>膽固醇 mg/dl：：</span>
+                            <input class="mt-1" id="txtMPM_CHOL" placeholder="請輸入膽固醇值" />
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="w-100 mt-1">
-                <button class="IPbtn full round">儲存</button>
+                <button class="IPbtn full round" onclick="MeasureManual.onBtnSaveClick();">儲存</button>
             </div>
         </div>
 
         <!--新增手動輸入紀錄 血糖-->
-        <div id="stateManualB" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
+        <!-- <div id="stateManualB" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
             <div class="chartType f-center-center">
                 <div><a class="btn gotoPage" data-pagename="#stateManualD">血壓</a></div>
                 <div><a class="btn active">血糖</a></div>
@@ -649,10 +678,10 @@
             <div class="w-100 mt-1">
                 <button class="IPbtn full round">儲存</button>
             </div>
-        </div>
+        </div> -->
 
         <!--新增手動輸入紀錄 膽固醇-->
-        <div id="stateManualC" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
+        <!-- <div id="stateManualC" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
             <div class="chartType f-center-center">
                 <div><a class="btn gotoPage" data-pagename="#stateManualD">血壓</a></div>
                 <div><a class="btn gotoPage" data-pagename="#stateManualB">血糖</a></div>
@@ -674,7 +703,7 @@
             <div class="w-100 mt-1">
                 <button class="IPbtn full round">儲存</button>
             </div>
-        </div>
+        </div> -->
 
         <!--血糖量測提醒-->
         <div id="Timenotice" class="block" data-navname="血糖量測提醒" data-parent="#MainHome" style="display:none;">

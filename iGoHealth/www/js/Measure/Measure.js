@@ -120,10 +120,10 @@ var Measure = {
             Log.write(objList.length, "objList.length getPersonalData");
             //Log.write(JSON.stringify(objList), " getPersonalData");
 
-            HtmlStr += '<h6>' + $.i18n('備註_Info') + '</h6>';
+            HtmlStr += '<h3>' + $.i18n('備註_Info_IGH') + '</h3>';
             HtmlStr += Measure.getPersonalTitle(MType);
             Measure.getPersonalBody(MType, objList).then(function (result) {
-                HtmlStr += "<tbody>";
+
                 HtmlStr += result.HtmlStr;
                 chartType = result.chartType;
                 chartData = result.chartData;
@@ -136,8 +136,6 @@ var Measure = {
 
                 morrisChart.init(chartType, "flot_placeholder", "", chartData, chartDataKey, xyAxisName, chartStyle);
 
-                HtmlStr += "</tbody>";
-                HtmlStr += "</table>";
                 Log.write(HtmlStr, "HtmlStr");
 
                 $("#History_DataGridView").html(HtmlStr);
@@ -192,54 +190,52 @@ var Measure = {
 
     },
     getPersonalTitle: function (MType) {
-        var tbClass = "class=\"Listbox table\"";
-        var HtmlStr = '<table id="tb_' + MType + '" ' + tbClass + '>';
-        HtmlStr += '<thead>';
-        HtmlStr += '<tr>';
-        HtmlStr += '<th width="140px;">' + $.i18n('量測時間') + '</th>';
+        var tbClass = "class=\"stateTable h-center-center text-center\"";
+        var HtmlStr = '<div id="tb_' + MType + '" ' + tbClass + '>';
+        HtmlStr += '<div class=\"header\">';
+        HtmlStr += '<div>' + $.i18n('量測時間') + '</div>';
         switch (MType) {
             case "BP":
-                HtmlStr += '<th>' + $.i18n('收縮壓') + '</th>';
-                HtmlStr += '<th>' + $.i18n('舒張壓') + '</th>';
-                HtmlStr += '<th>' + $.i18n('脈搏') + '</th>';
+                HtmlStr += '<div>' + $.i18n('收縮壓') + '</div>';
+                HtmlStr += '<div>' + $.i18n('舒張壓') + '</div>';
+                HtmlStr += '<div>' + $.i18n('脈搏') + '</div>';
                 break;
             case "STEP":
-                HtmlStr += '<th>' + $.i18n('步數') + '</th>';
-                HtmlStr += '<th>' + $.i18n('距離') + "(km)" + '</th>';
-                HtmlStr += '<th>' + $.i18n('卡路里') + "(kcal)" + '</th>';
+                HtmlStr += '<div>' + $.i18n('步數') + '</div>';
+                HtmlStr += '<div>' + $.i18n('距離') + "(km)" + '</div>';
+                HtmlStr += '<div>' + $.i18n('卡路里') + "(kcal)" + '</div>';
                 break;
             case "BG":
-                HtmlStr += '<th>' + $.i18n('量測時段') + '</th>';
-                HtmlStr += '<th>' + $.i18n('血糖') + '</th>';
+                HtmlStr += '<div>' + $.i18n('量測時段') + '</div>';
+                HtmlStr += '<div>' + $.i18n('血糖') + '</div>';
                 break;
             case "UA":
-                HtmlStr += '<th>' + $.i18n('尿酸') + '</th>';
+                HtmlStr += '<div>' + $.i18n('尿酸') + '</div>';
                 break;
             case "CHOL":
-                HtmlStr += '<th>' + $.i18n('膽固醇') + '</th>';
+                HtmlStr += '<div>' + $.i18n('膽固醇') + '</div>';
                 break;
             case "BT":
-                HtmlStr += '<th>' + $.i18n('體溫') + '</th>';
+                HtmlStr += '<div>' + $.i18n('體溫') + '</div>';
                 break;
             case "BO":
-                HtmlStr += '<th>' + $.i18n('血氧') + '</th>';
+                HtmlStr += '<div>' + $.i18n('血氧') + '</div>';
                 break;
             case "HR":
-                HtmlStr += '<th>' + $.i18n('心率') + '</th>';
+                HtmlStr += '<div>' + $.i18n('心率') + '</div>';
                 break;
             case "BW":
-                HtmlStr += '<th>' + $.i18n('體重') + '</th>';
-                HtmlStr += '<th>BMI</th>';
-                HtmlStr += '<th>' + $.i18n('體脂') + '</th>'; //%
-                // HtmlStr += '<th>' + $.i18n('基礎代謝') + '</th>'; //kcal
-                //HtmlStr += '<th>' + parent.$.i18n('檢測結果') + '</th>';
+                HtmlStr += '<div>' + $.i18n('體重') + '</div>';
+                HtmlStr += '<div>BMI</div>';
+                HtmlStr += '<div>' + $.i18n('體脂') + '</div>'; //%
+                // HtmlStr += '<div>' + $.i18n('基礎代謝') + '</div>'; //kcal
+                //HtmlStr += '<div>' + parent.$.i18n('檢測結果') + '</div>';
                 break;
             default:
                 break;
         }
         // HtmlStr += '<th>' + $.i18n('備註') + '</th>';
-        HtmlStr += '</tr>';
-        HtmlStr += '</thead>';
+        HtmlStr += '</div>';
         return HtmlStr;
     },
     getPersonalBody: function (MType, objList) {
@@ -290,10 +286,13 @@ var Measure = {
             var row = 0;
             for (var i = 0; i < objList.length; i++) {
                 Measure.getPersonalBodyRow(MType, objList[i]).then(function (obj) {
+                    
+                    Log.write(obj.HtmlStr,'getPersonalBodyRowobj.HtmlStr');
 
                     result.HtmlStr += obj.HtmlStr;
                     result.chartData.push(obj.objRow);
                     if (row === objList.length - 1) {
+                        result.HtmlStr += "</div>";
                         resolve(result);
                     }
                     row++;
@@ -313,10 +312,15 @@ var Measure = {
             var MRowSId = objRow.MRowSId;
             var arrWar = []; //
 
-            var startTr = "<tr onclick='MeasureManual.show(" + objRow.MRowID + ",\"" + UploadStatus + "\")'>";
-            // var endTr = '</tr>' + '<tr><td colspan="10">MRowSId: ' + MRowSId + '/Memo: ' + Memo + '/MRowKey: ' + MRowKey + "/UploadStatus: " + UploadStatus+ "/M_UP_Date: " + M_UP_Date + '</td></tr>';
-            var endTr = '</tr>';
-            endTr += "<tr onclick='MeasureManual.show(" + objRow.MRowID + ",\"" + UploadStatus + "\")'>";
+            var startTr = "<div class='row'>";
+            // var endTr = '</tr>' + '<tr><div colspan="10">MRowSId: ' + MRowSId + '/Memo: ' + Memo + '/MRowKey: ' + MRowKey + "/UploadStatus: " + UploadStatus+ "/M_UP_Date: " + M_UP_Date + '</div></tr>';
+            var endTr = '</div>';
+
+            var HtmlMemo = "<div class='row seperate' onclick='MeasureManual.show(" + objRow.MRowID + ",\"" + UploadStatus + "\")'>";
+            HtmlMemo += '<div class="left gotoPage" data-pagename="#addRemarks">';
+            HtmlMemo += '<img src="./images/plus.svg" class="mark" />';
+            HtmlMemo += ' ' + $.i18n('備註') + '： ' + Memo;
+            HtmlMemo += "</div>";
 
             HtmlStr += startTr;
 
@@ -348,18 +352,18 @@ var Measure = {
 
                         TheWar = Display.showText(arrWar.join(';'));
 
-                        HtmlStr += '<td>' + Display.dateFormat(MTimeStamp) + '</td>';
-                        HtmlStr += '<td>' + SBP + '</td>';
-                        HtmlStr += '<td>' + DBP + '</td>';
-                        HtmlStr += '<td>' + HR + '</td>';
+                        HtmlStr += '<div>' + Display.dateFormat(MTimeStamp) + '</div>';
+                        HtmlStr += '<div>' + SBP + '</div>';
+                        HtmlStr += '<div>' + DBP + '</div>';
+                        HtmlStr += '<div>' + HR + '</div>';
 
 
                         if (TheWar !== '') {
                             Memo += "</br>" + TheWar;
                         }
 
-                        endTr += '<td colspan="10">' + $.i18n('備註') + ": " + Memo + '</td>';
-                        endTr += '</tr>';
+                        endTr += HtmlMemo;
+                        endTr += '</div>';
 
                         HtmlStr += endTr;
 
@@ -374,18 +378,18 @@ var Measure = {
                     var Distance = objList[i].Distance;
                     var CAL = objList[i].CAL;
 
-                    HtmlStr += '<td>' + Display.dateFormat(MTimeStamp) + '</td>';
-                    HtmlStr += '<td>' + STEP + '</td>';
-                    HtmlStr += '<td>' + Distance + '</td>';
-                    HtmlStr += '<td>' + CAL + '</td>';
+                    HtmlStr += '<div>' + Display.dateFormat(MTimeStamp) + '</div>';
+                    HtmlStr += '<div>' + STEP + '</div>';
+                    HtmlStr += '<div>' + Distance + '</div>';
+                    HtmlStr += '<div>' + CAL + '</div>';
                     HtmlStr += endTr;
 
                     if (TheWar !== '') {
                         Memo += "</br>" + TheWar;
                     }
 
-                    endTr += '<td colspan="10">' + $.i18n('備註') + ": " + Memo + '</td>';
-                    endTr += '</tr>';
+                    endTr += HtmlMemo;
+                    endTr += '</div>';
 
                     HtmlStr += endTr;
 
@@ -409,16 +413,16 @@ var Measure = {
                             BS = "<font color=#BC272D>" + BS + "</font>";
                         }
 
-                        HtmlStr += '<td>' + Display.dateFormat(MTimeStamp) + '</td>';
-                        HtmlStr += '<td>' + Display.getTimeType(TimeType) + '</td>';
-                        HtmlStr += '<td>' + BS + '</td>';
+                        HtmlStr += '<div>' + Display.dateFormat(MTimeStamp) + '</div>';
+                        HtmlStr += '<div>' + Display.getTimeType(TimeType) + '</div>';
+                        HtmlStr += '<div>' + BS + '</div>';
 
                         if (TheWar !== '') {
                             Memo += "</br>" + TheWar;
                         }
 
-                        endTr += '<td colspan="10">' + $.i18n('備註') + ": " + Memo + '</td>';
-                        endTr += '</tr>';
+                        endTr += HtmlMemo;
+                        endTr += '</div>';
 
                         HtmlStr += endTr;
 
@@ -450,18 +454,18 @@ var Measure = {
 
                         TheWar = Display.showText(arrWar.join(';'));
 
-                        HtmlStr += '<td>' + Display.dateFormat(MTimeStamp) + '</td>';
-                        HtmlStr += '<td>' + Weight + '</td>';
-                        HtmlStr += '<td>' + BMI + '</td>';
-                        HtmlStr += '<td>' + BodyRate + '</td>';
-                        // HtmlStr += '<td>' + baseRate + '</td>';
+                        HtmlStr += '<div>' + Display.dateFormat(MTimeStamp) + '</div>';
+                        HtmlStr += '<div>' + Weight + '</div>';
+                        HtmlStr += '<div>' + BMI + '</div>';
+                        HtmlStr += '<div>' + BodyRate + '</div>';
+                        // HtmlStr += '<div>' + baseRate + '</div>';
 
                         if (TheWar !== '') {
                             Memo += "</br>" + TheWar;
                         }
 
-                        endTr += '<td colspan="10">' + $.i18n('備註') + ": " + Memo + '</td>';
-                        endTr += '</tr>';
+                        endTr += HtmlMemo;
+                        endTr += '</div>';
 
                         HtmlStr += endTr;
 
@@ -484,15 +488,15 @@ var Measure = {
                             MValue = "<font color=#BC272D>" + MValue + "</font>";
                         }
 
-                        HtmlStr += '<td>' + Display.dateFormat(MTimeStamp) + '</td>';
-                        HtmlStr += '<td>' + MValue + '</td>';
+                        HtmlStr += '<div>' + Display.dateFormat(MTimeStamp) + '</div>';
+                        HtmlStr += '<div>' + MValue + '</div>';
 
                         if (TheWar !== '') {
                             Memo += "</br>" + TheWar;
                         }
 
-                        endTr += '<td colspan="10">' + $.i18n('備註') + ": " + Memo + '</td>';
-                        endTr += '</tr>';
+                        endTr += HtmlMemo;
+                        endTr += '</div>';
 
                         HtmlStr += endTr;
 
