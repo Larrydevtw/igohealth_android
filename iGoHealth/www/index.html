@@ -337,6 +337,29 @@
             </div>
         </div>
 
+        <!-- 重設密碼-->
+        <div id="ResetPS" class="block" data-navname="重設密碼" data-parent="#MainHome" style="display:none;">
+            <div class="h-center-center">
+                <div class="input login-input">
+                    <span>新密碼</span>
+                    <input id="Reset_PS1" type="password" value="" placeholder="請輸入新密碼">
+                </div>
+                <div class="input login-input">
+                    <span>確認密碼</span>
+                    <input id="Reset_PS2" type="password" value="" placeholder="請再次輸入新密碼">
+                </div>
+                <div class="input login-input">
+                    <span data-i18n="密碼規則_Info">※注意：密碼允許8~14碼，包含英、數字組合</span>
+                </div>
+                <div class="w-100">
+                    <button type="submit" class="IPbtn full gotoPage round" data-pagename="#login_page"
+                        onclick="Member.ChgPassword();">
+                        送出
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!--sys nav-->
         <div id="app-nav" style="display:none;">
             <div class="f-center-between">
