@@ -61,7 +61,10 @@ var WSCall = WSCall || {},
                     CheckCode: encodeURI(CheckCode),
                     EquipmentID: encodeURI(EquipmentID),
                     UploadData: encodeURI(UploadData),
-                    SystemModel: encodeURI(SystemModel)
+                    SystemModel: encodeURI(SystemModel),
+                    Platform: DeviceInfo.getOS(),
+                    Version: Domain.Version,
+                    VersionNo: Domain.VersionNo
                 };
                 
                 $.ajax({

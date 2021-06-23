@@ -51,6 +51,9 @@ var MeasureManual = {
         });
     },
     goToMemoPage:function(MType, MRowID){
+
+        $("#MPM_Memo_Text").val("");
+
         MeasureManual.getInfoData(MType, MRowID).then(function (obj) {
             Log.write(JSON.stringify(obj), "goToMemoPage getInfoData");
 
@@ -59,10 +62,12 @@ var MeasureManual = {
 
             var MTimeStamp = obj.MTimeStamp;
             var DeviceModel = obj.DeviceModel;
-
+            var Memo = obj.Memo;
+            
             MTimeStamp = MTimeStamp.substr(0, 16).replace(/\-/g, "/");
 
             $("#MPM_Memo_Date").html(MTimeStamp);
+            $("#MPM_Memo_Text").val(Memo);
 
             var MValue = "";
             var TimeType = "";
@@ -93,7 +98,10 @@ var MeasureManual = {
             $("#MPM_Memo_MType").html($.i18n(MType) + "值: ");
             $("#MPM_Memo_MValue").html(MValue);
 
-            WiseScripts.Tool.NextPop("addRemarks", function () {}, null, 'F');
+            $("#MeasurePage_Manual_Memo").attr("measure-MRowKey", MRowKey);
+            $("#MeasurePage_Manual_Memo").attr("measure-type", MType);
+            
+            WiseScripts.Tool.NextPop("MeasurePage_Manual_Memo", function () {}, null, 'F');
         });
     },
     updateMRowStatus: function (MType, MRowID) {
@@ -278,6 +286,36 @@ var MeasureManual = {
     onBtnSaveClick: function (_MData, _UserID, isCheckMData) {
         FnCtrl.isBlockBtnClick(function () {
             MeasureManual.insertMData(_MData, _UserID, isCheckMData);
+        });
+    },
+    onBtnMemoSaveClick: function (_UserID) {
+
+        if(!MainHome.CheckNet()){
+            return;
+        }
+
+        FnCtrl.isBlockBtnClick(function () {
+
+            var MRowKey = $("#MeasurePage_Manual_Memo").attr("measure-MRowKey");
+            var Memo = $("#MPM_Memo_Text").val();
+            var MType = $("#MeasurePage_Manual_Memo").attr("measure-type");
+            Log.write("Memo: " + Memo + "MType: " + MType, 'onBtnMemoSaveClick');
+
+            var UserID = "";
+            if (_UserID) {
+                UserID = _UserID;
+            } else {
+                UserID = localStorage.UserID;
+            }
+
+            var lParams = {
+                MRowKey: MRowKey,
+                Memo: Memo,
+                MType: MType,
+                UserID: UserID
+            };
+
+            MeasureManual.inserMData_Memo(lParams);
         });
     },
     insertMData: function (_MData, _UserID, isCheckMData) {
@@ -624,6 +662,40 @@ var MeasureManual = {
         });
 
     },
+    inserMData_Memo: function (lParams, _UserID) {
+
+        return new Promise(function (resolve, reject) {
+
+            var MRowKey = lParams.MRowKey;
+            var Memo = lParams.Memo;
+            var MType = lParams.MType;
+
+            var strSql = "Update Management_" + MType + " Set Memo = '" + Memo + "'  Where MRowKey = '" + MRowKey + "';";
+            DAOFn.Query('', strSql, function (result) {
+
+                var objList = $.parseJSON(result);
+                if (objList.length == 0) {
+                    MeasureManual.UploadMData_Memo(lParams, function () {
+                        var message = $.i18n("新增成功") + "!!!";
+                        var title = $.i18n('系統訊息');
+                        FnCtrl.alert(message, title, function () {
+                            Measure.showHistory(MType);
+                        });
+                    });
+
+                    setTimeout(function () {
+                        resolve();
+                    }, 500);
+                } else {
+                    Log.write(result, 'inserMData_Memo Error');
+                    setTimeout(function () {
+                        resolve(result);
+                    }, 500);
+                }
+            });
+        });
+
+    },
     clearText: function (MType) {
         $("#MPM_Memo").val("");
         switch(MType){
@@ -697,4 +769,50 @@ var MeasureManual = {
             successFn(timeType);
         }
     },
+    UploadMData_Memo: function (lParams, successFn, errFn) {
+
+        var MTime = DateTimeFun.getFullInputDateNow();
+
+        var UploadData = {
+            'UserID': lParams.UserID,
+            'MTime': MTime,
+            'MType': lParams.MType,
+            'MRowKey': lParams.MRowKey,
+            'Memo': lParams.Memo,
+            "M_UP_Date": MTime,
+            "SystemModel": AppConfig.SystemModel
+        };
+
+        var PostInfo = {
+            Url: AppConfig.AppServices + '/UploadMData_Memo',
+            UploadData: UploadData,
+            async: true
+        };
+
+        WSCall.Post(PostInfo, function (result) { //成功 
+            if (successFn) {
+                successFn(result);
+            }
+        }, function (err) { //失敗
+            Log.write("UploadMData_Memo err:" + err, "MeasureManual");
+            if (errFn) {
+                errFn();
+            }
+        });
+
+    },
+    UploadSuccess: function (MRowKey, successFn) {
+
+        var lParams = {
+            MRowKey: MRowKey,
+            UploadStatus: "S"
+        };
+
+        WaitQueue.UpdateMRowKey(lParams, MType, _MRowKey, function () {
+            Log.write("Update Success", 'UpdateMRowKey');
+            if(successFn){
+                successFn();
+            }
+        });
+    }
 };

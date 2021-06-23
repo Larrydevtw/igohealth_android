@@ -548,7 +548,7 @@
                     <div>120</div>
                 </div>
                 <div class="row seperate">
-                    <div class="left gotoPage" data-pagename="#addRemarks">
+                    <div class="left gotoPage" data-pagename="#MeasurePage_Manual_Memo">
                         <img src="./images/plus.svg" class="mark" />
                         <span>備註：午餐的飯量為半碗飯
                     </div>
@@ -559,7 +559,7 @@
                     <div>120</div>
                 </div>
                 <div class="row seperate">
-                    <div class="left gotoPage" data-pagename="#addRemarks">
+                    <div class="left gotoPage" data-pagename="#MeasurePage_Manual_Memo">
                         <img src="./images/plus.svg" class="mark" />
                         <span>備註：午餐的飯量為半碗飯
                     </div>
@@ -570,7 +570,7 @@
                     <div>120</div>
                 </div>
                 <div class="row seperate">
-                    <div class="left gotoPage" data-pagename="#addRemarks">
+                    <div class="left gotoPage" data-pagename="#MeasurePage_Manual_Memo">
                         <img src="./images/plus.svg" class="mark" />
                         <span>備註：午餐的飯量為半碗飯
                     </div>
@@ -579,7 +579,7 @@
         </div>
 
         <!--新增備註-->
-        <div id="addRemarks" class="block" data-navname="備註" data-parent="#userHistory" style="display:none;">
+        <div id="MeasurePage_Manual_Memo" class="block" data-navname="備註" data-parent="#userHistory" style="display:none;" measure-type="">
             <div class="info ">
                 <div class="f-center-center mb-1">
                     <label>量測時間：</label>
@@ -602,7 +602,7 @@
                 </div>
             </div>
             <div class="w-100 mt-1">
-                <button class="IPbtn full round ">
+                <button class="IPbtn full round" onclick="MeasureManual.onBtnMemoSaveClick();">
                     儲存
                 </button>
             </div>

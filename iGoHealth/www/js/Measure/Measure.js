@@ -318,7 +318,7 @@ var Measure = {
 
             var isMemo = true;
             var HtmlMemo = "<div class='row seperate' onclick='MeasureManual.show(" + objRow.MRowID + ",\"" + UploadStatus + "\"," + isMemo + ")'>";
-            HtmlMemo += '<div class="left gotoPage" data-pagename="#addRemarks">';
+            HtmlMemo += '<div class="left gotoPage" data-pagename="#MeasurePage_Manual_Memo">';
             HtmlMemo += '<img src="./images/plus.svg" class="mark" />';
             HtmlMemo += ' ' + $.i18n('備註') + '： ' + Memo;
             HtmlMemo += "</div>";
