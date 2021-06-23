@@ -316,7 +316,8 @@ var Measure = {
             // var endTr = '</tr>' + '<tr><div colspan="10">MRowSId: ' + MRowSId + '/Memo: ' + Memo + '/MRowKey: ' + MRowKey + "/UploadStatus: " + UploadStatus+ "/M_UP_Date: " + M_UP_Date + '</div></tr>';
             var endTr = '</div>';
 
-            var HtmlMemo = "<div class='row seperate' onclick='MeasureManual.show(" + objRow.MRowID + ",\"" + UploadStatus + "\")'>";
+            var isMemo = true;
+            var HtmlMemo = "<div class='row seperate' onclick='MeasureManual.show(" + objRow.MRowID + ",\"" + UploadStatus + "\"," + isMemo + ")'>";
             HtmlMemo += '<div class="left gotoPage" data-pagename="#addRemarks">';
             HtmlMemo += '<img src="./images/plus.svg" class="mark" />';
             HtmlMemo += ' ' + $.i18n('備註') + '： ' + Memo;

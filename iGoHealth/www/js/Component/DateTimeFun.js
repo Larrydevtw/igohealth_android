@@ -307,7 +307,7 @@ var DateTimeFun = DateTimeFun || {}, DateTimeFun =
                 (day < 10 ? '0' : '') + day;
 
             $("#" + id_Date).attr("type", "date");
-            $("#" + id_Date).css("height", "35px");
+            // $("#" + id_Date).css("height", "35px");
             outputDate = outputDate.replace(/,/g, "-");
             $("#" + id_Date).val(outputDate);
 

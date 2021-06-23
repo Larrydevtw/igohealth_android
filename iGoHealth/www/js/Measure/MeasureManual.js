@@ -2,7 +2,7 @@ var MeasureManual = {
     Mode: "A",
     MRowID: "",
     MRowKey: "", //P1SNo
-    show: function (MRowID, _UploadStatus) {
+    show: function (MRowID, _UploadStatus,isMemo) {
         var MType = MeasureInfo.MType;
         if (MType == "") { //第一次開啟這個畫面 給預設值開啟血糖
             MType = 'BG'; //預設顯示新增血糖 TODO
@@ -13,6 +13,8 @@ var MeasureManual = {
             UploadStatus = _UploadStatus;
         }
 
+        var title = "";
+
         switch (UploadStatus) {
             case "A":
                 FnCtrl.alert($.i18n('資料上傳中，不可進行修改'));
@@ -20,23 +22,78 @@ var MeasureManual = {
 
             case "":
                 UploadStatus = "A";
-                $("#MeasurePage_Manual_Title").html($.i18n('新增'));
+                title = $.i18n('新增手動輸入紀錄');
                 break;
             case "U":
             case "S":
                 UploadStatus = "U";
                 MeasureManual.updateMRowStatus(MType, MRowID);
-                $("#MeasurePage_Manual_Title").html($.i18n('修改'));
+                title = $.i18n('修改');
                 break;
         }
 
+        $("#MeasurePage_Manual").attr("data-navname", title);
+
         MeasureManual.Mode = UploadStatus;
 
+        if (isMemo) {
+            MeasureManual.goToMemoPage(MType, MRowID);
+        } else {
+            MeasureManual.goToUpdatePage(MType, MRowID);
+        }
+    },
+    goToUpdatePage: function (MType, MRowID) {
         MeasureManual.showByMType(MType, MRowID).then(function () {
             DateTimeFun.iniDate("MPM_Date", "MPM_Time"); //依據不同OS製作不同日期控件
             WiseScripts.Tool.NextPop("MeasurePage_Manual", function () {
                 document.getElementById("tabManual_btn" + MType).scrollIntoView();
             }, null, 'F');
+        });
+    },
+    goToMemoPage:function(MType, MRowID){
+        MeasureManual.getInfoData(MType, MRowID).then(function (obj) {
+            Log.write(JSON.stringify(obj), "goToMemoPage getInfoData");
+
+            var MRowKey = obj.MRowKey;
+            MeasureManual.MRowKey = MRowKey;
+
+            var MTimeStamp = obj.MTimeStamp;
+            var DeviceModel = obj.DeviceModel;
+
+            MTimeStamp = MTimeStamp.substr(0, 16).replace(/\-/g, "/");
+
+            $("#MPM_Memo_Date").html(MTimeStamp);
+
+            var MValue = "";
+            var TimeType = "";
+            switch(MType){
+                case "BG":
+                    MValue = MeasureInfo.convertMValue(MType, obj.BS, DeviceModel);
+
+                    TimeType = Display.getTimeType(obj.TimeType); 
+                    break;
+                case "BP":
+                    MValue = obj.SBP + " / ";
+                    MValue += obj.DBP + " / ";
+                    MValue += obj.HR;
+                    break;
+                default: //BT, UA, CHOL, BO, HR
+                    MValue = MeasureInfo.convertMValue(MType, obj[MType]);
+                    break;
+            }
+
+            if(TimeType === ""){
+                $("#divMPM_Memo_TimeType").hide();
+                $("#MPM_Memo_TimeType").html("");  
+            }else{
+                $("#divMPM_Memo_TimeType").show();
+                $("#MPM_Memo_TimeType").html(TimeType);  
+            }
+
+            $("#MPM_Memo_MType").html($.i18n(MType) + "值: ");
+            $("#MPM_Memo_MValue").html(MValue);
+
+            WiseScripts.Tool.NextPop("addRemarks", function () {}, null, 'F');
         });
     },
     updateMRowStatus: function (MType, MRowID) {
@@ -82,7 +139,7 @@ var MeasureManual = {
                 // MeasureManual.MRowKey = "";
 
                 $("#ulManual").hide();
-                $("#divMPM_Memp").show();
+                // $("#divMPM_Memo").show();
                 $("#tabManual_" + MType).show(400, function () {});
             }else{
                 MeasureManual.clearText(MType);
@@ -90,7 +147,7 @@ var MeasureManual = {
                 MeasureManual.MRowKey = "";
 
                 $("#ulManual").show();
-                $("#divMPM_Memp").hide();
+                // $("#divMPM_Memo").hide();
                 $("#tabManual_" + MType).show(400, function () {
                     MeasureManual.focusByMType(MType);//MPM_Date
                 });
@@ -114,8 +171,6 @@ var MeasureManual = {
             DateTimeFun.iniDate("MPM_Date", "MPM_Time", MTimeStamp); //依據不同OS製作不同日期控件
 
             var Memo = obj.Memo ? obj.Memo : "";
-
-            $("#MPM_Memo").val(Memo);
 
             switch(MType){
                 case "BG":

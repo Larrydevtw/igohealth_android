@@ -579,26 +579,26 @@
         </div>
 
         <!--新增備註-->
-        <div id="addRemarks" class="block" data-navname="新增備註" data-parent="#userHistory" style="display:none;">
+        <div id="addRemarks" class="block" data-navname="備註" data-parent="#userHistory" style="display:none;">
             <div class="info ">
                 <div class="f-center-center mb-1">
                     <label>量測時間：</label>
-                    <span>2021-05-14 (五) 13:24</span>
+                    <span id="MPM_Memo_Date">2021-05-14 (五) 13:24</span>
                 </div>
-                <div class="f-center-center mb-1">
+                <div id="divMPM_Memo_TimeType" class="f-center-center mb-1" style="display: none;">
                     <label>量測時段：</label>
-                    <span>2021-05-14 (五) 13:24</span>
+                    <span id="MPM_Memo_TimeType"></span>
                 </div>
                 <div class="f-center-center mb-1">
-                    <label>血糖值：</label>
-                    <span>2021-05-14 (五) 13:24</span>
+                    <label id="MPM_Memo_MType">血糖值：</label>
+                    <span id="MPM_Memo_MValue"><span>
                 </div>
                 <div class="f-center-center mb-1">
-                    <label>新增備註：</label>
+                    <label>備註：</label>
                     <span></span>
                 </div>
                 <div>
-                    <textarea></textarea>
+                    <textarea id="MPM_Memo_Text"></textarea>
                 </div>
             </div>
             <div class="w-100 mt-1">
@@ -610,7 +610,7 @@
 
         <!--新增手動輸入紀錄 血壓、血糖、膽固醇-->
         <div id="MeasurePage_Manual" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
-            <div class="chartType f-center-center">
+            <div id="ulManual" class="chartType f-center-center">
                 <div><a id="tabManual_btnBP" onclick="MeasureManual.showByMType('BP');" class="btn">血壓</a></div>
                 <div><a id="tabManual_btnBG" onclick="MeasureManual.showByMType('BG');" class="btn">血糖</a></div>
                 <div><a id="tabManual_btnCHOL" onclick="MeasureManual.showByMType('CHOL');" class="btn">膽固醇</a></div>
@@ -640,15 +640,15 @@
                         </div>
                     </div>
                     <div id="tabManual_BG" style="display:none">
-                        <div class="input login-input mb-1">
+                        <div class="input login-input">
                             <span>測量時段：</span>
-                            <select style="width:80px;margin:0px 5px;padding:10px;" id="MPM_TimeGroup_BG" onchange="Display.showTimeType('BG');">
+                            <select style="width:80px;padding:10px;" id="MPM_TimeGroup_BG" onchange="Display.showTimeType('BG');">
                                 <option value="AC" data-i18n="飯前">飯前</option>
                                 <option value="PC" data-i18n="飯後">飯後</option>
                                 <option value="7" data-i18n="睡前">睡前</option>
                                 <option value="0" data-i18n="隨機">隨機</option>
                             </select>
-                            <select style="width:80px;margin:0px 5px;padding:10px;" id="MPM_TimeType_BG" style="display:none;">
+                            <select style="width:80px;padding:10px;" id="MPM_TimeType_BG" style="display:none;">
                             </select>
                         </div>
 
@@ -661,6 +661,12 @@
                         <div class="input login-input mb-1">
                             <span>膽固醇 mg/dl：：</span>
                             <input class="mt-1" id="txtMPM_CHOL" placeholder="請輸入膽固醇值" />
+                        </div>
+                    </div>
+                    <div id="tabManualMemo" style="">
+                        <div class="input login-input mb-1">
+                            <span>備註：</span>
+                            <input class="mt-1" id="MPM_Memo"/>
                         </div>
                     </div>
                 </div>
