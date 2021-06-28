@@ -3,8 +3,9 @@ var Domain = {
     Address: "", //"ocics.tw",ethink.ocics.tw,ocics.cn/Beta 192.168.0.112
     ServiceRoot: "/Wise_Cloud_Service/AppCloudServices",
     ServiceApi: "/HATM_Services/api/HATMApp",
-    Version: "IGH_Wifi", //6 版本號: tw:IGH_x.x.x cn:HCCN_x.x.x IGH_TEST_ IGH_eThink_
+    Version: "IGH_eThink", //6 版本號: tw:IGH_x.x.x cn:HCCN_x.x.x IGH_TEST_ IGH_eThink_
     VersionNo: "", //版本號(只有號碼部分)
+    AppName: "i顧健康",
 
     //App功能
     lFunction: ["Point", "Product", "MeasureScan", "SyncAppInfo"],
@@ -33,9 +34,9 @@ var Domain = {
                 Domain.lDevFunction = ["Point", "Product"];
                 break;
             case "IGH_eThink":
-                Domain.Address = "http://ethink.ocics.tw";
-                Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
-                Domain.ServiceApi = "/HATM_Services_Bioptik/api/HATMApp";
+                Domain.Address = "https://demosite.ethink.com.tw";
+                Domain.ServiceRoot = "/iGoHealth";
+                Domain.ServiceApi = "/HATM_Services/api/HATMApp";
 
                 Domain.lDevFunction = [];
                 break;

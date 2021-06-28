@@ -400,7 +400,7 @@
                         data-pagename="#StandardInfo">三高量測標準值範圍</button>
 
                     <button class="IPbtn gotoPage modalClose" onclick="MainHome.goToMeasureScan();"
-                        data-pagename="#Instructions">藥師量測三高</button>
+                        data-pagename="#Instructions" style="display:none;">藥師量測三高</button>
 
                     <button class="IPbtn parent" id="txtDisplayName">林小花（顯示姓名）</button>
 
@@ -740,28 +740,24 @@
                 <h3>早餐</h3>
                 <div class="f-center-center w-100">
                     <label>餐前</label>
-                    <select>
-                        <option>上午 7:00</option>
-                        <option>上午 8:00</option>
-                        <option>上午 9:00</option>
-                    </select>
+                    <input id="notifyTime1" class="timepicker" value="07:00"
+                        onchange="LocalNotify.onChangeTime('notifyTime1','notifyActive1');" />
                     <div>
                         <label class="switch">
-                            <input type="checkbox">
+                            <input type="checkbox" id="notifyActive1"
+                                onchange="LocalNotify.onChangeActive('notifyTime1',this);">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div>
                 <div class="f-center-center w-100">
                     <label>餐後</label>
-                    <select>
-                        <option>上午 7:00</option>
-                        <option>上午 8:00</option>
-                        <option>上午 9:00</option>
-                    </select>
+                    <input id="notifyTime2" class="timepicker" value="10:00"
+                        onchange="LocalNotify.onChangeTime('notifyTime2','notifyActive2');" />
                     <div>
                         <label class="switch">
-                            <input type="checkbox">
+                            <input type="checkbox" id="notifyActive2"
+                                onchange="LocalNotify.onChangeActive('notifyTime2',this);">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -771,28 +767,24 @@
                 <h3>午餐</h3>
                 <div class="f-center-center w-100">
                     <label>餐前</label>
-                    <select>
-                        <option>上午 7:00</option>
-                        <option>上午 8:00</option>
-                        <option>上午 9:00</option>
-                    </select>
+                    <input id="notifyTime3" class="timepicker" value="11:30"
+                        onchange="LocalNotify.onChangeTime('notifyTime3','notifyActive3');" />
                     <div>
                         <label class="switch">
-                            <input type="checkbox">
+                            <input type="checkbox" id="notifyActive3"
+                                onchange="LocalNotify.onChangeActive('notifyTime3',this);">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div>
                 <div class="f-center-center w-100">
                     <label>餐後</label>
-                    <select>
-                        <option>上午 7:00</option>
-                        <option>上午 8:00</option>
-                        <option>上午 9:00</option>
-                    </select>
+                    <input id="notifyTime4" class="timepicker" value="14:30"
+                        onchange="LocalNotify.onChangeTime('notifyTime4','notifyActive4');" />
                     <div>
                         <label class="switch">
-                            <input type="checkbox">
+                            <input type="checkbox" id="notifyActive4"
+                                onchange="LocalNotify.onChangeActive('notifyTime4',this);">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -802,28 +794,24 @@
                 <h3>晚餐</h3>
                 <div class="f-center-center w-100">
                     <label>餐前</label>
-                    <select>
-                        <option>上午 7:00</option>
-                        <option>上午 8:00</option>
-                        <option>上午 9:00</option>
-                    </select>
+                    <input id="notifyTime5" class="timepicker" value="17:30"
+                        onchange="LocalNotify.onChangeTime('notifyTime5','notifyActive5');" />
                     <div>
                         <label class="switch">
-                            <input type="checkbox">
+                            <input type="checkbox" id="notifyActive5"
+                                onchange="LocalNotify.onChangeActive('notifyTime5',this);">
                             <span class="slider"></span>
                         </label>
                     </div>
                 </div>
                 <div class="f-center-center w-100">
                     <label>餐後</label>
-                    <select>
-                        <option>上午 7:00</option>
-                        <option>上午 8:00</option>
-                        <option>上午 9:00</option>
-                    </select>
+                    <input id="notifyTime6" class="timepicker" value="19:30"
+                        onchange="LocalNotify.onChangeTime('notifyTime6','notifyActive6');" />
                     <div>
                         <label class="switch">
-                            <input type="checkbox">
+                            <input type="checkbox" id="notifyActive6"
+                                onchange="LocalNotify.onChangeActive('notifyTime6',this);">
                             <span class="slider"></span>
                         </label>
                     </div>
@@ -833,14 +821,12 @@
                 <h3>就寢</h3>
                 <div class="f-center-center w-100">
                     <label>睡前</label>
-                    <select>
-                        <option>上午 7:00</option>
-                        <option>上午 8:00</option>
-                        <option>上午 9:00</option>
-                    </select>
+                    <input id="notifyTime7" class="timepicker" value="22:00"
+                        onchange="LocalNotify.onChangeTime('notifyTime7','notifyActive7');" />
                     <div>
                         <label class="switch">
-                            <input type="checkbox">
+                            <input type="checkbox" id="notifyActive7"
+                                onchange="LocalNotify.onChangeActive('notifyTime7',this);">
                             <span class="slider"></span>
                         </label>
                     </div>

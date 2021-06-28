@@ -382,7 +382,7 @@ input:checked + .slider:before {
 
 /*血糖量測提醒*/
 #Timenotice label{white-space: nowrap;}
-#Timenotice select{max-width: 200px;}
+#Timenotice input{max-width: 200px;}
 #Timenotice .rData{border-bottom: 1px solid #ccc;margin-bottom: 10px;padding-bottom: 20px;}
 #Timenotice .rData:last-child{border-bottom:none;}
 

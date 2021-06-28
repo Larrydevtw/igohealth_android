@@ -179,7 +179,7 @@ var LocalNotify = LocalNotify || {},
                     var HH = timeHHmm[0];
                     var mm = timeHHmm.length > 1 ? timeHHmm[1] : "00";
                     var title = $.i18n("量測提醒");
-                    var message = $.i18n("吾齡無齡提醒您，$1記得量測$2喔!", time, notifyType);
+                    var message = $.i18n("$1提醒您，$2記得量測$3喔!", $.i18n(Domain.AppName), time, notifyType);
 
                     var startTime = moment().hours(HH).minutes(mm).format("YYYY/MM/DD HH:mm");
                     var endTime = moment().add(365, "days").hours(HH).minutes(mm).format("YYYY/MM/DD HH:mm");
@@ -206,7 +206,7 @@ var LocalNotify = LocalNotify || {},
             var time = notifyInfo.time;
             var active=notifyInfo.active;
             var SA_NO=notifyInfo.SA_NO;
-            var message = $.i18n("吾齡無齡提醒您，$1記得量測$2喔!", time,notifyType);
+            var message = $.i18n("$1提醒您，$2記得量測$3喔!", $.i18n(Domain.AppName), time, notifyType);
             var title=$.i18n('量測提醒');
             var date = moment().format("YYYY/MM/DD HH:mm");
             var timeHHmm = time.split(':');
