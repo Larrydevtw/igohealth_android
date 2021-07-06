@@ -195,6 +195,8 @@ var FnBT = {
             Log.alert("MSCordovaBLE.InitSetting");
             //Scan確定間隔，如果超過時間就重啟模組(0:代表不檢查)
             MSCordovaBLE.checkBLE = 10000;
+            //最大連線數
+            MSCordovaBLE.MaxConnCnt = 6;
             //設定初始化
             MSCordovaBLE.InitSetting();
 

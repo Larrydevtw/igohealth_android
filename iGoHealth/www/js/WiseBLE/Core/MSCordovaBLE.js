@@ -21,9 +21,11 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
     ,
     NowStep: "" //記錄目前執行到的函數
     ,
-    sUUID: "" 
+    sUUID: ""
     ,
     cUUID: ""
+    ,
+    MaxConnCnt: 1//最大連線數
     ,
     BT_Init_OK: false
 
@@ -39,23 +41,23 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
         $.extend(MSCordovaBLE.MySetting, UserSetting);//JQuery的指令
     }
     //-------------------------------------------
-    
+
 
     //-------------------------------------------
     //與藍牙流程有關的函式
 
     ,//初使化藍牙
-    btInitialize: function ()
-    {        
+    btInitialize: function () {
         MSCordovaBLE.BT_Init_OK = false;
         MSCordovaBLE.NowStep = "btInitialize";
         //added by sinclair 20170930
         localStorage.setItem("inDeviceList", "[]");//暫取可配對清單
-        
+        MSCordovaBLE.connDevices = [];//清空目前連線數
+
+
         WriteLog.write("目前的作業模式: 正常的 scan 模式", "status");
         WriteLog.write("目前的作業平台: " + window.cordova.platformId, "status");
-        if (window.cordova.platformId === "android")     
-        {
+        if (window.cordova.platformId === "android") {
             //先處理Android權限
             bluetoothle.hasPermission(MSCordovaBLE.hasPermissionSuccess);
             bluetoothle.isLocationEnabled(MSCordovaBLE.isLocationEnabledSuccess, MSCordovaBLE.handleError);
@@ -63,34 +65,35 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
             new Promise(function (resolve) {
 
                 bluetoothle.initialize(resolve,
-                {
-                    request: true,
-                    statusReceiver: false //default 值 false                   
-                });
+                    {
+                        request: true,
+                        statusReceiver: false //default 值 false                   
+                    });
 
             }).then(MSCordovaBLE.btInitializeSuccess, MSCordovaBLE.handleError);
         }
-        else if (window.cordova.platformId === "ios") 
-        {
+        else if (window.cordova.platformId === "ios") {
             new Promise(function (resolve) {
 
                 bluetoothle.initialize(resolve,
-                {
-                    request: true,
-                    statusReceiver: true //如果設成false --> ios會不能initialize藍芽 !!!
-                });
+                    {
+                        request: true,
+                        statusReceiver: true //如果設成false --> ios會不能initialize藍芽 !!!
+                    });
 
             }).then(MSCordovaBLE.btInitializeSuccess, MSCordovaBLE.handleError);
         }
-        else
-        {
+        else {
             WriteLog.write("目前不支援 " + window.cordova.platformId + " 這種作業平台 !", "status");
         }
+
+
+
+
     }
 
     ,
-    btInitializeSuccess: function (result)
-    {
+    btInitializeSuccess: function (result) {
         MSCordovaBLE.BT_Init_OK = true;
         MSCordovaBLE.NowStep = "btInitializeSuccess";
         if (result.status === "enabled") {
@@ -102,30 +105,33 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
             WriteLog.write("藍牙目前尚未開啟:" + result.status, "status");
         }
 
-//確認是否啟動修復,每隔10(checkBLE)秒檢查scan間隔有沒有超過10秒
-//，有的代表藍牙被lock，重啟!↓↓↓
+        //確認是否啟動修復,每隔10(checkBLE)秒檢查scan間隔有沒有超過10秒
+        //，有的代表藍牙被lock，重啟!↓↓↓
         if (MSCordovaBLE.checkBLE > 0) {
             var vCheckScan = function () {
-                var tDate = new Date();
-                var dDay1 = tDate.getTime();
-                if (!sessionStorage["checkBLETime"]) {
-                    sessionStorage["checkBLETime"] = dDay1;
-                }
-                var dDay2 = sessionStorage["checkBLETime"];
-                var vDif = dDay1 - dDay2;
-                //sessionStorage["checkBLETime"] = dDay1.getTime();
-                if (vDif > MSCordovaBLE.checkBLE) {
-                    WriteLog.write("check scan!" + dDay1 + "," + dDay2 + "," + vDif, "status");
-                    WriteLog.write("啟動修復!", "error");
-                    //MSCordovaBLE.btInitialize();
+                if (MSCordovaBLE.connDevices.length < MSCordovaBLE.MaxConnCnt) {
+                    var tDate = new Date();
+                    var dDay1 = tDate.getTime();
+                    if (!sessionStorage["checkBLETime"]) {
+                        sessionStorage["checkBLETime"] = dDay1;
+                    }
+                    var dDay2 = sessionStorage["checkBLETime"];
+                    var vDif = dDay1 - dDay2;
+                    //sessionStorage["checkBLETime"] = dDay1.getTime();
+                    if (vDif > MSCordovaBLE.checkBLE) {
+                        WriteLog.write("check scan!" + dDay1 + "," + dDay2 + "," + vDif, "status");
+                        WriteLog.write("啟動修復!", "error");
+                        //MSCordovaBLE.btInitialize();
 
-                    MSCordovaBLE.startScan();
-                    WriteLog.write("藍牙scan逾時，重啟scan!", "error");
+                        MSCordovaBLE.startScan();
+                        WriteLog.write("藍牙scan逾時，重啟scan!", "error");
+                    }
+                    //else {
+                    //    //WriteLog.write("check scan!" + dDay1 + "," + dDay2 + "," + vDif, "status");
+                    //    vCheckScan();
+                    //}
                 }
-                //else {
-                //    //WriteLog.write("check scan!" + dDay1 + "," + dDay2 + "," + vDif, "status");
-                //    vCheckScan();
-                //}
+
             };
             var myTimer = setInterval(
                 vCheckScan
@@ -135,79 +141,83 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
         }
         //確認是否啟動修復↑↑↑
     }
-    
+
     ,//掃瞄藍牙設備
-    startScan: function () 
-    {
-        
+    startScan: function () {
+
 
         MSCordovaBLE.NowStep = "startScan";
         MSCordovaBLE.foundDevices = [];
 
-        if (window.cordova.platformId != "windows") {            
-            try
-            {
+        if (window.cordova.platformId != "windows") {
+            try {
                 //modified by sinclair 20170930
                 var vStartFn = function () {
+
+                    if (MSCordovaBLE.connDevices.length >= MSCordovaBLE.MaxConnCnt) {//超過最大連線數，就不用scan
+                        return;
+                    }
+
                     if (window.cordova.platformId === "android") {
                         bluetoothle.startScan(MSCordovaBLE.startScanSuccess, MSCordovaBLE.handleError,
-                        {
-                            services: [
-                            //"180D",
-                            // "180F"
-                            ],
-                            scanMode: bluetoothle.SCAN_MODE_LOW_LATENCY,
-                            //    /*
-                            //     1、SCAN_MODE_BALANCED：
-                            //     Perform Bluetooth LE scan in balanced power mode.
-                            //     2、SCAN_MODE_LOW_LATENCY：
-                            //     Scan using highest duty cycle.
-                            //     3、SCAN_MODE_LOW_POWER(default)：
-                            //     Perform Bluetooth LE scan in low power mode.
-                            //     4、SCAN_MODE_OPPORTUNISTIC：
-                            //     A special Bluetooth LE scan mode.
-                            //    */
-                            matchMode: bluetoothle.MATCH_MODE_AGGRESSIVE,
-                            //    /*
-                            //     1、MATCH_MODE_AGGRESSIVE(default)：
-                            //     In Aggressive mode, hw will determine a match sooner even with feeble signal strength and few number of sightings/match in a duration.
-                            //     2、MATCH_MODE_STICKY：
-                            //     For sticky mode, higher threshold of signal strength and sightings is required before reporting by hw
-                            //    */
-                            //matchNum: bluetoothle.MATCH_NUM_MAX_ADVERTISEMENT,
-                            //callbackType: bluetoothle.CALLBACK_TYPE_ALL_MATCHES
-                        });
+                            {
+                                services: [
+                                    //"180D",
+                                    // "180F"
+                                ],
+                                scanMode: bluetoothle.SCAN_MODE_LOW_LATENCY,
+                                //    /*
+                                //     1、SCAN_MODE_BALANCED：
+                                //     Perform Bluetooth LE scan in balanced power mode.
+                                //     2、SCAN_MODE_LOW_LATENCY：
+                                //     Scan using highest duty cycle.
+                                //     3、SCAN_MODE_LOW_POWER(default)：
+                                //     Perform Bluetooth LE scan in low power mode.
+                                //     4、SCAN_MODE_OPPORTUNISTIC：
+                                //     A special Bluetooth LE scan mode.
+                                //    */
+                                matchMode: bluetoothle.MATCH_MODE_AGGRESSIVE,
+                                //    /*
+                                //     1、MATCH_MODE_AGGRESSIVE(default)：
+                                //     In Aggressive mode, hw will determine a match sooner even with feeble signal strength and few number of sightings/match in a duration.
+                                //     2、MATCH_MODE_STICKY：
+                                //     For sticky mode, higher threshold of signal strength and sightings is required before reporting by hw
+                                //    */
+                                //matchNum: bluetoothle.MATCH_NUM_MAX_ADVERTISEMENT,
+                                //callbackType: bluetoothle.CALLBACK_TYPE_ALL_MATCHES
+                            });
                     }
-                    else if (window.cordova.platformId === "ios")
-                    {
+                    else if (window.cordova.platformId === "ios") {
                         bluetoothle.startScan(MSCordovaBLE.startScanSuccess, MSCordovaBLE.handleError,
-                        {
-                            services: [
-                            //"180D",
-                            // "180F"
-                            ],
-                            allowDuplicates: true //allowDuplicates 對iOS是很重要的屬性,如果allowDuplicates=false則藍芽設備只能被scan一次,再來就不會再被scan到了!
-                        });
-                    }                    
+                            {
+                                services: [
+                                    //"180D",
+                                    // "180F"
+                                ],
+                                allowDuplicates: true //allowDuplicates 對iOS是很重要的屬性,如果allowDuplicates=false則藍芽設備只能被scan一次,再來就不會再被scan到了!
+                            });
+                    }
                 };
 
                 bluetoothle.stopScan(
                     function () {
-                        setTimeout(function () { vStartFn() }, 2000);}, 
+                        setTimeout(function () { vStartFn() }, 2000);
+                    },
                     function () {
-                        setTimeout(function () { vStartFn() }, 2000);}
-                );                
+                        setTimeout(function () { vStartFn() }, 2000);
+                    }
+                );
             }
-            catch (error)
-            {
+            catch (error) {
                 MSCordovaBLE.handleError(error);
             }
         }
     }
 
     ,
-    startScanSuccess: function (result)
-    {
+    startScanSuccess: function (result) {
+        if (result.name == null) { return; }
+
         //確認是否啟動修復↓↓↓
         if (MSCordovaBLE.checkBLE > 0) {
             var dDay1 = new Date();
@@ -215,12 +225,10 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
         }
         //確認是否啟動修復↑↑↑
         MSCordovaBLE.NowStep = "startScanSuccess";
-        if (result.status === "scanStarted")
-        {
+        if (result.status === "scanStarted") {
             WriteLog.write("掃瞄藍牙設備中...", "status");
         }
-        else if (result.status === "scanResult")
-        {     
+        else if (result.status === "scanResult") {
             //debug
             //if (
             //    result.name.toString() == "DS3"
@@ -233,12 +241,11 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
             //    WriteLog.write("Debug:" + result.name + "/" + result.address, "status");
 
             //}
-            
+
 
             if (
                 !MSCordovaBLE.foundDevices.some(
-                    function (device)
-                    {
+                    function (device) {
                         return device.address === result.address;
                     }
                 )
@@ -277,9 +284,19 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
                 //    }, 'F');
                 //}
                 //
+                //泰菱模糊名:
+                if ((typeof ZYTEMP != "undefined") && ZYTEMP.deviceNameSearching(result.name) == true) {
+                    var Params = {
+                        'DeviceModel': result.name
+                    };
+                    DAOFn.SimpleMerge('', 'DevicesInfo', Params, 'DeviceModel', result.name, "", function ResultFun(rv) {
+                        //WriteLog.write("rv : " + rv, "status");
+                    }, 'F');
+                }
+
                 //B設備模糊名:
                 //...
-            
+
 
                 //WriteLog.write("找到設備:" + result.name + "/" + result.address);
                 MSCordovaBLE.inDeviceList(result.name, function (flag)//避免一直open DB造成速度下降
@@ -328,17 +345,15 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
                             Wait();//休息1秒！        
                         }
                     }
-                });                
+                });
             }
         }
     }
 
     ,//連線藍牙設備
-    connect: function (result)
-    {
+    connect: function (result) {
         MSCordovaBLE.NowStep = "connect";
-        if (window.cordova.platformId === "android")
-        {
+        if (window.cordova.platformId === "android") {
             if (result.name === "FLG-756")//歐瑟若體脂機需要先做硬體配對,不然讀寫資料會失敗!
             {
                 WriteLog.write("檢查硬體設備配對... : " + result.address, "status");
@@ -373,9 +388,9 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
                 WriteLog.write("連接到設備中... : " + result.address, "status");
                 new Promise(function (resolve, reject) {
                     bluetoothle.connect(resolve, reject,
-                    {
-                        address: result.address
-                    });
+                        {
+                            address: result.address
+                        });
                 }).then(Oserio_FLG_756.connectSuccess, MSCordovaBLE.handleErrorAndToClose);
             }
             else if (result.name == "TSB-631") {//廣州同聲BP，GATT模式
@@ -415,19 +430,7 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
             //    }).then(MSCordovaBLE.connectSuccess, MSCordovaBLE.handleErrorAndToClose);
             //}
             //else if (result.name === "2282RAA0429") //華廣血糖機是是屬於模糊藍牙名這一類的,所以須採用模糊比對!
-            else if (Bionime_GM282.deviceNameSearching(result.name) == true) //華廣血糖機需要先做硬體配對,不然讀寫資料會失敗!
-            {
-                WriteLog.write("檢查硬體設備配對... : " + result.address, "status");
-                MSCordovaBLE.addPairDevices(result.address, null, null); //加入硬體配對
 
-                WriteLog.write("連接到設備中... : " + result.address, "status");
-                new Promise(function (resolve, reject) {
-                    bluetoothle.connect(resolve, reject,
-                    {
-                        address: result.address
-                    });
-                }).then(MSCordovaBLE.connectSuccess, MSCordovaBLE.handleErrorAndToClose);
-            }
             //else if (Portal_BP.deviceNameSearching(result.name) == true) //華廣血糖機需要先做硬體配對,不然讀寫資料會失敗!
             //{
             //    //WriteLog.write("檢查硬體設備配對... : " + result.address, "status");
@@ -441,33 +444,33 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
             //            });
             //    }).then(Portal_BP.connectSuccess, MSCordovaBLE.handleErrorAndToClose);
             //}
+
             else//歐瑟若體脂機以外的設備不需要硬體配對,就可以讀的到資料.
             {
                 WriteLog.write("連接到設備中... : " + result.address, "status");
                 new Promise(function (resolve, reject) {
                     bluetoothle.connect(resolve, reject,
-                    {
-                        address: result.address
-                    });
+                        {
+                            address: result.address
+                        });
                 }).then(MSCordovaBLE.connectSuccess, MSCordovaBLE.handleErrorAndToClose);
             }
-        }        
-        else if (window.cordova.platformId === "ios")
-        {
+        }
+        else if (window.cordova.platformId === "ios") {
             if (result.name === "FLG-756")   //歐瑟若體脂機需要監控一個以上的uuid,discover的方式是不一樣的!
             {
                 WriteLog.write("連接到設備中... : " + result.address, "status");
                 new Promise(function (resolve, reject) {
                     bluetoothle.connect(resolve, reject,
-                    {
-                        address: result.address
-                    });
+                        {
+                            address: result.address
+                        });
                 }).then(Oserio_FLG_756.connectSuccess, MSCordovaBLE.handleErrorAndToClose);
-            }    
-            else if (Portal_BP.deviceNameSearching(result.name) == true) //華廣血糖機需要先做硬體配對,不然讀寫資料會失敗!
+            }
+            else if ((typeof Portal_BP != "undefined") && Portal_BP.deviceNameSearching(result.name) == true) //華廣血糖機需要先做硬體配對,不然讀寫資料會失敗!
             {
                 WriteLog.write("檢查硬體設備配對... : " + result.address, "status");
-                
+
                 WriteLog.write("連接到設備中... : " + result.address, "status");
                 new Promise(function (resolve, reject) {
                     bluetoothle.connect(resolve, reject,
@@ -481,54 +484,300 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
                 WriteLog.write("連接到設備中... : " + result.address, "status");
                 new Promise(function (resolve, reject) {
                     bluetoothle.connect(resolve, reject,
-                    {
-                        address: result.address
-                    });
+                        {
+                            address: result.address
+                        });
                 }).then(MSCordovaBLE.connectSuccess, MSCordovaBLE.handleErrorAndToClose);
             }
         }
     }
 
     ,
-    connectSuccess: function (result)
-    {
+    connectSuccess: function (result) {
         MSCordovaBLE.NowStep = "connectSuccess";
         WriteLog.write(result);
 
-        if (result.status === "connected") {            
-                //記錄已連接設備
-                //name,address,status
-                MSCordovaBLE.connDevices.push(result);
+        if (result.status === "connected") {
+           
 
-                WriteLog.write("藍牙連接成功！(" + MSCordovaBLE.connDevices.length+")", "status");     
 
-                ////2020.8.6 added by sinclair
-                //if (result.name == "Mini Grill") {
-                //    KT_MINI_GRILL.getMacAddress(
-                //        result.address
-                //        ,
-                //        function(sObj){
-                //            //add item
-                //            result["TrueMAC"] = sObj.value;
-                //            MSCordovaBLE.MySetting.ConnectCallBackFn(result);//呼叫外部的 ConnectCallBackFn
-                //        });
-                    
-                //} else {
-                //    MSCordovaBLE.MySetting.ConnectCallBackFn(result);//呼叫外部的 ConnectCallBackFn
-                //}
+            //記錄已連接設備
+            //name,address,status
+            MSCordovaBLE.connDevices.push(result);
 
-                MSCordovaBLE.MySetting.ConnectCallBackFn(result);//呼叫外部的 ConnectCallBackFn
+            WriteLog.write("藍牙連接成功！(" + MSCordovaBLE.connDevices.length + ")", "status");
 
-                MSCordovaBLE.discoverDeviceServices(result);            
+            if (MSCordovaBLE.connDevices.length >= MSCordovaBLE.MaxConnCnt) {//超過最大連線數，停止scan
+                WriteLog.write("到達最大連線數，停止scan", "status");
+                bluetoothle.stopScan(
+                    function () {
+                        WriteLog.write("到達最大連線數，停止成功", "status");
+                    },
+                    function () {
+                        WriteLog.write("到達最大連線數，停止失敗", "status");
+                    }
+                );
+            }
+
+            ////2020.8.6 added by sinclair
+            //if (result.name == "Mini Grill") {
+            //    KT_MINI_GRILL.getMacAddress(
+            //        result.address
+            //        ,
+            //        function(sObj){
+            //            //add item
+            //            result["TrueMAC"] = sObj.value;
+            //            MSCordovaBLE.MySetting.ConnectCallBackFn(result);//呼叫外部的 ConnectCallBackFn
+            //        });
+
+            //} else {
+            //    MSCordovaBLE.MySetting.ConnectCallBackFn(result);//呼叫外部的 ConnectCallBackFn
+            //}
+
+            MSCordovaBLE.MySetting.ConnectCallBackFn(result);//呼叫外部的 ConnectCallBackFn
+
+            MSCordovaBLE.discoverDeviceServices(result);
         }
         else if (result.status === "disconnected") {
             MSCordovaBLE.disconnectSuccess(result);
         }
     }
+    ,
+    /*
+    取得sUUID與cUUID
 
+     var vUUID = MSCordovaBLE.UUID_List("HC-08");
+     vUUID = vUUID.split('^');
+     MSCordovaBLE.sUUID = vUUID[0];
+     MSCordovaBLE.cUUID = vUUID[1];
+    */
+    UUID_List: function (DevName) {
+        var platform = window.cordova.platformId;
+        var sUUID = ""
+        var cUUID = "";
+
+        switch (DevName) {
+            case "TAIDOC TD4231":
+            case "TAIDOC TD4286":
+            case "TAIDOC BG":
+            case "TAIDOC TD4289":
+            case "FORA GD40":
+            case "FORA D40":
+            case "UniTai TD3261":
+            case "DIAMOND CUFF BP":
+            case "FORA IR21":
+            case "FORA IR20":
+            case "FORA IR40":
+            case "FORA IR42":
+            case "TAIDOC TD1261":
+            case "FORA P30 PLUS":
+                sUUID = "00001523-1212-EFDE-1523-785FEABCD123";
+                cUUID = "00001524-1212-EFDE-1523-785FEABCD123";
+                break;
+            case "Tyson bio_NCIT":
+                sUUID = "0000706D-7547-4F49-5047-676E6F6C7553";
+                cUUID = "0200706D-7547-4F49-5047-676E6F6C7553";
+                break;
+            case "Tysonbio_BPM":
+            case "Tyson bio_BPM":
+                if (platform === "android") {
+                    sUUID = "0000FC00-0000-1000-8000-00805F9B34FB";
+                    cUUID = "0000FCA1-0000-1000-8000-00805F9B34FB";
+                }
+                else if (platform === "ios") {
+                    sUUID = "FC00"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    cUUID = "FCA1";
+                }
+                break;
+            case "TSB-631":
+                if (platform === "android") {
+                    sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
+                    cUUID = "0000FFF2-0000-1000-8000-00805F9B34FB";
+                }
+                else if (platform === "ios") {
+                    sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    cUUID = "FFF2";
+                }
+                break;
+            case "Tysonbio_BGM":
+                if (platform === "android") {
+                    sUUID = "0000FC00-0000-1000-8000-00805F9B34FB";
+                    cUUID = "0000FCA1-0000-1000-8000-00805F9B34FB";
+                }
+                else if (platform === "ios") {
+                    sUUID = "FC00"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    cUUID = "FCA1";
+                }
+                break;
+            case "Tyson_NC100":
+                if (platform === "android") {
+                    sUUID = "0000FC00-0000-1000-8000-00805F9B34FB";
+                    cUUID = "0000FCA1-0000-1000-8000-00805F9B34FB";
+                }
+                else if (platform === "ios") {
+                    sUUID = "FC00"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    cUUID = "FCA1";
+                }
+                break;
+            case "USB_HOST"://亞培血糖
+                if (platform === "android") {
+                    sUUID = "943D0001-C9AF-4033-AC41-0C857E0EE45A";
+                    cUUID = "943D0003-C9AF-4033-AC41-0C857E0EE45A";
+                }
+                else if (platform === "ios") {
+                    sUUID = "FC00"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    cUUID = "FCA1";
+                }
+                break;
+            //case "FLG-756":                
+            //    MSCordovaBLE.sUUID = "181D";
+            //    MSCordovaBLE.cUUID = "2A9D";                
+            //    break;
+            case "ETB04":
+                //case "ETB":
+                WriteLog.write("ETB power status..." + Bioptik_ETB04.poweroffIng.toString(), "status");
+                if (platform === "android") {
+                    sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
+                    cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
+                }
+                else if (platform === "ios") {
+                    sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    cUUID = "FFF1";
+                }
+                break;
+            case "ETB05":
+                WriteLog.write("ETB power status..." + Bioptik_ETB05.poweroffIng.toString(), "status");
+                if (platform === "android") {
+                    sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
+                    cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
+                }
+                else if (platform === "ios") {
+                    sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    cUUID = "FFF1";
+                }
+                break;
+            case "YBT"://優瑞恩-額溫
+                if (platform === "android") {
+                    sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
+                    cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
+                }
+                else if (platform === "ios") {
+                    sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    cUUID = "FFF1";
+                }
+                break;
+            case "Bluetooth BP"://優瑞恩-血壓
+                if (platform === "android") {
+                    sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
+                    cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
+                }
+                else if (platform === "ios") {
+                    sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    cUUID = "FFF1";
+                }
+                break;
+            case "DS3"://樂生
+                if (platform === "android") {
+                    //MSCordovaBLE.sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
+                    //MSCordovaBLE.cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
+                    sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
+                    cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
+                }
+                else if (platform === "ios") {
+                    sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    cUUID = "FFF1";
+                }
+                break;
+            case "DS5"://樂生
+                if (platform === "android") {
+                    sUUID = "0000FFE0-0000-1000-8000-00805F9B34FB";
+                    cUUID = "0000FFE2-0000-1000-8000-00805F9B34FB";
+                }
+                else if (platform === "ios") {
+                    sUUID = "FFE0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    cUUID = "FFE2";
+                }
+                break;
+            case "Blue2"://森鴻
+                sUUID = "f2b32c77-ea68-464b-9cd7-a22cbffb98bd";
+                cUUID = "78544003-4394-4fc2-8cfd-be6a00aa701b";
+                break;
+            case "Mini Grill": //開泰
+                if (platform === "android") {
+                    sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
+                    cUUID = "0000FFF2-0000-1000-8000-00805F9B34FB";
+                }
+                else if (platform === "ios") {
+                    sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    cUUID = "FFF2";
+                }
+                break;
+            case "MATE1"://手環
+                if (platform === "android") {
+                    sUUID = "00002A37-0000-1000-8000-00805F9B34FB";
+                    cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
+                }
+                else if (platform === "ios") {
+                    //sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                    //cUUID = "FFF1";
+                }
+                break;
+            default:
+
+                if ((typeof ZYTEMP != "undefined") && ZYTEMP.deviceNameSearching(DevName) == true) {//力康血氧
+                    WriteLog.write("發現new ZYTEMP！", "status");
+                    //泰菱
+                    if (platform === "android") {
+                        sUUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+                        cUUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+                        //MSCordovaBLE.cUUID = "2A52";
+                    }
+                    else if (platform === "ios") {
+                        sUUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+                        cUUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+                    }
+                }//華廣血糖機是是屬於模糊藍牙名這一類的,所以須採用模糊比對!
+                else if ((typeof Bionime_GM282 != "undefined") && Bionime_GM282.deviceNameSearching(DevName) == true)//華廣血糖機
+                {
+                    if (platform === "android") {
+                        sUUID = "0000FEE0-0000-1000-8000-00805F9B34FB";
+                        cUUID = "0000FEE2-0000-1000-8000-00805F9B34FB";
+                    }
+                    else if (platform === "ios") {
+                        sUUID = "FEE0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
+                        cUUID = "FEE2";
+                    }
+                }
+                else
+                    if ((typeof HealForce_60F != "undefined") && HealForce_60F.deviceNameSearching(DevName) == true) {//力康血氧
+                    WriteLog.write("發現力康血氧！", "status");
+                    if (platform === "android") {
+                        sUUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
+                        cUUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
+                    }
+                    else if (platform === "ios") {
+                        sUUID = "6e400001";
+                        cUUID = "6e400003";
+                    }
+                }
+                    else if ((typeof Portal_BP != "undefined") && Portal_BP.deviceNameSearching(DevName) == true) {//力康血壓
+                    WriteLog.write("發現new bp！", "status");
+                    if (platform === "android") {
+                        sUUID = "0x1810";
+                        cUUID = "00002A52-0000-1000-8000-00805F9B34FB";
+                        //cUUID = "2A52";
+                    }
+                    else if (platform === "ios") {
+                        sUUID = "1810";
+                        cUUID = "2A52";
+                    }
+                }
+        }
+
+        return sUUID + "^" + cUUID;
+    }
     ,//發現出藍牙設備上提供了哪些服務
-    discoverDeviceServices: function (result)
-    {
+    discoverDeviceServices: function (result) {
         MSCordovaBLE.NowStep = "discoverDeviceServices";
         WriteLog.write("Discover 設備服務中...", "status");
 
@@ -543,211 +792,10 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
         //        result.name = "ETB";
         //    }
         //}
-
-        switch (result.name) {
-            case "TAIDOC TD4231":
-            case "TAIDOC TD4286":
-            case "TAIDOC BG":
-            case "TAIDOC TD4289":
-            case "FORA GD40":
-            case "FORA D40":
-            case "UniTai TD3261":                
-            case "DIAMOND CUFF BP":
-            case "FORA IR21":
-            case "FORA IR20":
-            case "FORA IR40":
-            case "FORA IR42":
-            case "TAIDOC TD1261":
-            case "FORA P30 PLUS":
-                MSCordovaBLE.sUUID = "00001523-1212-EFDE-1523-785FEABCD123";
-                MSCordovaBLE.cUUID = "00001524-1212-EFDE-1523-785FEABCD123";
-                break;
-            case "Tyson bio_NCIT":
-                MSCordovaBLE.sUUID = "0000706D-7547-4F49-5047-676E6F6C7553";
-                MSCordovaBLE.cUUID = "0200706D-7547-4F49-5047-676E6F6C7553";
-                break;
-            case "Tysonbio_BPM":
-            case "Tyson bio_BPM":
-                if (platform === "android") {
-                    MSCordovaBLE.sUUID = "0000FC00-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.cUUID = "0000FCA1-0000-1000-8000-00805F9B34FB";
-                }
-                else if (platform === "ios") {
-                    MSCordovaBLE.sUUID = "FC00"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    MSCordovaBLE.cUUID = "FCA1";
-                }
-                break;
-            case "TSB-631":
-                if (platform === "android") {
-                    MSCordovaBLE.sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.cUUID = "0000FFF2-0000-1000-8000-00805F9B34FB";
-                }
-                else if (platform === "ios") {
-                    MSCordovaBLE.sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    MSCordovaBLE.cUUID = "FFF2";
-                }
-                break;
-            case "Tysonbio_BGM":
-                if (platform === "android") {
-                    MSCordovaBLE.sUUID = "0000FC00-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.cUUID = "0000FCA1-0000-1000-8000-00805F9B34FB";
-                }
-                else if (platform === "ios") {
-                    MSCordovaBLE.sUUID = "FC00"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    MSCordovaBLE.cUUID = "FCA1";
-                }
-                break;
-            case "Tyson_NC100":
-                if (platform === "android") {
-                    MSCordovaBLE.sUUID = "0000FC00-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.cUUID = "0000FCA1-0000-1000-8000-00805F9B34FB";
-                }
-                else if (platform === "ios") {
-                    MSCordovaBLE.sUUID = "FC00"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    MSCordovaBLE.cUUID = "FCA1";
-                }
-                break;             
-            case "USB_HOST"://亞培血糖
-                if (platform === "android") {
-                    MSCordovaBLE.sUUID = "943D0001-C9AF-4033-AC41-0C857E0EE45A";
-                    MSCordovaBLE.cUUID = "943D0003-C9AF-4033-AC41-0C857E0EE45A";
-                }
-                else if (platform === "ios") {
-                    MSCordovaBLE.sUUID = "FC00"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    MSCordovaBLE.cUUID = "FCA1";
-                }
-                break;              
-            //case "FLG-756":                
-            //    MSCordovaBLE.sUUID = "181D";
-            //    MSCordovaBLE.cUUID = "2A9D";                
-            //    break;
-            case "ETB04":
-            //case "ETB":
-                WriteLog.write("ETB power status..." + Bioptik_ETB04.poweroffIng.toString(), "status");
-                if (platform === "android") {
-                    MSCordovaBLE.sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
-                }
-                else if (platform === "ios") {
-                    MSCordovaBLE.sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    MSCordovaBLE.cUUID = "FFF1";
-                }                
-                break;
-            case "ETB05":
-                WriteLog.write("ETB power status..." + Bioptik_ETB05.poweroffIng.toString(), "status");
-                if (platform === "android") {
-                    MSCordovaBLE.sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
-                }
-                else if (platform === "ios") {
-                    MSCordovaBLE.sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    MSCordovaBLE.cUUID = "FFF1";
-                }
-                break;
-            case "YBT"://優瑞恩-額溫
-                if (platform === "android") {
-                    MSCordovaBLE.sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
-                }
-                else if (platform === "ios") {
-                    MSCordovaBLE.sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    MSCordovaBLE.cUUID = "FFF1";
-                }
-                break; 
-            case "Bluetooth BP"://優瑞恩-血壓
-                if (platform === "android") {
-                    MSCordovaBLE.sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
-                }
-                else if (platform === "ios") {
-                    MSCordovaBLE.sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    MSCordovaBLE.cUUID = "FFF1";
-                }
-                break; 
-            case "DS3"://樂生
-                if (platform === "android") {
-                    //MSCordovaBLE.sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
-                    //MSCordovaBLE.cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
-                }
-                else if (platform === "ios") {
-                    MSCordovaBLE.sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    MSCordovaBLE.cUUID = "FFF1";
-                }
-                break; 
-            case "DS5"://樂生
-                if (platform === "android") {
-                    MSCordovaBLE.sUUID = "0000FFE0-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.cUUID = "0000FFE2-0000-1000-8000-00805F9B34FB";
-                }
-                else if (platform === "ios") {
-                    MSCordovaBLE.sUUID = "FFE0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    MSCordovaBLE.cUUID = "FFE2";
-                }
-                break; 
-            case "Blue2"://森鴻
-                MSCordovaBLE.sUUID = "f2b32c77-ea68-464b-9cd7-a22cbffb98bd";
-                MSCordovaBLE.cUUID = "78544003-4394-4fc2-8cfd-be6a00aa701b";
-                break;
-            case "Mini Grill": //開泰
-                if (platform === "android") {
-                    MSCordovaBLE.sUUID = "0000FFF0-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.cUUID = "0000FFF2-0000-1000-8000-00805F9B34FB";
-                }
-                else if (platform === "ios") {
-                    MSCordovaBLE.sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    MSCordovaBLE.cUUID = "FFF2";
-                }
-                break;
-            case "MATE1"://手環
-                if (platform === "android") {
-                    MSCordovaBLE.sUUID = "00002A37-0000-1000-8000-00805F9B34FB";
-                    MSCordovaBLE.cUUID = "0000FFF1-0000-1000-8000-00805F9B34FB";
-                }
-                else if (platform === "ios") {
-                    //MSCordovaBLE.sUUID = "FFF0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                    //MSCordovaBLE.cUUID = "FFF1";
-                }
-                break;     
-            default:
-                //華廣血糖機是是屬於模糊藍牙名這一類的,所以須採用模糊比對!
-                if (Bionime_GM282.deviceNameSearching(result.name) == true)//華廣血糖機
-                {
-                    if (platform === "android") {
-                        MSCordovaBLE.sUUID = "0000FEE0-0000-1000-8000-00805F9B34FB";
-                        MSCordovaBLE.cUUID = "0000FEE2-0000-1000-8000-00805F9B34FB";
-                    }
-                    else if (platform === "ios") {
-                        MSCordovaBLE.sUUID = "FEE0"; //在ios中,上面的 sUUID/cUUID 會變成4碼的形式
-                        MSCordovaBLE.cUUID = "FEE2";
-                    }
-                }
-                else if (HealForce_60F.deviceNameSearching(result.name) == true)
-                {//力康血氧
-                    WriteLog.write("發現力康血氧！", "status");
-                    if (platform === "android") {
-                        MSCordovaBLE.sUUID = "6e400001-b5a3-f393-e0a9-e50e24dcca9e";
-                        MSCordovaBLE.cUUID = "6e400003-b5a3-f393-e0a9-e50e24dcca9e";
-                    }
-                    else if (platform === "ios") {
-                        MSCordovaBLE.sUUID = "6e400001"; 
-                        MSCordovaBLE.cUUID = "6e400003";
-                    }
-                }
-                else if (Portal_BP.deviceNameSearching(result.name) == true) {//力康血氧
-                    WriteLog.write("發現new bp！", "status");
-                    if (platform === "android") {
-                        MSCordovaBLE.sUUID = "0x1810";
-                        MSCordovaBLE.cUUID = "00002A52-0000-1000-8000-00805F9B34FB";
-                        //MSCordovaBLE.cUUID = "2A52";
-                    }
-                    else if (platform === "ios") {
-                        MSCordovaBLE.sUUID = "1810";
-                        MSCordovaBLE.cUUID = "2A52";
-                    }
-                }
-        }        
+        var vUUID = MSCordovaBLE.UUID_List(result.name);
+        vUUID = vUUID.split('^');
+        MSCordovaBLE.sUUID = vUUID[0];
+        MSCordovaBLE.cUUID = vUUID[1];
 
 
         //確認 Discover
@@ -783,128 +831,124 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
         vCheckScanAD();
         //確認 Discover
 
-        if (platform === "android")
-        {
-           
+        if (platform === "android") {
+
             new Promise(function (resolve, reject) {
 
                 //發現設備的 服務/特徵/描述項 這3種資訊。
                 //android呼叫一個bluetoothle.discover()就搞定一切
                 bluetoothle.discover(resolve, reject,
-                {
-                    address: result.address
-                });
+                    {
+                        address: result.address
+                    });
 
             }).then(MSCordovaBLE.discoverSuccess, MSCordovaBLE.handleErrorAndToClose);
         }
-        else if (platform === "ios")
-        {
+        else if (platform === "ios") {
             var arrSevices = [];
 
             if (result.name === "Mini Grill") {
                 arrSevices = ["FFF0", "180A"];
-            } else {
+            } else if ((typeof ZYTEMP != "undefined") && ZYTEMP.deviceNameSearching(result.name) == true) {
+                arrSevices = [vUUID[0], vUUID[1]];
+            }
+            else {
                 arrSevices = [MSCordovaBLE.sUUID];
             }
 
             new Promise(function (resolve, reject) {
-            
+
                 //ios不像android呼叫一個discover()就搞定一切,ios必須按下面的步驟循序呼叫才能完成等同discover的功能
                 // 1. bluetoothle.services()
                 // 2. bluetoothle.characteristics()
                 // 3. bluetoothle.descriptors()
                 bluetoothle.services(resolve, reject,
-                {
-                    address: result.address,
-                    services: arrSevices                   
-                });
-            
+                    {
+                        address: result.address,
+                        services: arrSevices
+                    });
+
             }).then(MSCordovaBLE.iOSServicesSuccess, MSCordovaBLE.handleErrorAndToClose);
-        }        
-        else
-        {
+        }
+        else {
             WriteLog.write("不支援的平臺: '" + window.cordova.platformId + "'", "error");
             MSCordovaBLE.disconnectSuccess(result);
         }
     }
-    
+
     ,//For Android 的 discover ==> 設備的 服務/特徵/描述項 這3種資訊。
-    discoverSuccess: function (result)
-    {
+    discoverSuccess: function (result) {
         MSCordovaBLE.NowStep = "discoverSuccess";
         WriteLog.write("Discover 回傳狀態: " + result.status, "status");
 
-        if (result.status === "discovered")
-        {            
+        if (result.status === "discovered") {
             //確認是否啟動修復↓↓↓
             var dDay1 = new Date();
             sessionStorage.setItem("checkDiscover_" + result.address, dDay1.getTime());
             //確認是否啟動修復↑↑↑
 
-             //2020.8.10 added by sinclair
-                if (result.name == "Mini Grill") {
-                    KT_MINI_GRILL.getMacAddress(
-                        result.address
-                        ,
-                        function(sObj){
-                            //add item
-                            result["TrueMAC"] = sObj.value;
-                            MSCordovaBLE.MySetting.DiscoverCallBackFn(result);//呼叫外部的 ConnectCallBackFn
-                        });
+            //2020.8.10 added by sinclair
+            if (result.name == "Mini Grill") {
+                KT_MINI_GRILL.getMacAddress(
+                    result.address
+                    ,
+                    function (sObj) {
+                        //add item
+                        result["TrueMAC"] = sObj.value;
+                        MSCordovaBLE.MySetting.DiscoverCallBackFn(result);//呼叫外部的 ConnectCallBackFn
+                    });
 
-                } else {
-                    MSCordovaBLE.MySetting.DiscoverCallBackFn(result);//呼叫外部的 ConnectCallBackFn
-                }
+            } else {
+                MSCordovaBLE.MySetting.DiscoverCallBackFn(result);//呼叫外部的 ConnectCallBackFn
+            }
 
             setTimeout(function () {
                 MSCordovaBLE.receiveData(
                     result.name,
                     result.address,
                     MSCordovaBLE.sUUID,
-                    MSCordovaBLE.cUUID);           
+                    MSCordovaBLE.cUUID);
             }
-            , MSCordovaBLE.delayReceive
+                , MSCordovaBLE.delayReceive
             );
-            
+
         }
     }
 
     ,//For iOS 的 discover ==> 設備的 服務資訊。
-    iOSServicesSuccess: function (result) 
-    {
-        //WriteLog.write("Services 回傳狀態: " + result.status, "status");
+    iOSServicesSuccess: function (result) {
+        WriteLog.write("Services 回傳狀態: " + result.status, "status");
 
         if (result.status === "services") {
             for (var key in result.services)//foreach 的等價寫法
             {
                 //for (var key in objs) ... 其中宣告一個key變數,然後走訪services陣列,key顯示出來會是陣列索引
-                var sItem = result.services[key];
-                //WriteLog.write("sItem: " + sItem , "status");
-                Log.write(sItem,"iOSServicesSuccess");
+                var sItem = result.services[key].toString().toUpperCase();
+                WriteLog.write("sItem: " + sItem , "status");
+                //Log.write(sItem, "iOSServicesSuccess");
 
-                if (sItem === MSCordovaBLE.sUUID || sItem === "180A") {
-                    //WriteLog.write("sItem: " + sItem + "符合!", "status");
-                    Log.write(sItem,"iOSServicesSuccess 符合");
+                if (sItem === MSCordovaBLE.sUUID.toString().toUpperCase() || sItem === "180A") {
+                    WriteLog.write("sItem: " + sItem + "符合!", "status");
+                    //Log.write(sItem, "iOSServicesSuccess 符合");
                     new Promise(function (resolve, reject) {
 
                         bluetoothle.characteristics(resolve, reject,
-                        {
-                            address: result.address,
-                            service: sItem,
-                            characteristics: []
-                        });
+                            {
+                                address: result.address,
+                                service: sItem,
+                                characteristics: []
+                            });
 
                     }).then(MSCordovaBLE.iOSCharacteristicsSuccess, MSCordovaBLE.handleErrorAndToClose);
 
                 }
             }
         }
-    }    
+    }
 
     ,//For iOS 的 discover ==> 設備的 特徵資訊。
-    iOSCharacteristicsSuccess: function (result) 
-    {
-        //WriteLog.write("Characteristics 回傳狀態: " + result.status, "status");
+    iOSCharacteristicsSuccess: function (result) {
+        WriteLog.write("Characteristics 回傳狀態: " + result.status, "status");
         //確認是否啟動修復↓↓↓
         var dDay1 = new Date();
         sessionStorage.setItem("checkDiscover_" + result.address, dDay1.getTime());
@@ -931,12 +975,12 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
             {
                 //for (var key in objs) ... 其中宣告一個key變數,然後走訪characteristics物件,key顯示出來會是物件的屬性名稱
                 var cItem = result.characteristics[key];
-                //WriteLog.write("cItem.uuid: " + cItem.uuid, "status");
+                WriteLog.write("cItem.uuid: " + cItem.uuid, "status");
 
 
-                if (cItem.uuid === MSCordovaBLE.cUUID) {
+                if (cItem.uuid.toString().toUpperCase() === MSCordovaBLE.cUUID) {
                     //WriteLog.write("result.service: " + result.service + "符合!", "status");
-                    //WriteLog.write("cItem.uuid: " + cItem.uuid + "符合!", "status");                                       
+                    WriteLog.write("cItem.uuid: " + cItem.uuid + "符合!", "status");                                       
 
                     MSCordovaBLE.receiveData(
                         result.name,
@@ -948,16 +992,15 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
                 }
             }
         }
-    }    
+    }
 
     ,//開始接收藍牙設備傳過來的資料(真正開發建立訂閱)
-    receiveData: function (deviceName, address, serviceUuid, characteristicsUuid)
-    {
+    receiveData: function (deviceName, address, serviceUuid, characteristicsUuid) {
         MSCordovaBLE.NowStep = "receiveData";//★
 
-      
 
-         //debug:
+
+        //debug:
         //WriteLog.write("address: " + address, "status");
         //WriteLog.write("serviceUuid: " + serviceUuid, "status");
         //WriteLog.write("characteristicsUuid: " + characteristicsUuid, "status");
@@ -966,7 +1009,7 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
         WriteLog.write("訂閱... " + address
             + "/" + serviceUuid + "/" + characteristicsUuid
             + "(wait:" + MSCordovaBLE.delayReceive.toString() + ")", "debug");
-        
+
         var returnData = "";
         bluetoothle.subscribe(function (result) {
 
@@ -983,21 +1026,20 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
 
                 //以下這行是debug用
                 //WriteLog.write("從" + result.name + "收到資料: " + returnData, "receive");
-                
+
                 MSCordovaBLE.dataDispacher(result.name, address, serviceUuid, characteristicsUuid, returnData);
             }
         },
-        MSCordovaBLE.handleErrorAndToClose,
-        {
-            address: address,
-            service: serviceUuid,
-            characteristic: characteristicsUuid
-        });
+            MSCordovaBLE.handleErrorAndToClose,
+            {
+                address: address,
+                service: serviceUuid,
+                characteristic: characteristicsUuid
+            });
     }
 
     ,//解析藍牙資料
-    dataDispacher: function (deviceName, address, serviceUuid, characteristicsUuid, returnData)
-    {
+    dataDispacher: function (deviceName, address, serviceUuid, characteristicsUuid, returnData) {
         MSCordovaBLE.NowStep = "dataDispacher";
         MSCordovaBLE.delayReceive = 100;//可能會有問題的subscribe已過去，初始化時間
 
@@ -1013,6 +1055,9 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
         //}
 
         switch (deviceName) {
+            case "HC-08":
+                Fusional_HC08.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
+                break;
             case "TAIDOC TD4231":
             case "TAIDOC TD4286":
             case "TAIDOC BG":
@@ -1029,16 +1074,16 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
             case "FORA P30 PLUS":
                 //目前泰博的機型有支援並開發出 "回傳多筆紀錄" 的功能
                 if (MSCordovaBLE.MySetting.OnlyLastestData == true)         //true -> 只回傳最新的一筆紀錄 
-                {   
+                {
                     TAIDOC.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
                 }
                 else                                                        //false -> 回傳多筆紀錄
-                {   
+                {
                     TAIDOC_MultiRecord.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
                 }
                 break;
             case "Tyson bio_NCIT":
-                TysonBio_TP.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);                
+                TysonBio_TP.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
                 break;
             case "Tysonbio_BPM":
             case "Tyson bio_BPM":
@@ -1066,8 +1111,8 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
             //    OSERIO.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
             //    break;
             case "ETB04"://聿新科血糖、尿酸、膽固醇三合一
-            //case "ETB"://聿新科血壓、血糖、膽固醇三合一
-                
+                //case "ETB"://聿新科血壓、血糖、膽固醇三合一
+
                 //目前中山瑞福(大陸)的機型有支援並開發出 "回傳多筆紀錄" 的功能
                 if (MSCordovaBLE.MySetting.OnlyLastestData == true)         //true -> 只回傳最新的一筆紀錄 
                 {
@@ -1077,7 +1122,7 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
                 {
                     Bioptik_MultiRecord.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
                 }
-                break; 
+                break;
             case "ETB05"://聿新科血糖、尿酸、膽固醇、三酸甘油脂、血紅素 五合一
                 //無 "回傳多筆紀錄" 的功能
                 if (MSCordovaBLE.MySetting.OnlyLastestData == true)         //true -> 只回傳最新的一筆紀錄 
@@ -1088,7 +1133,7 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
                 {
                     //Bioptik_MultiRecord.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
                 }
-                break; 
+                break;
             case "Blue2":
                 //目前森鴻的機型沒有支援並開發出 "回傳多筆紀錄" 的功能
                 Blue2_BT.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
@@ -1101,14 +1146,14 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
                 //樂生
                 //if (MSCordovaBLE.MySetting.OnlyLastestData == true)         //true -> 只回傳最新的一筆紀錄 
                 //{
-                    Loson_DS3.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
+                Loson_DS3.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
                 //}
                 //else                                                        //false -> 回傳多筆紀錄
                 //{//藍牙4.0版沒有做多筆接收
                 //    Loson_DS3_MultiRecord.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
                 //}
-                
-                    break;  
+
+                break;
             case "DS5":
                 //樂生
                 //if (MSCordovaBLE.MySetting.OnlyLastestData == true)         //true -> 只回傳最新的一筆紀錄 
@@ -1120,10 +1165,10 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
                 //    Loson_DS3_MultiRecord.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
                 //}
 
-                break;  
+                break;
             default:
                 //華廣血糖機是是屬於模糊藍牙名這一類的,所以須採用模糊比對!
-                if (Bionime_GM282.deviceNameSearching(deviceName) == true)//華廣血糖機
+                if ((typeof Bionime_GM282 != "undefined") && Bionime_GM282.deviceNameSearching(deviceName) == true)//華廣血糖機
                 {
                     //目前華廣的機型有支援並開發出 "回傳多筆紀錄" 的功能
                     if (MSCordovaBLE.MySetting.OnlyLastestData == true)     //true -> 只回傳最新的一筆紀錄 
@@ -1134,35 +1179,42 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
                     {
                         Bionime_MultiRecord.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
                     }
-                } else if (HealForce_60F.deviceNameSearching(deviceName) == true)//華廣血糖機
+                } else if ((typeof HealForce_60F != "undefined") && HealForce_60F.deviceNameSearching(deviceName) == true)//華廣血糖機
                 {
                     //力康血氧
                     //WriteLog.write("剖析力康血氧！", "status");
                     HealForce_60F.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
 
                 }
-                //else if (Portal_BP.deviceNameSearching(deviceName) == true)//華廣血糖機
-                //{
-                //    WriteLog.write("剖析new bp！", "status");
-                //    //血壓
-                //    Portal_BP.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
+                else if ((typeof ZYTEMP != "undefined") && ZYTEMP.deviceNameSearching(deviceName) == true)//華廣血糖機
+                {
+                    //WriteLog.write("剖析new ZYTEMP！", "status");
+                    //血壓
+                    ZYTEMP.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
 
-                //}
+                }
+            //else if (Portal_BP.deviceNameSearching(deviceName) == true)//華廣血糖機
+            //{
+            //    WriteLog.write("剖析new bp！", "status");
+            //    //血壓
+            //    Portal_BP.procReturn(deviceName, address, serviceUuid, characteristicsUuid, returnData);
+
+            //}
+
 
         }
     }
 
     ,//解除訂閱
-    unReceiveData: function (address, serviceUuid, characteristicsUuid)
-    {
+    unReceiveData: function (address, serviceUuid, characteristicsUuid) {
         new Promise(function (resolve, reject) {
 
             bluetoothle.unsubscribe(resolve, reject,
-            {
-                address: address,
-                service: serviceUuid,
-                characteristic: characteristicsUuid
-            });
+                {
+                    address: address,
+                    service: serviceUuid,
+                    characteristic: characteristicsUuid
+                });
         }).then(MSCordovaBLE.unsubscribeSuccess, MSCordovaBLE.handleErrorAndToClose);
     }
 
@@ -1171,48 +1223,76 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
         WriteLog.write("取消訂閱成功！", "status");
         WriteLog.write(result);
     }
-        
+
     ,//斷開藍牙連接
-    disconnectSuccess: function (result)
-    {
+    disconnectSuccess: function (result) {
         WriteLog.write("從設備斷開藍牙連接！", "status");
         WriteLog.write(result);
-        
+
         //官網文件說從iOS 10開始,藍芽close之前一定要先呼叫disconnect才行 !!!
         //但是因為iOS在處理disconnect的速度沒有很快速(猜想可能是iOS較嚴謹之故)!藍芽設備已經關了導致接下close無法再與藍芽設備溝通而出錯.
         //故在此依舊採取與android做法一致,不呼叫disconnect直接close藍芽~
-        new Promise(function (resolve, reject) {
+        if (window.cordova.platformId === "ios") //20171201
+        {
+            new Promise(function (resolve, reject) {
 
-            bluetoothle.close(resolve, reject,
-            {
-                address: result.address
-            });
-        }).then(MSCordovaBLE.closeSuccess, MSCordovaBLE.handleError);       
-    },
-    closeSuccess: function (result)
-    {
+                bluetoothle.disconnect(resolve, reject,
+                    {
+                        address: result.address
+                    });
+            }).then(MSCordovaBLE.closeSuccess, MSCordovaBLE.handleError);
+        }
+        else if (window.cordova.platformId === "android") {
+            new Promise(function (resolve, reject) {
+
+                bluetoothle.close(resolve, reject,
+                    {
+                        address: result.address
+                    });
+            }).then(MSCordovaBLE.closeSuccess, MSCordovaBLE.handleError);
+        }
+
+        //new Promise(function (resolve, reject) {
+
+        //        bluetoothle.disconnect(resolve, reject,
+        //        {
+        //            address: result.address
+        //        });
+        //}).then(function () {
+        //    WriteLog.write("disconnect！", "status");
+        //        new Promise(function (resolve, reject) {
+
+        //            bluetoothle.close(resolve, reject,
+        //                {
+        //                    address: result.address
+        //                });
+        //        }).then(MSCordovaBLE.closeSuccess, MSCordovaBLE.handleError);
+
+        //    }, MSCordovaBLE.handleError);            
+    }
+
+    ,
+    closeSuccess: function (result) {
         WriteLog.write("關閉連線！", "status");
         //WriteLog.write(result);
         //Bioptik_ETB04.poweroffIng = false;
 
         //程式先擋住一段時間再往下執行        
         var Wait = function () {
-            if (window.cordova.platformId === "android") 
-            {
+            if (window.cordova.platformId === "android") {
                 setTimeout(function () { MSCordovaBLE.foundDevices = []; WriteLog.write("休息1000微秒！"); }, 1000);//1000微秒
             }
-            else if (window.cordova.platformId === "ios") 
-            {
+            else if (window.cordova.platformId === "ios") {
                 setTimeout(function () { MSCordovaBLE.foundDevices = []; WriteLog.write("休息3000微秒！"); }, 3000);//3000微秒 
             }
         }
-        
+
         var WaitForSingleDevicePoolingMode = function () {
             if (window.cordova.platformId === "android") {
-                setTimeout(function () { MSCordovaBLE.foundDevices = []; WriteLog.write("休息1000微秒！"); SingleDevicePooling.devicePooling();}, 1000);//1000微秒
+                setTimeout(function () { MSCordovaBLE.foundDevices = []; WriteLog.write("休息1000微秒！"); SingleDevicePooling.devicePooling(); }, 1000);//1000微秒
             }
             else if (window.cordova.platformId === "ios") {
-                setTimeout(function () { MSCordovaBLE.foundDevices = []; WriteLog.write("休息3000微秒！"); SingleDevicePooling.devicePooling();}, 3000);//3000微秒 
+                setTimeout(function () { MSCordovaBLE.foundDevices = []; WriteLog.write("休息3000微秒！"); SingleDevicePooling.devicePooling(); }, 3000);//3000微秒 
             }
         }
 
@@ -1221,7 +1301,7 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
         }
         else {
             Wait();                             //正常的scan模式
-        }    
+        }
 
         //移除已連線清單
         for (var i = 0; i < MSCordovaBLE.connDevices.length; i++) {
@@ -1234,16 +1314,14 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
     }
 
     ,
-    reportValue: function (serviceUuid, characteristicUuid, value)
-    {
+    reportValue: function (serviceUuid, characteristicUuid, value) {
         document.getElementById(serviceUuid + "." + characteristicUuid).textContent = value;
     }
-    
+
     //-------------------------------------------
     //與藍牙權限有關的函式
     ,
-    hasPermissionSuccess: function (result)
-    {
+    hasPermissionSuccess: function (result) {
         if (result.hasPermission === false) {
             bluetoothle.requestPermission(MSCordovaBLE.requestPermissionSuccess, MSCordovaBLE.handleError);
         }
@@ -1253,14 +1331,12 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
     }
 
     ,
-    requestPermissionSuccess: function (result)
-    {
+    requestPermissionSuccess: function (result) {
         WriteLog.write(result);
     }
 
     ,
-    isLocationEnabledSuccess: function (result)
-    {
+    isLocationEnabledSuccess: function (result) {
         if (result.isLocationEnabled === false) {
             bluetoothle.requestLocation(MSCordovaBLE.requestLocationSuccess, MSCordovaBLE.handleError);
         }
@@ -1270,15 +1346,13 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
     }
 
     ,
-    requestLocationSuccess: function (result)
-    {
+    requestLocationSuccess: function (result) {
         WriteLog.write(result);
     }
     //-------------------------------------------
     //與錯誤處理有關的函式
     ,
-    handleError: function(error)
-    {
+    handleError: function (error) {
         var msg;
         if (error.error && error.message) {
             var errorItems = [];
@@ -1301,12 +1375,10 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
             MSCordovaBLE.reportValue(error.service, error.characteristic, "Error: " + error.message);
         }
     }
-    
+
     ,
-    handleErrorAndToClose: function(error)
-    {
-        if (MSCordovaBLE.NowStep == "receiveData")
-        {
+    handleErrorAndToClose: function (error) {
+        if (MSCordovaBLE.NowStep == "receiveData") {
             //在訂閱時出錯，為了解決service not found問題!延遲下一次訂閱時間
             if (MSCordovaBLE.delayReceive < 1000 || MSCordovaBLE.delayReceive > 10000) {
                 MSCordovaBLE.delayReceive = 2000;
@@ -1320,13 +1392,13 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
         new Promise(function (resolve, reject) {
 
             bluetoothle.close(resolve, reject,
-            {
-                address: error.address
-            });
+                {
+                    address: error.address
+                });
         }).then(MSCordovaBLE.closeSuccess
             ,
             function (error) {
-                
+
                 MSCordovaBLE.handleError(error);
                 //MSCordovaBLE.closeSuccess("關閉失敗，強制清空!");
             }
@@ -1336,21 +1408,20 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
     //Sqlite DB 處理函式
 
     ,//檢查 deviceName 是否在設備清單(db)中
-    inDeviceList: function (deviceName, callBack)
-    {
+    inDeviceList: function (deviceName, callBack) {
         if (deviceName == null) {
             callBack(false);
             return;
         }
         //-----------------------------------------------------------
         //modified by jerry 20180612，處理模糊藍牙名
-        if (Bionime_GM282.deviceNameSearching(deviceName) == true     //如果確定是 華廣血糖機(具有模糊藍牙名)就不用檢查,則一概回傳 true!
-            || HealForce_60F.deviceNameSearching(deviceName) == true 
-            || Portal_BP.deviceNameSearching(deviceName) == true 
+        if (((typeof Bionime_GM282 != "undefined") && Bionime_GM282.deviceNameSearching(deviceName) == true)     //如果確定是 華廣血糖機(具有模糊藍牙名)就不用檢查,則一概回傳 true!
+            || ((typeof HealForce_60F != "undefined") && HealForce_60F.deviceNameSearching(deviceName) == true)
+            || ((typeof Portal_BP != "undefined") && Portal_BP.deviceNameSearching(deviceName) == true)
+            || ((typeof ZYTEMP != "undefined") && ZYTEMP.deviceNameSearching(deviceName) == true)
             // || xxxx_A血糖機.deviceNameSearching(deviceName) == true  //如果確定是 A品牌血糖機(具有模糊藍牙名)就不用檢查,則一概回傳 true!
             // || xxxx_B血糖機.deviceNameSearching(deviceName) == true  //如果確定是 B品牌血糖機(具有模糊藍牙名)就不用檢查,則一概回傳 true!
-        )
-        {
+        ) {
             callBack(true);//不用檢查,一概回傳 true!
             return;
         }
@@ -1368,27 +1439,26 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
             for (var i = 0; i < _DeviceList.length; i++) {
                 if (deviceName != "undefined" &&
                     deviceName == _DeviceList[i].DeviceModel
-                    ) {
+                ) {
                     callBack(true);
                     return;
                 }
             }
-            callBack(false);            
+            callBack(false);
         } else {
             DAOFn.Query('', "select DeviceModel from DevicesInfo",
-               function (result) {
-                   localStorage.setItem("inDeviceList", result);
-                   _DeviceList = $.parseJSON(result);
-                   for (var i = 0; i < _DeviceList.length; i++) {
-                       if (deviceName != "undefined" &&
-                           deviceName == _DeviceList[i].DeviceModel )
-                       {
-                           callBack(true);
-                           return;
-                       }
-                   }
-                   callBack(false);
-               }
+                function (result) {
+                    localStorage.setItem("inDeviceList", result);
+                    _DeviceList = $.parseJSON(result);
+                    for (var i = 0; i < _DeviceList.length; i++) {
+                        if (deviceName != "undefined" &&
+                            deviceName == _DeviceList[i].DeviceModel) {
+                            callBack(true);
+                            return;
+                        }
+                    }
+                    callBack(false);
+                }
             );
         }
         //-----------------------------------------------------------
@@ -1407,7 +1477,7 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
         //   }
         //);
     }
-    
+
     ,//根據保留天數來刪除 DeviceLog 的資料
     delDeviceLog: function (flag, filterDays) {
         if (flag) {
@@ -1441,26 +1511,24 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
         dl_Date = dl_Date.replace(" ", "").replace(".", "");
         //判斷有沒有重覆
         DAOFn.Query("", "select * from DeviceLog where DL_Date='" + dl_Date + "' and DL_Mac='" + dl_Mac + "' and DL_Value='" + dl_Value + "'",
-        function ResultFun(result) {
-            var objList = $.parseJSON(result);
-            if (objList.length == 0)
-            {
-                //沒有重覆，新增記錄，並往下做事
-                MSCordovaBLE.writeHistoryLog(dl_Date, dl_Mac, dl_Value);
+            function ResultFun(result) {
+                var objList = $.parseJSON(result);
+                if (objList.length == 0) {
+                    //沒有重覆，新增記錄，並往下做事
+                    MSCordovaBLE.writeHistoryLog(dl_Date, dl_Mac, dl_Value);
 
-                CallBack(true);
-            }
-            else
-            {
-                CallBack(false);
-            }
+                    CallBack(true);
+                }
+                else {
+                    CallBack(false);
+                }
 
-        });
+            });
     }
-           
+
     ,//回傳是否在配對清單中
     inPairedList: function (deviceID) {
-        
+
         var vResult = false;
         var vDevPairObj = [];
         try {
@@ -1473,7 +1541,7 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
                 break;
             }
         }
-        return vResult;        
+        return vResult;
     }
 
     ,
@@ -1483,22 +1551,20 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
     sleep: function (milliseconds) {//WORK.
         var start = new Date().getTime();
         for (var i = 0; i < 1e7; i++) {
-            if ((new Date().getTime() - start) > milliseconds){
+            if ((new Date().getTime() - start) > milliseconds) {
                 break;
             }
         }
 
         WriteLog.write("休息" + milliseconds + "微秒！");
-    }    
-    
+    }
+
     //-------------------------------------------
     //與硬體配對有關的函式
 
     ,//移除配對設備(Android only)
-    removePairDevices: function (address, CB, FB)
-    {
-        if (window.cordova.platformId === "android")
-        {
+    removePairDevices: function (address, CB, FB) {
+        if (window.cordova.platformId === "android") {
             bluetoothle.unbond(//做硬體配對
                 function (result) {
                     WriteLog.write(result.name + " 移除配對成功.", "status");
@@ -1515,16 +1581,14 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
     }
 
     ,//設備做硬體配對(Android only)
-    addPairDevices: function (address, CB, FB)
-    {
-        if (window.cordova.platformId === "android")
-        {
+    addPairDevices: function (address, CB, FB) {
+        if (window.cordova.platformId === "android") {
             new Promise(function (resolve, reject) {
 
                 bluetoothle.isBonded(resolve, reject,
-                {
-                    address: address
-                });
+                    {
+                        address: address
+                    });
             }).then(
                 function (result) {
                     //WriteLog.write(result);                                        
@@ -1539,10 +1603,10 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
                         bluetoothle.bond(//做硬體配對
                             function (result) {
                                 //MSCordovaBLE.isBondSuccess = true;
-                                WriteLog.write(result.name + " 配對成功.", "status");                                
+                                WriteLog.write(result.name + " 配對成功.", "status");
                                 if (CB !== undefined) { CB(); }
                             },
-                            function (err) {                                
+                            function (err) {
                                 WriteLog.write(err.name + " 無法配對! {message: " + err.message + "}", "status")
                                 if (FB !== undefined) { FB(); }
                             },
@@ -1563,11 +1627,10 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
     //Failed Callback,
     //是否關機的旗標
     ,
-    SetTimeAlone: function (Ver, device, SFn, FFn, PowerOffFlag)
-    {        
+    SetTimeAlone: function (Ver, device, SFn, FFn, PowerOffFlag) {
         WriteLog.write("獨立設定時間", "status");
-        
-        SetPeripheralTimeAlone.setTimeAloneConnect(Ver, device, SFn, FFn, PowerOffFlag);        
+
+        SetPeripheralTimeAlone.setTimeAloneConnect(Ver, device, SFn, FFn, PowerOffFlag);
     }
     ,
     /*
@@ -1586,4 +1649,8 @@ var MSCordovaBLE = MSCordovaBLE || {}, MSCordovaBLE = {
             callback();
         }
     }
+
+
+
+
 };
