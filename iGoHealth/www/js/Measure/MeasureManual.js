@@ -675,12 +675,20 @@ var MeasureManual = {
 
                 var objList = $.parseJSON(result);
                 if (objList.length == 0) {
+
+                    var message = $.i18n("新增成功") + "!!!";
+                    var title = $.i18n('系統訊息');
+
                     MeasureManual.UploadMData_Memo(lParams, function () {
-                        var message = $.i18n("新增成功") + "!!!";
-                        var title = $.i18n('系統訊息');
-                        FnCtrl.alert(message, title, function () {
-                            Measure.showHistory(MType);
-                        });
+                        message = $.i18n("新增成功") + "!!!";
+                        title = $.i18n('系統訊息');
+                    }, function (err) {
+                        message = $.i18n("目前無網路連線或是無法連線至伺服器，請檢查網路，並稍後再試。") + "!!!";
+                        title = $.i18n('系統訊息');
+                    });
+
+                    FnCtrl.alert(message, title, function () {
+                        Measure.showHistory(MType);
                     });
 
                     setTimeout(function () {

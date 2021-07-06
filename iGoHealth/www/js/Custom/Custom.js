@@ -38,6 +38,11 @@ var Custom = Custom || {},
                 function getTextZoomCallback(textZoom) {
                     Log.write('WebView text should be scaled to the preferred value ' + textZoom + '%', 'Custom setFontSize');
 
+                    if(textZoom === 100){
+                        Log.write("調整.chartType .btn文字大小",'Custom setFontSize');
+                        $(".chartType .btn").css("font-size","1.7em");
+                    }
+
                     // var maxFontSize = 100;
                     // var MeasureImageSize = 125; //default
                     // var MeasureImageSizeAdjust = 0;

@@ -1,5 +1,5 @@
 var SidebarCustom = {
-    sidebarId: "sidebarMenu",
+    sidebarId: "IP_Modal",
     openMenuFn:function(){      
     },
     closeMenuFn:function(){

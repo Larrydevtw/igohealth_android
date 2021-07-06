@@ -47,7 +47,14 @@
     <!-- CSS3 動態效果 -->
     <link href="css/animate.css" rel="stylesheet">
     <script src="js/Component/animateCss.js" type="text/javascript"></script>
+    <!--補間動畫-->
+    <script src="js/Component/TweenMax.min.js"></script>
 
+    <!--Sidebar-->
+    <link rel="stylesheet" href="js/Component/Sidebar/jquery.mCustomScrollbar.min.css">
+    <!-- <link rel="stylesheet" href="js/Component/Sidebar/SidebarCustom.css"> -->
+    <script src="js/Component/Sidebar/jquery.mCustomScrollbar.concat.min.js"></script>
+    <script src="js/Component/Sidebar/SidebarCustom.js"></script>
     <!--手勢滑動-->
     <script type="text/javascript" src="js/Component/hammer.min.js"></script>
 
@@ -101,6 +108,7 @@
     <!--★ 藍牙模組-->
     <script type="text/javascript" src="js/WiseBLE/Core/es6-promise.min.js"></script>
     <script type="text/javascript" src="js/WiseBLE/Core/uuids.js"></script>
+    <script type="text/javascript" src="js/WiseBLE/Bionime.js"></script>
 
     <script type="text/javascript" src="js/WiseBLE/Core/BTSetting.js"></script>
     <script type="text/javascript" src="js/WiseBLE/Core/MSCordovaBLE.js"></script>
@@ -619,7 +627,7 @@
                 <h3 class="text-center  mb-1">請留意手動輸入之量測數值，<br />
                     不納入本服務平台激勵點數之計算範圍。</h3>
                 <div class="input f-center-center row3 mb-1">
-                    <span>測量時間：</span>
+                    <!-- <span>測量時間：</span> -->
                     <input class="date" id="MPM_Date">
                     <input class="time" id="MPM_Time">
                 </div>
@@ -628,15 +636,15 @@
                     <div id="tabManual_BP" style="display:none">
                         <div class="input login-input mb-1">
                             <span>收縮壓 mmHg：</span>
-                            <input class="mt-1" id="txtMPM_SBP" placeholder="請輸入收縮壓值" />
+                            <input type="number" class="mt-1" id="txtMPM_SBP" placeholder="請輸入收縮壓值" />
                         </div>
                         <div class="input login-input mb-1">
                             <span>舒張壓 mmHg：</span>
-                            <input class="mt-1" id="txtMPM_DBP" placeholder="請輸入舒張壓值" />
+                            <input type="number" class="mt-1" id="txtMPM_DBP" placeholder="請輸入舒張壓值" />
                         </div>
                         <div class="input login-input mb-1">
                             <span>脈膊 次/分：</span>
-                            <input class="mt-1" id="txtMPM_BPHR" placeholder="請輸入脈膊值" />
+                            <input type="number" class="mt-1" id="txtMPM_BPHR" placeholder="請輸入脈膊值" />
                         </div>
                     </div>
                     <div id="tabManual_BG" style="display:none">
@@ -654,13 +662,13 @@
 
                         <div class="input login-input">
                             <span>血糖值 mg/dl：</span>
-                            <input class="mt-1" id="txtMPM_BG" placeholder="請輸入血糖值" />
+                            <input type="number" class="mt-1" id="txtMPM_BG" placeholder="請輸入血糖值" />
                         </div>
                     </div>
                     <div id="tabManual_CHOL" style="display:none">
                         <div class="input login-input mb-1">
-                            <span>膽固醇 mg/dl：：</span>
-                            <input class="mt-1" id="txtMPM_CHOL" placeholder="請輸入膽固醇值" />
+                            <span>膽固醇 mg/dl：</span>
+                            <input type="number" class="mt-1" id="txtMPM_CHOL" placeholder="請輸入膽固醇值" />
                         </div>
                     </div>
                     <div id="tabManualMemo" style="">
