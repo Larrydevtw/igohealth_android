@@ -304,7 +304,17 @@ var Measure = {
         Log.write("getPersonalBodyRow start", "getPersonalBodyRow");
         return new Promise(function (resolve, reject) {
             var HtmlStr = "";
+
+            var DeviceModel = objRow.DeviceModel;
             var MTimeStamp = objRow.MTimeStamp;
+            var DisplayMTimeStamp = Display.dateFormat(MTimeStamp);
+            
+            //確認是否為非手動量測，是的話在日期後加上*
+            var checkDeviceModel = DeviceModel.indexOf('(Manual)');
+            if (checkDeviceModel < 0) {
+                DisplayMTimeStamp = DisplayMTimeStamp + '*';
+            }
+
             var MRowKey = objRow.MRowKey;
             var UploadStatus = objRow.UploadStatus;
             var Memo = objRow.Memo == null ? "" : objRow.Memo;
@@ -353,7 +363,7 @@ var Measure = {
 
                         TheWar = Display.showText(arrWar.join(';'));
 
-                        HtmlStr += '<div>' + Display.dateFormat(MTimeStamp) + '</div>';
+                        HtmlStr += '<div>' + DisplayMTimeStamp + '</div>';
                         HtmlStr += '<div>' + SBP + '</div>';
                         HtmlStr += '<div>' + DBP + '</div>';
                         HtmlStr += '<div>' + HR + '</div>';
@@ -379,7 +389,7 @@ var Measure = {
                     var Distance = objList[i].Distance;
                     var CAL = objList[i].CAL;
 
-                    HtmlStr += '<div>' + Display.dateFormat(MTimeStamp) + '</div>';
+                    HtmlStr += '<div>' + DisplayMTimeStamp + '</div>';
                     HtmlStr += '<div>' + STEP + '</div>';
                     HtmlStr += '<div>' + Distance + '</div>';
                     HtmlStr += '<div>' + CAL + '</div>';
@@ -414,7 +424,7 @@ var Measure = {
                             BS = "<font color=#BC272D>" + BS + "</font>";
                         }
 
-                        HtmlStr += '<div>' + Display.dateFormat(MTimeStamp) + '</div>';
+                        HtmlStr += '<div>' + DisplayMTimeStamp + '</div>';
                         HtmlStr += '<div>' + Display.getTimeType(TimeType) + '</div>';
                         HtmlStr += '<div>' + BS + '</div>';
 
@@ -455,7 +465,7 @@ var Measure = {
 
                         TheWar = Display.showText(arrWar.join(';'));
 
-                        HtmlStr += '<div>' + Display.dateFormat(MTimeStamp) + '</div>';
+                        HtmlStr += '<div>' + DisplayMTimeStamp + '</div>';
                         HtmlStr += '<div>' + Weight + '</div>';
                         HtmlStr += '<div>' + BMI + '</div>';
                         HtmlStr += '<div>' + BodyRate + '</div>';
@@ -489,7 +499,7 @@ var Measure = {
                             MValue = "<font color=#BC272D>" + MValue + "</font>";
                         }
 
-                        HtmlStr += '<div>' + Display.dateFormat(MTimeStamp) + '</div>';
+                        HtmlStr += '<div>' + DisplayMTimeStamp + '</div>';
                         HtmlStr += '<div>' + MValue + '</div>';
 
                         if (TheWar !== '') {

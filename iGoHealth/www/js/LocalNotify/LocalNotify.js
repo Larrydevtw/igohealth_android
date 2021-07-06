@@ -277,18 +277,24 @@ var LocalNotify = LocalNotify || {},
                             var timeHHmm = objList[i].SA_Time.split(':');
                             var HH = parseInt(timeHHmm[0]);
                             var mm = timeHHmm.length > 1 ? parseInt(timeHHmm[1]) : 0;
-                            var notify={
-                                "id": objList[i].SA_NO,
-                                "title": objList[i].SA_Title,
-                                "text": objList[i].SA_Text,
-                                "smallIcon": LocalNotify.smallIcon,
-                                "icon": LocalNotify.icon,
-                                "trigger": {
-                                    "every": {
-                                        "hour": HH,
-                                        "minute": mm
+                            var notify = {
+                                id: objList[i].SA_NO,
+                                title: objList[i].SA_Title,
+                                text: objList[i].SA_Text,
+                                smallIcon: LocalNotify.smallIcon,
+                                icon: LocalNotify.icon,
+                                trigger: {
+                                    every: {
+                                        hour: HH,
+                                        minute: mm
                                     }
-                                }
+                                },
+                                foreground: true,
+                                // attachments: ['file://images/devices/5050/ETB04.jpg'],
+                                // actions: [
+                                //     { id: 'Y', title: '是' },
+                                //     { id: 'N',  title: '否' }
+                                // ]
                             };
                             arrResult.push(notify);
                         });
