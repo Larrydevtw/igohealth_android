@@ -92,6 +92,12 @@ var app = {
                 next();
             });
         }, function (next) {
+            FnGeo.arrTargets = ["signup_twzipcode","profile_twzipcode"];
+            FnGeo.init(function () { //successFn
+                //alert("FnGeo Success");
+                next();
+            });
+        }, function (next) {
             FnBT.DeviceInfo(function () { //successFn
                 //alert("DeviceInfo Success");
                 next();

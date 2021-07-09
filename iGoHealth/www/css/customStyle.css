@@ -12,15 +12,34 @@
 input[type=text]{
   height:30px;
 } */
+
+/*縣市下拉樣式*/
+.selzipcode {
+  margin-right: 10px;
+  width: 100%;
+}
+
+.selzipcode > select {
+  width: 100%;
+  border-radius: 5px;
+  font-size: 1.2em;
+  color: #333;
+  border-color: #aaa;
+  background-color: white;
+  padding: 10px 15px;
+  margin: 5px;
+}
+
 /*搜尋Bar樣式*/
-.container-4{
+.container-4 {
   overflow: hidden;
   width: 100%;
   margin: 5px;
   vertical-align: middle;
   white-space: nowrap;
 }
-.container-4 input[type="search"]{
+
+.container-4 input[type="search"] {
   width: 100%;
   height: 50px;
   background: #2b303b;
@@ -33,26 +52,33 @@ input[type=text]{
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
+
 .container-4 input[type="search"]::-webkit-input-placeholder {
   color: #65737e;
 }
-.container-4 input[type="search"]:-moz-placeholder { /* Firefox 18- */
-  color: #65737e;  
+
+.container-4 input[type="search"]:-moz-placeholder {
+  /* Firefox 18- */
+  color: #65737e;
 }
-.container-4 input[type="search"]::-moz-placeholder {  /* Firefox 19+ */
-  color: #65737e;  
+
+.container-4 input[type="search"]::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #65737e;
 }
-.container-4 input[type="search"]:-ms-input-placeholder {  
-  color: #65737e;  
+
+.container-4 input[type="search"]:-ms-input-placeholder {
+  color: #65737e;
 }
-.container-4 button.icon{
+
+.container-4 button.icon {
   -webkit-border-top-right-radius: 5px;
   -webkit-border-bottom-right-radius: 5px;
   -moz-border-radius-topright: 5px;
   -moz-border-radius-bottomright: 5px;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
- 
+
   border: none;
   background: #232833;
   height: 50px;
@@ -60,7 +86,7 @@ input[type=text]{
   color: #4f5b66;
   opacity: 1;
   font-size: 10pt;
- 
+
   -webkit-transition: all .55s ease;
   -moz-transition: all .55s ease;
   -ms-transition: all .55s ease;
@@ -72,7 +98,7 @@ input[type=text]{
   margin-left: -50px;
 }
 
-.container-4:hover button.icon:hover{
+.container-4:hover button.icon:hover {
   background: white;
 }
 
@@ -86,6 +112,7 @@ input[type=text]{
   padding: 10px 20px;
   margin: 5px;
 }
+
 .timepicker_ios {
   width: 60px !important;
   font-size: 18px;
@@ -313,6 +340,7 @@ a.bttn-dark {
   -webkit-transition: 0.3s all ease;
   transition: 0.3s ease all;
 }
+
 a.bttn-light {
   color: #DDA87C;
   border: 3px solid #DDA87C;
@@ -322,6 +350,7 @@ a.bttn-light {
   -webkit-transition: 0.3s all ease;
   transition: 0.3s ease all;
 }
+
 a.bttn-dark:hover {
   color: #FFF;
 }

@@ -171,6 +171,11 @@
     <script src="js/Points/FnPoint.js"></script>
     <!-- 商品 -->
     <script src="js/Points/FnProduct.js"></script>
+    
+    <!--台灣縣市下拉 -->
+    <script src="js/Geo/ZipcodeData.js"></script>
+    <script src="js/Geo/jquery.twzipcode.min.js"></script>
+    <script src="js/Geo/FnGeo.js"></script>
 
     <!--APP各程式-->
     <script src="js/Login.js"></script>
@@ -295,7 +300,7 @@
                 </div>
                 <div class="input login-input">
                     <span>居住縣市及鄉鎮</span>
-                    <div class="mt-1 f-center-between">
+                    <!-- <div class="mt-1 f-center-between">
                         <select id="signup_City">
                             <option>台北市</option>
                             <option>新北市</option>
@@ -306,6 +311,11 @@
                             <option>第二區</option>
                             <option>第三區</option>
                         </select>
+                    </div> -->
+                    <div id="signup_twzipcode" class="mt-1 f-center-between">
+                        <div id="signup_City" data-role="county" data-style="Style Name" data-value="110" class="selzipcode"></div>
+                        <div id="signup_Chiu" data-role="district" data-style="Style Name" data-value="臺北市" class="selzipcode"></div>
+                        <div data-role="zipcode" data-style="Style Name" data-value="信義區" style="display:none;" class="selzipcode"></div>
                     </div>
                 </div>
                 <div class="w-100">
@@ -979,7 +989,7 @@
 
                 <div class="input login-input">
                     <span>居住縣市及鄉鎮</span>
-                    <div class="mt-1 f-center-between">
+                    <!-- <div class="mt-1 f-center-between">
                         <select id="profile_City">
                             <option>台北市</option>
                             <option>新北市</option>
@@ -990,6 +1000,11 @@
                             <option>第二區</option>
                             <option>第三區</option>
                         </select>
+                    </div> -->
+                    <div id="profile_twzipcode" class="mt-1 f-center-between">
+                        <div id="profile_City" data-role="county" data-style="Style Name" data-value="110" class="selzipcode"></div>
+                        <div id="profile_Chiu" data-role="district" data-style="Style Name" data-value="臺北市" class="selzipcode"></div>
+                        <div data-role="zipcode" data-style="Style Name" data-value="信義區" style="display:none;" class="selzipcode"></div>
                     </div>
                 </div>
             </div>
