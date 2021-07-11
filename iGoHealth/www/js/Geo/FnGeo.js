@@ -38,7 +38,7 @@ var FnGeo = {
         var zipcode = $(selector).twzipcode('get', 'zipcode');
         Log.write(zipcode, 'FnGeo getZipcode');
 
-        return zipcode;
+        return zipcode + "";
     },
     setZipcode: function (targetId, zipcode) { //FnGeo.setZipcode(targetId,zipcode);
         var selector = "#" + targetId;
