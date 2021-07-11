@@ -198,6 +198,13 @@ var Member = {
             }
         }
 
+        var Zipcode = FnGeo.getZipcode("signup_twzipcode");
+        Log.write(Zipcode,'Member Apply zipcode');
+        if(Zipcode == undefined || Zipcode == ""){
+            navigator.notification.alert($.i18n('請選擇居住縣市及鄉鎮'), null, $.i18n('系統訊息'), $.i18n('確定'));
+            return;
+        }
+
         var UserSex = $('input:radio[name=sex]:checked').val();
 
         if (UserSex == "") {
@@ -226,6 +233,7 @@ var Member = {
             UserSex,
             document.getElementById("signup_PID").value,
             document.getElementById("signup_Nick").value,
+            Zipcode,
             function (Result) {
                 Log.write("收到：" + Result);
                 switch (Result) {
@@ -538,6 +546,12 @@ var Member = {
                 localStorage["NickName_" + UserID] = UserInfo.NickName;
                 Member.showDisplayName();
 
+                Log.write(UserInfo.Zipcode,'Member GetUserData UserInfo.Zipcode');
+                if (UserInfo.Zipcode != "") {
+                    localStorage["Zipcode_" + UserID] = UserInfo.Zipcode;
+                    FnGeo.setZipcode("profile_twzipcode", UserInfo.Zipcode);
+                }
+
                 if (UserInfo.Bir != "") {
                     localStorage["Bir_" + UserID] = UserInfo.Bir;
                     // Age = Member.GetAgeByBrithday(Bir);
@@ -682,6 +696,13 @@ var Member = {
             return;
         }
 
+        var Zipcode = FnGeo.getZipcode("profile_twzipcode");
+        Log.write(Zipcode,'Member SaveUserData zipcode');
+        if(Zipcode == undefined || Zipcode == ""){
+            navigator.notification.alert($.i18n('請選擇居住縣市及鄉鎮'), null, $.i18n('系統訊息'), $.i18n('確定'));
+            return;
+        }
+
         if(AppConfig.lMType.indexOf("BW") > -1){
             if ($("#profile_tall").val() == "") {
                 navigator.notification.alert("請輸入身高", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
@@ -743,6 +764,7 @@ var Member = {
         localStorage["Height_" + UserID] = Height;
         localStorage["Age_" + UserID] = Age;
         localStorage["NickName_" + UserID] = NickName;
+        localStorage["Zipcode_" + UserID] = Zipcode;
 
         var TargetW = $("#profile_tgW").val();
         if (TargetW) {
@@ -773,6 +795,7 @@ var Member = {
         var UserInfo = {
             UserID: UserID,
             NickName: NickName,
+            Zipcode: Zipcode,
             Bir: Bir,
             UserType: UserType,
             Gender: Gender,
@@ -805,7 +828,7 @@ var Member = {
             return;
         }
 
-        var UserData = UserInfo.UserID + "," + UserInfo.UserType + "," + UserInfo.Gender + "," + UserInfo.Height + "," + UserInfo.Age + "," + UserInfo.Bir + "," + UserInfo.NickName;
+        var UserData = UserInfo.UserID + "," + UserInfo.UserType + "," + UserInfo.Gender + "," + UserInfo.Height + "," + UserInfo.Age + "," + UserInfo.Bir + "," + UserInfo.NickName+ "," + UserInfo.Zipcode;
         Log.alert(UserData, "Member.js SysUserDataToCloud");
 
         var SystemModel = AppConfig.SystemModel; 

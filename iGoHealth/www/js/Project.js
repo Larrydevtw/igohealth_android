@@ -42,12 +42,14 @@ var Project = Project || {}, Project =
 
             //$("body").disableSelection(); //讓網頁內的文字無法被選取 //2021.06.15移除，因為需使用JqueryUI
             
-            Log.write("判斷是否自動登入","Project.js AppInit");
+            Log.write("判斷是否自動登入 localStorage.UserID:" + localStorage.UserID, "Project.js AppInit");
             //判斷是否自動登入
             if (localStorage.UserID) {
+                Log.write("自動登入", "Project.js AppInit");
+
                 //RecView.push('MainHome');
                 var Pwd = localStorage.UserPS;
-                var UserID=localStorage.UserID;
+                var UserID = localStorage.UserID;
 
                 document.getElementById("login_userId").value = UserID;
                 document.getElementById("login_userPwd").value = Pwd;
@@ -70,7 +72,7 @@ var Project = Project || {}, Project =
                 //         Log.write("解密失敗");
                 //     }
                 // );
-            } 
+            }
             $("#txtReleaseVer").text(Domain.Version);
             $("#txtReleaseVer_Menu").text(Domain.Version);           
         },

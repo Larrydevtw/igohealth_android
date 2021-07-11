@@ -184,6 +184,11 @@ var FnSystem = {
     CheckStandardValue: function (strStandardInfo) {
         Log.write(strStandardInfo, 'FnSystem CheckStandardValue');
 
+        if(strStandardInfo === undefined){
+            Log.write("未取得雲端標準值版本資料，不進行後續檢查", 'FnSystem CheckStandardValue');
+            return;
+        }
+
         var StandardInfo = JSON.parse(strStandardInfo);
         var VersionNo = StandardInfo.VersionNo;
 

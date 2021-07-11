@@ -30,27 +30,21 @@ var FnGeo = {
         }
 
     },
-    getZipcode: function (targetId, successFn) {
+    getZipcode: function (targetId) {
         var selector = "#" + targetId;
 
         // var county = $(selector).twzipcode('get', 'county');
         // var district = $(selector).twzipcode('get', 'district');
         var zipcode = $(selector).twzipcode('get', 'zipcode');
-        console.log(zipcode);
+        Log.write(zipcode, 'FnGeo getZipcode');
 
-        if (successFn) {
-            successFn(zipcode);
-        }
+        return zipcode;
     },
-    setZipcode: function (targetId, zipcode, successFn) { //FnGeo.setZipcode(targetId,zipcode);
+    setZipcode: function (targetId, zipcode) { //FnGeo.setZipcode(targetId,zipcode);
         var selector = "#" + targetId;
         Log.write(selector, 'FnGeo setZipcode');
         Log.write(zipcode, 'FnGeo setZipcode');
         // 直接設置郵遞區號
         $(selector).twzipcode('set', zipcode);
-
-        if (successFn) {
-            successFn();
-        }
     }
 };

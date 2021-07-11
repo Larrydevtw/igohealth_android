@@ -145,6 +145,9 @@ var MainHome = MainHome || {}, MainHome =
                     });
                 }
             });
+
+            //首頁手勢滑動
+            ProjectFn.gestureInit('MainHomeDiv');
         },
         CheckNet:function(){
             var netFlag = NetStatusFn.getNetFlag();
@@ -325,6 +328,9 @@ var MainHome = MainHome || {}, MainHome =
                         }
 
                         $("#txtNickName").val(UserInfo.NickName); //TODO
+                        var Zipcode = UserInfo.Zipcode;
+                        FnGeo.setZipcode("profile_twZipcode", Zipcode);
+
                         $("#profile_BIR").val(Bir);
                         $("#profile_tall").val(UserInfo.Height);
                         if(localStorage["TargetW_" + UserID]){
@@ -373,6 +379,9 @@ var MainHome = MainHome || {}, MainHome =
                 }
 
                 $("#txtNickName").val(localStorage["NickName_" + UserID]); //TODO
+                var Zipcode = localStorage["Zipcode_" + UserID];
+                FnGeo.setZipcode("profile_twZipcode", Zipcode);
+
                 $("#profile_BIR").val(Bir);
                 $("#profile_tall").val(localStorage["Height_" + UserID]);
                 $("#profile_tgW").val(localStorage["TargetW_" + UserID]);

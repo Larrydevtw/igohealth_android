@@ -124,7 +124,6 @@ var app = {
         }], function () {
             //alert("PJ Success");
             
-            ProjectFn.gestureInit('MainHomeDiv');
             ProjectFn.ballAddInit();
 
             WiseScripts.Tool.ShowLoading(false, '', '', function () {

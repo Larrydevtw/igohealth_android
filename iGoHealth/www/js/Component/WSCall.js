@@ -8,10 +8,10 @@ var WSCall = WSCall || {},
     WSCall = {
         Post: function (PostInfo, successFn, errFn) {
             var netFlag = NetStatusFn.getNetFlag();
-            Log.write(netFlag,'Wscall Post');
+            Log.write(netFlag, 'Wscall Post');
             if (!netFlag) {
                 Log.write("目前無網路連線或是無法連線至伺服器，請檢查網路，並稍後再試。", "WSCall Post");
-                if(errFn){
+                if (errFn) {
                     errFn($.i18n('目前無網路連線!!!'));
                 }
                 return;
@@ -22,15 +22,15 @@ var WSCall = WSCall || {},
             var SystemModel = AppConfig.SystemModel; //todo //WiseHC應該不用使用OID OCICS1^OID OCICS1: 照護者端； OID  
 
             var UploadData = JSON.stringify(PostInfo.UploadData);
-            var async=PostInfo.async===undefined? true: PostInfo.async; //true:預設，非同步執行；false:同步執行(非必要不使用同步執行)
-            var timeout=PostInfo.timeout===undefined? 20000: PostInfo.timeout; //預設:20000 in milliseconds
+            var async = PostInfo.async === undefined ? true : PostInfo.async; //true:預設，非同步執行；false:同步執行(非必要不使用同步執行)
+            var timeout = PostInfo.timeout === undefined ? 20000 : PostInfo.timeout; //預設:20000 in milliseconds
             var Url = PostInfo.Url;
 
-            var ASKey1=PostInfo.ASKey1===undefined?AppConfig.ASKey1:PostInfo.ASKey1;
-            var ASKey2=PostInfo.ASKey2===undefined?AppConfig.ASKey2:PostInfo.ASKey2;
+            var ASKey1 = PostInfo.ASKey1 === undefined ? AppConfig.ASKey1 : PostInfo.ASKey1;
+            var ASKey2 = PostInfo.ASKey2 === undefined ? AppConfig.ASKey2 : PostInfo.ASKey2;
 
-            var deASKey1 = ASKey1;//PostInfo.deASKey1 === undefined ? ASKey1 : PostInfo.deASKey1;
-            var deASKey2 = ASKey2;//PostInfo.deASKey2 === undefined ? ASKey2 : PostInfo.deASKey2;
+            var deASKey1 = ASKey1; //PostInfo.deASKey1 === undefined ? ASKey1 : PostInfo.deASKey1;
+            var deASKey2 = ASKey2; //PostInfo.deASKey2 === undefined ? ASKey2 : PostInfo.deASKey2;
 
             //alert(deASKey2);
             //資料加密
@@ -66,20 +66,20 @@ var WSCall = WSCall || {},
                     Version: Domain.Version,
                     VersionNo: Domain.VersionNo
                 };
-                
+
                 $.ajax({
                     url: Url, //AppConfig.AppServices + "/UploadMData",
                     data: UData,
                     type: "POST",
                     timeout: timeout, // in milliseconds
-                    async:async,
+                    async: async,
                     success: function (clsReturn) { //200:回傳值正常，進行後續動作
                         //alert(clsReturn.Data);
                         NetStatusFn._bNetFlag = true;
                         $("#aOffline").hide();
 
                         if (clsReturn.Code == "200") {
-                            WiseAES.decryptAES(clsReturn.Data, deASKey1,deASKey2, "T",
+                            WiseAES.decryptAES(clsReturn.Data, deASKey1, deASKey2, "T",
                                 function (result) { //解密成功:後端系統正程運作
                                     if (successFn) {
                                         successFn(result);
@@ -87,13 +87,13 @@ var WSCall = WSCall || {},
                                 },
                                 function (errMsg) { //解密失敗:後端有系統性錯誤
                                     WSCall.errCallback($.i18n('解密失敗'));
-                                    if(errFn){
+                                    if (errFn) {
                                         errFn(($.i18n("服務呼叫失敗！請稍後再試。") + "解密失敗。"))
                                     }
                                 });
                         } else { //400:不正確請求信息 500:流程出現錯誤
                             WSCall.errCallback(clsReturn.Data);
-                            if(errFn){
+                            if (errFn) {
                                 errFn(clsReturn.Data);
                             }
                         }
@@ -110,7 +110,7 @@ var WSCall = WSCall || {},
         },
         errCallback: function (errMsg, successFn) {
             WiseScripts.Tool.ShowLoading(false);
-            Log.write(errMsg,'WSCall errCallback');
+            Log.write(errMsg, 'WSCall errCallback');
             if (successFn) {
                 successFn();
             }
@@ -133,7 +133,7 @@ var WSCall = WSCall || {},
                 var PostInfo = {
                     Url: AppConfig.AppServices + "/QueryMData",
                     UploadData: UploadData,
-                    async: true 
+                    async: true
                 };
                 WSCall.Post(PostInfo, function (result) { //成功
                     // Log.alert(MType + result);
@@ -277,8 +277,8 @@ var WSCall = WSCall || {},
             // }
         },
         Member: {
-            Register: function (ID, Mail, Phone, Bir, Gender, PID, NickName, successFn, errFn) {
-                // Log.write(AppConfig.HRSSNo+AppConfig.StationNo+AppConfig.EquipmentID,"WSCALL Member Register Result");
+            Register: function (ID, Mail, Phone, Bir, Gender, PID, NickName, Zipcode, successFn, errFn) {
+
                 var EquipmentID = AppConfig.EquipmentID;
                 var StationInfo = {
                     HRSSNo: AppConfig.HRSSNo,
@@ -293,6 +293,7 @@ var WSCall = WSCall || {},
                         // Password: "",
                         // VCode:"",                            //驗證碼
                         NickName: NickName, //暱稱
+                        Zipcode: Zipcode, //郵遞區號
                         SEX: Gender, //性別
                         Birthday: Bir, //生日
                         EMail: Mail, //電郵
@@ -324,6 +325,9 @@ var WSCall = WSCall || {},
                 var CheckCode = DateTimeFun.getNow();
                 var strStationInfo = JSON.stringify(StationInfo);
                 var strMember = JSON.stringify(MemberRegister);
+
+                Log.write(strStationInfo, 'WSCALL Member Register strStationInfo');
+                Log.write(strMember, 'WSCALL Member Register strMember ');
 
                 ProjectFn.Wait([
                     function (next) {
@@ -410,7 +414,7 @@ var WSCall = WSCall || {},
             //MCheckType:01:生日；02:E-mail；03:行動電話；04:暱稱
             SendDefPassword: function (ID, Mail, Phone, Bir, ActionType, CallBack, MCheckType) {
                 var MCheckValue = "";
-                Log.alert("ID:" + ID + " Mail:" + Mail, "SendDefPassword"+" ,Bir:"+Bir);
+                Log.alert("ID:" + ID + " Mail:" + Mail, "SendDefPassword" + " ,Bir:" + Bir);
                 switch (MCheckType) {
                     case "01":
                         MCheckValue = Bir;
@@ -459,7 +463,7 @@ var WSCall = WSCall || {},
                 ID = WiseScripts.IO.ClrJson(ID);
 
                 var URL = AppConfig.MemberServices + "/Login";
-                Log.write(URL,"URL");
+                Log.write(URL, "URL");
                 ProjectFn.Wait([
                     function (next) {
                         WiseAES.md5(PS,
@@ -471,7 +475,7 @@ var WSCall = WSCall || {},
                     function (next) {
                         if (ActionType === "0301") {
                             //第一次註冊登入修改密碼
-                            Log.write("第一次註冊登入修改密碼",'WSCall Login');
+                            Log.write("第一次註冊登入修改密碼", 'WSCall Login');
                             next();
                         } else {
                             WiseAES.md5(NewPS,
@@ -505,7 +509,7 @@ var WSCall = WSCall || {},
                             }]
                         };
                         UploadData = JSON.stringify(MemberLogin);
-                        Log.write(UploadData,"UploadData");
+                        Log.write(UploadData, "UploadData");
                         WiseAES.enpryptAES(UploadData, AppConfig.ASKey1, AppConfig.ASKey2, "T",
                             function (res) {
                                 UploadData = res;
@@ -550,9 +554,9 @@ var WSCall = WSCall || {},
                         error: function (xhr, status, err) {
                             //TODO
                             if (localStorage.UserID) { //已有登入過，Server暫時無法連線時，採用離線登入
-                                FnCtrl.toast($.i18n('目前無網路連線或是無法連線至伺服器，採用離線登入',2000));
-                                Member.offlineLogin(ID,PS);
-                            }else{
+                                FnCtrl.toast($.i18n('目前無網路連線或是無法連線至伺服器，採用離線登入', 2000));
+                                Member.offlineLogin(ID, PS);
+                            } else {
                                 navigator.notification.alert($.i18n('目前無網路連線或是無法連線至伺服器，請檢查網路，並稍後再試。') + err, null, $.i18n('系統訊息'), $.i18n('確定'));
                             }
 
@@ -567,7 +571,7 @@ var WSCall = WSCall || {},
                 //加密MemberID
                 Log.alert(MemberID + "^" + UserType + "URL:" + AppConfig.AppServices + "/GetUserInfo", "WSCall GetUserInfo");
 
-                var SystemModel = AppConfig.SystemModel; 
+                var SystemModel = AppConfig.SystemModel;
 
                 WiseAES.enpryptAES(MemberID, AppConfig.ASKey1, AppConfig.ASKey2, "T",
                     function (result) {
@@ -602,6 +606,11 @@ var WSCall = WSCall || {},
                                                 B_NO = buff[7];
                                             }
 
+                                            var Zipcode = "";
+                                            if (buff.length == 9) {
+                                                Zipcode = buff[8];
+                                            }
+
                                             if (Age != "")
                                                 Age = parseInt(Age);
 
@@ -614,6 +623,7 @@ var WSCall = WSCall || {},
                                                 Height: Height,
                                                 Bir: Bir,
                                                 NickName: NickName,
+                                                Zipcode: Zipcode,
                                                 EMail: EMail,
                                                 PID: PID,
                                                 B_NO: B_NO
