@@ -295,6 +295,10 @@ var MainHome = MainHome || {}, MainHome =
             RecView.push("MainHome");
         },
         goToProfile: function (NoCancel, successFn) {
+            if(!MainHome.CheckNet()){
+                return;
+            }
+            
             //Log.write("goToProfile","MainHome goToProfile");
             $("#profile_ID").val(localStorage.UserID);
             var UserID=localStorage.UserID;

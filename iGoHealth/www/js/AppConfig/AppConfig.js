@@ -27,7 +27,7 @@ var Domain = {
     CheckDomain:function(){
         switch (Domain.Version) {
             case "IGH":
-                Domain.Address = "https://apps.5050.tw";
+                Domain.Address = "https://igohealth.com.tw";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
 
@@ -69,7 +69,7 @@ var Domain = {
                 Domain.lDevFunction = [];
                 break;
             case "IGH_Wifi":
-                Domain.Address = "http://172.27.80.1";
+                Domain.Address = "http://192.168.0.180";//"http://172.27.80.1";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
 

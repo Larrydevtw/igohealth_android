@@ -33,8 +33,16 @@ var Member = {
 
             WiseScripts.Tool.ShowLoading(true, $.i18n('登入中...'));
             //會員登入驗證
-            WSCall.Member.Login("02", UserID, Pwd, "",
-                Member.LoginCallBack);
+            WSCall.Member.Login("02", UserID, Pwd, "", Member.LoginCallBack, function (err) {
+                if (localStorage.UserID) { //已有登入過，Server暫時無法連線時，採用離線登入
+                    FnCtrl.toast($.i18n('目前無網路連線或是無法連線至伺服器，採用離線登入'));
+                    Member.offlineLogin(UserID, Pwd);
+                } else {
+                    navigator.notification.alert($.i18n('目前無網路連線或是無法連線至伺服器，請檢查網路，並稍後再試。') + err, null, $.i18n('系統訊息'), $.i18n('確定'));
+                }
+
+                WiseScripts.Tool.ShowLoading(false);
+            });
         } else { //無網路用離線登入
             Member.offlineLogin(UserID, Pwd);
         }
@@ -157,7 +165,7 @@ var Member = {
                         try {
                             MainHome.onLoad(); //TODO 登入成功在進行各種初始化動作
                         } catch (error) {
-                            Log.write(error,"MainHome.onLoad");
+                            Log.write(error, "MainHome.onLoad");
                         }
                     }, 'T');
                 });
@@ -199,8 +207,8 @@ var Member = {
         }
 
         var Zipcode = FnGeo.getZipcode("signup_twzipcode");
-        Log.write(Zipcode,'Member Apply zipcode');
-        if(Zipcode == undefined || Zipcode == ""){
+        Log.write(Zipcode, 'Member Apply zipcode');
+        if (Zipcode == undefined || Zipcode == "") {
             navigator.notification.alert($.i18n('請選擇居住縣市及鄉鎮'), null, $.i18n('系統訊息'), $.i18n('確定'));
             return;
         }
@@ -278,8 +286,7 @@ var Member = {
         }, null, 'T');
     },
     GoToPrivacy: function () {
-        WiseScripts.Tool.NextPop('privacy_page', function () {
-        }, null, 'F');
+        WiseScripts.Tool.NextPop('privacy_page', function () {}, null, 'F');
     },
     GoToLogin: function (successFn) {
         $("#login_userId").val('');
@@ -303,7 +310,7 @@ var Member = {
         }, null, 'T');
     },
     ResetPS: function (isRegister, successFn) {
-        
+
         Member.isRegister = isRegister;
 
         Member.GoToResetPS(function () {
@@ -503,8 +510,8 @@ var Member = {
         function confirmCallback(btnIndex) {
             if (btnIndex == 1) {
 
-                if($$){ //選單收合
-                    $$("#IP_Modal").style.display = "none";     
+                if ($$) { //選單收合
+                    $$("#IP_Modal").style.display = "none";
                 }
 
                 //TODO 登出後將帳號表中的密碼即登入記錄去除去除
@@ -516,10 +523,10 @@ var Member = {
                     Log.write("localStorage.UserID:" + localStorage.UserID + "\nRecView:" + RecView, "Logout");
                     localStorage.UserID = "";
                     localStorage.UserPS = "";
-                    Member.GoToLogin(function(){
+                    Member.GoToLogin(function () {
                         RecView = [];
                         RecView.push("login_page");
-                    });             
+                    });
                 });
             } else {
 
@@ -546,7 +553,7 @@ var Member = {
                 localStorage["NickName_" + UserID] = UserInfo.NickName;
                 Member.showDisplayName();
 
-                Log.write(UserInfo.Zipcode,'Member GetUserData UserInfo.Zipcode');
+                Log.write(UserInfo.Zipcode, 'Member GetUserData UserInfo.Zipcode');
                 if (UserInfo.Zipcode != "") {
                     localStorage["Zipcode_" + UserID] = UserInfo.Zipcode;
                     FnGeo.setZipcode("profile_twzipcode", UserInfo.Zipcode);
@@ -562,7 +569,7 @@ var Member = {
 
                 if (UserInfo.B_NO != "") {
                     FnProduct.setB_NO(UserInfo.B_NO);
-                }else{
+                } else {
                     FnProduct.setB_NO();
                 }
 
@@ -697,13 +704,13 @@ var Member = {
         }
 
         var Zipcode = FnGeo.getZipcode("profile_twzipcode");
-        Log.write(Zipcode,'Member SaveUserData zipcode');
-        if(Zipcode == undefined || Zipcode == ""){
+        Log.write(Zipcode, 'Member SaveUserData zipcode');
+        if (Zipcode == undefined || Zipcode == "") {
             navigator.notification.alert($.i18n('請選擇居住縣市及鄉鎮'), null, $.i18n('系統訊息'), $.i18n('確定'));
             return;
         }
 
-        if(AppConfig.lMType.indexOf("BW") > -1){
+        if (AppConfig.lMType.indexOf("BW") > -1) {
             if ($("#profile_tall").val() == "") {
                 navigator.notification.alert("請輸入身高", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
                 return;
@@ -828,10 +835,10 @@ var Member = {
             return;
         }
 
-        var UserData = UserInfo.UserID + "," + UserInfo.UserType + "," + UserInfo.Gender + "," + UserInfo.Height + "," + UserInfo.Age + "," + UserInfo.Bir + "," + UserInfo.NickName+ "," + UserInfo.Zipcode;
+        var UserData = UserInfo.UserID + "," + UserInfo.UserType + "," + UserInfo.Gender + "," + UserInfo.Height + "," + UserInfo.Age + "," + UserInfo.Bir + "," + UserInfo.NickName + "," + UserInfo.Zipcode;
         Log.alert(UserData, "Member.js SysUserDataToCloud");
 
-        var SystemModel = AppConfig.SystemModel; 
+        var SystemModel = AppConfig.SystemModel;
 
         WiseAES.enpryptAES(UserData, AppConfig.ASKey1, AppConfig.ASKey2, "T", function (result) {
             Log.alert(result, "Member.js SysUserDataToCloud Ajax");

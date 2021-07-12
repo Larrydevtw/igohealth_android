@@ -18,7 +18,11 @@ var FnGeo = {
 
         for (var i = 0; i < arrTargets.length; i++) {
             var targetId = arrTargets[i];
-            $('#' + targetId).twzipcode();
+            var selector = "#" + targetId;
+
+            $(selector).twzipcode();
+            //恢復預設值
+            $(selector).twzipcode('reset');
             // $('#' + targetId).twzipcode({
             //     'zipcodeSel'  : '110',
             // });
@@ -45,6 +49,6 @@ var FnGeo = {
         Log.write(selector, 'FnGeo setZipcode');
         Log.write(zipcode, 'FnGeo setZipcode');
         // 直接設置郵遞區號
-        $(selector).twzipcode('set', zipcode);
+        $(selector).twzipcode('set', +zipcode);
     }
 };

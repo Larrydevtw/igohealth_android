@@ -451,7 +451,7 @@ var WSCall = WSCall || {},
                     FnCtrl.alert($.i18n("服務呼叫失敗！請稍後再試。"));
                 });
             },
-            Login: function (ActionType, ID, PS, NewPS, CallBack) {
+            Login: function (ActionType, ID, PS, NewPS, CallBack, errFn) {
                 Log.alert("WSCALL LOGIN");
                 //ActionType：01:啟用帳號；02:會員登入；03:修改密碼；0301:修改密碼(第一次登入)
                 var CheckCode = DateTimeFun.getNow();
@@ -553,14 +553,11 @@ var WSCall = WSCall || {},
                         },
                         error: function (xhr, status, err) {
                             //TODO
-                            if (localStorage.UserID) { //已有登入過，Server暫時無法連線時，採用離線登入
-                                FnCtrl.toast($.i18n('目前無網路連線或是無法連線至伺服器，採用離線登入', 2000));
-                                Member.offlineLogin(ID, PS);
-                            } else {
-                                navigator.notification.alert($.i18n('目前無網路連線或是無法連線至伺服器，請檢查網路，並稍後再試。') + err, null, $.i18n('系統訊息'), $.i18n('確定'));
-                            }
+                            Log.write(err, 'WSCall MemberLogin');
 
-                            WiseScripts.Tool.ShowLoading(false);
+                            if (errFn) {
+                                errFn(err);
+                            }
                         }
                     });
 
