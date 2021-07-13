@@ -63,6 +63,7 @@ Thumbs.db
 
 */*
 !*/www
+!*/res
 !00_Info/*
 *.xcuserstate
 
