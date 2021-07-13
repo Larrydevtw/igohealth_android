@@ -60,15 +60,15 @@ var MeasureInfo={
             Max: 200
         },
     },
-    BG_Unit:" mg/dl", //血糖單位: tw(t):mg/dl；cn(c):mmol/L t/18=c (小數下一位，無條件捨去)
+    BG_Unit:" mg/dL", //血糖單位: tw(t):mg/dL；cn(c):mmol/L t/18=c (小數下一位，無條件捨去)
     BG_Convert_Num:1, //轉換數值
     BG_Display_Num:0, //顯示小數點以下第幾位 (tw:不顯示小數點；cn:顯示小數點一位))
     
-    UA_Unit:" mg/dl", //單位: tw(t):mg/dl；cn(c):umol/L t*59.5=c (小數下一位，無條件捨去)
+    UA_Unit:" mg/dL", //單位: tw(t):mg/dL；cn(c):umol/L t*59.5=c (小數下一位，無條件捨去)
     UA_Convert_Num:59.5, //轉換數值
     UA_Display_Num:1, //顯示小數點以下第幾位 (tw:不顯示小數點；cn:顯示小數點一位))
 
-    CHOL_Unit:" mg/dl", //尿酸單位: tw(t):mg/dl；cn(c):mmol/L t/38.67=c (小數下一位，無條件捨去)
+    CHOL_Unit:" mg/dL", //尿酸單位: tw(t):mg/dL；cn(c):mmol/L t/38.67=c (小數下一位，無條件捨去)
     CHOL_Convert_Num:1, //轉換數值
     CHOL_Display_Num:0, //顯示小數點以下第幾位 (tw:不顯示小數點；cn:顯示小數點一位))
 
@@ -179,13 +179,13 @@ var MeasureInfo={
                 CHOL_Display_Num=1;
                 break;
             default: //zh-hant
-                BG_Unit = " mg/dl";
+                BG_Unit = " mg/dL";
                 BG_Convert_Num=1;
 
-                UA_Unit = " mg/dl";
+                UA_Unit = " mg/dL";
                 UA_Convert_Num=59.5;
 
-                CHOL_Unit = " mg/dl";
+                CHOL_Unit = " mg/dL";
                 CHOL_Convert_Num=1;
                 break;
         }

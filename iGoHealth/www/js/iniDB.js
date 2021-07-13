@@ -211,7 +211,7 @@ var iniDB = iniDB || {},
                     "MRowSId TEXT," +
 
                     "TimeType TEXT," + //檢測時段(7:睡前/8:飯前/9:飯後)
-                    "BS TEXT," + //血糖值(mg/dl)
+                    "BS TEXT," + //血糖值(mg/dL)
 
                     "StandardLevel TEXT," +
                     "Warnings TEXT," +
@@ -234,7 +234,7 @@ var iniDB = iniDB || {},
                     "MRowKey TEXT," +
                     "MRowSId TEXT," +
 
-                    "UA TEXT," + //血糖值(mg/dl)
+                    "UA TEXT," + //血糖值(mg/dL)
 
                     "StandardLevel TEXT," +
                     "Warnings TEXT," +
@@ -257,7 +257,7 @@ var iniDB = iniDB || {},
                     "MRowKey TEXT," +
                     "MRowSId TEXT," +
 
-                    "CHOL TEXT," + //膽固醇(mg/dl)
+                    "CHOL TEXT," + //膽固醇(mg/dL)
                     "HDL TEXT," +
                     "LDL TEXT," +
                     "TG TEXT," +
