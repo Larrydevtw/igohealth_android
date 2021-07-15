@@ -10,8 +10,8 @@ var morrisChart = {
         weekdays[6] = "六";
 
         return ("0" + (d.getMonth() + 1)).slice(-2) + '/' +
-            ("0" + (d.getDate())).slice(-2) + " " +
-            weekdays[d.getDay()];
+            ("0" + (d.getDate())).slice(-2); 
+            // + " " +weekdays[d.getDay()];
     },
     dateFormat: function (x) {
         var d = new Date(x);

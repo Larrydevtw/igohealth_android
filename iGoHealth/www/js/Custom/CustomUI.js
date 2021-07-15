@@ -54,8 +54,8 @@ var CustomUI = {
         //圖表
         let chartDom = $$("#History_Chart");
         var myChart = echarts.init(chartDom);
-        let chartValues = $$("#userHistory .chartvalues").dataset.chartvalues.split(",");
-        let chartDays = $$("#userHistory .chartxaxis").dataset.chartxaxis.split(",");
+        let chartValues = $$("#userHistory .chartType .chartvalues").dataset.chartvalues.split(",");
+        let chartDays = $$("#History_Time .chartxaxis").dataset.chartxaxis.split(",");
 
         const renderChart = () => {
             //xData = days?days: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
@@ -170,8 +170,6 @@ var CustomUI = {
 
         page = "#" + page;
         page = page.replace(/##/g, '#');
-
-        var $$ = str => document.querySelector(str);
 
         if (page == "#main_page" || page == "#privacy_page" || page == "#login_page") {
             $$("#app-nav").style.display = "none";

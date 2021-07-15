@@ -212,7 +212,7 @@
                     <input type="password" id="login_userPwd" class="mt-1" placeholder="請輸入6位數密碼" />
                 </div>
                 <div class="w-100 mt-1">
-                    <button class="IPbtn full gotoPage round" onclick="Member.Login();">
+                    <button class="IPbtn full gotoPage round" data-pagename="#MainHome" onclick="Member.Login();">
                         送出
                     </button>
                 </div>
@@ -231,7 +231,7 @@
         </div>
 
         <!--保密條款-->
-        <div id="privacy_page" class="block" style="display:none;">
+        <div id="privacy_page" class="block" style="display:none;padding-top: 40px;">
             <div class="h-center-between h-100">
                 <div class="h-center-center">
                     <img src="./images/logo_2.svg" />
@@ -377,7 +377,7 @@
         </div>
 
         <!--sys nav-->
-        <div id="app-nav" style="display:none;">
+        <div id="app-nav" class="header" style="display:none;">
             <div class="f-center-between">
                 <div>
                     <img id="mainMenu" class="menu modalOpen" data-modalcontent="#MD_Test" src="./images/Menu.svg" />
@@ -517,7 +517,7 @@
             </div>
             <div class="chartDays">
                 <div class="f-start-center" id="History_Time">
-                    <div><a id="History_Time_2D" onclick="Measure.searchByInterval('2','D');" class="chartxaxis btnSearchDate" >2天</a></div>
+                    <div><a id="History_Time_2D" onclick="Measure.searchByInterval('2','D');" class="chartxaxis btnSearchDate" data-chartxaxis="6/1 二">2天</a></div>
                     <div><a class="chartxaxis btnSearchDate" id="History_Time_7D" onclick="Measure.searchByInterval('7','D');" data-chartxaxis="6/1 二,6/2 三,6/3 四,6/4 五,6/5 六,6/6 日,6/7 一">7天</a>
                     </div>
                     <div><a class="chartxaxis btnSearchDate" id="History_Time_14D" onclick="Measure.searchByInterval('14','D');" data-chartxaxis="6/1 二">14天</a>

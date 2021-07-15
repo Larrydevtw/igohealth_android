@@ -38,10 +38,9 @@ body {
     padding:0px;
     /* Padding to avoid the "unsafe" areas behind notches in the screen */
     padding: env(safe-area-inset-top, 0px) env(safe-area-inset-right, 0px) env(safe-area-inset-bottom, 0px) env(safe-area-inset-left, 0px);
-    text-transform:uppercase;
+    /* text-transform:uppercase; */
     width:100%;
     color:#333;
-
 }
 input, button{border: none;}
 p{margin: 0;}
@@ -92,7 +91,11 @@ p.center{ text-align:center;}
 .detail textarea{width:100%; min-height: 100px; margin: 3% 0;}
 */
 /*元件 conponents*/
-.block{width:calc(100% - 40px); height:calc(100% - 50px);padding: 70px 20px 0 20px;}
+.block {
+    width: calc(100% - 40px);
+    height: calc(100% - 50px);
+    padding: 70px 20px 0 20px;
+}
 
 
 select{

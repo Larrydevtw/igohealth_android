@@ -357,7 +357,9 @@ var MainHome = MainHome || {}, MainHome =
                         //     }
                         // }); //TODO
                         WiseScripts.Tool.ShowLoading(false);
-                        FnCtrl.focus("profile_tgW");
+                        if (AppConfig.lMType.indexOf("BW") > -1) {
+                            FnCtrl.focus("profile_tgW");
+                        }
                     });
                 },function(){//失敗
                     WiseScripts.Tool.ShowLoading(false);
