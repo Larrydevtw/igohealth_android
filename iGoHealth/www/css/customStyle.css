@@ -189,8 +189,12 @@ input[type="time"] {
 
 .Statusbar {
   width: 100%;
-  height: 0px;
+  height: 77px !important;
   z-index: 1;
+}
+.Statusbar>div {
+  height: 100%;
+  padding-top: 13px !important;
 }
 
 /* QRCode登入樣式 */

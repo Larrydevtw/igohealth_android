@@ -159,15 +159,13 @@ var Member = {
                     // NowCardID = "";
                     // sessionStorage["NFCReady"] = "F";
 
-                    WiseScripts.Tool.NextPop('MainHome', null, function () {
-                        RecView = [];
-                        RecView.push("MainHome");
+                    MainHome.goToHome(function () {
                         try {
                             MainHome.onLoad(); //TODO 登入成功在進行各種初始化動作
                         } catch (error) {
                             Log.write(error, "MainHome.onLoad");
                         }
-                    }, 'T');
+                    });
                 });
             }
         );

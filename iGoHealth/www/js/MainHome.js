@@ -288,11 +288,16 @@ var MainHome = MainHome || {}, MainHome =
                 });
             }
         },
-        goToHome: function () {
-            MainHome.fadeOutPage('Home');
-
-            RecView = [];
-            RecView.push("MainHome");
+        goToHome: function (successFn) {
+            WiseScripts.Tool.NextPop('MainHome', null, function () {
+                RecView = [];
+                RecView.push("MainHome");
+                
+                if(successFn){
+                    successFn();
+                }
+                
+            }, 'T');
         },
         goToProfile: function (NoCancel, successFn) {
             if(!MainHome.CheckNet()){

@@ -32,27 +32,36 @@ var CustomStyle=CustomStyle||{},CustomStyle={
         //$(".main-box .box").css("height","208px"); //TODO 因新增顯示日期 增加高度208
 
         var statusBarHeight="0px";
+        var headerHeight = $(".header").css("height");
         //TODO
-       if(WiseScripts.Tool.MobileType.IsAndroid()){//android
-            Log.write("android平台 "+bannerHeight,"index.js 頂部狀態列設定");
+        if (DeviceInfo.getOS() === "Android") { //android
+            Log.write("android平台 " + bannerHeight, "index.js 頂部狀態列設定");
             return;
-        }else{//ios
-            statusBarHeight="25px";
-            $(".Statusbar").css("height",statusBarHeight);
-            $(".SideStatusbar").css("height",statusBarHeight);
-            $(".dismiss").css("top", "calc(" + statusBarHeight + " + 15px)");
-            Log.write("ios平台 "+bannerHeight,"index.js 頂部狀態列設定");
+        } else { //ios
+            $(".header").addClass("Statusbar");
+            //statusBarHeight = "20px";
+            // var headerColor = $(".header").css("background-color");
+            // var headerHeight = $(".header").css("height");
+            // $(".Statusbar").css({
+            //     //"height": "calc(" + headerHeight + " + " + statusBarHeight + ")",
+            //     "height": statusBarHeight,
+            //     "background": headerColor
+            // });
+            // $(".SideStatusbar").css("height", statusBarHeight);
+            // $(".dismiss").css("top", "calc(" + statusBarHeight + " + 15px)");
+            // Log.write("ios平台 " + bannerHeight, "index.js 頂部狀態列設定");
         }
 
-        $(".header").css("height",bannerHeight);
-        $("#menu").css("top","calc("+statusBarHeight+" + "+bannerHeight+")");
-        $(".header .nowifi").css("top","calc("+bannerHeight+")");
+        // $(".header").css("height", "calc(" + headerHeight + " + " + statusBarHeight + ")", );
+        // $(".header").css("height",bannerHeight);
+        // $("#menu").css("top","calc("+statusBarHeight+" + "+bannerHeight+")");
+        // $(".header .nowifi").css("top","calc("+bannerHeight+")");
         
-        var adjustHeight=statusBarHeight+" - "+bannerHeight;
-        $(".main").css("height","calc(100% - "+adjustHeight+")");
-        $(".popup-body").css("height","calc(100% - "+adjustHeight+")");
-        $(".eventbox").css("height","calc(100% - "+adjustHeight+" + 4px)");
-        $(".messbox").css("height","calc(100% - "+adjustHeight+" + 4px)");
+        // var adjustHeight=statusBarHeight+" - "+bannerHeight;
+        // $("#MainHome").css("height","calc(100% - "+adjustHeight+")");
+        // $(".popup-body").css("height","calc(100% - "+adjustHeight+")");
+        // $(".eventbox").css("height","calc(100% - "+adjustHeight+" + 4px)");
+        // $(".messbox").css("height","calc(100% - "+adjustHeight+" + 4px)");
     },
     iniSwitchToggle:function(targetID,lbName_L,lbName_R,toggleFlag){
         var toggle = document.getElementById(targetID);
