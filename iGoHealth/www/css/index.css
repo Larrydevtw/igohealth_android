@@ -207,7 +207,7 @@ select{
     overflow-x: hidden;
 }
 
-#app-nav{ background-color:#F4C21E; color:#fff; width: 100%; position:fixed;z-index: 1;/*height:60px;*/height:70px;}
+#app-nav{ background-color:#F4C21E; color:#fff; width: 100%; position:fixed;z-index: 1;/*height:60px;*/height:60px;}
 #app-nav > div{ padding:0 10px; height:100%;padding-top:10px;  }
 #app-nav .logo{ height: 20px; }
 #app-nav .menu{ height: 20px; }

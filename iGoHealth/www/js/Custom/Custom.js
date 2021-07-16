@@ -10,6 +10,12 @@ var Custom = Custom || {},
             }).then(function () {
                 return Custom.setFontSize();
             }).then(function () {
+                var platform = DeviceInfo.getOS();
+
+                if(platform === "iOS"){
+                    Custom.iOSKeyboardBlur();
+                }
+
                 if (successFn) {
                     successFn();
                 }
@@ -28,7 +34,8 @@ var Custom = Custom || {},
                 }
                 resolve();
             });
-        }, setFontSize: function () {
+        }, 
+        setFontSize: function () {
             Log.write("setFontSize Start", 'Custom setFontSize');
             return new Promise(function (resolve, reject) {
                 function setTextZoomCallback(textZoom) {
@@ -71,5 +78,21 @@ var Custom = Custom || {},
 
                 resolve();
             });
+        },
+        iOSKeyboardBlur: function () {
+
+            $('input').on('blur', function () {
+                setTimeout(function () {
+                    var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+                    window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+                }, 100);
+            });
+            $('select').on('blur', function () {
+                setTimeout(function () {
+                    var scrollHeight = document.documentElement.scrollTop || document.body.scrollTop || 0;
+                    window.scrollTo(0, Math.max(scrollHeight - 1, 0));
+                }, 100);
+            });
+            
         }
     };
