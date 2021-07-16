@@ -335,7 +335,14 @@ var MainHome = MainHome || {}, MainHome =
                         var Zipcode = UserInfo.Zipcode;
                         FnGeo.setZipcode("profile_twZipcode", Zipcode);
 
-                        $("#profile_BIR").val(Bir);
+                        if ($("#profile_BIR").attr("type") === "date") {
+                            $("#profile_BIR").val(Bir);
+                        } else {
+                            var age = Member.GetAgeByBrithday(Bir);
+                            age = " (" + $.i18n('$1歲', age) + ")";
+                            $("#profile_BIR").val(Bir + age);
+                        }
+
                         $("#profile_tall").val(UserInfo.Height);
                         if(localStorage["TargetW_" + UserID]){
                             $("#profile_tgW").val(localStorage["TargetW_" + UserID]);
@@ -388,7 +395,14 @@ var MainHome = MainHome || {}, MainHome =
                 var Zipcode = localStorage["Zipcode_" + UserID];
                 FnGeo.setZipcode("profile_twZipcode", Zipcode);
 
-                $("#profile_BIR").val(Bir);
+                if ($("#profile_BIR").attr("type") === "date") {
+                    $("#profile_BIR").val(Bir);
+                } else {
+                    var age = Member.GetAgeByBrithday(Bir);
+                    age = " (" + $.i18n('$1歲', age) + ")";
+                    $("#profile_BIR").val(Bir + age);
+                }
+                
                 $("#profile_tall").val(localStorage["Height_" + UserID]);
                 $("#profile_tgW").val(localStorage["TargetW_" + UserID]);
 

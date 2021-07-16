@@ -686,6 +686,9 @@ var Member = {
         }
     },
     SaveUserData: function () {
+        
+        var UserID = localStorage.UserID;
+
         var NickName = $("#txtNickName").val(); //TODO
         if (NickName == "#wise#") { //查看目前所呼叫的Service資訊
             ProjectFn.getSysParams("mSys", "PostUrl", function (postUrl) {
@@ -694,12 +697,6 @@ var Member = {
                 }
                 FnCtrl.alert("postUrl:" + postUrl + "\nVersion:" + Domain.Version);
             });
-            return;
-        }
-
-        //防呆
-        if ($("#profile_BIR").val() == "") {
-            navigator.notification.alert("請輸入生日", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
             return;
         }
 
@@ -748,23 +745,30 @@ var Member = {
         //     }
         // }
 
-        if (parseInt((new Date() - parent.parseDate($("#profile_BIR").val())) / 86400000) <= 0) {
-            navigator.notification.alert("生日不正確", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
-            return;
+        var Bir = localStorage["Bir_" + UserID];
+        if ($("#profile_BIR").attr("type") === "date") {
+                    //防呆
+            if ($("#profile_BIR").val() == "") {
+                navigator.notification.alert("請輸入生日", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
+                return;
+            }
+
+            if (parseInt((new Date() - parent.parseDate($("#profile_BIR").val())) / 86400000) <= 0) {
+                navigator.notification.alert("生日不正確", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
+                return;
+            }
+
+            Bir = $("#profile_BIR").val();
         }
 
+        Log.write("Bir: " + Bir, "SaveUserData");
         //防呆結束
         // Log.alert("SaveUserData S","Member.js SaveUserData");
-
-        var Bir = $("#profile_BIR").val();
-        Log.write("Bir: " + Bir, "SaveUserData");
 
         var UserType = Member.GetUserType(); //M: 會員 C:卡片 //TODO
         var Gender = $("#profile_s1").prop("checked") ? 'M' : 'F';
         var Height = parseFloat($("#profile_tall").val()).toFixed(1);
-        var Age = Member.GetAgeByBrithday($("#profile_BIR").val());
-
-        var UserID = localStorage.UserID;
+        var Age = Member.GetAgeByBrithday(Bir);
 
         localStorage["Gender_" + UserID] = Gender;
         localStorage["Bir_" + UserID] = Bir;

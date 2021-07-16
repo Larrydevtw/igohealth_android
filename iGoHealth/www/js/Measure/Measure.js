@@ -132,7 +132,7 @@ var Measure = {
                 xyAxisName = result.xyAxisName;
 
                 Log.write("success", 'getPersonalBodys');
-                $("#flot_placeholder").height(screen.height * 0.3);
+                $("#flot_placeholder").height(screen.height * 0.35);
 
                 morrisChart.init(chartType, "flot_placeholder", "", chartData, chartDataKey, xyAxisName, chartStyle);
 

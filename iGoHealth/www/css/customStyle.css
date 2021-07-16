@@ -19,8 +19,29 @@ input[type=text]{
   background-color: #F4C21E;
 }
 /*日期選項*/
-.row3 .date{width: 114px;margin: 0 5px; padding: 10px;}
-.row3 .time{width: 114px;margin: 0 5px; padding: 10px;}
+select {
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+}
+input[type="date"],
+input[type="time"] {
+  display: block;
+  -webkit-appearance: textfield;
+  -moz-appearance: textfield;
+  min-height: 1.3em;
+  max-height: 1.3em;
+}
+.row3 .date {
+  width: 130px !important;
+}
+.row3 .time {
+  width: 114px;
+}
+
+/* 繪圖區塊 */
+.historychart {
+  margin: 0.3em 0.1em 0.1em 0.1em;
+}
 
 /*縣市下拉樣式*/
 .selzipcode {
@@ -130,10 +151,6 @@ input[type=text]{
   vertical-align: middle;
   height: 34px;
   padding: 5px;
-}
-
-.date {
-  width: 130px !important;
 }
 
 .btnDate {

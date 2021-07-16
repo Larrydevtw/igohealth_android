@@ -9,8 +9,13 @@ var FnCtrl = {
     isBtnClick: false,
     focus: function (targetID) {
         //$("#btnSave_MPM").addEventListener('click',function(){
-        $("#" + targetID).focus();
         //});    
+        var platform = DeviceInfo.getOS();
+        if (platform === "Android") {
+            $("#" + targetID).focus();
+        } else {
+            Log.write(platform + "平台focus無法運作", "FnCtrl.focus");
+        }
     },
     PIDShadow: function (P_ID) { //身份證字號遮蔽 //TODO目前用長度判斷
         if (P_ID.length == 18) {

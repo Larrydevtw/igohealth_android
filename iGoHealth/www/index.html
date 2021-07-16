@@ -292,7 +292,7 @@
                 </div>
                 <div class="input login-input">
                     <span>出生年月日</span>
-                    <input id="signup_BIR" type="date" class="mt-1" placeholder="請輸入出生年月日，如：19460822" />
+                    <input id="signup_BIR" type="date" class="mt-1" />
                 </div>
                 <div class="input login-input" style="display:none;">
                     <span>信箱</span><span id="txtSignup_Mail"></span>
@@ -545,7 +545,7 @@
                 </div>
             
                 <div id="History_Chart">
-                    <div id="flot_placeholder" style="margin-top:1em;"></div>
+                    <div id="flot_placeholder" class="historychart"></div>
                 </div>
                 <div id="History_DataGridView">
                 </div>
@@ -1237,7 +1237,8 @@
                 </div>
                 <div class="input login-input">
                     <span>出生年月日</span>
-                    <input id="profile_BIR" type="date" class="mt-1" />
+                    <!-- <input id="profile_BIR" type="date" class="mt-1" /> -->
+                    <input id="profile_BIR" type="text" class="mt-1" disabled/>
                 </div>
 
                 <div class="input login-input">
