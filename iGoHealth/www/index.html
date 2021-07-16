@@ -195,8 +195,10 @@
 <body style="height:100vh;">
     <div class="app">
         <!--進入頁-->
-        <div id="main_page" class="block h-center-center" style="display:none;">
-            <img class="logo gotoPage" src="./images/logo_main.svg" data-pagename="#privacy_page" />
+        <div id="main_page" class="block" style="display:none;">
+            <div class="h-center-center">
+                <img class="logo gotoPage" src="./images/logo_main.svg" data-pagename="#privacy_page"/>    
+            </div>
         </div>
 
         <!-- 登入-->
@@ -395,11 +397,8 @@
 
         <!-- sys 彈出視窗區-->
         <div id="IP_Modal" style="display:none;" class="f-start-center">
+            <div class="MD_full modalClose"></div>
             <div class="MD_card">
-                <div class="MD_nav">
-                    <span id="MD_close" class="modalClose">X</span>
-                </div>
-
                 <div class="MD_header f-center-center">
                     <img class="gotoPage modalClose" data-pagename="#MainHome" src="images/logo_3.svg" />
                 </div>
@@ -416,7 +415,7 @@
                         data-pagename="#StandardInfo">三高量測標準值範圍</button>
 
                     <button class="IPbtn gotoPage modalClose" onclick="MainHome.goToMeasureScan();"
-                        data-pagename="#Instructions" style="display:none;">藥師量測三高</button>
+                        data-pagename="#divMeasureScan">藥師量測三高</button>
 
                     <button class="IPbtn parent" id="txtDisplayName">林小花（顯示姓名）</button>
 
@@ -511,45 +510,47 @@
         -->
         <div id="userHistory" class="block" data-navname="測量記錄" data-parent="#MainHome" style="display:none;">
             <div class="chartType f-center-center">
-                <div><a id="tabHistory_btnBP" onclick="Measure.showHistory('BP','N');" class="D chartvalues btn" data-chartvalues="100,102,103,95,96,110,108,103,92,94,96,111,107,102">血壓</a></div>
-                <div><a id="tabHistory_btnBG" onclick="Measure.showHistory('BG','N');" class="B chartvalues btn" data-chartvalues="91,95,96,110,108,89,92,94,96,111">血糖</a></div>
-                <div><a id="tabHistory_btnCHOL" onclick="Measure.showHistory('CHOL','N');" class="C chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">膽固醇</a></div>
+                <div><a id="tabHistory_btnBP" onclick="Measure.showHistory('BP','N');" class="D color-MBP chartvalues btn" data-chartvalues="100,102,103,95,96,110,108,103,92,94,96,111,107,102">血壓</a></div>
+                <div><a id="tabHistory_btnBG" onclick="Measure.showHistory('BG','N');" class="B color-MBG chartvalues btn" data-chartvalues="91,95,96,110,108,89,92,94,96,111">血糖</a></div>
+                <div><a id="tabHistory_btnCHOL" onclick="Measure.showHistory('CHOL','N');" class="C color-MCHOL chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">膽固醇</a></div>
             </div>
-            <div class="chartDays">
-                <div class="f-start-center" id="History_Time">
-                    <div><a id="History_Time_2D" onclick="Measure.searchByInterval('2','D');" class="chartxaxis btnSearchDate" data-chartxaxis="6/1 二">2天</a></div>
-                    <div><a class="chartxaxis btnSearchDate" id="History_Time_7D" onclick="Measure.searchByInterval('7','D');" data-chartxaxis="6/1 二,6/2 三,6/3 四,6/4 五,6/5 六,6/6 日,6/7 一">7天</a>
-                    </div>
-                    <div><a class="chartxaxis btnSearchDate" id="History_Time_14D" onclick="Measure.searchByInterval('14','D');" data-chartxaxis="6/1 二">14天</a>
-                    </div>
-                    <div><a class="chartxaxis btnSearchDate" id="History_Time_30D" onclick="Measure.searchByInterval('30','D');" data-chartxaxis="6/1 二">30天</a>
-                    </div>
-                    <div><a class="chartxaxis btnSearchDate" id="History_Time_60D" onclick="Measure.searchByInterval('60','D');" data-chartxaxis="6/1 二">60天</a></div>
-                    <div><a class="chartxaxis btnSearchDate" id="History_Time_120D" onclick="Measure.searchByInterval('120','D');" data-chartxaxis="6/1 二">120天</a>
+            <div class="chartContainer">
+                <div class="chartDays">
+                    <div class="f-start-center" id="History_Time">
+                        <div><a id="History_Time_2D" onclick="Measure.searchByInterval('2','D');" class="chartxaxis btnSearchDate" data-chartxaxis="6/1 二">2天</a></div>
+                        <div><a class="chartxaxis btnSearchDate" id="History_Time_7D" onclick="Measure.searchByInterval('7','D');" data-chartxaxis="6/1 二,6/2 三,6/3 四,6/4 五,6/5 六,6/6 日,6/7 一">7天</a>
+                        </div>
+                        <div><a class="chartxaxis btnSearchDate" id="History_Time_14D" onclick="Measure.searchByInterval('14','D');" data-chartxaxis="6/1 二">14天</a>
+                        </div>
+                        <div><a class="chartxaxis btnSearchDate" id="History_Time_30D" onclick="Measure.searchByInterval('30','D');" data-chartxaxis="6/1 二">30天</a>
+                        </div>
+                        <div><a class="chartxaxis btnSearchDate" id="History_Time_60D" onclick="Measure.searchByInterval('60','D');" data-chartxaxis="6/1 二">60天</a></div>
+                        <div><a class="chartxaxis btnSearchDate" id="History_Time_120D" onclick="Measure.searchByInterval('120','D');" data-chartxaxis="6/1 二">120天</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="chartDays" id="divHistory_Time_Custom" style="text-align: center;display:none;">
-                <div class="row">
-                    <div class="col-5">
-                        <input id="History_DateS" type="date" class="form-control date">
-                    </div>
-                    <div class="col-5">
-                        <input id="History_DateE" type="date" class="form-control date">
-                    </div>
-                    <div class="text-align:center;vertical-align:middle;">
-                        <button type="button" style="margin:0 5px;width:50px;color:#AB6C24;" class="btn" id="btnSearch"
-                            onclick="Measure.bindPersonalData();"><i class="wise_search"></i></button>
+                <div class="chartDays" id="divHistory_Time_Custom" style="text-align: center;display:none;">
+                    <div class="row">
+                        <div class="col-5">
+                            <input id="History_DateS" type="date" class="form-control date">
+                        </div>
+                        <div class="col-5">
+                            <input id="History_DateE" type="date" class="form-control date">
+                        </div>
+                        <div class="text-align:center;vertical-align:middle;">
+                            <button type="button" style="margin:0 5px;width:50px;color:#AB6C24;" class="btn" id="btnSearch"
+                                onclick="Measure.bindPersonalData();"><i class="wise_search"></i></button>
+                        </div>
                     </div>
                 </div>
+            
+                <div id="History_Chart">
+                    <div id="flot_placeholder" style="margin-top:1em;"></div>
+                </div>
+                <div id="History_DataGridView">
+                </div>
+                <div id="History_page"></div>
             </div>
-
-            <div id="History_Chart">
-                <div id="flot_placeholder" style="margin-top:1em;"></div>
-            </div>
-            <div id="History_DataGridView">
-            </div>
-            <div id="History_page"></div>
             <!-- <h3>量測時間數值後的*<br />
                 代表該筆數值是透過聿新三高機藍牙接收</h3>
             <div class="stateTable h-center-center text-center">
@@ -627,68 +628,71 @@
         <!--新增手動輸入紀錄 血壓、血糖、膽固醇-->
         <div id="MeasurePage_Manual" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
             <div id="ulManual" class="chartType f-center-center">
-                <div><a id="tabManual_btnBP" onclick="MeasureManual.showByMType('BP');" class="btn">血壓</a></div>
-                <div><a id="tabManual_btnBG" onclick="MeasureManual.showByMType('BG');" class="btn">血糖</a></div>
-                <div><a id="tabManual_btnCHOL" onclick="MeasureManual.showByMType('CHOL');" class="btn">膽固醇</a></div>
+                <div><a id="tabManual_btnBP" onclick="MeasureManual.showByMType('BP');" class="btn color-MBP">血壓</a></div>
+                <div><a id="tabManual_btnBG" onclick="MeasureManual.showByMType('BG');" class="btn color-MBG">血糖</a></div>
+                <div><a id="tabManual_btnCHOL" onclick="MeasureManual.showByMType('CHOL');" class="btn color-MCHOL">膽固醇</a></div>
             </div>
-            <div class="info h-center-center">
-                <h3 class="text-center  mb-1">請留意手動輸入之量測數值，<br />
-                    不納入本服務平台激勵點數之計算範圍。</h3>
-                <div class="input f-center-center row3 mb-1">
-                    <!-- <span>測量時間：</span> -->
-                    <input class="date" id="MPM_Date">
-                    <input class="time" id="MPM_Time">
+            <div class="chartContainer">
+                <div class="info h-center-center">
+                    <h3 class="text-center mb-1">請留意手動輸入之量測數值，<br />
+                        不納入本服務平台激勵點數之計算範圍。</h3>
+                    <div class="input f-center-center row3 mb-1">
+                        <!-- <span>測量時間：</span> -->
+                        <input class="date" id="MPM_Date">
+                        <input class="time" id="MPM_Time">
+                    </div>
+                    <hr>
+                    <div id="tabManualSection">
+                        <div id="tabManual_BP" style="display:none">
+                            <div class="input login-input mb-1">
+                                <span>收縮壓 mmHg：</span>
+                                <input type="number" class="mt-1" id="txtMPM_SBP" placeholder="請輸入收縮壓值" />
+                            </div>
+                            <div class="input login-input mb-1">
+                                <span>舒張壓 mmHg：</span>
+                                <input type="number" class="mt-1" id="txtMPM_DBP" placeholder="請輸入舒張壓值" />
+                            </div>
+                            <div class="input login-input mb-1">
+                                <span>脈膊 次/分：</span>
+                                <input type="number" class="mt-1" id="txtMPM_BPHR" placeholder="請輸入脈膊值" />
+                            </div>
+                        </div>
+                        <div id="tabManual_BG" style="display:none">
+                            <div class="input login-input">
+                                <span>測量時段：</span>
+                                <select style="width:80px;padding:10px;" id="MPM_TimeGroup_BG"
+                                    onchange="Display.showTimeType('BG');">
+                                    <option value="AC" data-i18n="飯前">飯前</option>
+                                    <option value="PC" data-i18n="飯後">飯後</option>
+                                    <option value="7" data-i18n="睡前">睡前</option>
+                                    <option value="0" data-i18n="隨機">隨機</option>
+                                </select>
+                                <select style="width:80px;padding:10px;" id="MPM_TimeType_BG" style="display:none;">
+                                </select>
+                            </div>
+            
+                            <div class="input login-input">
+                                <span>血糖值 mg/dL：</span>
+                                <input type="number" class="mt-1" id="txtMPM_BG" placeholder="請輸入血糖值" />
+                            </div>
+                        </div>
+                        <div id="tabManual_CHOL" style="display:none">
+                            <div class="input login-input mb-1">
+                                <span>膽固醇 mg/dL：</span>
+                                <input type="number" class="mt-1" id="txtMPM_CHOL" placeholder="請輸入膽固醇值" />
+                            </div>
+                        </div>
+                        <div id="tabManualMemo" style="">
+                            <div class="input login-input mb-1">
+                                <span>備註：</span>
+                                <input class="mt-1" id="MPM_Memo" />
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <hr>
-                <div id="tabManualSection">
-                    <div id="tabManual_BP" style="display:none">
-                        <div class="input login-input mb-1">
-                            <span>收縮壓 mmHg：</span>
-                            <input type="number" class="mt-1" id="txtMPM_SBP" placeholder="請輸入收縮壓值" />
-                        </div>
-                        <div class="input login-input mb-1">
-                            <span>舒張壓 mmHg：</span>
-                            <input type="number" class="mt-1" id="txtMPM_DBP" placeholder="請輸入舒張壓值" />
-                        </div>
-                        <div class="input login-input mb-1">
-                            <span>脈膊 次/分：</span>
-                            <input type="number" class="mt-1" id="txtMPM_BPHR" placeholder="請輸入脈膊值" />
-                        </div>
-                    </div>
-                    <div id="tabManual_BG" style="display:none">
-                        <div class="input login-input">
-                            <span>測量時段：</span>
-                            <select style="width:80px;padding:10px;" id="MPM_TimeGroup_BG" onchange="Display.showTimeType('BG');">
-                                <option value="AC" data-i18n="飯前">飯前</option>
-                                <option value="PC" data-i18n="飯後">飯後</option>
-                                <option value="7" data-i18n="睡前">睡前</option>
-                                <option value="0" data-i18n="隨機">隨機</option>
-                            </select>
-                            <select style="width:80px;padding:10px;" id="MPM_TimeType_BG" style="display:none;">
-                            </select>
-                        </div>
-
-                        <div class="input login-input">
-                            <span>血糖值 mg/dL：</span>
-                            <input type="number" class="mt-1" id="txtMPM_BG" placeholder="請輸入血糖值" />
-                        </div>
-                    </div>
-                    <div id="tabManual_CHOL" style="display:none">
-                        <div class="input login-input mb-1">
-                            <span>膽固醇 mg/dL：</span>
-                            <input type="number" class="mt-1" id="txtMPM_CHOL" placeholder="請輸入膽固醇值" />
-                        </div>
-                    </div>
-                    <div id="tabManualMemo" style="">
-                        <div class="input login-input mb-1">
-                            <span>備註：</span>
-                            <input class="mt-1" id="MPM_Memo"/>
-                        </div>
-                    </div>
+                <div class="w-100 mt-1">
+                    <button class="IPbtn full round" onclick="MeasureManual.onBtnSaveClick();">儲存</button>
                 </div>
-            </div>
-            <div class="w-100 mt-1">
-                <button class="IPbtn full round" onclick="MeasureManual.onBtnSaveClick();">儲存</button>
             </div>
         </div>
 
@@ -850,6 +854,257 @@
             </div>
         </div>
 
+        <!--藥師量測三高-->
+        <div id="divMeasureScan" class="block" data-navname="藥師量測三高" style="display:none">
+            <div class="h-center-center">
+                <div class="mt-1 mb-1">
+                    <span>
+                        請輸入以下資訊協助民眾進行量測<br />*此功能僅限藥局人員使用
+                    </span>
+                </div>
+                <div class="h-center-center w-100">
+                    <div class="input login-input">
+                        <input class="mt-1" placeholder="請輸入藥師識別碼" />
+                    </div>
+                    <div class="input login-input">
+                        <input class="mt-1" placeholder="請輸入藥師密碼" />
+                    </div>
+                    <div class="w-100">
+                        <p>*若您忘記藥師密碼，<br />
+                            請至i顧健康藥局端LINE@進行重置</p>
+                    </div>
+                </div>
+                <div class="w-100 mt-1">
+                    <button class="IPbtn full round gotoPage" data-pagename="#measure_2-6">
+                        送出
+                    </button>
+                </div>
+        
+            </div>
+        </div>
+        <!--藥師測量三高 民眾手機-->
+        <div id="measure_2-6" class="block" data-navname="三高量測標準值範圍" style="display:none;">
+            <div class="h-center-center">
+                <div class="mt-1 mb-1">
+                    <span>
+                        請輸入民眾的帳號（手機號碼）<br />*民眾需先註冊成為i顧健康APP的會員
+                    </span>
+                </div>
+                <div class="h-center-center w-100">
+                    <div class="input login-input">
+                        <input class="mt-1" placeholder="請輸入民眾的帳號（手機號碼）" />
+                    </div>
+                </div>
+                <div class="w-100 mt-1">
+                    <button class="IPbtn full round gotoPage" data-pagename="#measure_2-7">
+                        送出
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--藥師測量三高 開始測量-->
+        <div id="measure_2-7" class="block" data-navname="三高量測標準值範圍" style="display:none;">
+            <div class="h-center-center">
+                <div class="mt-1 mb-1">
+                    <span>
+                        請輸入民眾的帳號（手機號碼）<br />*民眾需先註冊成為i顧健康APP的會員
+                    </span>
+                </div>
+                <div class="h-center-center w-100">
+                    <div class="h-center-center">
+                        <div class="input login-input">
+                            <span>手機號碼（帳號）</span>
+                            <input class="mt-1" placeholder="請輸入手機號碼，如：0988000888" />
+                        </div>
+                        <div class="input login-input">
+                            <span>姓名</span>
+                            <input class="mt-1" placeholder="請輸入姓名" />
+                        </div>
+                        <div class="input login-input">
+                            <span>性別</span>
+                            <div class="btn-group mt-1">
+                                <button value="male">男</button>
+                                <button value="female">女</button>
+                            </div>
+                        </div>
+        
+                        <div class="input login-input">
+                            <span>年齡</span>
+                            <input class="mt-1" placeholder="請輸入年齡" />
+                        </div>
+                    </div>
+                </div>
+                <div class="w-100 mt-1">
+                    <button class="IPbtn full round gotoPage" data-pagename="#measure_2-8">
+                        開始量測
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--藥師測量三高 開始測量-->
+        <div id="measure_2-8" class="block" data-navname="三高量測標準值範圍" style="display:none;">
+            <div class="h-center-center">
+                <div class="mt-1 mb-1">
+                    <span>
+                        請輸入民眾的帳號（手機號碼）<br />*民眾需先註冊成為i顧健康APP的會員
+                    </span>
+                </div>
+                <div class="h-center-center w-100">
+                    <div class="rData">
+                        <label>手機號碼（帳號）</label>
+                        <span class="light">0988000888</span>
+                    </div>
+                    <div class="rData">
+                        <label>姓名：</label>
+                        <span class="light">林小花</span>
+                    </div>
+                    <div class="rData">
+                        <label>性別：</label>
+                        <span class="light">女</span>
+                    </div>
+                    <div class="rData">
+                        <label>年齡：</label>
+                        <span class="light">64</span>
+                    </div>
+                </div>
+                <div class="stateTable h-center-center text-center w-100">
+                    <div class="header ">
+                        <div>量測時間</div>
+                        <div>量測時段</div>
+                        <div>血糖值</div>
+                    </div>
+                    <div class="row ">
+                        <div>2021-05-14 13:24*</div>
+                        <div>午餐後</div>
+                        <div>120</div>
+                    </div>
+                </div>
+                <div class="w-100 mt-1">
+                    <button class="IPbtn full round gotoPage" data-pagename="#measure_2-6">
+                        返回至輸入民眾帳號
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="divMeasureScanMode" style="display:none">
+            <div class="Statusbar">
+            </div>
+            <div class="header">
+                <a id="aMeasureScan_Back" onclick="app.onBack();" class="left">
+                    <i class="wise_arrow-left BannerIcon"></i>
+                </a>
+                <div class="center">
+                    <span id="txtMeasureScanModeTitle" class="title" data-i18n="掃碼量測掃碼">掃碼量測掃碼</span>
+                </div>
+                <a class="right">
+                    <!-- <i class="wise_plus-square BannerIcon"></i> -->
+                </a>
+            </div>
+            <div class="popup-body">
+                <div class="frombox" id="MeasureScanMode_Scan">
+                    <div class="form-group col-12">
+                        <div class="frombox">
+                            <a href="#" style="width:100%;" onclick="MeasureScan.startCamera();" class="bttn"
+                                data-i18n="掃描會員條碼">掃描會員條碼</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="frombox" id="MeasureScanMode_Profile" style="display: none;margin-top:2em;">
+                    <div class="form-group">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="">
+                                <label for="" data-i18n="帳號">帳號</label>
+                            </div>
+                            <div class="col-6">
+                                <input id="MeasureScan_UserID" type="text" value="" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="">
+                                <label for="" data-i18n="姓名">姓名</label>
+                            </div>
+                            <div class="col-6">
+                                <input id="MeasureScan_NickName" type="text" value="" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="">
+                                <label for="" data-i18n="生日">生日</label>
+                            </div>
+                            <div class="col-6">
+                                <input id="MeasureScan_BirthDay" type="text" value="" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row justify-content-center align-items-center">
+                            <div class="">
+                                <label for="" data-i18n="性別">性別</label>
+                            </div>
+                            <div class="col-6">
+                                <input id="MeasureScan_Gender" type="text" value="" class="form-control" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group col-12" id="MeasureScanMode_Confirm" style="display: none;">
+                    <p data-i18n="掃碼量測確認_Info">* 確認身分無誤後，點選下方開始量測按鈕開始進行量測。</p>
+                    <div class="frombox">
+                        <a href="#" style="width:100%;" onclick="MeasureScan.startMeasure();" class="bttn bttn-light"
+                            data-i18n="開始量測">開始量測</a>
+                    </div>
+                    <div class="frombox">
+                        <a href="#" style="width:100%;" onclick="MeasureScan.backToScan();" class="bttn bttn-dark"
+                            data-i18n="返回掃描">返回掃描</a>
+                    </div>
+                </div>
+                <div class="form-group col-12" id="MeasureScanMode_Data" style="display: none;">
+                    <div class="frombox">
+                        <a href="#" style="width:100%;" onclick="MeasureScan.backToScan();" class="bttn bttn-dark"
+                            data-i18n="返回掃描">返回掃描</a>
+                    </div>
+                    <hr />
+                    <div class="form-group col-sm-12 table-responsive">
+                        <table class="Listbox table">
+                            <thead>
+                                <tr>
+                                    <th width="190px;">量測時間</th>
+                                    <th>量測類型</th>
+                                    <!-- <<th>量測值</th> -->
+                                </tr>
+                            </thead>
+                            <tbody id="MeasureScan_tbResult">
+                                <!-- <tr>
+                                                    <td>07/07 18:05</td>
+                                                    <td>血壓</td>
+                                                    <td>177/77/70</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>07/07 17:55</td>
+                                                    <td>血壓</td>
+                                                    <td>130/75/69</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>07/07 19:55</td>
+                                                    <td>血糖</td>
+                                                    <td>113</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>07/07 19:55</td>
+                                                    <td>膽固醇</td>
+                                                    <td>220</td>
+                                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!--三高機操作說明-->
         <div id="Instructions" class="block" data-navname="三高機操作說明" data-parent="#MainHome" style="display:none;">
             <div class="h-center-center">
@@ -873,7 +1128,7 @@
 
         <!--三高量測標準值範圍-->
         <div id="StandardInfo" class="block" data-navname="三高量測標準值範圍" data-parent="#MainHome" style="display:none;">
-            <h3>血糖（兒童及青少年第 1 型糖尿病）</h3>
+            <h3 class="color-MBG">血糖（兒童及青少年第 1 型糖尿病）</h3>
             <div class="h-center-center">
                 <div class="rData">
                     <label>空腹血糖</label>
@@ -884,7 +1139,7 @@
                     <span>90 - 150 mg/dL</span>
                 </div>
             </div>
-            <h3>血糖（成年人—20~65歲）</h3>
+            <h3 class="color-MBG">血糖（成年人—20~65歲）</h3>
             <div class="h-center-center">
                 <div class="rData">
                     <label>空腹血糖</label>
@@ -895,7 +1150,7 @@
                     <span>80 - 160 mg/dL</span>
                 </div>
             </div>
-            <h3>血糖（妊娠型）</h3>
+            <h3 class="color-MBG">血糖（妊娠型）</h3>
             <div class="h-center-center">
                 <div class="rData">
                     <label>空腹血糖 (飯前/餐前血糖)</label>
@@ -916,7 +1171,7 @@
                     </span> 
                 </div>
             </div>
-            <h3>血糖（老年人—超過65歲）</h3>
+            <h3 class="color-MBG">血糖（老年人—超過65歲）</h3>
             <div class="h-center-center">
                 <div class="rData">
                     <label>空腹血糖</label>
@@ -927,7 +1182,7 @@
                     <span>90 - 150 mg/dL</span>
                 </div>
             </div>
-            <h3>血壓</h3>
+            <h3 class="color-MBP">血壓</h3>
             <div class="h-center-center">
                 <div class="rData">
                     <label>收縮壓</label>
@@ -942,7 +1197,7 @@
                     <span>60 - 100 次/分</span>
                 </div>
             </div>
-            <h3>膽固醇</h3>
+            <h3 class="color-MCHOL">膽固醇</h3>
             <div class="h-center-center">
                 <div class="rData">
                     <label>膽固醇</label>

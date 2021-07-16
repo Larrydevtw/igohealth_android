@@ -13,6 +13,15 @@ input[type=text]{
   height:30px;
 } */
 
+/*男女性別Checkbox*/
+.btn-group .active {
+  color:#fff;
+  background-color: #F4C21E;
+}
+/*日期選項*/
+.row3 .date{width: 114px;margin: 0 5px; padding: 10px;}
+.row3 .time{width: 114px;margin: 0 5px; padding: 10px;}
+
 /*縣市下拉樣式*/
 .selzipcode {
   margin-right: 10px;
