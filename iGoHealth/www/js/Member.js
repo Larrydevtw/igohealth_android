@@ -146,11 +146,11 @@ var Member = {
     DoLoginSuccessWork: function (_UserID, _UserPS) {
         localStorage.setItem("UserID", _UserID.toLowerCase());
         localStorage.setItem("UserPS", _UserPS); //TODO localStoraage暫時儲存未加密 
-        try { //註冊推播(暫無使用)
-            PushMsg.init(_UserID);
-        } catch (e) {
-            Log.write("註冊推播 失敗" + e.toString(), "RegisterPush");
-        }
+        // try { //註冊推播(暫無使用)
+        //     PushMsg.init(_UserID);
+        // } catch (e) {
+        //     Log.write("註冊推播 失敗" + e.toString(), "RegisterPush");
+        // }
         //先將密碼加密在儲存
         WiseAES.enpryptAES(_UserPS, AppConfig.ASKey1, AppConfig.ASKey2, "T",
             function (res) {

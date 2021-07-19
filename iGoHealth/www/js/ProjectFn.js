@@ -60,6 +60,9 @@ var ProjectFn = ProjectFn || {},
             SidebarCustom.toggleMenu();
         },
         gestureInit: function (ElementId) {
+            //TODO:
+            Log.write(" gestureInit todo...", "Hammer");
+            return;
             try {
                 // use hammer.js
                 var myElement = document.getElementById(ElementId);
