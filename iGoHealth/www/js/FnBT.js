@@ -88,7 +88,7 @@ var FnBT = {
                 } else {
                     Log.write('有資料');
                     if (DeviceModel == "ETB04") {
-                        switch(Data.length){
+                        switch (Data.length) {
                             case 6:
                                 switch (Data[5]) {
                                     case "G":
@@ -133,7 +133,7 @@ var FnBT = {
     iniBT: function (successFn, errFn) { //初始化藍牙
         Log.alert("初始化藍牙", "FnBT iniBT");
         try {
-            
+
             //藍牙狀態套件初始化 (BluetoothStatus) 抓取手機目前藍牙狀態(開啟或關閉)
             cordova.plugins.BluetoothStatus.initPlugin();
             //設定藍牙操作時所需使用到的變數
@@ -240,18 +240,18 @@ var FnBT = {
             }
         }
     },
-    SetBTMode:function(successFn){
+    SetBTMode: function (successFn) {
         var BTMode = AppConfig.BTPairMode;
         ProjectFn.setSysParams("mSys", "BTMode", BTMode, function (msg) {
             Log.write(msg + "FnBTMode:" + BTMode + "，儲存設定至SQLLite中", "FnBTPair SwitchBTMode");
         });
-        if(BTMode === "Y"){
+        if (BTMode === "Y") {
             $("#divBTPairSwitch").hide();
-        }else{
+        } else {
             $("#divBTPairSwitch").show();
         }
 
-        if(successFn){
+        if (successFn) {
             successFn();
         }
     },
@@ -457,17 +457,17 @@ var FnBT = {
     },
     GetBTMode: function (successFn) { //取得目前藍牙設定模式 Y:配對模式；N:一般掃描模式
         ProjectFn.getSysParams("mSys", "BTMode", function (BTMode) {
-            Log.write(BTMode,'BTMode');
+            Log.write(BTMode, 'BTMode');
             if (successFn) {
                 successFn(BTMode);
             }
         });
     },
-    CheckSameMData: function (MType,_Params) {
+    CheckSameMData: function (MType, _Params) {
         return new Promise(function (resolve, reject) {
-            if(!_Params){
+            if (!_Params) {
                 resolve(false);
-                Log.write("Params為空!",'CheckSameMData');
+                Log.write("Params為空!", 'CheckSameMData');
                 return;
             }
 
@@ -486,13 +486,13 @@ var FnBT = {
             strSql += "select * from Management_" + MType;
             strSql += " Where ";
             for (var key in Params) {
-                if(key === "Account" || key === "MTimeStamp"){
+                if (key === "Account" || key === "MTimeStamp") {
                     valueArray.push(key + " = '" + Params[key] + "'");
-                }else{
+                } else {
                     valueArray.push("Cast(" + key + " as double)" + " = " + "Cast('" + Params[key] + "' as double)");
                 }
             }
-          
+
             strSql += valueArray.join(' and ');
             // Log.write(strSql, 'CheckSameMData');
             // DAOFn.Query("", "select * from Management_" + MType+" order by MTimeStamp desc",
@@ -526,17 +526,17 @@ var FnBT = {
         var UploadStatus = "A";
         var MRowKey = "";
         var Memo = "";
-        if(lParams){
+        if (lParams) {
             UploadStatus = lParams.UploadStatus;
             MRowKey = lParams.MRowKey;
             Memo = lParams.Memo;
         }
 
-        var M_UP_Date = ""; 
+        var M_UP_Date = "";
 
-        if(UploadStatus === "U"){
+        if (UploadStatus === "U") {
             //更新流程
-            M_UP_Date =  DateTimeFun.getFullInputDateNow();
+            M_UP_Date = DateTimeFun.getFullInputDateNow();
         }
 
         lParams.M_UP_Date = M_UP_Date;
@@ -637,8 +637,8 @@ var FnBT = {
                     break;
             }
 
-            FnBT.CheckSameMData(MType, Params).then(function(isNewData){
-                if(isNewData){
+            FnBT.CheckSameMData(MType, Params).then(function (isNewData) {
+                if (isNewData) {
                     //Log.write(JSON.stringify(Params),"Params");
                     switch (UploadStatus) {
                         case "A":
@@ -666,7 +666,7 @@ var FnBT = {
                     lMData.shift();
                     lMData.shift();
                     lMData.shift();
-    
+
                     var isAnimate = false;
                     if (dataType === "device") {
                         isAnimate = true;
@@ -684,11 +684,11 @@ var FnBT = {
                     }
 
                 }
-                
+
                 //WriteLog.write(RecordsArr[i], "multiresult");
                 if (_count == rCount - 1) { //最後一筆    
- 
-                    if(!isNewData && dataType === "device"){
+
+                    if (!isNewData && dataType === "device") {
                         FnCtrl.alert($.i18n('此次量測值已在記錄內'));
                     }
 
@@ -707,8 +707,8 @@ var FnBT = {
         }
     },
     SaveDataToDB: function (lParams, MType, successFn) {
-        DAOFn.InsertData('','Management_' + MType,lParams,function(result) { 
-            Log.write(MType+":"+JSON.stringify(lParams), "SaveDataToDB");
+        DAOFn.InsertData('', 'Management_' + MType, lParams, function (result) {
+            Log.write(MType + ":" + JSON.stringify(lParams), "SaveDataToDB");
             setTimeout(function () {
                 //Measure.readByMType(MType);
                 if (successFn) {
@@ -771,8 +771,8 @@ var FnBT = {
     fn_DataMode: function (isOnlyOneData) { //切換多筆和單筆
         MSCordovaBLE.MySetting.OnlyLastestData = isOnlyOneData;
     },
-    confirmBTPair:function(Device) {
-        if(sessionStorage.WhereAmI !== "MainHome"){
+    confirmBTPair: function (Device) {
+        if (sessionStorage.WhereAmI !== "MainHome") {
             Log.write("不在主畫面，不用檢查是否有配對過設備", "confirmBTPair");
             return;
         }
@@ -782,29 +782,30 @@ var FnBT = {
         });
 
         Log.write(Device, "confirmBTPair");
-        var message=$.i18n('未配對任何藍牙設備，是否前往配對畫面進行配對?');
+        var message = $.i18n('未配對任何藍牙設備，是否前往配對畫面進行配對?');
         var buttonLabels = [$.i18n("好"), $.i18n("不再提醒")];
-        navigator.notification.confirm(message, confirmCallback,$.i18n('系統訊息'),buttonLabels);
+        navigator.notification.confirm(message, confirmCallback, $.i18n('系統訊息'), buttonLabels);
 
         function confirmCallback(btnIndex) {
-            switch(btnIndex){
+            switch (btnIndex) {
                 case 0:
                     confirmBTPair = "Y";
                     break;
                 case 1:
-                    FnBT.StopScan();FnBTPair.ShowPage(1);
+                    FnBT.StopScan();
+                    FnBTPair.ShowPage(1);
                     confirmBTPair = "Y";
                     break;
                 case 2:
                     confirmBTPair = "N";
-                    break;     
+                    break;
             }
             ProjectFn.setSysParams("mSys", "confirmBTPair", confirmBTPair, function (msg) {
                 Log.write(msg + "confirmBTPair:" + confirmBTPair + "，儲存設定至SQLLite中", "FnBTPair SwitchBTMode");
             });
-        }  
+        }
     },
-    getConfirmBTPair:function(successFn){
+    getConfirmBTPair: function (successFn) {
         ProjectFn.getSysParams("mSys", "confirmBTPair", function (confirmBTPair) {
             if (successFn) {
                 successFn(confirmBTPair);
@@ -838,32 +839,32 @@ var FnBT = {
             if (BTMode == "Y") { //判斷是否為配對模式
                 Log.write("配對模式", "FnBT ScanCallBack");
                 var arrDevPair = $.parseJSON(localStorage.getItem("BT40P").toString());
-                Log.write(arrDevPair,"FnBT ScanCallBack");
-                if(arrDevPair.length === 0){
+                Log.write(arrDevPair, "FnBT ScanCallBack");
+                if (arrDevPair.length === 0) {
                     var confirmBTPair = "N";
-                    ProjectFn.Wait([function(next){
-                         FnBT.getConfirmBTPair(function(result){
-                             confirmBTPair = result;
-                             next();
-                         });
-                    }],function(){
-                        if(confirmBTPair === "Y" || confirmBTPair === ""){
+                    ProjectFn.Wait([function (next) {
+                        FnBT.getConfirmBTPair(function (result) {
+                            confirmBTPair = result;
+                            next();
+                        });
+                    }], function () {
+                        if (confirmBTPair === "Y" || confirmBTPair === "") {
                             FnBT.confirmBTPair(Device);
-                        }      
+                        }
                         Log.write("confirmBTPair: " + confirmBTPair, 'ScanCallBack');
-                    });         
-                }else{
+                    });
+                } else {
                     if (MSCordovaBLE.inPairedList(Device.address)) { //判斷是否在配對清單之中
                         Log.write("配對模式:設備在配對清單之中", "FnBT ScanCallBack");
                         FnBT.ShowConnectInfo(Device.name);
                     }
-                }               
+                }
             } else {
                 FnBT.ShowConnectInfo(Device.name);
             }
         });
     },
-    ShowConnectInfo:function(deviceName){
+    ShowConnectInfo: function (deviceName) {
         FnBT.DeviceToName(deviceName).then(function (result) {
             window.plugins.toast.showShortBottom($.i18n("發現:$1，正在連線中..", result), function (a) {}, function (b) {});
         });
@@ -895,7 +896,7 @@ var FnBT = {
             case "Scan":
                 UserID = localStorage.MersureScanUserID;
                 break;
-        } 
+        }
 
         Log.write(ResultStr, "ResultCallBack ResultStr");
         var RecordsArr = [];
@@ -905,10 +906,10 @@ var FnBT = {
         var MType = ""; //量測類型;
         var UploadStatus = "A";
         FnBT.GetDeviceType(lMData).then(function (_MType) {
-            if(_MType === "Err"){
+            if (_MType === "Err") {
                 var errCode = lMData.length > 4 ? lMData[3] : "";
                 var message = FnBT.ShowDeviceErrCode(DeviceModel, errCode); //"E" + errCode+"\n \n 請參閱ETB04異常排除";
-                FnCtrl.alert(message,"藍牙設備錯誤");
+                FnCtrl.alert(message, "藍牙設備錯誤");
                 return;
             }
 
@@ -918,7 +919,7 @@ var FnBT = {
                 FnDateTime.checkMTime(lMData[2], function (isCorrect) {
                     if (isCorrect != "Y") {
                         lMData[2] = DateTimeFun.getFullInputDateNow(); //取得固定日期格式 2017-09-28 11:00:10.123
-                    }else{
+                    } else {
                         var TheDay = new Date();
                         var seconds = DateTimeFun.addZC(TheDay.getSeconds());
                         var milliseconds = WiseScripts.IO.padLeft(TheDay.getMilliseconds(), 3, '0');
@@ -935,11 +936,11 @@ var FnBT = {
                 } else {
                     next();
                 }
-            },function(next){
+            }, function (next) {
                 Measure.checkMValue(lMData, MType, function (result) {
-                    if(result === ""){
+                    if (result === "") {
                         next();
-                    }else{
+                    } else {
                         FnCtrl.alert(result);
                     }
                 });
@@ -949,9 +950,9 @@ var FnBT = {
                 ResultStr = lMData.join(",");
                 Log.write(MType + ":" + ResultStr, "DataReceive Data");
                 var lParams = {
-                    UploadStatus : UploadStatus,
-                    MRowKey : lMData[2],
-                    Memo : ""
+                    UploadStatus: UploadStatus,
+                    MRowKey: lMData[2],
+                    Memo: ""
                 };
 
                 switch (MType) {
@@ -1039,7 +1040,7 @@ var FnBT = {
             });
         });
     },
-    ShowDeviceErrCode: function(DeviceModel,errCode){
+    ShowDeviceErrCode: function (DeviceModel, errCode) {
         var result = "";
         var errMsg = "";
         switch (DeviceModel) {
@@ -1074,7 +1075,7 @@ var FnBT = {
                 result = "E" + errCode + "\n \n 請參閱" + DeviceModel + "異常排除";
                 break;
         }
-            
+
         return result;
     },
     GetMultiDataCallBack: function (RecordsArr) { //回傳多筆量測資料CallBack

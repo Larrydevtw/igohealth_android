@@ -2,7 +2,7 @@ var MeasureManual = {
     Mode: "A",
     MRowID: "",
     MRowKey: "", //P1SNo
-    show: function (MRowID, _UploadStatus,isMemo) {
+    show: function (MRowID, _UploadStatus, isMemo) {
         var MType = MeasureInfo.MType;
         if (MType == "") { //第一次開啟這個畫面 給預設值開啟血糖
             MType = 'BG'; //預設顯示新增血糖 TODO
@@ -50,7 +50,7 @@ var MeasureManual = {
             }, null, 'F');
         });
     },
-    goToMemoPage:function(MType, MRowID){
+    goToMemoPage: function (MType, MRowID) {
 
         $("#MPM_Memo_Text").val("");
 
@@ -63,7 +63,7 @@ var MeasureManual = {
             var MTimeStamp = obj.MTimeStamp;
             var DeviceModel = obj.DeviceModel;
             var Memo = obj.Memo;
-            
+
             MTimeStamp = MTimeStamp.substr(0, 16).replace(/\-/g, "/");
 
             $("#MPM_Memo_Date").html(MTimeStamp);
@@ -71,11 +71,11 @@ var MeasureManual = {
 
             var MValue = "";
             var TimeType = "";
-            switch(MType){
+            switch (MType) {
                 case "BG":
                     MValue = MeasureInfo.convertMValue(MType, obj.BS, DeviceModel);
 
-                    TimeType = Display.getTimeType(obj.TimeType); 
+                    TimeType = Display.getTimeType(obj.TimeType);
                     break;
                 case "BP":
                     MValue = obj.SBP + " / ";
@@ -87,12 +87,12 @@ var MeasureManual = {
                     break;
             }
 
-            if(TimeType === ""){
+            if (TimeType === "") {
                 $("#divMPM_Memo_TimeType").hide();
-                $("#MPM_Memo_TimeType").html("");  
-            }else{
+                $("#MPM_Memo_TimeType").html("");
+            } else {
                 $("#divMPM_Memo_TimeType").show();
-                $("#MPM_Memo_TimeType").html(TimeType);  
+                $("#MPM_Memo_TimeType").html(TimeType);
             }
 
             $("#MPM_Memo_MType").html($.i18n(MType) + "值: ");
@@ -100,7 +100,7 @@ var MeasureManual = {
 
             $("#MeasurePage_Manual_Memo").attr("measure-MRowKey", MRowKey);
             $("#MeasurePage_Manual_Memo").attr("measure-type", MType);
-            
+
             WiseScripts.Tool.NextPop("MeasurePage_Manual_Memo", function () {}, null, 'F');
         });
     },
@@ -118,7 +118,7 @@ var MeasureManual = {
             }
         });
     },
-    showByMType: function (MType,dataId) {
+    showByMType: function (MType, dataId) {
         return new Promise(function (resolve, reject) {
             Log.write(MType, "Measures ShowMPMbyMType");
             var height = "";
@@ -139,17 +139,17 @@ var MeasureManual = {
             }
             $("#tabManualSection>div").hide();
 
-            Log.write(MType,"bindInfo start");
+            Log.write(MType, "bindInfo start");
 
-            if(MeasureManual.Mode === "U"){
-                MeasureManual.bindInfo(MType,dataId);
+            if (MeasureManual.Mode === "U") {
+                MeasureManual.bindInfo(MType, dataId);
                 MeasureManual.MRowID = dataId;
                 // MeasureManual.MRowKey = "";
 
                 $("#ulManual").hide();
                 // $("#divMPM_Memo").show();
                 $("#tabManual_" + MType).show(400, function () {});
-            }else{
+            } else {
                 MeasureManual.clearText(MType);
                 MeasureManual.MRowID = "";
                 MeasureManual.MRowKey = "";
@@ -157,16 +157,16 @@ var MeasureManual = {
                 $("#ulManual").show();
                 // $("#divMPM_Memo").hide();
                 $("#tabManual_" + MType).show(400, function () {
-                    MeasureManual.focusByMType(MType);//MPM_Date
+                    MeasureManual.focusByMType(MType); //MPM_Date
                 });
             }
-            
+
             resolve();
         });
 
     },
     bindInfo: function (MType, MRowID) {
-        Log.write(MType,"bindInfo");
+        Log.write(MType, "bindInfo");
         MeasureManual.getInfoData(MType, MRowID).then(function (obj) {
             Log.write(JSON.stringify(obj), "getInfoData");
 
@@ -175,12 +175,12 @@ var MeasureManual = {
 
             var MTimeStamp = obj.MTimeStamp;
             var DeviceModel = obj.DeviceModel;
-            
+
             DateTimeFun.iniDate("MPM_Date", "MPM_Time", MTimeStamp); //依據不同OS製作不同日期控件
 
             var Memo = obj.Memo ? obj.Memo : "";
 
-            switch(MType){
+            switch (MType) {
                 case "BG":
                     var BG = MeasureInfo.convertMValue(MType, obj.BS, DeviceModel);
                     $("#txtMPM_BG").val(BG);
@@ -202,7 +202,7 @@ var MeasureManual = {
                     $("#txtMPM_CAL").val(obj.CAL);
                     break;
                 case "BO":
-                    $("#txtMPM_"+MType).val(obj.SBP);
+                    $("#txtMPM_" + MType).val(obj.SBP);
                     $("#txtMPM_BOHR").val(obj.SBP);
                     break;
                 default: //BT, UA, CHOL, BO, HR
@@ -212,10 +212,10 @@ var MeasureManual = {
             }
         });
     },
-    getInfoData:function(MType,MRowID,successFn){
-        return new Promise(function(resolve,reject){
+    getInfoData: function (MType, MRowID, successFn) {
+        return new Promise(function (resolve, reject) {
             var infoData;
-            var strSql = "select * from Management_" + MType + " where MRowID = " + MRowID +" limit 1;";
+            var strSql = "select * from Management_" + MType + " where MRowID = " + MRowID + " limit 1;";
             DAOFn.Query('', strSql, function (result) {
                 var objList = $.parseJSON(result);
                 if (objList.length == 0) {
@@ -229,16 +229,16 @@ var MeasureManual = {
                 resolve(infoData);
             });
         });
-        
+
     },
-    switchTimeType:function(MType,timeType){
-        var $timeGroup = $("#MPM_TimeGroup_" + MType);//.val();
+    switchTimeType: function (MType, timeType) {
+        var $timeGroup = $("#MPM_TimeGroup_" + MType); //.val();
         var $ddlTimeType = $("#MPM_TimeType_" + MType);
         $ddlTimeType.html("");
 
         var $optBreakfast = $("<option>");
         var $optLunch = $("<option>");
-        var $optDinner =  $("<option>");
+        var $optDinner = $("<option>");
 
         $optBreakfast.text($.i18n('早餐'));
         $optLunch.text($.i18n('午餐'));
@@ -261,7 +261,7 @@ var MeasureManual = {
                 $optLunch.val("3");
                 $optDinner.val("5");
 
-                $ddlTimeType.append($optBreakfast); 
+                $ddlTimeType.append($optBreakfast);
                 $ddlTimeType.append($optLunch);
                 $ddlTimeType.append($optDinner);
                 $ddlTimeType.val(timeType);
@@ -275,7 +275,7 @@ var MeasureManual = {
                 $optLunch.val("4");
                 $optDinner.val("6");
 
-                $ddlTimeType.append($optBreakfast); 
+                $ddlTimeType.append($optBreakfast);
                 $ddlTimeType.append($optLunch);
                 $ddlTimeType.append($optDinner);
 
@@ -290,7 +290,7 @@ var MeasureManual = {
     },
     onBtnMemoSaveClick: function (_UserID) {
 
-        if(!MainHome.CheckNet()){
+        if (!MainHome.CheckNet()) {
             return;
         }
 
@@ -333,8 +333,8 @@ var MeasureManual = {
         } else {
             UserID = localStorage.UserID;
         }
-        
-        if(!isCheckMData){ //Y:檢查資料是否重複；N:不檢查
+
+        if (!isCheckMData) { //Y:檢查資料是否重複；N:不檢查
             isCheckMData = "Y";
         }
 
@@ -345,28 +345,28 @@ var MeasureManual = {
         if (_MData) {
             MData = _MData;
             //取得固定日期格式 2017/09/28 11:00:10.123
-            MTimeStamp = DateTimeFun.getFullInputDateNow();//.getInputDateNow() + " " + DateTimeFun.getInputTimeNow(); 
+            MTimeStamp = DateTimeFun.getFullInputDateNow(); //.getInputDateNow() + " " + DateTimeFun.getInputTimeNow(); 
             isManual = "N";
-            MData.isManual="N";
+            MData.isManual = "N";
             MeasureManual.Mode = "A";
         } else {
-            var dateVal=$("#MPM_Date").val();
-            var timeVal=$("#MPM_Time").val();
-            
-            if (dateVal == "" || timeVal == "" ) {
+            var dateVal = $("#MPM_Date").val();
+            var timeVal = $("#MPM_Time").val();
+
+            if (dateVal == "" || timeVal == "") {
                 FnCtrl.alert($.i18n('請輸入') + $.i18n('量測時間'));
                 return;
             }
 
-            MTimeStamp = FnDateTime.getMTimeStamp(dateVal,timeVal);
-            MData.isManual="Y";
+            MTimeStamp = FnDateTime.getMTimeStamp(dateVal, timeVal);
+            MData.isManual = "Y";
         }
-        
-        MData.MTimeStamp=MTimeStamp;
+
+        MData.MTimeStamp = MTimeStamp;
 
         var Memo = $("#MPM_Memo").val();
         var MType = MeasureInfo.MType;
-        var DeviceModel =  MType+"(Manual)"; //ex: BG(Manual)
+        var DeviceModel = MType + "(Manual)"; //ex: BG(Manual)
         var DeviceId = "";
 
         var RecordsArr = [];
@@ -376,14 +376,14 @@ var MeasureManual = {
 
         ResultStr += DeviceModel + "," + DeviceId + "," + MTimeStamp;
 
-        ProjectFn.Wait([function(next){
+        ProjectFn.Wait([function (next) {
             MeasureManual.checkMData(MData, function (MData) {
                 var MValue = "";
                 switch (MType) {
                     case "BG":
-                        MValue=MData[MType];
-                        MValue=MeasureInfo.convertSaveMValue(MType,MValue);
-                        MeasureManual.getTimeType(MType,function (TimeType) {
+                        MValue = MData[MType];
+                        MValue = MeasureInfo.convertSaveMValue(MType, MValue);
+                        MeasureManual.getTimeType(MType, function (TimeType) {
                             ResultStr += "," + MValue + "," + TimeType;
                         });
                         break;
@@ -404,8 +404,8 @@ var MeasureManual = {
                         var STEP = MData.STEP;
                         var Distance = MData.Distance;
                         var CAL = MData.CAL;
-                        
-                        ResultStr += "," + STEP+ "," + Distance + "," + CAL;
+
+                        ResultStr += "," + STEP + "," + Distance + "," + CAL;
                         break;
                     case "BW":
                         var BW = MData.BW == null ? "" : MData.BW;
@@ -434,7 +434,7 @@ var MeasureManual = {
                         break;
                     default: //BT, UA, CHOL, HR
                         MValue = MData[MType];
-                        MValue=MeasureInfo.convertSaveMValue(MType,MValue);
+                        MValue = MeasureInfo.convertSaveMValue(MType, MValue);
 
                         ResultStr += "," + MValue;
                         break;
@@ -448,31 +448,30 @@ var MeasureManual = {
                 RecordsArr.push(ResultStr);
                 next();
             });
-        }],function(){
-            
+        }], function () {
+
             WiseScripts.Tool.ShowLoading(true, $.i18n("儲存資料中"));
 
             var UploadStatus = MeasureManual.Mode;
             var MRowKey = MeasureManual.MRowKey;
             var lParams = {
-                UploadStatus : UploadStatus,
-                MRowKey : MRowKey,
-                Memo : Memo
+                UploadStatus: UploadStatus,
+                MRowKey: MRowKey,
+                Memo: Memo
             };
 
             FnBT.SaveMData(RecordsArr, MType, "manual", UserID, lParams, function (isNewData) {
                 Log.write("isNewData: " + isNewData + ",isCheckMData: " + isCheckMData + "；isCheckMData如為N不需要檢查是否資料重複", 'checkMData');
-                
+
                 WiseScripts.Tool.ShowLoading(false);
 
                 if (!isNewData && isCheckMData === "Y") {
-                    FnCtrl.alert($.i18n('此次量測值已在記錄內'), $.i18n('系統訊息'), function () {  
-                    });
+                    FnCtrl.alert($.i18n('此次量測值已在記錄內'), $.i18n('系統訊息'), function () {});
                     return;
                 }
 
                 if (isManual == "Y") { //手動新增才要跳以下訊息
-                    switch(UploadStatus){
+                    switch (UploadStatus) {
                         case "A":
                             var message = $.i18n("新增成功") + "!!!";
                             var title = $.i18n('系統訊息');
@@ -503,7 +502,7 @@ var MeasureManual = {
     checkMData: function (MData, successFn) { //檢查手動輸入欄位
         var result = "";
         var isManual = MData.isManual;
-        ProjectFn.Wait([function(next){
+        ProjectFn.Wait([function (next) {
             FnDateTime.checkMTime(MData.MTimeStamp, function (isCorrect) {
                 if (isCorrect != "Y") {
                     FnCtrl.alert($.i18n('日期輸入錯誤！不可為180天前及未來一天之日期。'));
@@ -511,7 +510,7 @@ var MeasureManual = {
                 }
                 next();
             });
-        }],function(){
+        }], function () {
             var MType = MeasureInfo.MType;
             switch (MType) {
                 case "BP": //TODO
@@ -556,12 +555,12 @@ var MeasureManual = {
                     var Distance = MData.Distance === undefined ? $("#txtMPM_Distance").val() : MData.Distance;
                     var CAL = MData.CAL === undefined ? $("#txtMPM_CAL").val() : MData.CAL;
 
-                    if (STEP === "" || Distance==="") { //輸入不可為空
+                    if (STEP === "" || Distance === "") { //輸入不可為空
                         result = $.i18n('請輸入');
                         if (STEP == "") {
-                            FnCtrl.focus("txtMPM_"+MType);
+                            FnCtrl.focus("txtMPM_" + MType);
                             result += $.i18n('步數');
-                        }else {
+                        } else {
                             FnCtrl.focus("txtMPM_Distance");
                             result += $.i18n("距離");
                         }
@@ -635,18 +634,18 @@ var MeasureManual = {
                     }
                     break;
                 default: //BG, UA, CHOL, BT, HR
-                    var MValue = MData[MType] === undefined ? $("#txtMPM_"+MType).val() : MData[MType];
+                    var MValue = MData[MType] === undefined ? $("#txtMPM_" + MType).val() : MData[MType];
 
                     if (MValue === "") { //輸入不可為空
-                        result = $.i18n('請輸入')+$.i18n(MType);
-                        FnCtrl.focus("txtMPM_"+MType);
+                        result = $.i18n('請輸入') + $.i18n(MType);
+                        FnCtrl.focus("txtMPM_" + MType);
                     } else {
                         var _MValue = parseInt(MValue);
                         if (_MValue < MeasureInfo.Range[MType].Min || _MValue > MeasureInfo.Range[MType].Max) {
                             result = $.i18n('輸入數值不正確!');
-                            FnCtrl.focus("txtMPM_"+MType);
-                        }else{
-                            MData[MType]=MValue;
+                            FnCtrl.focus("txtMPM_" + MType);
+                        } else {
+                            MData[MType] = MValue;
                         }
                     }
                     break;
@@ -706,7 +705,7 @@ var MeasureManual = {
     },
     clearText: function (MType) {
         $("#MPM_Memo").val("");
-        switch(MType){
+        switch (MType) {
             case "BP":
                 $("#txtMPM_SBP").val("");
                 $("#txtMPM_DBP").val("");
@@ -723,34 +722,34 @@ var MeasureManual = {
                 $("#txtMPM_CAL").val("");
                 break;
             case "BO":
-                $("#txtMPM_"+MType).val("");
+                $("#txtMPM_" + MType).val("");
                 $("#txtMPM_BOHR").val("");
                 break;
             default: //BG, BT, UA, CHOL, BO, HR
-                $("#txtMPM_"+MType).val("");
+                $("#txtMPM_" + MType).val("");
                 break;
         }
     },
     focusByMType: function (MType) {
         switch (MType) {
             case "BG":
-                FnCtrl.focus("txtMPM_"+MType);
+                FnCtrl.focus("txtMPM_" + MType);
                 var nowHour = new Date().getHours();
 
                 var dailyRoutine = MeasureInfo.dailyRoutine;
-                var wakeUp= parseFloat(dailyRoutine.wakeUp);
-                var dinner= parseFloat(dailyRoutine.dinner);
-                var bedTime= parseFloat(dailyRoutine.bedTime);
+                var wakeUp = parseFloat(dailyRoutine.wakeUp);
+                var dinner = parseFloat(dailyRoutine.dinner);
+                var bedTime = parseFloat(dailyRoutine.bedTime);
 
                 if (nowHour >= wakeUp && nowHour < dinner) {
                     timeType = "AC";
-                } else if (nowHour >= bedTime || nowHour < (bedTime+2-24)) {
+                } else if (nowHour >= bedTime || nowHour < (bedTime + 2 - 24)) {
                     timeType = "7";
                 } else {
                     timeType = "0";
                 }
-                $("#MPM_TimeGroup_"+MType).val(timeType);
-                Log.write(timeType, MType+"量測時段");
+                $("#MPM_TimeGroup_" + MType).val(timeType);
+                Log.write(timeType, MType + "量測時段");
 
                 Display.showTimeType(MType);
                 break;
@@ -758,17 +757,17 @@ var MeasureManual = {
                 FnCtrl.focus("txtMPM_SBP");
                 break;
             default: //BW, BT, UA, CHOL, BO, STEP, HR
-                FnCtrl.focus("txtMPM_"+MType);
+                FnCtrl.focus("txtMPM_" + MType);
                 break;
         }
     },
-    getTimeType: function (MType,successFn) {
+    getTimeType: function (MType, successFn) {
         var timeType = "";
 
-        var timeGroup = $("#MPM_TimeGroup_"+MType).val();
+        var timeGroup = $("#MPM_TimeGroup_" + MType).val();
 
         if (timeGroup == "AC" || timeGroup == "PC") {
-            timeType = $("#MPM_TimeType_"+MType).val();
+            timeType = $("#MPM_TimeType_" + MType).val();
         } else {
             timeType = timeGroup;
         }
@@ -818,7 +817,7 @@ var MeasureManual = {
 
         WaitQueue.UpdateMRowKey(lParams, MType, _MRowKey, function () {
             Log.write("Update Success", 'UpdateMRowKey');
-            if(successFn){
+            if (successFn) {
                 successFn();
             }
         });

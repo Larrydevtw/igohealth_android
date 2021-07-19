@@ -286,8 +286,8 @@ var Measure = {
             var row = 0;
             for (var i = 0; i < objList.length; i++) {
                 Measure.getPersonalBodyRow(MType, objList[i]).then(function (obj) {
-                    
-                    Log.write(obj.HtmlStr,'getPersonalBodyRowobj.HtmlStr');
+
+                    Log.write(obj.HtmlStr, 'getPersonalBodyRowobj.HtmlStr');
 
                     result.HtmlStr += obj.HtmlStr;
                     result.chartData.push(obj.objRow);
@@ -308,7 +308,7 @@ var Measure = {
             var DeviceModel = objRow.DeviceModel;
             var MTimeStamp = objRow.MTimeStamp;
             var DisplayMTimeStamp = Display.dateFormat(MTimeStamp);
-            
+
             //確認是否為非手動量測，是的話在日期後加上*
             var checkDeviceModel = DeviceModel.indexOf('(Manual)');
             if (checkDeviceModel < 0) {

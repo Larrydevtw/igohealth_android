@@ -92,7 +92,7 @@ var app = {
                 next();
             });
         }, function (next) {
-            FnGeo.arrTargets = ["signup_twzipcode","profile_twzipcode"];
+            FnGeo.arrTargets = ["signup_twzipcode", "profile_twzipcode"];
             FnGeo.init(function () { //successFn
                 //alert("FnGeo Success");
                 next();
@@ -123,7 +123,7 @@ var app = {
             });
         }], function () {
             //alert("PJ Success");
-            
+
             ProjectFn.ballAddInit();
 
             WiseScripts.Tool.ShowLoading(false, '', '', function () {
@@ -133,7 +133,7 @@ var app = {
                 HATMService.RegisterSite(function () { //successFn
                     Log.write(" HATMService.RegisterSite Success", "index.js onDeviceReady");
                     try {
-                        
+
                         Project.AppInit(); //App初始化 確認網路>啟動上傳>登入流程
 
                     } catch (error) {
