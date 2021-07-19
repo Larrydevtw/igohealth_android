@@ -296,7 +296,7 @@ var MainHome = MainHome || {}, MainHome =
                 if(successFn){
                     successFn();
                 }
-                
+
             }, 'T');
         },
         goToProfile: function (NoCancel, successFn) {
@@ -415,6 +415,9 @@ var MainHome = MainHome || {}, MainHome =
             }
             
             WiseScripts.Tool.NextPop('profile', function(){
+                if(WiseScripts.Tool.NoBack){
+                    $("#backBtn").hide();
+                }
                 if(successFn){
                     successFn();
                 }

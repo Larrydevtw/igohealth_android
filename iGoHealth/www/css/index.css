@@ -197,7 +197,7 @@ body{overflow-y: hidden;}
     /*height:50px;                   /* text area height */
     /*width:225px;                   /* text area width */
     /*padding:180px 0px 0px 0px;     /* image height is 200px (bottom 20px are overlapped with text) */
-    /*margin:-115px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
+    /*margin:-95px 0px 0px -112px;  /* offset vertical: half of image height and text area height */
                                    /* offset horizontal: half of text area width */
     /*max-width: 414px;*/
     height: 100%;
@@ -219,8 +219,8 @@ body{overflow-y: hidden;}
 #app-nav .icon-bluetooth{width: 18px;margin-right: 10px;}
 #app-nav .icon-wifi{width: 15px;}
 
-.app.bangs #app-nav{height:115px}
-.app.bangs .block{padding: 115px 20px 0 20px;}
+.app.bangs #app-nav{height:95px}
+.app.bangs .block{padding: 95px 20px 0 20px;}
 
 .toggleButton button{font-size:1.2em;color:#333;background-color: white; padding: 10spx 20px;border: 1px solid #aaa;}
 
@@ -330,7 +330,7 @@ input:checked + .slider:before {
     
 }
 
-.app.bangs #main_page > div{ margin-top: -115px;height: 117%;}
+.app.bangs #main_page > div{ margin-top: -95px;height: 117%;}
 
 /*0. 登入*/
 #login_page .logo{ max-width: 240px; margin:15% 0 8% 0;}
@@ -370,7 +370,7 @@ input:checked + .slider:before {
 
 /*測量記錄*/
 .chartType{margin-bottom: 30px; position: fixed; width: 100%;top:70px;left:0; background-color: #FFF;padding:10px 0; z-index: 1;}
-.app.bangs .chartType{top: 115px;}
+.app.bangs .chartType{top: 95px;}
 
 .chartType > div{flex:1 1 33%; text-align: center;margin: 0 5px;}
 .chartDays {overflow-x: scroll; width: 115%; margin: 0 -20px;}
