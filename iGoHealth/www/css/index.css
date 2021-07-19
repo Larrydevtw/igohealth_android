@@ -41,6 +41,7 @@ body {
     /* text-transform:uppercase;*/
     width:100%;
     color:#333;
+
 }
 input, button{border: none;}
 p{margin: 0;}
@@ -61,6 +62,9 @@ h4{color:#999}
 .h-center-center{ display:flex; justify-content: center; align-items: center; flex-direction: column;}
 .h-center-around{ display:flex; justify-content:space-around; align-items: center; flex-direction: column;}
 .h-center-between{ display:flex; justify-content:space-between; align-items: center; flex-direction: column;}
+.h-center-end{ display:flex; justify-content: flex-end; flex-direction: column;}
+
+
 .f-wrap{flex-wrap: wrap;}
 
 .mt-1{margin-top: 10px;}
@@ -91,12 +95,7 @@ p.center{ text-align:center;}
 .detail textarea{width:100%; min-height: 100px; margin: 3% 0;}
 */
 /*元件 conponents*/
-.block {
-    width: calc(100% - 40px);
-    height: calc(100% - 50px);
-    /*padding: 70px 20px 0 20px;*/
-    padding: 85px 20px 0 20px;
-}
+.block{width:calc(100% - 40px); height:calc(100% - 50px);/*padding: 70px 20px 0 20px;*/padding: 85px 20px 0 20px;}
 
 
 select{
@@ -148,6 +147,8 @@ select{
 .IPbtn.full{ width:100%; height:50px; margin:0;}
 .IPbtn.full.fixed-bottom{ width:115%;height:75px; }
 
+.app.bangs .IPbtn.full.fixed-bottom{ margin-bottom: -5px;}
+
 #MD_Test{position: relative;}
 .IPbtn.parent::after{
     transition: .1s;
@@ -187,6 +188,7 @@ select{
 .footer_btns button.next{color:#FFF;background-color: #001976; }
 
 /* Portrait layout (default) */
+body{overflow-y: hidden;}
 .app {
     /*background:url(../img/logo.png) no-repeat center top; /* 170px x 200px */
     /*position:absolute;             /* position in the center of the screen */
@@ -207,12 +209,18 @@ select{
     overflow-x: hidden;
 }
 
-#app-nav{ background-color:#F4C21E; color:#fff; width: 100%; position:fixed;z-index: 1;/*height:60px;*/height:60px;}
-#app-nav > div{ padding:0 10px; height:100%;padding-top:10px;  }
+.app.bangs{/*margin-top: 34pt; height:calc( 100% - 34pt);*/}
+
+
+#app-nav{ background-color:#F4C21E; color:#fff; width: 100%; position:fixed;z-index: 1;/*height:60px;*/height:70px;}
+#app-nav  .container{ padding:0 10px; height:100%;max-height: 60px;padding-top:10px;  }
 #app-nav .logo{ height: 20px; }
 #app-nav .menu{ height: 20px; }
 #app-nav .icon-bluetooth{width: 18px;margin-right: 10px;}
 #app-nav .icon-wifi{width: 15px;}
+
+.app.bangs #app-nav{height:115px}
+.app.bangs .block{padding: 115px 20px 0 20px;}
 
 .toggleButton button{font-size:1.2em;color:#333;background-color: white; padding: 10spx 20px;border: 1px solid #aaa;}
 
@@ -322,6 +330,8 @@ input:checked + .slider:before {
     
 }
 
+.app.bangs #main_page > div{ margin-top: -115px;height: 117%;}
+
 /*0. 登入*/
 #login_page .logo{ max-width: 240px; margin:15% 0 8% 0;}
 
@@ -360,10 +370,14 @@ input:checked + .slider:before {
 
 /*測量記錄*/
 .chartType{margin-bottom: 30px; position: fixed; width: 100%;top:70px;left:0; background-color: #FFF;padding:10px 0; z-index: 1;}
+.app.bangs .chartType{top: 115px;}
+
 .chartType > div{flex:1 1 33%; text-align: center;margin: 0 5px;}
 .chartDays {overflow-x: scroll; width: 115%; margin: 0 -20px;}
 .chartDays > div{width: 520px;height:40px}
 .chartDays > div >div{flex:1 1 90px; text-align: center;}
+.chartDays {-ms-overflow-style: none;}
+.chartDays::-webkit-scrollbar {display: none;}
 .chartxaxis{color:#0BA29A;background-color: #fff; padding:5px 20px; border: 1px solid #0BA29A; border-radius: 30px; min-width:70px;}
 .chartxaxis.active{color:#fff;background-color: #0BA29A; }
 .chartType .btn{font-size: 2em;color:#aaa;transition: .4s;border-bottom-width: 3px;border-bottom-style: solid;color: #aaa;display: block; }
@@ -382,9 +396,10 @@ input:checked + .slider:before {
 .stateTable .row.seperate{border-bottom: 2px solid #aaa;}
 .stateTable .row .left{text-align: left;color:#0BA29A}
 .stateTable .mark{width: 20px; vertical-align: bottom;}
-.stateTable .header div:nth-child(1), .stateTable .row div:nth-child(1){flex:1 1 auto}
-.stateTable .header div:nth-child(2), .stateTable .row div:nth-child(2){flex:0 0 90px}
-.stateTable .header div:nth-child(3), .stateTable .row div:nth-child(3){flex:0 0 90px}
+.stateTable .header div:nth-child(1), .stateTable .row div:nth-child(1){flex:1 1 165px}
+.stateTable .header div:nth-child(2), .stateTable .row div:nth-child(2),
+.stateTable .header div:nth-child(3), .stateTable .row div:nth-child(3),
+.stateTable .header div:nth-child(4), .stateTable .row div:nth-child(4){flex:3 1 70px}
 /*新增備註*/
 #MeasurePage_Manual_Memo .info label{flex:0 0 100px;}
 #MeasurePage_Manual_Memo .info span{flex:0 0 200px;}
@@ -438,6 +453,7 @@ input:checked + .slider:before {
     background-color: #fff;max-width: 260px; ;min-width: 70%;min-height:100%; display: flex;flex-direction: column;}
 #IP_Modal .MD_nav{height: 40px;display:flex;justify-content: flex-end;align-items: center;} 
 #IP_Modal .MD_header{height: 120px;} 
+.app.bangs #IP_Modal .MD_header{padding-top: 35pt;} 
 #IP_Modal .MD_content{ background-color: #0BA29A;padding:10px; flex-grow: 1;} 
 #IP_Modal .MD_content .blockNav{padding:0;} 
 #IP_Modal .MD_content .title{text-align:center;} 

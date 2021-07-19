@@ -193,6 +193,10 @@
     </script>
 </head>
 <body style="height:100vh;">
+    <!--
+        瀏海機請在app的class 增加bangs樣式，範例如下：
+        <div class="app bangs">
+    -->
     <div class="app">
         <!--進入頁-->
         <div id="main_page" class="block" style="display:none;">
@@ -380,17 +384,19 @@
 
         <!--sys nav-->
         <div id="app-nav" class="header" style="display:none;">
-            <div class="f-center-between">
-                <div>
-                    <img id="mainMenu" class="menu modalOpen" data-modalcontent="#MD_Test" src="./images/Menu.svg" />
-                    <img class="" id="backBtn" data-modalcontent="" src="./images/back-arrow.svg" />
-                </div>
-                <div>
-                    <h2 id="navTitle">標頭</h2>
-                </div>
-                <div class="f-center-center">
-                    <img id="navPlus" class="gotoPage" onclick="MeasureManual.show();" data-pagename="#stateManual"
-                        src="./images/plus.svg" />
+            <div class="h-center-end h-100">
+                <div class="container f-center-between">
+                    <div>
+                        <img id="mainMenu" class="menu modalOpen" data-modalcontent="#MD_Test" src="./images/Menu.svg" />
+                        <img class="" id="backBtn" data-modalcontent="" src="./images/back-arrow.svg" />
+                    </div>
+                    <div>
+                        <h2 id="navTitle">標頭</h2>
+                    </div>
+                    <div class="f-center-center">
+                        <img id="navPlus" class="gotoPage" onclick="MeasureManual.show();" data-pagename="#stateManual"
+                            src="./images/plus.svg" />
+                    </div>
                 </div>
             </div>
         </div>
