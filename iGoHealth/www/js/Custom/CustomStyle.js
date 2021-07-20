@@ -1,17 +1,22 @@
 var CustomStyle = {
     banner_H: "50px", //預設Banner高度
     adjustStatus_H: function (bannerHeight) {
+        var iconSize = "30px";
+        if (!bannerHeight ||bannerHeight === undefined ) {
+            bannerHeight = CustomStyle.banner_H;
+        }
+
         if (DeviceInfo.getOS() === "Android") { //android
+            $(".MD_full").hide();
+            $(".MD_nav").show();
             Log.write("android平台 " + bannerHeight, "index.js 頂部狀態列設定");
             return;
         } else { //ios
+            $(".MD_full").show();
+            $(".MD_nav").hide();
             $(".app").addClass("bangs");
             Log.write("ios平台 ", "index.js 頂部狀態列設定");
         }
-        // var iconSize="30px";
-        // if(!bannerHeight){
-        //     bannerHeight=CustomStyle.banner_H;
-        // }
 
         // if(window.screen.availWidth<=768){
         //     Display.txtMaxLength=20;
