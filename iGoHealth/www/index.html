@@ -121,6 +121,9 @@
     <!-- <script type="text/javascript" src="js/WiseBLE/Band/FnBTPairBand.js"></script>
     <script type="text/javascript" src="js/WiseBLE/Band/DeviceCordova.js"></script> -->
 
+    <script type="text/javascript" src="js/WiseBLE/TAIDOC/TAIDOC.js"></script>
+    <script type="text/javascript" src="js/WiseBLE/TAIDOC/TAIDOC_MultiRecord.js"></script>
+
     <script type="text/javascript" src="js/FnBT.js"></script>
     <script type="text/javascript" src="js/FnBTPair.js"></script>
 
@@ -870,10 +873,10 @@
                 </div>
                 <div class="h-center-center w-100">
                     <div class="input login-input">
-                        <input class="mt-1" placeholder="請輸入藥師識別碼" />
+                        <input type="text" id="txtMeasureScanU_ID" class="mt-1" placeholder="請輸入藥師識別碼" />
                     </div>
                     <div class="input login-input">
-                        <input class="mt-1" placeholder="請輸入藥師密碼" />
+                        <input type="password" id="txtMeasureScanU_Code" class="mt-1" placeholder="請輸入藥師密碼" />
                     </div>
                     <div class="w-100">
                         <p>*若您忘記藥師密碼，<br />
@@ -881,7 +884,7 @@
                     </div>
                 </div>
                 <div class="w-100 mt-1">
-                    <button class="IPbtn full round gotoPage" data-pagename="#measure_2-6">
+                    <button onclick="MeasureScan.checkAuth();" class="IPbtn full round gotoPage" data-pagename="#divMeasureScanMode">
                         送出
                     </button>
                 </div>
@@ -889,8 +892,8 @@
             </div>
         </div>
         <!--藥師測量三高 民眾手機-->
-        <div id="measure_2-6" class="block" data-navname="三高量測標準值範圍" style="display:none;">
-            <div class="h-center-center">
+        <div id="divMeasureScanMode" class="block" data-navname="藥師量測三高" style="display:none;">
+            <div id="MeasureScanMode_Manual" class="h-center-center" >
                 <div class="mt-1 mb-1">
                     <span>
                         請輸入民眾的帳號（手機號碼）<br />*民眾需先註冊成為i顧健康APP的會員
@@ -898,18 +901,93 @@
                 </div>
                 <div class="h-center-center w-100">
                     <div class="input login-input">
-                        <input class="mt-1" placeholder="請輸入民眾的帳號（手機號碼）" />
+                        <input id="MeasureScanMember_ID" class="mt-1" placeholder="請輸入民眾的帳號（手機號碼）" />
                     </div>
                 </div>
                 <div class="w-100 mt-1">
-                    <button class="IPbtn full round gotoPage" data-pagename="#measure_2-7">
+                    <button onclick="MeasureScan.Manual_Action();" class="IPbtn full round gotoPage">
                         送出
                     </button>
                 </div>
+                <div class="w-100 mt-1">
+                    <button onclick="MainHome.goToHome();" class="IPbtn full round">
+                        返回
+                    </button>
+                </div>
+            </div>
+            <div id="MeasureScanMode_Profile" class="info" style="display: none;">
+                <div class="f-center-center mb-1">
+                    <label>會員:</label>
+                    <span id="MeasureScan_UserID"></span>
+                </div>
+                <div class="f-center-center mb-1">
+                    <label>姓名: </label>
+                    <span id="MeasureScan_NickName"></span>
+                </div>
+                <div class="f-center-center mb-1">
+                    <label>性別: </label>
+                    <span id="MeasureScan_Gender"></span>
+                </div>
+                <div class="f-center-center mb-1">
+                    <label>年齡: </label>
+                    <span id="MeasureScan_Age"></span>
+                </div>
+                <div class="f-center-center mb-1" style="display: none;">
+                    <label>生日: </label>
+                    <span id="MeasureScan_BirthDay"></span>
+                </div>
+            </div>
+            <div id="MeasureScanMode_Confirm" class="h-center-center" style="display: none;">
+                <p data-i18n="掃碼量測確認_Info">* 確認身分無誤後，點選下方開始量測按鈕開始進行量測。</p>
+                <div class="w-100 mt-1">
+                    <button onclick="MeasureScan.startMeasure();" class="IPbtn full round gotoPage" data-pagename="#藥師測量三高" data-i18n="開始量測">
+                        開始量測
+                    </button>
+                </div>
+                <div class="w-100 mt-1">
+                    <button onclick="MeasureScan.backToScan();" class="IPbtn full round gotoPage" data-pagename="#藥師測量三高">
+                        返回至輸入民眾帳號
+                    </button>
+                </div>
+            </div>
+            <div id="MeasureScanMode_Data" class="h-center-center" style="display: none;">
+                <div class="w-100 mt-1">
+                    <button onclick="MeasureScan.backToScan();" class="IPbtn full round gotoPage" data-pagename="#藥師測量三高">
+                        返回至輸入民眾帳號
+                    </button>
+                </div>
+                <hr>
+                <div id="MeasureScan_tbResult" class="stateTable h-center-center text-center w-100">
+                    <div class="header">
+                        <div>量測時間</div>
+                        <div>量測類型</div>
+                        <!-- <div>量測值</div> -->
+                    </div>
+                    <div class="row">
+                        <div>2021-05-14 13:24*</div>
+                        <div>血糖</div>
+                        <!-- <div>120</div> -->
+                    </div>
+                    <div class="row seperate">
+                        <div class="left">
+                            120 (午餐後)
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div>2021-05-14 13:24*</div>
+                        <div>血壓</div>
+                        <!-- <div>120</div> -->
+                    </div>
+                    <div class="row seperate">
+                        <div class="left">
+                            120 / 77 / 66
+                        </div>
+                    </div>    
+                </div>
             </div>
         </div>
-        <!--藥師測量三高 開始測量-->
-        <div id="measure_2-7" class="block" data-navname="三高量測標準值範圍" style="display:none;">
+         <!--藥師測量三高 開始測量-->
+         <div id="measure_2-7" class="block" data-navname="三高量測標準值範圍" style="display:none;">
             <div class="h-center-center">
                 <div class="mt-1 mb-1">
                     <span>
@@ -948,13 +1026,8 @@
             </div>
         </div>
         <!--藥師測量三高 開始測量-->
-        <div id="measure_2-8" class="block" data-navname="三高量測標準值範圍" style="display:none;">
+        <div id="measure_2-8" class="block" data-navname="藥師量測三高" style="display:none;">
             <div class="h-center-center">
-                <div class="mt-1 mb-1">
-                    <span>
-                        請輸入民眾的帳號（手機號碼）<br />*民眾需先註冊成為i顧健康APP的會員
-                    </span>
-                </div>
                 <div class="h-center-center w-100">
                     <div class="rData">
                         <label>手機號碼（帳號）</label>
@@ -989,124 +1062,6 @@
                     <button class="IPbtn full round gotoPage" data-pagename="#measure_2-6">
                         返回至輸入民眾帳號
                     </button>
-                </div>
-            </div>
-        </div>
-        <div id="divMeasureScanMode" style="display:none">
-            <div class="Statusbar">
-            </div>
-            <div class="header">
-                <a id="aMeasureScan_Back" onclick="app.onBack();" class="left">
-                    <i class="wise_arrow-left BannerIcon"></i>
-                </a>
-                <div class="center">
-                    <span id="txtMeasureScanModeTitle" class="title" data-i18n="掃碼量測掃碼">掃碼量測掃碼</span>
-                </div>
-                <a class="right">
-                    <!-- <i class="wise_plus-square BannerIcon"></i> -->
-                </a>
-            </div>
-            <div class="popup-body">
-                <div class="frombox" id="MeasureScanMode_Scan">
-                    <div class="form-group col-12">
-                        <div class="frombox">
-                            <a href="#" style="width:100%;" onclick="MeasureScan.startCamera();" class="bttn"
-                                data-i18n="掃描會員條碼">掃描會員條碼</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="frombox" id="MeasureScanMode_Profile" style="display: none;margin-top:2em;">
-                    <div class="form-group">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="">
-                                <label for="" data-i18n="帳號">帳號</label>
-                            </div>
-                            <div class="col-6">
-                                <input id="MeasureScan_UserID" type="text" value="" class="form-control" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="">
-                                <label for="" data-i18n="姓名">姓名</label>
-                            </div>
-                            <div class="col-6">
-                                <input id="MeasureScan_NickName" type="text" value="" class="form-control" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="">
-                                <label for="" data-i18n="生日">生日</label>
-                            </div>
-                            <div class="col-6">
-                                <input id="MeasureScan_BirthDay" type="text" value="" class="form-control" disabled>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row justify-content-center align-items-center">
-                            <div class="">
-                                <label for="" data-i18n="性別">性別</label>
-                            </div>
-                            <div class="col-6">
-                                <input id="MeasureScan_Gender" type="text" value="" class="form-control" disabled>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group col-12" id="MeasureScanMode_Confirm" style="display: none;">
-                    <p data-i18n="掃碼量測確認_Info">* 確認身分無誤後，點選下方開始量測按鈕開始進行量測。</p>
-                    <div class="frombox">
-                        <a href="#" style="width:100%;" onclick="MeasureScan.startMeasure();" class="bttn bttn-light"
-                            data-i18n="開始量測">開始量測</a>
-                    </div>
-                    <div class="frombox">
-                        <a href="#" style="width:100%;" onclick="MeasureScan.backToScan();" class="bttn bttn-dark"
-                            data-i18n="返回掃描">返回掃描</a>
-                    </div>
-                </div>
-                <div class="form-group col-12" id="MeasureScanMode_Data" style="display: none;">
-                    <div class="frombox">
-                        <a href="#" style="width:100%;" onclick="MeasureScan.backToScan();" class="bttn bttn-dark"
-                            data-i18n="返回掃描">返回掃描</a>
-                    </div>
-                    <hr />
-                    <div class="form-group col-sm-12 table-responsive">
-                        <table class="Listbox table">
-                            <thead>
-                                <tr>
-                                    <th width="190px;">量測時間</th>
-                                    <th>量測類型</th>
-                                    <!-- <<th>量測值</th> -->
-                                </tr>
-                            </thead>
-                            <tbody id="MeasureScan_tbResult">
-                                <!-- <tr>
-                                                    <td>07/07 18:05</td>
-                                                    <td>血壓</td>
-                                                    <td>177/77/70</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>07/07 17:55</td>
-                                                    <td>血壓</td>
-                                                    <td>130/75/69</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>07/07 19:55</td>
-                                                    <td>血糖</td>
-                                                    <td>113</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>07/07 19:55</td>
-                                                    <td>膽固醇</td>
-                                                    <td>220</td>
-                                                </tr> -->
-                            </tbody>
-                        </table>
-                    </div>
                 </div>
             </div>
         </div>

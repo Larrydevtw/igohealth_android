@@ -105,6 +105,7 @@ var Member = {
 
             case "MemberFN0009_03": //帳號或密碼錯誤
             case "MemberFN0005_02":
+                document.getElementById("login_userPwd").value = "";
                 navigator.notification.alert($.i18n('帳號或密碼不正確'), null, $.i18n('系統訊息'), $.i18n('確定'));
                 break;
 

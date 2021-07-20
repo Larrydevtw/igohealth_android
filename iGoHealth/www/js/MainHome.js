@@ -460,9 +460,12 @@ var MainHome = MainHome || {}, MainHome =
                 return;
             }
 
+            $("#" + MeasureScan.txtCheckUserId).val("");
             $("#" + MeasureScan.txtCheckCodeId).val("");
-            WiseScripts.Tool.NextPop('divMeasureScan', function(){
-                
+            WiseScripts.Tool.NextPop('divMeasureScan', function () {
+                if (localStorage[localStorage.UserID + "_checkBranchUserID"]) {
+                    $("#" + MeasureScan.txtCheckUserId).val(localStorage[localStorage.UserID + "_checkBranchUserID"]);
+                }
             }, null, 'F');
         },
         goToTimenotice: function () {

@@ -1,8 +1,9 @@
 var MeasureScan = {
-    txtCheckCodeId: "txtMeasureCheckCode",
+    txtCheckUserId: "txtMeasureScanU_ID",
+    txtCheckCodeId: "txtMeasureScanU_Code",
     MeasureScanModeId: "divMeasureScanMode",
-    MeasureScan_tbResultId:"MeasureScan_tbResult",
-    btnScanId: "MeasureScanMode_Scan",
+    MeasureScan_tbResultId: "MeasureScan_tbResult",
+    btnScanId: "MeasureScanMode_Manual",
     profileId: "MeasureScanMode_Profile",
     confirmId: "MeasureScanMode_Confirm",
     dataId: "MeasureScanMode_Data",
@@ -36,17 +37,29 @@ var MeasureScan = {
         $("#txtMeasureScanModeTitle").html(title);
     },
     checkAuth: function () {
-        var BranchCode = $("#" + MeasureScan.txtCheckCodeId).val();
-        Log.write(BranchCode, 'checkAuth');
+        var CheckUserID = $("#" + MeasureScan.txtCheckUserId).val();
+        var CheckUserCode = $("#" + MeasureScan.txtCheckCodeId).val();
 
+        Log.write(CheckUserID + " / " + CheckUserCode, 'checkAuth');
+
+        if (CheckUserID === "" || CheckUserCode === "") {
+            FnCtrl.alert($.i18n('請輸入必要資訊'));
+            return;
+        }
+
+        $("#" + MeasureScan.txtCheckUserId).val("");
         $("#" + MeasureScan.txtCheckCodeId).val("");
 
-        MeasureScan.checkBranchCode(BranchCode, function () {
-            var targetId = MeasureScan.MeasureScanModeId;
+        WiseAES.md5(CheckUserCode, function (resCheckUserCode) {
+            MeasureScan.checkBranchUserInfoCode(CheckUserID, resCheckUserCode, function () {
+                var targetId = MeasureScan.MeasureScanModeId;
 
-            WiseScripts.Tool.NextPop(targetId, function () {}, null, 'T');
-        }, function () {
-            Log.write("權限驗證失敗", 'checkAuth');
+                WiseScripts.Tool.NextPop(targetId, function () {
+                    $("#mainMenu").hide();
+                }, null, 'F');
+            }, function () {
+                Log.write("權限驗證失敗", 'checkAuth');
+            });
         });
     },
     startCamera: function () { //開啟相機掃碼
@@ -91,13 +104,49 @@ var MeasureScan = {
         );
     },
     startMeasure: function () {
+
+        var header = "";
+        header += '<div class="header">';
+        header += '<div>量測時間</div>';
+        header += '<div>量測類型</div>';
+        header += '</div>';
+
+        $("#" + MeasureScan.MeasureScan_tbResultId).html(header);
+
+        //Test
+        // var MType = "BG";
+        // var lMData = ["122","1"];
+        // var isAnimate = false;
+        // var MTimeStamp = "2021-07-20 05:20";
+        // var DeviceModel = "ETB04";
+        // MeasureScan.showValue(MType, lMData, isAnimate, MTimeStamp, DeviceModel);
+
         MeasureScan.showByStep(3);
         FnBT.AppMode = "Scan";
         FnBT.StartScan();
     },
     backToScan: function () {
         MeasureScan.showByStep(1);
-        $("#"+MeasureScan.MeasureScan_tbResultId).html("");
+        $("#" + MeasureScan.MeasureScan_tbResultId).html("");
+        $("#MeasureScanMember_ID").val("");
+    },
+    Manual_Action: function () {
+        var Member_ID = $("#MeasureScanMember_ID").val();
+        if (Member_ID.length < 1) {
+            navigator.notification.alert($.i18n('請輸入帳號'), null, $.i18n('系統訊息'), $.i18n('確定'));
+            return;
+        } else {
+            if (!WiseScripts.Validate.isPhone(Member_ID)) {
+                navigator.notification.alert($.i18n("帳號請輸入行動電話號碼"), null, $.i18n('系統訊息'), $.i18n('確定'));
+                return;
+            }
+        }
+
+        MeasureScan.getMemberInfo(Member_ID, function () {
+            MeasureScan.showByStep(2);
+        }, function () { //查無資料或有錯誤
+            FnCtrl.alert($.i18n('查無資料'));
+        });
     },
     BarCodeScan_Action: function (BCV) {
         Log.write(BCV, 'BarCodeScan_Action');
@@ -112,13 +161,18 @@ var MeasureScan = {
                 WSCall.errCallback($.i18n('解密失敗'));
             }
         );
-        
+
     },
-    getMemberInfo: function (MemberID, successFn) {
-        if(MemberID === ""){
-            FnCtrl.alert($.i18n('不正確之QRCode訊息'));
+    getMemberInfo: function (MemberID, successFn, errFn) {
+        if (MemberID === "") {
+            FnCtrl.alert($.i18n('不正確之訊息'));
+            if (errFn) {
+                errFn();
+            }
             return;
         }
+
+        WiseScripts.Tool.ShowLoading(true, $.i18n('資料確認中'));
 
         localStorage.MersureScanUserID = MemberID;
 
@@ -133,47 +187,63 @@ var MeasureScan = {
         };
         Log.write(MemberID, "MemberID");
         WSCall.Post(PostInfo, function (result) { //成功
-            Log.write(result, "GetMemberInfo success");
-            MeasureScan.getMemberInfoSuccess(result);
-            if (successFn) {
-                successFn(result);
+            Log.write(result, "GetMemberInfo WSCall success");
+
+            WiseScripts.Tool.ShowLoading(false);
+
+            if (result === "") { //結果為空: 查無此會員
+                if (errFn) {
+                    errFn();
+                }
+            } else {
+                MeasureScan.getMemberInfoSuccess(result);
+
+                if (successFn) {
+                    successFn(result);
+                }
             }
         }, function (err) { //失敗
+            if (errFn) {
+                errFn();
+            }
             FnCtrl.alert($.i18n("獲取雲端資料失敗"));
+            WiseScripts.Tool.ShowLoading(false);
         });
     },
-    getMemberInfoSuccess:function(strObj){
+    getMemberInfoSuccess: function (strObj) {
+
         var memberInfo = JSON.parse(strObj);
 
         var UserID = memberInfo.UserID;
         var NickName = memberInfo.NickName;
+        var Zipcode = memberInfo.Zipcode;
         var BirthDay = memberInfo.BirthDay;
         var Gender = memberInfo.Gender === "M" ? "男性" : "女性";
 
-        var Age = memberInfo.Age;
-        
-        $("#MeasureScan_UserID").val(UserID);
-        $("#MeasureScan_NickName").val(NickName);
-        $("#MeasureScan_BirthDay").val(BirthDay);
-        $("#MeasureScan_Gender").val(Gender);
+        var Age = memberInfo.Age + " 歲";
+
+        $("#MeasureScan_UserID").html(UserID);
+        $("#MeasureScan_NickName").html(NickName);
+        $("#MeasureScan_BirthDay").html(BirthDay);
+        $("#MeasureScan_Age").html(Age);
+        $("#MeasureScan_Gender").html(Gender);
     },
-    showValue:function(MType, ValueArr, isAnimate, MTimeStamp, DeviceModel){
+    showValue: function (MType, ValueArr, isAnimate, MTimeStamp, DeviceModel) {
         Log.write(MType + "/" + ValueArr + "/" + isAnimate + "/" + MTimeStamp + "/" + DeviceModel, 'MeasureScan ShowValue');
-        
+
         MTimeStamp = MTimeStamp.substr(0, 16).replace(/\-/g, "/");
+        MTimeStamp = MTimeStamp + "*";
 
-        var tr1 = $("<tr>");
-        tr1.append($("<td>").html(MTimeStamp));
-        tr1.append($("<td>").html($.i18n(MType)));
+        var tr1 = $('<div>').addClass("row");
+        tr1.append($("<div>").html(MTimeStamp));
+        tr1.append($("<div>").html($.i18n(MType)));
 
-        MeasureScan.getDisplayMValue(MType, ValueArr, DeviceModel).then(function(DisplayMValue){
+        MeasureScan.getDisplayMValue(MType, ValueArr, DeviceModel).then(function (DisplayMValue) {
             console.log(DisplayMValue);
-            var tr2 = $("<tr>");      
-            var td2 = $("<td>").append(DisplayMValue);
-            td2.attr("colspan", "2");
-            tr2.append(td2);
-        
-            $("#"+MeasureScan.MeasureScan_tbResultId).append(tr1).append(tr2);
+            var tr2 = $("<div>").addClass("row seperate");
+            tr2.append($("<div>").addClass("left").html(DisplayMValue));
+
+            $("#" + MeasureScan.MeasureScan_tbResultId).append(tr1).append(tr2);
 
         });
     },
@@ -181,8 +251,8 @@ var MeasureScan = {
         return new Promise(function (resolve, reject) {
             var toFixedNum = 0;
             switch (MType) {
-                case "BG":   
-                case "UA":  
+                case "BG":
+                case "UA":
                 case "CHOL":
                     toFixedNum = MeasureInfo[MType + "_Display_Num"];
                     break;
@@ -216,9 +286,9 @@ var MeasureScan = {
 
                         if (result.IsRed == "1") {
                             MColor = 'rgba(255, 0, 0,1)';
-                        }else{
+                        } else {
                             MColor = 'rgba(0, 0, 0,1)';
-                        } 
+                        }
 
                         BS = "<span style='color:" + MColor + "'>" + BS + "</span>";
                         MValue = $.i18n('量測值:', BS) + displayTimeType;
@@ -233,9 +303,9 @@ var MeasureScan = {
                     Display.isRed("SBP", SBP, "").then(function (obj) {
                         if (obj.IsRed == "1") {
                             MColor = 'rgba(255, 0, 0,1)';
-                        }else{
+                        } else {
                             MColor = 'rgba(0, 0, 0,1)';
-                        } 
+                        }
 
                         SBP = "<span style='color:" + MColor + "'>" + SBP + "</span>";
 
@@ -243,9 +313,9 @@ var MeasureScan = {
                     }).then(function (obj) {
                         if (obj.IsRed == "1") {
                             MColor = 'rgba(255, 0, 0,1)';
-                        }else{
+                        } else {
                             MColor = 'rgba(0, 0, 0,1)';
-                        } 
+                        }
 
                         DBP = "<span style='color:" + MColor + "'>" + DBP + "</span>";
 
@@ -253,9 +323,9 @@ var MeasureScan = {
                     }).then(function (obj) {
                         if (obj.IsRed == "1") {
                             MColor = 'rgba(255, 0, 0,1)';
-                        }else{
+                        } else {
                             MColor = 'rgba(0, 0, 0,1)';
-                        } 
+                        }
 
                         HR = "<span style='color:" + MColor + "'>" + HR + "</span>";
 
@@ -280,9 +350,9 @@ var MeasureScan = {
                     Display.isRed("Weight", Weight, "").then(function (obj) {
                         if (obj.IsRed == "1") {
                             MColor = 'rgba(255, 0, 0,1)';
-                        }else{
+                        } else {
                             MColor = 'rgba(0, 0, 0,1)';
-                        } 
+                        }
 
                         Weight = "<span style='color:" + MColor + "'>" + Weight + "</span>";
 
@@ -290,9 +360,9 @@ var MeasureScan = {
                     }).then(function (obj) {
                         if (obj.IsRed == "1") {
                             MColor = 'rgba(255, 0, 0,1)';
-                        }else{
+                        } else {
                             MColor = 'rgba(0, 0, 0,1)';
-                        } 
+                        }
 
                         BodyRate = "<span style='color:" + MColor + "'>" + BodyRate + "</span>";
 
@@ -324,7 +394,7 @@ var MeasureScan = {
             resolve(DisplayMValue);
         });
     },
-    checkBranchCode: function (BranchCode, successFn,errFn) {
+    checkBranchCode: function (BranchCode, successFn, errFn) {
 
         WiseScripts.Tool.ShowLoading(true, $.i18n('據點代碼確認中'));
 
@@ -341,12 +411,12 @@ var MeasureScan = {
 
         WSCall.Post(PostInfo, function (result) { //成功
             Log.write(result, "CheckBranchCode");
-            MeasureScan.checkBranchCodeSuccess(result,function(){
+            MeasureScan.checkBranchCodeSuccess(result, function () {
                 if (successFn) {
                     successFn();
                 }
-            },function(){
-                if(errFn){
+            }, function () {
+                if (errFn) {
                     errFn();
                 }
             });
@@ -356,23 +426,76 @@ var MeasureScan = {
             WiseScripts.Tool.ShowLoading(false);
         });
     },
-    checkBranchCodeSuccess: function (strResult,successFn,errFn) {
+    checkBranchCodeSuccess: function (strResult, successFn, errFn) {
         var obj = JSON.parse(strResult);
         var code = obj.code;
         var result = obj.result;
         switch (code) {
             case "1": //據點代碼輸入正確
                 Log.write(result, 'checkBranchCodeSuccess');
-                if(successFn){
+                if (successFn) {
                     successFn();
-                }      
+                }
                 break;
             default: //0: //據點代碼輸入錯誤
                 FnCtrl.alert(result);
-                if(errFn){
+                if (errFn) {
                     errFn();
                 }
                 break;
         }
     },
+
+    checkBranchUserInfoCode: function (U_ID, U_GW, successFn, errFn) {
+
+        WiseScripts.Tool.ShowLoading(true, $.i18n('資料確認中'));
+
+        var UploadData = {
+            "UserId": U_ID,
+            "UserPwd": U_GW
+        };
+
+        var PostInfo = {
+            Url: AppConfig.AppServices + "/CheckBranchUserInfoCode",
+            UploadData: UploadData,
+            async: true
+        };
+        Log.write(JSON.stringify(UploadData), 'checkBranchUserInfoCode');
+        WSCall.Post(PostInfo, function (result) { //成功
+            Log.write(result, "CheckBranchCode");
+            MeasureScan.checkBranchCodeSuccess(result, function () {
+                localStorage[localStorage.UserID + "_checkBranchUserID"] = U_ID;
+                if (successFn) {
+                    successFn();
+                }
+            }, function () {
+                if (errFn) {
+                    errFn();
+                }
+            });
+            WiseScripts.Tool.ShowLoading(false);
+        }, function (err) { //失敗
+            FnCtrl.alert($.i18n("獲取雲端資料失敗"));
+            WiseScripts.Tool.ShowLoading(false);
+        });
+    },
+    checkBranchUserInfoCodeSuccess: function (strResult, successFn, errFn) {
+        var obj = JSON.parse(strResult);
+        var code = obj.code;
+        var result = obj.result;
+        switch (code) {
+            case "1": //資料輸入正確
+                Log.write(result, 'checkBranchUserInfoCodeSuccess');
+                if (successFn) {
+                    successFn();
+                }
+                break;
+            default: //0: //資料輸入錯誤
+                FnCtrl.alert(result);
+                if (errFn) {
+                    errFn();
+                }
+                break;
+        }
+    }
 };
