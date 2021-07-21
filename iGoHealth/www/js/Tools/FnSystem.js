@@ -124,7 +124,7 @@ var FnSystem = {
                     FnSystem.CheckUpdate(message);
                     break;
                 case "CheckStandardValue":
-                    FnSystem.CheckStandardValue(message);
+                    FnSystem.CheckStandardValue(appInfo);
                     break;
                 case "CheckAutoSyncData":
                     FnSystem.CheckAutoSyncData(message);
@@ -170,7 +170,7 @@ var FnSystem = {
                 case 1:
                     var OS = DeviceInfo.getOS();
                     if (OS === "iOS") {
-                        window.open("https://apps.apple.com/us/app/%E5%90%BE%E9%BD%A1%E7%84%A1%E9%BD%A1-%E6%A8%82%E6%B4%BB%E7%A4%BE%E5%8D%80-%E5%81%A5%E5%BA%B7%E6%88%91%E7%85%A7%E4%BD%A0/id1513507523");
+                        window.open("https://apps.apple.com/tw/app/i%E9%A1%A7%E5%81%A5%E5%BA%B7/id1576044908");
                     } else {
                         window.open("https://play.google.com/store/apps/details?id=tw.com.ethink.iGoHealth");
                     }
@@ -181,13 +181,19 @@ var FnSystem = {
             }
         }
     },
-    CheckStandardValue: function (strStandardInfo) {
-        Log.write(strStandardInfo, 'FnSystem CheckStandardValue');
+    CheckStandardValue: function (appInfo) {
+        Log.write(JSON.stringify(appInfo), 'FnSystem CheckStandardValue');
 
-        if(strStandardInfo === undefined){
+        var strStandardInfo = appInfo.Message;
+
+        if (strStandardInfo === undefined) {
             Log.write("未取得雲端標準值版本資料，不進行後續檢查", 'FnSystem CheckStandardValue');
             return;
         }
+
+        //Display StandardValue
+        var displayStandardValue = appInfo.Data;
+        $("#StandardInfo").html(displayStandardValue);
 
         var StandardInfo = JSON.parse(strStandardInfo);
         var VersionNo = StandardInfo.VersionNo;
@@ -213,7 +219,7 @@ var FnSystem = {
             });
 
         }
-        },
+    },
     UpdateStandardValue: function (successFn, errFn) {
 
         var UploadData = {

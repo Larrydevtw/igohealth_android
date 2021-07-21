@@ -428,11 +428,19 @@ var MainHome = MainHome || {}, MainHome =
             WiseScripts.Tool.NextPop('Setting', null, null, 'T');
         },
         goToDeviceINS: function () {
+            if(!MainHome.CheckNet()){
+                return;
+            }
+            
             WiseScripts.Tool.NextPop('Instructions', function(){
                 FnDeviceINS.showByGroup("");
             }, null, 'T');
         },
         goToStandardInfo: function () {
+            if(!MainHome.CheckNet()){
+                return;
+            }
+
             WiseScripts.Tool.NextPop('StandardInfo', function(){
                 FnDeviceINS.showByGroup("");
             }, null, 'T');
