@@ -42,14 +42,22 @@ var CustomInfo = {
         });
     },
     checkDevMode: function () {
-        var UserID = localStorage.UserID;
-        var strCheck = UserID + localStorage["NickName_" + UserID];
-        WiseAES.md5(strCheck, function (res) {
-            Log.write(res, "checkDevMode");
-            if (res === "f5ece4e2499d95a35eb0990f3c1e7212") {
-                $("#MeasureScanMode_Test").show();
+        try {
+            var UserID = localStorage.UserID;
+            Log.write(UserID, "checkDevMode");
+            if (localStorage.UserID) {
+                var strCheck = UserID + localStorage["NickName_" + UserID];
+                WiseAES.md5(strCheck, function (res) {
+                    Log.write(res, "checkDevMode");
+                    if (res === "f5ece4e2499d95a35eb0990f3c1e7212") {
+                        $("#MeasureScanMode_Test").show();
+                    }
+                });
             }
-        });
+        } catch (err) {
+            Log.write(err, checkDevMode);
+        }
+
     },
     setValidate: function () {
         return new Promise(function (resolve, reject) {

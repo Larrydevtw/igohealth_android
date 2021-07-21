@@ -124,7 +124,8 @@ var app = {
         }], function () {
             //alert("PJ Success");
 
-            ProjectFn.ballAddInit();
+            //TODO:
+            //ProjectFn.ballAddInit();
 
             WiseScripts.Tool.ShowLoading(false, '', '', function () {
                 //20180316 拿掉站點註冊

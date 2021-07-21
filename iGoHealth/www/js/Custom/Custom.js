@@ -35,8 +35,14 @@ var Custom = {
         });
     },
     setFontSize: function () {
-        Log.write("setFontSize Start", 'Custom setFontSize');
         return new Promise(function (resolve, reject) {
+            if(DeviceInfo.GetOS() === "iOS"){
+                Log.write("iOS don't need to setFontSize", 'Custom setFontSize');
+                resolve();
+                return;
+            }
+            Log.write("setFontSize Start", 'Custom setFontSize');
+
             function setTextZoomCallback(textZoom) {
                 Log.write('WebView text should be scaled ' + textZoom + '%', 'Custom setFontSize');
             }
