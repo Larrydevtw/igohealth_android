@@ -10,7 +10,7 @@ var FnCtrl = {
     focus: function (targetID) {
         //$("#btnSave_MPM").addEventListener('click',function(){
         //});    
-        var platform = DeviceInfo.getOS();
+        var platform = DeviceInfo.GetOS();
         if (platform === "Android") {
             $("#" + targetID).focus();
         } else {

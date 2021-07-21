@@ -287,7 +287,7 @@ var DateTimeFun = DateTimeFun || {}, DateTimeFun =
         iniDate: function (id_Date, id_Time, date) {
             var d = new Date();
             //alert(d);
-            var OS = DeviceInfo.getOS();
+            var OS = DeviceInfo.GetOS();
 
             if (date !== undefined) {
                 if(OS === "iOS"){

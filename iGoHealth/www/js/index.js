@@ -35,7 +35,7 @@ var app = {
             Log.write("window.plugins.insomnia is undefined", 'onDeviceReady');
         }
 
-        var OS = DeviceInfo.getOS();
+        var OS = DeviceInfo.GetOS();
         //IOS頂部狀態列設定
         CustomStyle.adjustStatus_H();
 

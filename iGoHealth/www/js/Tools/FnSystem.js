@@ -15,7 +15,7 @@ var FnSystem = {
 
         FnSystem.GetLastSyncTime().then(function (LastSyncTime) {
             var UploadData = {
-                "Platform": DeviceInfo.getOS(),
+                "Platform": DeviceInfo.GetPlatform(),
                 "Version": Domain.Version,
                 "VersionNo": Domain.VersionNo,
                 "LastSyncTime": LastSyncTime
@@ -29,13 +29,13 @@ var FnSystem = {
 
             WSCall.Post(PostInfo, function (result) { //成功
                 var LastSyncTime = DateTimeFun.getNow();
-                FnSystem.SetLastSyncTime(LastSyncTime); 
+                FnSystem.SetLastSyncTime(LastSyncTime);
 
                 FnSystem.ShowByGroup(result);
-     
+
                 if (successFn) {
                     successFn(result);
-                } 
+                }
             }, function (err) { //失敗
                 Log.write("SyncAppInfo err:" + err, "FnSystem");
                 if (errFn) {
@@ -57,28 +57,28 @@ var FnSystem = {
         }
         FnSystem.GetLastSyncTime().then(function (LastSyncTime) {
             var UploadData = {
-                "Platform": DeviceInfo.getOS(),
+                "Platform": DeviceInfo.GetPlatform(),
                 "Version": Domain.Version,
                 "VersionNo": Domain.VersionNo,
                 "LastSyncTime": LastSyncTime,
                 "ID": localStorage.UserID
             };
-    
+
             var PostInfo = {
                 Url: AppConfig.AppServices + '/SyncAuthority',
                 UploadData: UploadData,
                 async: true
             };
-    
+
             WSCall.Post(PostInfo, function (result) { //成功
                 var LastSyncTime = DateTimeFun.getNow();
-                FnSystem.SetLastSyncTime(LastSyncTime); 
-    
+                FnSystem.SetLastSyncTime(LastSyncTime);
+
                 FnSystem.ShowByGroup(result);
-     
+
                 if (successFn) {
                     successFn(result);
-                } 
+                }
             }, function (err) { //失敗
                 Log.write("SyncAppInfo err:" + err, "FnSystem SyncAuthority");
                 if (errFn) {
@@ -168,7 +168,7 @@ var FnSystem = {
         function confirmCallback(btnIndex) {
             switch (btnIndex) {
                 case 1:
-                    var OS = DeviceInfo.getOS();
+                    var OS = DeviceInfo.GetOS();
                     if (OS === "iOS") {
                         window.open("https://apps.apple.com/tw/app/i%E9%A1%A7%E5%81%A5%E5%BA%B7/id1576044908");
                     } else {
@@ -223,7 +223,7 @@ var FnSystem = {
     UpdateStandardValue: function (successFn, errFn) {
 
         var UploadData = {
-            "Platform": DeviceInfo.getOS(),
+            "Platform": DeviceInfo.GetPlatform(),
             "Version": Domain.Version,
             "VersionNo": Domain.VersionNo,
             "StandardVersion": localStorage.StandardVersion,
@@ -266,13 +266,13 @@ var FnSystem = {
     CheckAutoSyncData: function (isAutoSyncData) {
 
         var LastSyncTime = FnSystem.LastSyncTime;
-        Log.write(LastSyncTime,'FnSystem LastSyncTime');
+        Log.write(LastSyncTime, 'FnSystem LastSyncTime');
 
         FnSystem.isAutoSyncData = isAutoSyncData;
-        Log.write(isAutoSyncData,'FnSystem isAutoSyncData');
+        Log.write(isAutoSyncData, 'FnSystem isAutoSyncData');
 
     },
-    CheckDevFunction: function(strJson){
+    CheckDevFunction: function (strJson) {
 
         Log.write(strJson, 'FnSystem CheckDevFunction');
 
@@ -287,7 +287,7 @@ var FnSystem = {
         }
 
     },
-    CheckDeviceINS: function(strJson){
+    CheckDeviceINS: function (strJson) {
 
         try {
             Log.write(strJson, 'CheckDeviceINS');

@@ -9,7 +9,7 @@ var Custom = {
         }).then(function () {
             return Custom.setFontSize();
         }).then(function () {
-            var platform = DeviceInfo.getOS();
+            var platform = DeviceInfo.GetOS();
 
             if (platform === "iOS") {
                 Custom.iOSKeyboardBlur();

@@ -62,7 +62,7 @@ var WSCall = WSCall || {},
                     EquipmentID: encodeURI(EquipmentID),
                     UploadData: encodeURI(UploadData),
                     SystemModel: encodeURI(SystemModel),
-                    Platform: DeviceInfo.getOS(),
+                    Platform: DeviceInfo.GetOS(),
                     Version: Domain.Version,
                     VersionNo: Domain.VersionNo
                 };

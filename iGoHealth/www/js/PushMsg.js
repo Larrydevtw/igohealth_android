@@ -5,7 +5,7 @@ var PushMsg = PushMsg || {}, PushMsg = {
     OS: "",
     init: function (UserID) {
         //alert("init");
-        var OS = DeviceInfo.getOS();
+        var OS = DeviceInfo.GetOS();
         ChatInfo.ID= UserID;
         //alert(OS);
         if (OS) {
