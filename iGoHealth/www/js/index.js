@@ -252,6 +252,7 @@ var app = {
                     case "MainHome":
                         FnBT.StartScan("Y");
                         FnBT.AppMode = "People";
+                        MeasureScan.CheckUserID = "";
                         break;
                     case "Points":
                         FnPoint.showPointList();

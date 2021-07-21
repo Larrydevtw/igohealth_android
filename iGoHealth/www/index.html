@@ -218,7 +218,7 @@
                 </div>
                 <div class="input login-input">
                     <span>密碼（預設為i顧健康識別碼）</span>
-                    <input type="password" id="login_userPwd" class="mt-1" placeholder="請輸入6位數密碼" />
+                    <input type="password" id="login_userPwd" class="mt-1" placeholder="請輸入密碼" />
                 </div>
                 <div class="w-100 mt-1">
                     <button class="IPbtn full gotoPage round" data-pagename="#MainHome" onclick="Member.Login();">
@@ -522,8 +522,8 @@
         -->
         <div id="userHistory" class="block" data-navname="測量記錄" data-parent="#MainHome" style="display:none;">
             <div class="chartType f-center-center">
-                <div><a id="tabHistory_btnBP" onclick="Measure.showHistory('BP','N');" class="D color-MBP chartvalues btn" data-chartvalues="100,102,103,95,96,110,108,103,92,94,96,111,107,102">血壓</a></div>
                 <div><a id="tabHistory_btnBG" onclick="Measure.showHistory('BG','N');" class="B color-MBG chartvalues btn" data-chartvalues="91,95,96,110,108,89,92,94,96,111">血糖</a></div>
+                <div><a id="tabHistory_btnBP" onclick="Measure.showHistory('BP','N');" class="D color-MBP chartvalues btn" data-chartvalues="100,102,103,95,96,110,108,103,92,94,96,111,107,102">血壓</a></div>
                 <div><a id="tabHistory_btnCHOL" onclick="Measure.showHistory('CHOL','N');" class="C color-MCHOL chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">膽固醇</a></div>
             </div>
             <div class="chartContainer">
@@ -640,8 +640,8 @@
         <!--新增手動輸入紀錄 血壓、血糖、膽固醇-->
         <div id="MeasurePage_Manual" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
             <div id="ulManual" class="chartType f-center-center">
-                <div><a id="tabManual_btnBP" onclick="MeasureManual.showByMType('BP');" class="btn color-MBP">血壓</a></div>
                 <div><a id="tabManual_btnBG" onclick="MeasureManual.showByMType('BG');" class="btn color-MBG">血糖</a></div>
+                <div><a id="tabManual_btnBP" onclick="MeasureManual.showByMType('BP');" class="btn color-MBP">血壓</a></div>
                 <div><a id="tabManual_btnCHOL" onclick="MeasureManual.showByMType('CHOL');" class="btn color-MCHOL">膽固醇</a></div>
             </div>
             <div class="chartContainer">
@@ -954,6 +954,20 @@
                 </div>
             </div>
             <div id="MeasureScanMode_Data" class="h-center-center" style="display: none;">
+                <div id="MeasureScanMode_Test" style="display: none;">
+                    <div class="w-100 mt-1">
+                        <button onclick="MeasureScan.testBTData('People');" class="IPbtn full round gotoPage"
+                            data-pagename="#藥師測量三高">
+                            藍牙測試(People)
+                        </button>
+                    </div>
+                    <div class="w-100 mt-1">
+                        <button onclick="MeasureScan.testBTData('Scan');" class="IPbtn full round gotoPage"
+                            data-pagename="#藥師測量三高">
+                            藍牙測試(Scan)
+                        </button>
+                    </div>
+                </div>             
                 <div class="w-100 mt-1">
                     <button onclick="MeasureScan.backToScan();" class="IPbtn full round gotoPage" data-pagename="#藥師測量三高">
                         返回至輸入民眾帳號

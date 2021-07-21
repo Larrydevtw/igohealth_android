@@ -7,6 +7,7 @@ var MeasureScan = {
     profileId: "MeasureScanMode_Profile",
     confirmId: "MeasureScanMode_Confirm",
     dataId: "MeasureScanMode_Data",
+    CheckUserID: "",
     showByStep: function (step) {
         $("#" + MeasureScan.btnScanId).hide();
         $("#" + MeasureScan.profileId).hide();
@@ -122,8 +123,24 @@ var MeasureScan = {
         // MeasureScan.showValue(MType, lMData, isAnimate, MTimeStamp, DeviceModel);
 
         MeasureScan.showByStep(3);
-        FnBT.AppMode = "Scan";
+        FnBT.AppMode = "Scan";   
         FnBT.StartScan();
+    },
+    testBTData: function (AppMode) {
+        FnBT.AppMode = AppMode;
+        //Test
+        var MTimeStamp = DateTimeFun.getFullInputDateNow();
+        var max = 150,
+            min = 70;
+        var SBP = (Math.random() * (max - min) + min).toFixed(0);
+        max = 100;
+        min = 40;
+        var DBP = (Math.random() * (max - min) + min).toFixed(0);
+        max = 120;
+        min = 40;
+        var HR = (Math.random() * (max - min) + min).toFixed(0);
+        var ResultStr = "ETB04,5C:31:3E:34:2B:AC," + MTimeStamp + "," + SBP + "," + DBP + "," + HR + ",0,0";
+        FnBT.DataReceiving(ResultStr);
     },
     backToScan: function () {
         MeasureScan.showByStep(1);
@@ -465,6 +482,7 @@ var MeasureScan = {
             Log.write(result, "CheckBranchCode");
             MeasureScan.checkBranchCodeSuccess(result, function () {
                 localStorage[localStorage.UserID + "_checkBranchUserID"] = U_ID;
+                MeasureScan.CheckUserID = U_ID;
                 if (successFn) {
                     successFn();
                 }

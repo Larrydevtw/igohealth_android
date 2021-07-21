@@ -36,7 +36,19 @@ var CustomInfo = {
                     CustomInfo.Member_CheckType = "02"; //01:生日 02:EMail 03:手機號碼
                     break;
             }
+
+            CustomInfo.checkDevMode();
             resolve();
+        });
+    },
+    checkDevMode: function () {
+        var UserID = localStorage.UserID;
+        var strCheck = UserID + localStorage["NickName_" + UserID];
+        WiseAES.md5(strCheck, function (res) {
+            Log.write(res, "checkDevMode");
+            if (res === "f5ece4e2499d95a35eb0990f3c1e7212") {
+                $("#MeasureScanMode_Test").show();
+            }
         });
     },
     setValidate: function () {
@@ -107,5 +119,5 @@ var CustomInfo = {
 
                 break;
         }
-    },
+    }
 };

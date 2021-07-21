@@ -43,6 +43,7 @@ var WaitQueue = WaitQueue || {}, WaitQueue =
         var MTime = Data[2];
         var MDeviceID = Data[1];
         var DeviceModel = Data[0];
+        var CreateUser = FnBT.AppMode === "Scan" ? MeasureScan.CheckUserID : "";
 
         try {
             //TODO
@@ -65,8 +66,10 @@ var WaitQueue = WaitQueue || {}, WaitQueue =
             'UploadStatus': UploadStatus,
             'MRowKey': MRowKey,
             'Memo': Memo,
-            "M_UP_Date": M_UP_Date
+            "M_UP_Date": M_UP_Date,
+            "CreateUser": CreateUser
         };
+
         Log.write(JSON.stringify(Params), "WaitAdd");
         WaitQueue.Queue.push(Params);
 
