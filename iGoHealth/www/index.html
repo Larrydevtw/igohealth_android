@@ -285,12 +285,12 @@
                 <div class="input login-input">
                     <span>性別</span>
                     <div class="btn-group mt-1" data-toggle="buttons">
-                        <button class="btn btn-set">
+                        <button type="button" class="btn btn-set">
                             <input type="radio" style="display:none;" name="register_sex" id="signup_s1"
                                 autocomplete="off" value="M" checked>
                             <span data-i18n="男">男</span>
                         </button>
-                        <button class="btn btn-set">
+                        <button type="button" class="btn btn-set">
                             <input type="radio" style="display:none;" name="register_sex" id="signup_s2"
                                 autocomplete="off" value="F">
                             <span data-i18n="女">女</span>
@@ -1106,85 +1106,84 @@
 
         <!--三高量測標準值範圍-->
         <div id="StandardInfo" class="block" data-navname="三高量測標準值範圍" data-parent="#MainHome" style="display:none;">
-            <!-- <h3 class="color-MBG">血糖（兒童及青少年第 1 型糖尿病）</h3>
-            <div class="h-center-center">
-                <div class="rData">
-                    <label>空腹血糖</label>
-                    <span>90 - 130 mg/dL</span>
-                </div>
-                <div class="rData">
-                    <label>睡前血糖</label>
-                    <span>90 - 150 mg/dL</span>
-                </div>
-            </div>
-            <h3 class="color-MBG">血糖（成年人—20~65歲）</h3>
-            <div class="h-center-center">
-                <div class="rData">
-                    <label>空腹血糖</label>
-                    <span>80 - 130 mg/dL</span>
-                </div>
-                <div class="rData">
-                    <label>睡前血糖</label>
-                    <span>80 - 160 mg/dL</span>
-                </div>
-            </div>
-            <h3 class="color-MBG">血糖（妊娠型）</h3>
-            <div class="h-center-center">
-                <div class="rData">
-                    <label>空腹血糖 (飯前/餐前血糖)</label>
+            <!-- <h3 class='color-MBG'>非糖友標準值</h3>
+            <div class='h-center-center'>
+                <div class='rData'>
+                    <label>空腹 (餐前) 血糖</label>
                     <span>
-                        < 95 mg/dL 
-                    </span> 
-                </div>
-                <div class="rData">
-                    <label>餐後1小時血糖</label>
-                    <span>
-                        < 140 mg/dL 
-                    </span>
-                </div> 
-                <div class="rData">
-                    <label>餐後2小時血糖</label>
-                    <span>
-                        < 120 mg/dL 
-                    </span> 
-                </div>
-            </div>
-            <h3 class="color-MBG">血糖（老年人—超過65歲）</h3>
-            <div class="h-center-center">
-                <div class="rData">
-                    <label>空腹血糖</label>
-                    <span>90 - 130 mg/dL</span>
-                </div>
-                <div class="rData">
-                    <label>睡前血糖</label>
-                    <span>90 - 150 mg/dL</span>
-                </div>
-            </div>
-            <h3 class="color-MBP">血壓</h3>
-            <div class="h-center-center">
-                <div class="rData">
-                    <label>收縮壓</label>
-                    <span>90 - 119 mmHg</span>
-                </div>
-                <div class="rData">
-                    <label>舒張壓</label>
-                    <span>60 - 79 mmHg</span>
-                </div>
-                <div class="rData">
-                    <label>脈搏</label>
-                    <span>60 - 100 次/分</span>
-                </div>
-            </div>
-            <h3 class="color-MCHOL">膽固醇</h3>
-            <div class="h-center-center">
-                <div class="rData">
-                    <label>膽固醇</label>
-                    <span>120 - 199 mmHg</span>
-                </div>
-            </div>
-            <div class="h-center-center">
-                <h4>資料來源：2018 糖尿病臨床照護指引</h4>
-            </div> -->
+                        < 100 mg/dL </span> </div> <div class='rData'>
+                            <label>餐後 2 小時血糖</label>
+                            <span>
+                                < 140 mg/dL </span> </div> </div> <h3 class='color-MBG'>血糖（兒童及青少年第 1 型糖尿病）</h3>
+                                    <div class='h-center-center'>
+                                        <div class='rData'>
+                                            <label>空腹血糖</label>
+                                            <span>90 - 130 mg/dL</span>
+                                        </div>
+                                        <div class='rData'>
+                                            <label>睡前血糖</label>
+                                            <span>90 - 150 mg/dL</span>
+                                        </div>
+                                    </div>
+                                    <h3 class='color-MBG'>血糖（成年人—20~65歲）</h3>
+                                    <div class='h-center-center'>
+                                        <div class='rData'>
+                                            <label>空腹血糖</label>
+                                            <span>80 - 130 mg/dL</span>
+                                        </div>
+                                        <div class='rData'>
+                                            <label>餐後 2 小時血糖</label>
+                                            <span>80 - 160 mg/dL</span>
+                                        </div>
+                                    </div>
+                                    <h3 class='color-MBG'>血糖（妊娠型）</h3>
+                                    <div class='h-center-center'>
+                                        <div class='rData'>
+                                            <label>空腹血糖 (飯前/餐前血糖)</label>
+                                            <span>
+                                                < 95 mg/dL </span> </div> <div class='rData'>
+                                                    <label>餐後1小時血糖</label>
+                                                    <span>
+                                                        < 140 mg/dL </span> </div> <div class='rData'>
+                                                            <label>餐後2小時血糖</label>
+                                                            <span>
+                                                                < 120 mg/dL </span> </div> </div> <h3 class='color-MBG'>
+                                                                    血糖（老年人—超過65歲）</h3>
+                                                                    <div class='h-center-center'>
+                                                                        <div class='rData'>
+                                                                            <label>空腹血糖</label>
+                                                                            <span>90 - 130 mg/dL</span>
+                                                                        </div>
+                                                                        <div class='rData'>
+                                                                            <label>睡前血糖</label>
+                                                                            <span>90 - 150 mg/dL</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h3 class='color-MBP'>血壓</h3>
+                                                                    <div class='h-center-center'>
+                                                                        <div class='rData'>
+                                                                            <label>收縮壓</label>
+                                                                            <span>90 - 119 mmHg</span>
+                                                                        </div>
+                                                                        <div class='rData'>
+                                                                            <label>舒張壓</label>
+                                                                            <span>60 - 79 mmHg</span>
+                                                                        </div>
+                                                                        <div class='rData'>
+                                                                            <label>脈搏</label>
+                                                                            <span>60 - 100 次/分</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <h3 class='color-MCHOL'>膽固醇</h3>
+                                                                    <div class='h-center-center'>
+                                                                        <div class='rData'>
+                                                                            <label>膽固醇</label>
+                                                                            <span>120 - 199 mmHg</span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class='h-center-center'>
+                                                                        <h4>資料來源：2018 糖尿病臨床照護指引</h4>
+                                                                    </div> -->
         </div>
 
         <!--個人資料-->

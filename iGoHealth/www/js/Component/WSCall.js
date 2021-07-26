@@ -290,6 +290,7 @@ var WSCall = WSCall || {},
                     memberInfo: {
                         ID: ID,
                         IDType: "01", //帳號類型(01:一般帳號；02:E-mail；03:行動電話；04:身分證字號；05:護照號碼)    
+                        // PersonalID: "",
                         // Password: "",
                         // VCode:"",                            //驗證碼
                         NickName: NickName, //暱稱

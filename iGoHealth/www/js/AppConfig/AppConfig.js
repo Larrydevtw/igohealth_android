@@ -3,7 +3,7 @@ var Domain = {
     Address: "", //"ocics.tw",ethink.ocics.tw,ocics.cn/Beta 192.168.0.112
     ServiceRoot: "/Wise_Cloud_Service/AppCloudServices",
     ServiceApi: "/HATM_Services/api/HATMApp",
-    Version: "IGH_eThink", //6 版本號: tw:IGH_x.x.x cn:HCCN_x.x.x IGH_TEST_ IGH_eThink_
+    Version: "IGH", //6 版本號: tw:IGH_x.x.x cn:HCCN_x.x.x IGH_TEST_ IGH_eThink_
     VersionNo: "", //版本號(只有號碼部分)
     AppName: "i顧健康",
 
@@ -27,11 +27,11 @@ var Domain = {
     CheckDomain:function(){
         switch (Domain.Version) {
             case "IGH":
-                Domain.Address = "https://igohealth.com.tw";
-                Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
+                Domain.Address = "https://apps.igohealth.com.tw";
+                Domain.ServiceRoot = "";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
 
-                Domain.lDevFunction = ["Point", "Product"];
+                Domain.lDevFunction = [];
                 break;
             case "IGH_eThink":
                 Domain.Address = "https://demosite.ethink.com.tw";
