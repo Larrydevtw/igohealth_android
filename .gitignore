@@ -69,3 +69,4 @@ Thumbs.db
 
 www/icon/images
 *.zip
+*.DS_Store
