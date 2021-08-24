@@ -77,6 +77,10 @@ var CustomStyle = {
     },
     iniSwitchToggle: function (targetID, lbName_L, lbName_R, toggleFlag) {
         var toggle = document.getElementById(targetID);
+        if(!toggle){
+            return;
+        }
+        
         var toggleContent = "";
         var checkedStyle = "";
 

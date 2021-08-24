@@ -8,11 +8,12 @@ var Measure = {
         if (!isSwitchPage) { //是否要轉頁；預設為轉頁
             isSwitchPage = "Y";
         }
-        FnBT.StopScan();
-        MeasureInfo.MType = MType;
 
         try {
+
+            MeasureInfo.MType = MType;
             Measure.showHistoryMain(MType, isSwitchPage);
+
         } catch (error) {
             Log.write(error, 'Measure showHistoryMain');
         }
@@ -39,6 +40,8 @@ var Measure = {
             $("#History_DataGridView").hide();
             WiseScripts.Tool.ShowLoading(true, $.i18n('查詢歷史資料..'));
             WiseScripts.Tool.NextPop('userHistory', function () {
+
+                FnBT.StopScan();
                 Measure.searchByInterval(MeasureInfo.Interval);
                 //document.getElementById("tabHistory_btn" + MType).scrollIntoView();
             }, null, 'T');

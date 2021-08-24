@@ -511,6 +511,10 @@ var WiseScripts = WiseScripts || {}, WiseScripts = {
                     
                 }
 
+                if($("#aBluetooth")){
+                    $("#aBluetooth").hide();
+                };
+                
                 if(CustomUI){
 
                     CustomUI.closeAllPage(function(){

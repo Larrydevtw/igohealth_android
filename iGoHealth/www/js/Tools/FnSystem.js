@@ -129,6 +129,9 @@ var FnSystem = {
                 case "CheckAutoSyncData":
                     FnSystem.CheckAutoSyncData(message);
                     break;
+                case "CheckBTModeFunction":
+                    FnSystem.CheckBTModeFunction(message);
+                    break;
                 case "Message":
                     var title = appInfo.Title ? appInfo.Title : $.i18n('系統訊息');
                     FnCtrl.alert(message, title);
@@ -270,6 +273,12 @@ var FnSystem = {
 
         FnSystem.isAutoSyncData = isAutoSyncData;
         Log.write(isAutoSyncData, 'FnSystem isAutoSyncData');
+
+    },
+    CheckBTModeFunction: function (isOpenBTMode) {
+
+        FnBT.isOpenBTMode = isOpenBTMode;
+        Log.write(isOpenBTMode, 'FnSystem CheckBTModeFunction');
 
     },
     CheckDevFunction: function (strJson) {

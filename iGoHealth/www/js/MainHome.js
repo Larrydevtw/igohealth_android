@@ -292,7 +292,8 @@ var MainHome = MainHome || {}, MainHome =
             WiseScripts.Tool.NextPop('MainHome', null, function () {
                 RecView = [];
                 RecView.push("MainHome");
-                
+                sessionStorage.WhereAmI = "MainHome";
+
                 if(successFn){
                     successFn();
                 }

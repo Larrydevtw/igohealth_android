@@ -32,6 +32,10 @@
     <script type="text/javascript" src="js/Custom/CustomUI.js"></script>
     <link href="css/customStyle.css" rel="stylesheet">
 
+    <!-- Switch、Toggle開關樣式  -->
+    <!-- <link href="css/switch.css" rel="stylesheet"> -->
+    <link href="css/toggle.css" rel="stylesheet">
+    
     <!-- Cordova 主要js -->
     <script type="text/javascript" src="cordova.js"></script>
 
@@ -399,6 +403,8 @@
                     <div class="f-center-center">
                         <img id="navPlus" class="gotoPage" onclick="MeasureManual.show();" data-pagename="#stateManual"
                             src="./images/plus.svg" />
+                        <img id="aBluetooth" class="gotoPage" style="display: none;" onclick=""
+                            data-pagename="#BluetoothSettingPage_1" src="./images/bluetooth_off.svg" />
                     </div>
                 </div>
             </div>
@@ -1246,6 +1252,35 @@
             </div>
         </div>
 
+        <!-- 藍牙模式 -->
+        <div id="BluetoothSettingPage_1" class="block" data-navname="藍牙模式" data-parent="#MainHome" style="display:none;">
+            <div class="h-center-center">
+                <div class="input login-input" id="divBTPairSwitch">
+                    <div class="col-12">
+                        <div id="chkBTMode" class="toggle-style" onclick="FnBTPair.SwitchBTMode(this);"></div>
+                    </div>
+                    <div class="col-12" style="text-align:center;">
+                        <h1 id="txtBTModeTitle"></h1>
+                        <h3 id="txtBTModeExplain"></h3>
+                    </div>
+                </div>
+                <div style="display:none" class="input login-input" id="divBTPair">
+                    <div class="settitle blue">
+                        <span data-i18n="已配對設備"></span>
+                    </div>
+                    <ul class="setbox blue" id="ulPair">
+        
+                    </ul>
+                    <a href="#" style="width:100%;" onclick="FnBTPair.StartScan();" class="bttn" data-i18n="搜索設備">搜索設備</a>
+                    <div class="settitle">
+                        <span data-i18n="可用設備"></span>
+                    </div>
+                    <ul class="setbox" id="ulScanList">
+        
+                    </ul>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>

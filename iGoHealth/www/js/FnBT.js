@@ -7,6 +7,7 @@ var FnBT = {
     AppMode: "People", //App模式: Care:照護模式  People:民眾模式 Scan: 掃碼量測模式
     OnlyOneData: true, //接收模式是否為單筆
     bluetoothStatus: "N", //目前藍牙狀態
+    isOpenBTMode: "N", //是否開啟藍牙模式選擇功能
     DeviceInfo: function (successFn, errFn) {
         var strSQL = "delete from DevicesInfo";
         try {
@@ -427,13 +428,25 @@ var FnBT = {
         });
     },
     switchBTStatus: function (status) {
-        if (status === "Y") {
+
+        var currentPage = sessionStorage.WhereAmI;
+
+        if (currentPage === "MainHome") {
             $("#aBluetooth").show();
-            BandMate.switch("Y");
+            if (FnBT.isOpenBTMode === "Y") {
+                $("#aBluetooth").attr("onclick", "FnBTPair.ShowPage(1);FnBT.StopScan();");
+            }
+        }
+
+        if (status === "Y") {
+            $("#aBluetooth").attr("src", "./images/bluetooth_on.svg");
+            //BandMate.switch("Y");
             FnBT.bluetoothStatus = "Y";
         } else {
-            $("#aBluetooth").hide();
-            BandMate.switch("N");
+            $("#aBluetooth").attr("src", "./images/bluetooth_off.svg");
+            if (FnBT.isOpenBTMode === "Y") {
+                $("#aBluetooth").attr("onclick", "FnCtrl.alert($.i18n('請開啟藍牙，以接收藍牙設備量測資料。'));");
+            } //BandMate.switch("N");
             FnBT.bluetoothStatus = "N";
         }
     },
