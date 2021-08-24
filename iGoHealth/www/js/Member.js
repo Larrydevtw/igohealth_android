@@ -2,6 +2,7 @@
 var isBounding = false;
 var Member = {
     isRegister: "N",
+    isUpdateUserInfo: "N",
     Login: function () {
         // NowCardID = "";
         isBounding = false;

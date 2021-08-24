@@ -39,6 +39,10 @@ var app = {
         //IOS頂部狀態列設定
         CustomStyle.adjustStatus_H();
 
+        FnGeo.arrTargets = ["signup_twzipcode", "profile_twzipcode"];
+        FnGeo.init(function () { //successFn
+        });
+        
         try { //抓取設備機碼  
             Log.write(OS, 'deviceid');
             if (OS == "Android") {
@@ -89,12 +93,6 @@ var app = {
         }, function (next) {
             iniDB.createTable(function () {
                 //alert("成功");
-                next();
-            });
-        }, function (next) {
-            FnGeo.arrTargets = ["signup_twzipcode", "profile_twzipcode"];
-            FnGeo.init(function () { //successFn
-                //alert("FnGeo Success");
                 next();
             });
         }, function (next) {

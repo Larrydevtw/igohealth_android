@@ -132,6 +132,9 @@ var FnSystem = {
                 case "CheckBTModeFunction":
                     FnSystem.CheckBTModeFunction(message);
                     break;
+                case "CheckUpdateUserInfoFunction":
+                    FnSystem.CheckUpdateUserInfoFunction(message);
+                    break;
                 case "Message":
                     var title = appInfo.Title ? appInfo.Title : $.i18n('系統訊息');
                     FnCtrl.alert(message, title);
@@ -279,6 +282,12 @@ var FnSystem = {
 
         FnBT.isOpenBTMode = isOpenBTMode;
         Log.write(isOpenBTMode, 'FnSystem CheckBTModeFunction');
+
+    },
+    CheckUpdateUserInfoFunction: function (isUpdateUserInfo) {
+
+        Member.isUpdateUserInfo = isUpdateUserInfo;
+        Log.write(isUpdateUserInfo, 'FnSystem isUpdateUserInfo');
 
     },
     CheckDevFunction: function (strJson) {

@@ -328,10 +328,24 @@ var MainHome = MainHome || {}, MainHome =
 
                     Member.GetUserData(UserID,function (UserInfo) {
                         Log.write(JSON.stringify(UserInfo));
+                        var DisplayGender = "";
                         if(UserInfo.Gender=="M"){
                             $("#profile_s1").click();
+                            DisplayGender = $.i18n('男');
                         }else if(UserInfo.Gender=="F"){
                             $("#profile_s2").click();
+                            DisplayGender = $.i18n('女');
+                        }
+
+                        $("#div_profile_sex_disabled").val(DisplayGender);
+                        if(Member.isUpdateUserInfo === 'N'){
+                            document.getElementById("txtNickName").disabled = true;
+                            $("#div_profile_sex_disabled").show();
+                            $("#div_profile_sex").hide();       
+                        }else{
+                            document.getElementById("txtNickName").disabled = false;
+                            $("#div_profile_sex_disabled").hide();
+                            $("#div_profile_sex").show();    
                         }
 
                         var Bir=UserInfo.Bir;
