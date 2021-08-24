@@ -217,7 +217,7 @@ var Member = {
             return;
         }
 
-        var Gender = $("#profile_s1").prop("checked") ? 'M' : 'F';
+        var Gender = $("#signup_s1").prop("checked") ? 'M' : 'F';
         console.log("Gender"+Gender);
 
         if (document.getElementById("signup_mail").value.length == 0) {

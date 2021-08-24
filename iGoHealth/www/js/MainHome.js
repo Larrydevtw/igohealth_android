@@ -102,16 +102,24 @@ var MainHome = MainHome || {}, MainHome =
                     }], function () {
                         //更新雲端資料
                         Login.refreshAllMData("Y", function () {});
-                        //第一次登入，前往使用者資料輸入畫面
-                        Log.write("localStorage[UserDataSet]" + localStorage["UserDataSet_" + UserID], 'mainHome');
-                        MainHome.goToProfile(true, function () {
-                            Log.write("goToProfile", 'mainHome');
-                            Member.showDisplayName();
-                            FnBT.iniBT(function () {
-                                Log.write("更新使用者資料 FnBT success", 'mainHome');
-                                BandMate.init();
-                            });
+                        Member.showDisplayName();
+                        FnBT.iniBT(function () {
+                            Log.write("更新使用者資料 FnBT success", 'mainHome');
+                            BandMate.init();
                         });
+
+                        //第一次登入，前往使用者資料輸入畫面(有體重項目才需要前往個人資料畫面)
+                        Log.write("localStorage[UserDataSet]" + localStorage["UserDataSet_" + UserID], 'mainHome');
+                        if (AppConfig.lMType.indexOf("BW") > -1) {
+                            MainHome.goToProfile(true, function () {
+                                Log.write("goToProfile", 'mainHome');
+                                Member.showDisplayName();
+                                FnBT.iniBT(function () {
+                                    Log.write("更新使用者資料 FnBT success", 'mainHome');
+                                    BandMate.init();
+                                });
+                            });
+                        }         
                     });
                 } else {
                     ProjectFn.Wait([function (next) { //TODO   
@@ -319,14 +327,11 @@ var MainHome = MainHome || {}, MainHome =
                     WiseScripts.Tool.ShowLoading(true, $.i18n('同步使用者資料中..'));
 
                     Member.GetUserData(UserID,function (UserInfo) {
+                        Log.write(JSON.stringify(UserInfo));
                         if(UserInfo.Gender=="M"){
-                            $("#profile_s1").prop("checked", true);
-                            $("#profile_s2_lab").removeClass("active");
-                            $("#profile_s1_lab").addClass("active");
+                            $("#profile_s1").click();
                         }else if(UserInfo.Gender=="F"){
-                            $("#profile_s2").prop("checked", true);
-                            $("#profile_s1_lab").removeClass("active");
-                            $("#profile_s2_lab").addClass("active");
+                            $("#profile_s2").click();
                         }
 
                         var Bir=UserInfo.Bir;
