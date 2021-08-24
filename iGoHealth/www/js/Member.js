@@ -212,12 +212,13 @@ var Member = {
             return;
         }
 
-        var UserSex = $('input:radio[name=sex]:checked').val();
-
-        if (UserSex == "") {
-            navigator.notification.alert($.i18n('請選擇性別'), null, $.i18n('系統訊息'), $.i18n('確定'));
+        if (!$("#signup_s1").prop("checked") && !$("#signup_s2").prop("checked")) {
+            navigator.notification.alert("請選擇性別", function () {}, parent.$.i18n('系統訊息'), parent.$.i18n('確定'));
             return;
         }
+
+        var Gender = $("#profile_s1").prop("checked") ? 'M' : 'F';
+        console.log("Gender"+Gender);
 
         if (document.getElementById("signup_mail").value.length == 0) {
             if (CustomInfo.EMail_Validate === "Y") {
@@ -237,7 +238,7 @@ var Member = {
             UserID, document.getElementById("signup_mail").value,
             document.getElementById("signup_ID").value,
             document.getElementById("signup_BIR").value.replace(/\/|-/g, ""),
-            UserSex,
+            Gender,
             document.getElementById("signup_PID").value,
             document.getElementById("signup_Nick").value,
             Zipcode,
