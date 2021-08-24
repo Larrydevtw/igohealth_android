@@ -15,7 +15,7 @@ var FnBT = {
                 var InsertArray = [{ //聿新易立測/中山瑞福(大陸)血糖/尿酸/膽固醇三合一
                         'DeviceReceiveItem': 'BG,UA,CHOL',
                         'DeviceModel': 'ETB04',
-                        'DeviceName': '三合一量測設備',
+                        'DeviceName': '易立測三高機',
                         'DeviceBrand': 'Bioptik'
                     },
                     { //泰博體溫(TAIDOC TD1261)
