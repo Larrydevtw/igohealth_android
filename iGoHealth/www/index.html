@@ -433,7 +433,7 @@
                         data-pagename="#StandardInfo">三高量測標準值範圍</button>
 
                     <button class="IPbtn gotoPage modalClose" onclick="MainHome.goToMeasureScan();"
-                        data-pagename="#divMeasureScan">藥師量測三高</button>
+                        data-pagename="#divMeasureScan">主要照護者量測三高</button>
 
                     <button class="IPbtn parent" id="txtDisplayName">林小花（顯示姓名）</button>
 
@@ -872,23 +872,23 @@
             </div>
         </div>
 
-        <!--藥師量測三高-->
-        <div id="divMeasureScan" class="block" data-navname="藥師量測三高" style="display:none">
+        <!--主要照護者量測三高-->
+        <div id="divMeasureScan" class="block" data-navname="主要照護者量測三高" style="display:none">
             <div class="h-center-center">
                 <div class="mt-1 mb-1">
                     <span>
-                        請輸入以下資訊協助民眾進行量測<br />*此功能僅限藥局人員使用
+                        請輸入以下資訊協助民眾進行量測<br />*此功能僅限主要照護者使用
                     </span>
                 </div>
                 <div class="h-center-center w-100">
                     <div class="input login-input">
-                        <input type="text" id="txtMeasureScanU_ID" class="mt-1" placeholder="請輸入藥師識別碼" />
+                        <input type="text" id="txtMeasureScanU_ID" class="mt-1" placeholder="請輸入主要照護者識別碼" />
                     </div>
                     <div class="input login-input">
-                        <input type="password" id="txtMeasureScanU_Code" class="mt-1" placeholder="請輸入藥師密碼" />
+                        <input type="password" id="txtMeasureScanU_Code" class="mt-1" placeholder="請輸入主要照護者密碼" />
                     </div>
                     <div class="w-100">
-                        <p>*若您忘記藥師密碼，<br />
+                        <p>*若您忘記主要照護者密碼，<br />
                             請至i顧健康藥局端LINE@進行重置</p>
                     </div>
                 </div>
@@ -900,8 +900,8 @@
         
             </div>
         </div>
-        <!--藥師測量三高 民眾手機-->
-        <div id="divMeasureScanMode" class="block" data-navname="藥師量測三高" style="display:none;">
+        <!--主要照護者測量三高 民眾手機-->
+        <div id="divMeasureScanMode" class="block" data-navname="主要照護者量測三高" style="display:none;">
             <div id="MeasureScanMode_Manual" class="h-center-center" >
                 <div class="mt-1 mb-1">
                     <span>
@@ -949,12 +949,12 @@
             <div id="MeasureScanMode_Confirm" class="h-center-center" style="display: none;">
                 <p data-i18n="掃碼量測確認_Info">* 確認身分無誤後，點選下方開始量測按鈕開始進行量測。</p>
                 <div class="w-100 mt-1">
-                    <button onclick="MeasureScan.startMeasure();" class="IPbtn full round gotoPage" data-pagename="#藥師測量三高" data-i18n="開始量測">
+                    <button onclick="MeasureScan.startMeasure();" class="IPbtn full round gotoPage" data-pagename="#主要照護者測量三高" data-i18n="開始量測">
                         開始量測
                     </button>
                 </div>
                 <div class="w-100 mt-1">
-                    <button onclick="MeasureScan.backToScan();" class="IPbtn full round gotoPage" data-pagename="#藥師測量三高">
+                    <button onclick="MeasureScan.backToScan();" class="IPbtn full round gotoPage" data-pagename="#主要照護者測量三高">
                         返回至輸入民眾帳號
                     </button>
                 </div>
@@ -963,19 +963,19 @@
                 <div id="MeasureScanMode_Test" style="display: none;">
                     <div class="w-100 mt-1">
                         <button onclick="MeasureScan.testBTData('People');" class="IPbtn full round gotoPage"
-                            data-pagename="#藥師測量三高">
+                            data-pagename="#主要照護者測量三高">
                             藍牙測試(People)
                         </button>
                     </div>
                     <div class="w-100 mt-1">
                         <button onclick="MeasureScan.testBTData('Scan');" class="IPbtn full round gotoPage"
-                            data-pagename="#藥師測量三高">
+                            data-pagename="#主要照護者測量三高">
                             藍牙測試(Scan)
                         </button>
                     </div>
                 </div>             
                 <div class="w-100 mt-1">
-                    <button onclick="MeasureScan.backToScan();" class="IPbtn full round gotoPage" data-pagename="#藥師測量三高">
+                    <button onclick="MeasureScan.backToScan();" class="IPbtn full round gotoPage" data-pagename="#主要照護者測量三高">
                         返回至輸入民眾帳號
                     </button>
                 </div>
@@ -1009,7 +1009,7 @@
                 </div>
             </div>
         </div>
-         <!--藥師測量三高 開始測量-->
+         <!--主要照護者測量三高 開始測量-->
          <div id="measure_2-7" class="block" data-navname="三高量測標準值範圍" style="display:none;">
             <div class="h-center-center">
                 <div class="mt-1 mb-1">
@@ -1048,8 +1048,8 @@
                 </div>
             </div>
         </div>
-        <!--藥師測量三高 開始測量-->
-        <div id="measure_2-8" class="block" data-navname="藥師量測三高" style="display:none;">
+        <!--主要照護者測量三高 開始測量-->
+        <div id="measure_2-8" class="block" data-navname="主要照護者量測三高" style="display:none;">
             <div class="h-center-center">
                 <div class="h-center-center w-100">
                     <div class="rData">
