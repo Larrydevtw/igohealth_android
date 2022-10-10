@@ -13,7 +13,7 @@ var FnBTPairBand = {
 
     WiseScripts.Tool.NextPop("BluetoothSettingPage_Band_" + step, function () {
       FnBTPairBand.BindList();
-    }, null, "T");
+    }, null, 'T');
   },
   StartScan: function () {
     Log.write("", "FnBTPairBand StartScan");

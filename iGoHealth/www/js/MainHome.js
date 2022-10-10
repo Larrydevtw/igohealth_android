@@ -237,7 +237,7 @@ var MainHome = MainHome || {}, MainHome =
                 var Acct = '?Acct=';
 
                 WiseAES.enpryptAES(WiseScripts.Format.Date_yyyyMMddHHmmss(new Date()).replace(/\//g, "").replace(/\:/g, "").replace(/\s+/g, "") + 
-                    localStorage.UserID, AppConfig.MAesKey1, AppConfig.MAesKey2, "T",
+                    localStorage.UserID, AppConfig.MAesKey1, AppConfig.MAesKey2, 'T',
                     function (res) {
                         Acct += res;
 
@@ -441,7 +441,7 @@ var MainHome = MainHome || {}, MainHome =
                 if(successFn){
                     successFn();
                 }
-            }, null, "T");
+            }, null, 'T');
         },
         goToSetting: function () {
             MainHome.fadeOutPage('Setting');
@@ -491,6 +491,8 @@ var MainHome = MainHome || {}, MainHome =
             $("#" + MeasureScan.txtCheckUserId).val("");
             $("#" + MeasureScan.txtCheckCodeId).val("");
             WiseScripts.Tool.NextPop('divMeasureScan', function () {
+                app.onBackFlag = "N";
+                
                 if (localStorage[localStorage.UserID + "_checkBranchUserID"]) {
                     $("#" + MeasureScan.txtCheckUserId).val(localStorage[localStorage.UserID + "_checkBranchUserID"]);
                 }
@@ -554,7 +556,7 @@ var MainHome = MainHome || {}, MainHome =
         //     MainHome.ShowMsg();
         //     $("#MsgList").html("<center><a style='font-size:120%;font-family:Microsoft JhengHei;'><br><br>尚無任何訊息<br><br></a></center>");
 
-        //     WiseScripts.Tool.NextPop('Message', null, null, "T");
+        //     WiseScripts.Tool.NextPop('Message', null, null, 'T');
         // },
         // ShowMsg: function () {
         //     if (!localStorage["PushMessages"])

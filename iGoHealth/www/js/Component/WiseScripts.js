@@ -492,6 +492,8 @@ var WiseScripts = WiseScripts || {}, WiseScripts = {
 
                 if (IsRec == "T") {
 
+                    app.onBackFlag = "Y";
+
                     RecView.push(EtID);
                     // alert("sessionStorage.WhereAmI: " + sessionStorage.WhereAmI);
 
@@ -503,6 +505,7 @@ var WiseScripts = WiseScripts || {}, WiseScripts = {
                 }
                 else
                 {
+                    // app.onBackFlag = "N";
                     
                     fadeOutPage = sessionStorage.WhereAmI;
                     fadeInPage = EtID;

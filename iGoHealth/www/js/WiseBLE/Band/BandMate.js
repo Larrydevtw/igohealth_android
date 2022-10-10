@@ -14,6 +14,12 @@ var BandMate = {
     }
   },
   init: function (successFn,errFn) {
+    
+    if (AppConfig.BandMateActive === "N"){
+      Log.write("未啟用手環功能", 'BandMate.Status');
+      return;
+    }
+
     Log.write(BandMate.Status, 'BandMate.Status');
     if(!localStorage.UserID){
       Log.write("UserID is null", 'BandMate');

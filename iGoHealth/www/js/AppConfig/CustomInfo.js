@@ -91,7 +91,7 @@ var CustomInfo = {
     },
     enableFunction: function (functionType, isEnabled) {
 
-        Log.write(functionType + ":" + isEnabled, 'CustomInfo');
+        Log.write(functionType + ":" + isEnabled, 'CustomInfo enableFunction');
 
         if (isEnabled && functionType != "Product") {
             $("#li" + functionType).show();
@@ -121,7 +121,11 @@ var CustomInfo = {
                 }
                 break;
             case "MeasureScan":
-
+                if (isEnabled) {
+                    $("#btnMeasureScan").show();
+                } else {
+                    $("#btnMeasureScan").hide();
+                }            
                 break;
             case "SyncAppInfo":
 

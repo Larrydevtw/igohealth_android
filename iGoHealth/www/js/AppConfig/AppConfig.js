@@ -7,7 +7,7 @@ var Domain = {
     VersionNo: "", //版本號(只有號碼部分)
     AppName: "i顧健康",
 
-    //App功能
+    //App功能 
     lFunction: ["Point", "Product", "MeasureScan", "SyncAppInfo"],
     //App開發中功能，陣列中有的功能項目不會啟用
     lDevFunction: [],
@@ -30,58 +30,42 @@ var Domain = {
                 Domain.Address = "https://apps.igohealth.com.tw";
                 Domain.ServiceRoot = "";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
-
-                Domain.lDevFunction = [];
                 break;
             case "IGH_eThink":
                 Domain.Address = "https://demosite.ethink.com.tw";
                 Domain.ServiceRoot = "/iGoHealth";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
-
-                Domain.lDevFunction = [];
                 break;
             case "IGH_137":
                 Domain.Address = "http://192.168.137.1";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
-
-                Domain.lDevFunction = [];
                 break;
             case "IGH_127":
                 Domain.Address = "http://127.0.0.1";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
-
-                Domain.lDevFunction = [];
                 break;
             case "IGH_112":
                 Domain.Address = "http://192.168.1.112";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
-
-                Domain.lDevFunction = [];
                 break;
             case "IGH_133":
                 Domain.Address = "http://192.168.0.133";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
-
-                Domain.lDevFunction = [];
                 break;
             case "IGH_Wifi":
                 Domain.Address = "http://192.168.0.180";//"http://172.27.80.1";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
-
-                Domain.lDevFunction = [];
                 break;
 
             case "IGH_150":
                 Domain.Address = "http://10.168.199.150";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
-
-                Domain.lDevFunction = [];
                 break;
         }
     }
@@ -115,6 +99,8 @@ var AppConfig = {
     UserKind: "7",
     //有使用的量測功能
     lMType: ["BG", "BP", "CHOL"], //, "BO","HR","STEP", "BT", "BW", "UA", 
+    //是否使用手環功能
+    BandMateActive: "N",
     //第一次載入資料的起始日期(為確保載入所有量測資料)
     //DateS: "2018-01-01",
     //第一次載入資料的距今天數(載入雲端所有端點一個月的量測資料) //未來會有頁面給使用者選擇下載的區間

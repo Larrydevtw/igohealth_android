@@ -237,6 +237,8 @@ var MeasureScan = {
         var BirthDay = memberInfo.BirthDay;
         var Gender = memberInfo.Gender === "M" ? "男性" : "女性";
 
+        var BindPharmacy = memberInfo.BindPharmacy;
+
         var Age = memberInfo.Age + " 歲";
 
         $("#MeasureScan_UserID").html(UserID);
@@ -244,6 +246,17 @@ var MeasureScan = {
         $("#MeasureScan_BirthDay").html(BirthDay);
         $("#MeasureScan_Age").html(Age);
         $("#MeasureScan_Gender").html(Gender);
+
+        if(BindPharmacy){
+
+            $("#divMeasureScan_BindPharmacy").show();
+            $("#MeasureScan_BindPharmacy").html(BindPharmacy);
+
+        }else{
+
+            $("#divMeasureScan_BindPharmacy").hide();
+
+        }
     },
     showValue: function (MType, ValueArr, isAnimate, MTimeStamp, DeviceModel) {
         Log.write(MType + "/" + ValueArr + "/" + isAnimate + "/" + MTimeStamp + "/" + DeviceModel, 'MeasureScan ShowValue');

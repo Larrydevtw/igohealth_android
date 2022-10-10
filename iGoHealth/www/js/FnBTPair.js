@@ -11,7 +11,7 @@ var FnBTPair = {
       CustomStyle.iniSwitchToggle("chkBTMode", $.i18n("配對模式"), $.i18n("智能連線模式"), BTMode);
 
       FnBTPair.ShowByBTMode(BTMode, function () {
-        WiseScripts.Tool.NextPop("BluetoothSettingPage_" + step, function () {}, null, "T");
+        WiseScripts.Tool.NextPop("BluetoothSettingPage_" + step, function () {}, null, 'T');
       });
     });
   },

@@ -362,9 +362,12 @@ var WSCall = WSCall || {},
                 ], function () {
                     var URL = AppConfig.MemberServices + "/Register";
                     //Log.write("CheckCode: " + CheckCode + "\nEquipmentID: " + EquipmentID + "\nstrStationInfo: " + strStationInfo + "\nstrMember:" + strMember + "\n查詢網址：" + URL, "WSCall Member Register");
+                    var SystemModel = AppConfig.SystemModel;
+                    
                     var UData = {
                         CheckCode: encodeURI(CheckCode),
                         EquipmentID: encodeURI(EquipmentID),
+                        SystemModel: encodeURI(SystemModel),
                         SInfo: encodeURI(strStationInfo),
                         MData: encodeURI(strMember)
                     };
