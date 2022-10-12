@@ -25,7 +25,10 @@ var MSCordovaBLE = MSCordovaBLE || {},
         MaxConnCnt: 1 //最大連線數
             ,
         BT_Init_OK: false
-
+            ,
+        BT_ErrMsg: "" //錯誤訊息
+            ,
+        BT_Auth: false //是否取得權限
             //,//這個變數平常都是false,當藍牙設備被Bond成功時,這個變數會被設成true,
             //isBondSuccess: false
 
@@ -45,97 +48,206 @@ var MSCordovaBLE = MSCordovaBLE || {},
 
             , //初使化藍牙
         btInitialize: function () {
-                MSCordovaBLE.BT_Init_OK = false;
-                MSCordovaBLE.NowStep = "btInitialize";
-                //added by sinclair 20170930
-                localStorage.setItem("inDeviceList", "[]"); //暫取可配對清單
-                MSCordovaBLE.connDevices = []; //清空目前連線數
+            MSCordovaBLE.BT_Init_OK = false;
+            MSCordovaBLE.NowStep = "btInitialize";
+            //added by sinclair 20170930
+            localStorage.setItem("inDeviceList", "[]"); //暫取可配對清單
+            MSCordovaBLE.connDevices = []; //清空目前連線數
 
+            WriteLog.write("目前的作業模式: 正常的 scan 模式", "status");
+            WriteLog.write("目前的作業平台: " + window.cordova.platformId, "status");
 
-                WriteLog.write("目前的作業模式: 正常的 scan 模式", "status");
-                WriteLog.write("目前的作業平台: " + window.cordova.platformId, "status");
-                if (window.cordova.platformId === "android") {
-                    //先處理Android權限
-                    bluetoothle.hasPermission(MSCordovaBLE.hasPermissionSuccess);
-                    bluetoothle.isLocationEnabled(MSCordovaBLE.isLocationEnabledSuccess, MSCordovaBLE.handleError);
+            if (window.cordova.platformId === "android") {
+                
+                MSCordovaBLE.checkPermission()
+                    .then(MSCordovaBLE.btInitialize_android, MSCordovaBLE.btInitializeError)
+                    .then(MSCordovaBLE.btInitializeSuccess, MSCordovaBLE.handleError);
+               
+            } else if (window.cordova.platformId === "ios") {
+               
+                MSCordovaBLE.btInitialize_iOS()
+                    .then(MSCordovaBLE.btInitializeSuccess, MSCordovaBLE.handleError);
 
-                    new Promise(function (resolve) {
-
-                        bluetoothle.initialize(resolve, {
-                            request: true,
-                            statusReceiver: false //default 值 false                   
-                        });
-
-                    }).then(MSCordovaBLE.btInitializeSuccess, MSCordovaBLE.handleError);
-                } else if (window.cordova.platformId === "ios") {
-                    new Promise(function (resolve) {
-
-                        bluetoothle.initialize(resolve, {
-                            request: true,
-                            statusReceiver: true //如果設成false --> ios會不能initialize藍芽 !!!
-                        });
-
-                    }).then(MSCordovaBLE.btInitializeSuccess, MSCordovaBLE.handleError);
-                } else {
-                    WriteLog.write("目前不支援 " + window.cordova.platformId + " 這種作業平台 !", "status");
-                }
-
-
-
-
+            } else {
+                WriteLog.write("目前不支援 " + window.cordova.platformId + " 這種作業平台 !", "status");
             }
 
-            ,
-        btInitializeSuccess: function (result) {
-                MSCordovaBLE.BT_Init_OK = true;
-                MSCordovaBLE.NowStep = "btInitializeSuccess";
-                if (result.status === "enabled") {
-                    WriteLog.write("藍牙初始化成功！", "status");
+        },
+        btInitialize_android: function () {
 
-                    MSCordovaBLE.startScan();
-                } else {
-                    WriteLog.write("藍牙目前尚未開啟:" + result.status, "status");
-                }
+            return new Promise(function (resolve) {
 
-                //確認是否啟動修復,每隔10(checkBLE)秒檢查scan間隔有沒有超過10秒
-                //，有的代表藍牙被lock，重啟!↓↓↓
-                if (MSCordovaBLE.checkBLE > 0) {
-                    var vCheckScan = function () {
-                        if (MSCordovaBLE.connDevices.length < MSCordovaBLE.MaxConnCnt) {
-                            var tDate = new Date();
-                            var dDay1 = tDate.getTime();
-                            if (!sessionStorage["checkBLETime"]) {
-                                sessionStorage["checkBLETime"] = dDay1;
-                            }
-                            var dDay2 = sessionStorage["checkBLETime"];
-                            var vDif = dDay1 - dDay2;
-                            //sessionStorage["checkBLETime"] = dDay1.getTime();
-                            if (vDif > MSCordovaBLE.checkBLE) {
-                                WriteLog.write("check scan!" + dDay1 + "," + dDay2 + "," + vDif, "status");
-                                WriteLog.write("啟動修復!", "error");
-                                //MSCordovaBLE.btInitialize();
+                bluetoothle.initialize(resolve, {
+                    request: true,
+                    statusReceiver: false //default 值 false                   
+                });
 
-                                MSCordovaBLE.startScan();
-                                WriteLog.write("藍牙scan逾時，重啟scan!", "error");
-                            }
-                            //else {
-                            //    //WriteLog.write("check scan!" + dDay1 + "," + dDay2 + "," + vDif, "status");
-                            //    vCheckScan();
-                            //}
+            });
+
+        },
+        btInitialize_iOS:function(){
+
+            return new Promise(function (resolve) {
+
+                //TODO:
+                MSCordovaBLE.BT_Auth = true;
+
+                bluetoothle.initialize(resolve, {
+                    request: true,
+                    statusReceiver: true //如果設成false --> ios會不能initialize藍芽 !!!
+                });
+
+            });
+
+        },
+        checkPermission: function () {
+
+            return new Promise(function (resolve, reject) {
+
+                if (window.cordova.platformId === "android") {
+
+                    MSCordovaBLE.BT_Auth = false;
+
+                    var OSVersionNo = DeviceInfo.OSVersionNo;
+
+                    //先處理Android權限
+                    WriteLog.write("先處理Android權限");
+                    // bluetoothle.hasPermission(MSCordovaBLE.hasPermissionSuccess);
+                    // bluetoothle.isLocationEnabled(MSCordovaBLE.isLocationEnabledSuccess, MSCordovaBLE.handleError);
+                    MSCordovaBLE.hasPermission(function (result) {
+
+                        WriteLog.write("先處理Android權限 hasPermission: " + result);
+
+                        if (!result) {
+                            MSCordovaBLE.BT_ErrMsg = "未取得藍牙權限";
+                            reject();
+                            return;
                         }
 
-                    };
-                    var myTimer = setInterval(
-                        vCheckScan, MSCordovaBLE.checkBLE);
+                        WriteLog.write("Android版本 DeviceInfo.OSVersion / " + DeviceInfo.OSVersion + " / " + OSVersionNo);
 
+                        if (OSVersionNo < 12) {
+                            WriteLog.write("Android12以下版本 hasPermission / " + DeviceInfo.OSVersion + " / " + OSVersionNo);
+                            MSCordovaBLE.BT_Auth = true;
+                            resolve();
+                            return;
+                        }
 
+                        MSCordovaBLE.hasPermissionBtScan(function (result) {
+
+                            WriteLog.write("先處理Android權限 hasPermissionBtScan: " + result);
+
+                            if (!result) {
+                                MSCordovaBLE.BT_ErrMsg = "未取得藍牙鄰近裝置權限";
+                                reject();
+                                return;
+                            }
+
+                            MSCordovaBLE.hasPermissionBtConnect(function (result) {
+
+                                WriteLog.write("先處理Android權限 hasPermissionBtConnect: " + result);
+
+                                if (!result) {
+                                    MSCordovaBLE.BT_ErrMsg = "未取得藍牙鄰近裝置權限";
+                                    reject();
+                                    return;
+                                }
+
+                                MSCordovaBLE.BT_Auth = true;
+                                resolve();
+                            });
+                        });
+                    });
                 }
-                //確認是否啟動修復↑↑↑
+
+            });
+
+        },
+        btInitializeSuccess: function (result) {
+
+            var BT_Init_OK = true;
+
+            MSCordovaBLE.BT_Init_OK = BT_Init_OK;
+            MSCordovaBLE.NowStep = "btInitializeSuccess";
+            if (result.status === "enabled") {
+                WriteLog.write("藍牙初始化成功！", "status");
+
+                MSCordovaBLE.startScan();
+            } else {
+                WriteLog.write("藍牙目前尚未開啟:" + result.status, "status");
             }
 
-            , //掃瞄藍牙設備
+            MSCordovaBLE.MySetting.initCallBackFn(BT_Init_OK);
+
+            MSCordovaBLE.autoRepairBLE();
+      
+        },
+        btInitializeError: function () {
+
+            return new Promise(function (resolve, reject) {
+
+                var BT_Init_OK = false;
+
+                MSCordovaBLE.BT_Init_OK = BT_Init_OK;
+                MSCordovaBLE.NowStep = "btInitializeError";
+
+                WriteLog.write("藍牙目前尚未開啟", "status");
+
+                MSCordovaBLE.MySetting.initCallBackFn(BT_Init_OK);
+
+                reject();
+            });
+        },
+        autoRepairBLE: function () {
+
+            //確認是否啟動修復,每隔10(checkBLE)秒檢查scan間隔有沒有超過10秒
+            //，有的代表藍牙被lock，重啟!↓↓↓
+            if (MSCordovaBLE.checkBLE > 0) {
+                var vCheckScan = function () {
+                    if (MSCordovaBLE.connDevices.length < MSCordovaBLE.MaxConnCnt) {
+                        var tDate = new Date();
+                        var dDay1 = tDate.getTime();
+                        if (!sessionStorage["checkBLETime"]) {
+                            sessionStorage["checkBLETime"] = dDay1;
+                        }
+                        var dDay2 = sessionStorage["checkBLETime"];
+                        var vDif = dDay1 - dDay2;
+                        //sessionStorage["checkBLETime"] = dDay1.getTime();
+                        if (vDif > MSCordovaBLE.checkBLE) {
+                            WriteLog.write("check scan!" + dDay1 + "," + dDay2 + "," + vDif, "status");
+                            WriteLog.write("啟動修復!", "error");
+                            //MSCordovaBLE.btInitialize();
+
+                            MSCordovaBLE.startScan();
+                            WriteLog.write("藍牙scan逾時，重啟scan!", "error");
+                        }
+                        //else {
+                        //    //WriteLog.write("check scan!" + dDay1 + "," + dDay2 + "," + vDif, "status");
+                        //    vCheckScan();
+                        //}
+                    }
+
+                };
+                var myTimer = setInterval(
+                    vCheckScan, MSCordovaBLE.checkBLE);
+
+
+            }
+            //確認是否啟動修復↑↑↑
+
+        },
+        //掃瞄藍牙設備
         startScan: function () {
 
+                if (!MSCordovaBLE.BT_Auth) {
+                    WriteLog.write("未取得藍牙權限！ 無法進入掃描", "startScan");
+                    return;
+                }
+
+                if (MSCordovaBLE.NowStep === "startScan") {
+                    WriteLog.write("藍牙已進入掃描！ 無法再次進入掃描", "startScan");
+                    return;
+                }
 
                 MSCordovaBLE.NowStep = "startScan";
                 MSCordovaBLE.foundDevices = [];
@@ -1276,20 +1388,120 @@ var MSCordovaBLE = MSCordovaBLE || {},
             //-------------------------------------------
             //與藍牙權限有關的函式
             ,
-        hasPermissionSuccess: function (result) {
-                if (result.hasPermission === false) {
-                    bluetoothle.requestPermission(MSCordovaBLE.requestPermissionSuccess, MSCordovaBLE.handleError);
+        hasPermission: function (successFn, errFn) {
+
+            bluetoothle.hasPermission(function (result) {
+
+                var hasPermission = result.hasPermission;
+
+                if (hasPermission === false) {
+
+                    bluetoothle.requestPermission(function (result) {
+
+                            var requestPermission = result.requestPermission;
+
+                            if (successFn) {
+                                successFn(requestPermission);
+                            }
+                            MSCordovaBLE.requestPermissionSuccess(requestPermission);
+
+                        },
+                        function (result) {
+                            if (errFn) {
+                                errFn(result);
+                            }
+                            MSCordovaBLE.handleError(result);
+                        });
+
+                } else {
+                    if (successFn) {
+                        successFn(hasPermission);
+                    }
+                }
+            });
+
+        },
+        requestPermissionSuccess: function (result) {
+            WriteLog.write("requestPermissionSuccess" + result);
+        },
+        hasPermissionBtScan: function (successFn, errFn) {
+
+            WriteLog.write("hasPermissionBtScan");
+
+            bluetoothle.hasPermissionBtScan(function (result) {
+
+                WriteLog.write("requestPermissionBtScan 1:" + JSON.stringify(result));
+
+                var hasPermission = result.hasPermission;
+
+                if (hasPermission === false) {
+
+                    bluetoothle.requestPermissionBtScan(function (result) {
+
+                        WriteLog.write("requestPermissionBtScan 2:" + JSON.stringify(result));
+
+                        var requestPermission = result.requestPermission;
+
+                        if (successFn) {
+                            successFn(requestPermission);
+                        }
+                        MSCordovaBLE.requestPermissionBtScanSuccess(requestPermission);
+
+                    }, function (result) {
+
+                        if (errFn) {
+                            errFn(result);
+                        }
+                        MSCordovaBLE.handleError(result);
+
+                    });
                 } else {
                     //WriteLog.write(result);
+                    if (successFn) {
+                        successFn(hasPermission);
+                    }
                 }
-            }
+            });
 
-            ,
-        requestPermissionSuccess: function (result) {
-                WriteLog.write(result);
-            }
+        },
+        requestPermissionBtScanSuccess: function (result) {
+            WriteLog.write("requestPermissionBtScanSuccess" + result);
+        },
+        hasPermissionBtConnect: function (successFn, errFn) {
 
-            ,
+            WriteLog.write("hasPermissionBtConnect");
+
+            bluetoothle.hasPermissionBtConnect(function (result) {
+
+                var hasPermission = result.hasPermission;
+
+                if (hasPermission === false) {
+                    bluetoothle.requestPermissionBtConnect(function (result) {
+
+                        var requestPermission = result.requestPermission;
+
+                        if (successFn) {
+                            successFn(requestPermission);
+                        }
+                        MSCordovaBLE.requestPermissionBtConnectSuccess(requestPermission);
+                    }, function (result) {
+                        if (errFn) {
+                            errFn(result);
+                        }
+                        MSCordovaBLE.handleError(result);
+                    });
+                } else {
+                    //WriteLog.write(result);
+                    if (successFn) {
+                        successFn(hasPermission);
+                    }
+                }
+            });
+
+        },
+        requestPermissionBtConnectSuccess: function (result) {
+            WriteLog.write("requestPermissionBtConnectSuccess:" + result);
+        },
         isLocationEnabledSuccess: function (result) {
                 if (result.isLocationEnabled === false) {
                     bluetoothle.requestLocation(MSCordovaBLE.requestLocationSuccess, MSCordovaBLE.handleError);

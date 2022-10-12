@@ -29,29 +29,14 @@ var SingleDevicePooling = SingleDevicePooling || {}, SingleDevicePooling = {
         //-------------------------------------------------
         if (window.cordova.platformId === "android") {
             //先處理Android權限
-            bluetoothle.hasPermission(MSCordovaBLE.hasPermissionSuccess);
-            bluetoothle.isLocationEnabled(MSCordovaBLE.isLocationEnabledSuccess, MSCordovaBLE.handleError);
+            MSCordovaBLE.checkPermission()
+                .then(MSCordovaBLE.btInitialize_android, MSCordovaBLE.btInitializeError)
+                .then(SingleDevicePooling.btInitializeSuccess, MSCordovaBLE.handleError);
+        } else if (window.cordova.platformId === "ios") {
 
-            new Promise(function (resolve) {
+            MSCordovaBLE.btInitialize_iOS()
+                .then(SingleDevicePooling.btInitializeSuccess, MSCordovaBLE.handleError);
 
-                bluetoothle.initialize(resolve,
-                {
-                    request: true,                    
-                    statusReceiver: false //default 值                    
-                });
-
-            }).then(SingleDevicePooling.btInitializeSuccess, MSCordovaBLE.handleError);
-        }
-        else if (window.cordova.platformId === "ios") {
-            new Promise(function (resolve) {
-
-                bluetoothle.initialize(resolve,
-                {
-                    request: true,
-                    statusReceiver: true //如果設成false --> ios會不能initialize藍芽 !!!
-                });
-
-            }).then(SingleDevicePooling.btInitializeSuccess, MSCordovaBLE.handleError);
         }
         else {
             WriteLog.write("目前不支援 " + window.cordova.platformId + " 這種作業平台 !", "status");

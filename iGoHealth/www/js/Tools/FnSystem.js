@@ -15,7 +15,7 @@ var FnSystem = {
 
         FnSystem.GetLastSyncTime().then(function (LastSyncTime) {
             var UploadData = {
-                "Platform": DeviceInfo.GetPlatform(),
+                "Platform": DeviceInfo.GetPlatform() + "^" + DeviceInfo.OSVersion,
                 "Version": Domain.Version,
                 "VersionNo": Domain.VersionNo,
                 "LastSyncTime": LastSyncTime

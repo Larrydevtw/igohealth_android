@@ -1,9 +1,11 @@
 //cordova-plugin-device
 var DeviceInfo = {
+    OSVersion: "",
+    OSVersionNo: 0,
     GetOS: function () { //Android iOS
         return device.platform;
     },
-    GetOSVerion: function () {
+    GetOSVerion: function (successFn) {
         var OSVersion = "";
         switch (DeviceInfo.GetOS()) {
             case "iOS":
@@ -37,7 +39,10 @@ var DeviceInfo = {
                 OSVersion = version;
                 break;
         }
-        return OSVersion;
+
+        if (successFn){
+            successFn(OSVersion);
+        }
     },
     GetPlatform: function () {
         return DeviceInfo.GetOS() + "_" + DeviceInfo.GetOSVerion();

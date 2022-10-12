@@ -135,8 +135,6 @@ var FnBT = {
         Log.alert("初始化藍牙", "FnBT iniBT");
         try {
 
-            //藍牙狀態套件初始化 (BluetoothStatus) 抓取手機目前藍牙狀態(開啟或關閉)
-            cordova.plugins.BluetoothStatus.initPlugin();
             //設定藍牙操作時所需使用到的變數
             FnBT.ScandDevices = []; //把已掃過的設備清空
             localStorage["BTScanConfirm"] = "N"; //設定目前 是否正在詢問連線至設備的對話框
@@ -145,6 +143,8 @@ var FnBT = {
             //localStorage["isOnlyOneData"]=isOnlyOneData;//單筆模式 //TODO
 
             //設定各種CallBack(類似委派)
+            BTSetting.initCallBackFn = FnBT.initBTSuccess; //搜尋設備時會呼叫的函數
+
             BTSetting.ResultCallBackFn = FnBT.DataReceiving; //接收量測時會呼叫的函數
             BTSetting.ScanCallBackFn = FnBT.ScanCallBack; //搜尋設備時會呼叫的函數
             BTSetting.ConnectCallBackFn = FnBT.ConnectCallBack; //連接設備時會呼叫的函數
@@ -168,7 +168,7 @@ var FnBT = {
             //Pooling 單一藍牙設備模式
             BTSetting.SingleDevicePoolingMode = false; //false -> 正常的scan模式, true -> pooling 單一藍牙設備模式
 
-            var OS = WiseScripts.Tool.MobileType.IsAndroid() ? "android" : "iOS";
+            var OS = DeviceInfo.GetOS();
 
             //在單一模式下要被Pooling 的藍牙設備位址
             if (OS === "android") { //android 格式
@@ -201,37 +201,24 @@ var FnBT = {
             //設定初始化
             MSCordovaBLE.InitSetting();
 
-            //註冊藍牙監聽事件
-            window.addEventListener('BluetoothStatus.enabled', function () {
-                FnBT.switchBTStatus("Y");
-                Log.write("藍牙已開啟", "藍牙監聽事件");
-                Log.alert("藍牙已開啟", "藍牙監聽事件");
-                //藍牙初始化
-                setTimeout(function () {
-                    if (MSCordovaBLE.MySetting.SingleDevicePoolingMode == false) {
-                        MSCordovaBLE.btInitialize(); //false -> 正常的 scan 模式
-                    } else {
-                        SingleDevicePooling.btInitialize(); //true -> pooling 單一藍牙設備模式
-                    }
-                }, 100);
-
-                BandMate.init();
-            });
-
-            //當藍牙關閉時，要做什麼？
-            window.addEventListener('BluetoothStatus.disabled', function () {
-                FnBT.switchBTStatus("N");
-                BandMate.disConn();
-                Log.write("藍牙已關閉", "藍牙監聽事件");
-                Log.alert("藍牙已關閉", "藍牙監聽事件");
-                localStorage.setItem("BT_Enable", "N");
-            });
-
-            FnBT.OpenBT(function () {
-                if (successFn) {
-                    successFn();
+            //藍牙初始化
+            setTimeout(function () {
+                if (MSCordovaBLE.MySetting.SingleDevicePoolingMode == false) {
+                    MSCordovaBLE.btInitialize(); //false -> 正常的 scan 模式
+                } else {
+                    SingleDevicePooling.btInitialize(); //true -> pooling 單一藍牙設備模式
                 }
-            });
+            }, 100);
+            
+            if (successFn) {
+                successFn();
+            }
+
+            // FnBT.OpenBT(function () {
+            //     if (successFn) {
+            //         successFn();
+            //     }
+            // });
 
         } catch (err) {
             Log.alert("BT" + err);
@@ -240,6 +227,43 @@ var FnBT = {
                 errfn();
             }
         }
+    },
+    initBTSuccess: function () {
+
+        var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
+
+        Log.write("initBTSuccess:" + BT_Init_OK, "FnBT");
+
+        if (!BT_Init_OK) {
+            FnBT.switchBTStatus("N");
+            return;
+        }
+
+        FnBT.switchBTStatus("Y");
+
+        //藍牙狀態套件初始化 (BluetoothStatus) 抓取手機目前藍牙狀態(開啟或關閉)
+        cordova.plugins.BluetoothStatus.initPlugin();
+
+        //註冊藍牙監聽事件
+        window.addEventListener('BluetoothStatus.enabled', function () {
+            FnBT.switchBTStatus("Y");
+            Log.write("藍牙已開啟", "藍牙監聽事件");
+            Log.alert("藍牙已開啟", "藍牙監聽事件");
+
+            FnBT.StartScan("Y");
+
+            BandMate.init();
+        });
+
+        //當藍牙關閉時，要做什麼？
+        window.addEventListener('BluetoothStatus.disabled', function () {
+            FnBT.switchBTStatus("N");
+            BandMate.disConn();
+            Log.write("藍牙已關閉", "藍牙監聽事件");
+            Log.alert("藍牙已關閉", "藍牙監聽事件");
+            localStorage.setItem("BT_Enable", "N");
+        });
+
     },
     SetBTMode: function (successFn) {
         var BTMode = AppConfig.BTPairMode;
@@ -318,6 +342,15 @@ var FnBT = {
         }
     },
     StartScan: function (isStartScan, isClearBTResult, ScanOpen) { //isStartScan:Y/N, isClearBTResult:Y/N,ScanOpen:Y/N
+
+        var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
+        Log.write("BT_Init_OK:" + BT_Init_OK, "FnBT StartScan");
+
+        if (!BT_Init_OK){
+            Log.write("BT_Init false. Return Scan", "FnBT StartScan");
+            return;
+        }
+
         //alert("start Scan:"+isStartScan);
         MSCordovaBLE.MySetting.ScanCallBackFn = FnBT.ScanCallBack;
         FnBT.ScandDevices = []; //把已掃過的設備清空
@@ -438,12 +471,24 @@ var FnBT = {
             }
         }
 
-        if (status === "Y") {
+        var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
+        var BT_ErrMsg = MSCordovaBLE.BT_ErrMsg ? MSCordovaBLE.BT_ErrMsg : "";
+
+        Log.write("BT_Init_OK:" + BT_Init_OK, "FnBT StopScan");
+
+        if (status === "Y" && BT_Init_OK) {
             $("#aBluetooth").attr("src", "./images/bluetooth_on.svg");
             //BandMate.switch("Y");
             FnBT.bluetoothStatus = "Y";
         } else {
             $("#aBluetooth").attr("src", "./images/bluetooth_off.svg");
+
+            $("#aBluetooth").attr("onclick", "FnCtrl.alert($.i18n('請開啟藍牙，以接收藍牙設備量測資料。" + BT_ErrMsg + "'));");
+
+            if (BT_ErrMsg !== "") {
+                FnCtrl.toast(BT_ErrMsg);
+            }
+
             if (FnBT.isOpenBTMode === "Y") {
                 $("#aBluetooth").attr("onclick", "FnCtrl.alert($.i18n('請開啟藍牙，以接收藍牙設備量測資料。'));");
             } //BandMate.switch("N");
@@ -451,6 +496,15 @@ var FnBT = {
         }
     },
     StopScan: function (successFn) {
+
+        var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
+        Log.write("BT_Init_OK:" + BT_Init_OK, "FnBT StopScan");
+
+        if (!BT_Init_OK) {
+            Log.write("BT_Init false. Return StopScan", "FnBT StopScan");
+            return;
+        }
+
         FnBT.switchBTStatus("N");
         bluetoothle.stopScan( //停止 scan 模式
             function () {

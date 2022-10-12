@@ -79,6 +79,16 @@ var app = {
                 //alert("Domain.Version"+Domain.Version+"Domain.VersionNo"+Domain.VersionNo);
                 next();
             });
+        },function(next){
+            DeviceInfo.GetOSVerion(function (OSVersion){
+
+                Log.write(OSVersion, 'OSVersion');
+                DeviceInfo.OSVersion = OSVersion;
+                DeviceInfo.OSVersionNo = OSVersion.split('.')[0];
+
+                next();
+
+            });
         }, function (next) {
             //使用$.i18n初始化
             Log.write(Lang.locale, 'Lang.locale');

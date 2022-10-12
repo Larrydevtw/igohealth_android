@@ -7,9 +7,10 @@ var BTSetting = BTSetting || {}, BTSetting = {
   //-----------------------------------------------------
   //對外的 Call Back Function:
 
-    ScanCallBackFn: function (Device) { }                     //搜尋設備時會呼叫的函數
+    initCallBackFn: function (BT_Init_OK) {} //藍牙初始化成功會呼叫的函數
+  , ScanCallBackFn: function (Device) { }                     //搜尋設備時會呼叫的函數
   , ConnectCallBackFn: function (Device) { }                  //連接設備時會呼叫的函數
-  , DiscoverCallBackFn: function (Device) { }   //Discover 時會呼叫
+  , DiscoverCallBackFn: function (Device) { }                 //Discover 時會呼叫
   , ResultCallBackFn: function (ResultStr) { }                //接收量測時會呼叫的函數
   , ErrorCallBackFn: function (Ex) { }                        //發生錯誤時會呼叫的函數
   , GetMultiDataCallBackFn: function (RecordsArr) { }         //接收回傳多筆量測資料時會呼叫的函數           
