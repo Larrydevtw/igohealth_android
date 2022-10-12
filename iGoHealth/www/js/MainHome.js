@@ -12,8 +12,8 @@ var ScrollPosition = 0;
 
 var push;
 
-var MainHome = MainHome || {}, MainHome =
-    {
+var MainHome = MainHome || {},
+    MainHome = {
         onLoad: function () {
             //初始化 主頁面顯示
             $("#MBG_bg").height(0);
@@ -59,7 +59,7 @@ var MainHome = MainHome || {}, MainHome =
             $("#MBW_value1").hide();
             $("#MBW_txt1").text("");
             $("#MBW_txt2").text("");
-  
+
             // $("#MCHOL_txt1").html(0);
             // $("#MCHOL_txt2").html(300);
 
@@ -67,8 +67,8 @@ var MainHome = MainHome || {}, MainHome =
             // $("#MCHOL_arc2").attr('d', WiseFlot.describeArc(94, 90, 80, 210, 359.9));
 
             //存入預設量測時間(如有使用者有修改過，以使用者設定時間為主)
-            LocalNotify.get().then(function(objResult){
-                if(objResult.lResults.length<1){
+            LocalNotify.get().then(function (objResult) {
+                if (objResult.lResults.length < 1) {
                     LocalNotify.getDefaultTime().then(function (InsertArray) {
                         LocalNotify.save(InsertArray);
                     });
@@ -77,9 +77,9 @@ var MainHome = MainHome || {}, MainHome =
 
             Login.getUserFTime().then(function (FTime) {
                 Log.write(FTime, "MainHome.onLoad 判斷是否為第一次；第一次登入會從雲端撈取資料．");
-                var UserID=localStorage.UserID;
+                var UserID = localStorage.UserID;
                 if (FTime == "") { //第一次登入
-                    Log.write("FTime 第一次登入",'mainHome');
+                    Log.write("FTime 第一次登入", 'mainHome');
                     FnBT.SetBTMode();
 
                     //TODO://更新雲端資料到DB>畫面上綁定最新一筆資料     
@@ -92,7 +92,7 @@ var MainHome = MainHome || {}, MainHome =
                             Log.write("GetUserData", 'mainHome');
                             next();
                         });
-                    }, function(next){
+                    }, function (next) {
                         //同步App權限
                         FnSystem.SyncAuthority(function () {
                             next();
@@ -119,7 +119,7 @@ var MainHome = MainHome || {}, MainHome =
                                     BandMate.init();
                                 });
                             });
-                        }         
+                        }
                     });
                 } else {
                     ProjectFn.Wait([function (next) { //TODO   
@@ -132,7 +132,7 @@ var MainHome = MainHome || {}, MainHome =
                             Log.write("GetUserData", 'mainHome 更新UserData');
                             next();
                         });
-                    }, function(next){
+                    }, function (next) {
                         //同步App權限
                         FnSystem.SyncAuthority(function () {
                             next();
@@ -157,13 +157,13 @@ var MainHome = MainHome || {}, MainHome =
             //首頁手勢滑動
             ProjectFn.gestureInit('MainHomeDiv');
         },
-        CheckNet:function(){
+        CheckNet: function () {
             var netFlag = NetStatusFn.getNetFlag();
-            Log.write(netFlag,'MainHome CheckNet');
-            if(!netFlag){
+            Log.write(netFlag, 'MainHome CheckNet');
+            if (!netFlag) {
                 FnCtrl.alert($.i18n('請檢查手機網路，該功能需有網路連線狀態下才可開放使用'));
                 return false;
-            }else{
+            } else {
                 return true;
             }
         },
@@ -188,8 +188,7 @@ var MainHome = MainHome || {}, MainHome =
 
                     if (sessionStorage.mainHomeLocation != 'MemberPage') {
                         window.clearInterval(hnd);
-                    }
-                    else {
+                    } else {
                         if (document.getElementById("MemWebView").contentWindow.location.href !=
                             sessionStorage.NowURL
                         ) {
@@ -236,7 +235,7 @@ var MainHome = MainHome || {}, MainHome =
             ) {
                 var Acct = '?Acct=';
 
-                WiseAES.enpryptAES(WiseScripts.Format.Date_yyyyMMddHHmmss(new Date()).replace(/\//g, "").replace(/\:/g, "").replace(/\s+/g, "") + 
+                WiseAES.enpryptAES(WiseScripts.Format.Date_yyyyMMddHHmmss(new Date()).replace(/\//g, "").replace(/\:/g, "").replace(/\s+/g, "") +
                     localStorage.UserID, AppConfig.MAesKey1, AppConfig.MAesKey2, 'T',
                     function (res) {
                         Acct += res;
@@ -246,8 +245,7 @@ var MainHome = MainHome || {}, MainHome =
                         $("#MemWebView").bind('load', handler);
                     }
                 );
-            }
-            else {
+            } else {
                 MainHome.fadeOutPage('MemberPage');
                 //$("#MemWebView").bind('load', handler);
 
@@ -259,8 +257,7 @@ var MainHome = MainHome || {}, MainHome =
 
                     if (sessionStorage.mainHomeLocation != 'MemberPage') {
                         window.clearInterval(hnd);
-                    }
-                    else {
+                    } else {
                         if (document.getElementById("MemWebView").contentWindow.location.href !=
                             sessionStorage.NowURL
                         ) {
@@ -302,53 +299,53 @@ var MainHome = MainHome || {}, MainHome =
                 RecView.push("MainHome");
                 sessionStorage.WhereAmI = "MainHome";
 
-                if(successFn){
+                if (successFn) {
                     successFn();
                 }
 
             }, 'T');
         },
         goToProfile: function (NoCancel, successFn) {
-            if(!MainHome.CheckNet()){
+            if (!MainHome.CheckNet()) {
                 return;
             }
-            
+
             //Log.write("goToProfile","MainHome goToProfile");
             $("#profile_ID").val(localStorage.UserID);
-            var UserID=localStorage.UserID;
-            if (NetStatusFn.getNetFlag()) {//有網路狀態
-                if(NoCancel){ //第一次登入需檢查必填
+            var UserID = localStorage.UserID;
+            if (NetStatusFn.getNetFlag()) { //有網路狀態
+                if (NoCancel) { //第一次登入需檢查必填
                     WiseScripts.Tool.NoBack = true;
                     WiseScripts.Tool.NoBackMsg = $.i18n('請輸入必要資訊');
                     //$("#Profile_Cancel").hide();
                 }
 
-                WiseScripts.Tool.ShowLoading(false, '', '',function () {
+                WiseScripts.Tool.ShowLoading(false, '', '', function () {
                     WiseScripts.Tool.ShowLoading(true, $.i18n('同步使用者資料中..'));
 
-                    Member.GetUserData(UserID,function (UserInfo) {
+                    Member.GetUserData(UserID, function (UserInfo) {
                         Log.write(JSON.stringify(UserInfo));
                         var DisplayGender = "";
-                        if(UserInfo.Gender=="M"){
+                        if (UserInfo.Gender == "M") {
                             $("#profile_s1").click();
                             DisplayGender = $.i18n('男');
-                        }else if(UserInfo.Gender=="F"){
+                        } else if (UserInfo.Gender == "F") {
                             $("#profile_s2").click();
                             DisplayGender = $.i18n('女');
                         }
 
                         $("#div_profile_sex_disabled").val(DisplayGender);
-                        if(Member.isUpdateUserInfo === 'N'){
+                        if (Member.isUpdateUserInfo === 'N') {
                             document.getElementById("txtNickName").disabled = true;
                             $("#div_profile_sex_disabled").show();
-                            $("#div_profile_sex").hide();       
-                        }else{
+                            $("#div_profile_sex").hide();
+                        } else {
                             document.getElementById("txtNickName").disabled = false;
                             $("#div_profile_sex_disabled").hide();
-                            $("#div_profile_sex").show();    
+                            $("#div_profile_sex").show();
                         }
 
-                        var Bir=UserInfo.Bir;
+                        var Bir = UserInfo.Bir;
                         if (Bir) {
                             if (Bir.length == 8) {
                                 Bir = Bir.insert(6, "-");
@@ -369,17 +366,17 @@ var MainHome = MainHome || {}, MainHome =
                         }
 
                         $("#profile_tall").val(UserInfo.Height);
-                        if(localStorage["TargetW_" + UserID]){
+                        if (localStorage["TargetW_" + UserID]) {
                             $("#profile_tgW").val(localStorage["TargetW_" + UserID]);
-                        }else{
+                        } else {
                             $("#profile_tgW").val("");
                         }
-                        
+
                         //TODO
-                        if(UserInfo.PID){
+                        if (UserInfo.PID) {
                             $("#divProfile_PID").show();
                             $("#profile_PID").val(UserInfo.PID);
-                        }else{
+                        } else {
                             $("#divProfile_PID").hide();
                             $("#profile_PID").val("");
                         }
@@ -393,11 +390,10 @@ var MainHome = MainHome || {}, MainHome =
                             FnCtrl.focus("profile_tgW");
                         }
                     });
-                },function(){//失敗
+                }, function () { //失敗
                     WiseScripts.Tool.ShowLoading(false);
                 });
-            }
-            else {
+            } else {
                 if (localStorage["Gender_" + UserID] == "M") {
                     $("#profile_s1").prop("checked", true);
                     $("#profile_s2_lab").removeClass("active");
@@ -427,18 +423,18 @@ var MainHome = MainHome || {}, MainHome =
                     age = " (" + $.i18n('$1歲', age) + ")";
                     $("#profile_BIR").val(Bir + age);
                 }
-                
+
                 $("#profile_tall").val(localStorage["Height_" + UserID]);
                 $("#profile_tgW").val(localStorage["TargetW_" + UserID]);
 
                 //$("#Profile_Cancel").show();
             }
-            
-            WiseScripts.Tool.NextPop('profile', function(){
-                if(WiseScripts.Tool.NoBack){
+
+            WiseScripts.Tool.NextPop('profile', function () {
+                if (WiseScripts.Tool.NoBack) {
                     $("#backBtn").hide();
                 }
-                if(successFn){
+                if (successFn) {
                     successFn();
                 }
             }, null, 'T');
@@ -448,43 +444,43 @@ var MainHome = MainHome || {}, MainHome =
             WiseScripts.Tool.NextPop('Setting', null, null, 'T');
         },
         goToDeviceINS: function () {
-            if(!MainHome.CheckNet()){
+            if (!MainHome.CheckNet()) {
                 return;
             }
-            
-            WiseScripts.Tool.NextPop('Instructions', function(){
+
+            WiseScripts.Tool.NextPop('Instructions', function () {
                 FnDeviceINS.showByGroup("");
             }, null, 'T');
         },
         goToStandardInfo: function () {
-            if(!MainHome.CheckNet()){
+            if (!MainHome.CheckNet()) {
                 return;
             }
 
-            WiseScripts.Tool.NextPop('StandardInfo', function(){
+            WiseScripts.Tool.NextPop('StandardInfo', function () {
                 FnDeviceINS.showByGroup("");
             }, null, 'T');
         },
         goToPoints: function () {
-            if(!MainHome.CheckNet()){
+            if (!MainHome.CheckNet()) {
                 return;
             }
 
-            WiseScripts.Tool.NextPop('Points', function(){
+            WiseScripts.Tool.NextPop('Points', function () {
                 FnPoint.showPointList();
             }, null, 'T');
         },
         goToProducts: function () {
-            if(!MainHome.CheckNet()){
+            if (!MainHome.CheckNet()) {
                 return;
             }
 
-            WiseScripts.Tool.NextPop('Products', function(){
+            WiseScripts.Tool.NextPop('Products', function () {
                 FnProduct.showProductList();
             }, null, 'T');
         },
         goToMeasureScan: function () {
-            if(!MainHome.CheckNet()){
+            if (!MainHome.CheckNet()) {
                 return;
             }
 
@@ -492,7 +488,7 @@ var MainHome = MainHome || {}, MainHome =
             $("#" + MeasureScan.txtCheckCodeId).val("");
             WiseScripts.Tool.NextPop('divMeasureScan', function () {
                 app.onBackFlag = "N";
-                
+
                 if (localStorage[localStorage.UserID + "_checkBranchUserID"]) {
                     $("#" + MeasureScan.txtCheckUserId).val(localStorage[localStorage.UserID + "_checkBranchUserID"]);
                 }
@@ -502,10 +498,10 @@ var MainHome = MainHome || {}, MainHome =
             // MainHome.fadeOutPage('Timenotice');
             WiseScripts.Tool.ShowLoading(true);
 
-            LocalNotify.init(function(){
-                WiseScripts.Tool.NextPop('Timenotice', function() {
+            LocalNotify.init(function () {
+                WiseScripts.Tool.NextPop('Timenotice', function () {
                     WiseScripts.Tool.ShowLoading(false);
-                }, function() {
+                }, function () {
                     WiseScripts.Tool.ShowLoading(false);
                 }, 'T');
             });
@@ -530,8 +526,7 @@ var MainHome = MainHome || {}, MainHome =
                     if (NoAnim) {
                         $("#MemberPage").hide();
                         $("#MainHomeDiv").show();
-                    }
-                    else {
+                    } else {
                         $("#MemberPage").fadeOut();
                         $("#MainHomeDiv").fadeIn();
                     }
@@ -818,4 +813,3 @@ var MainHome = MainHome || {}, MainHome =
 
         // },
     };
-
