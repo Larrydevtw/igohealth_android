@@ -1,28 +1,33 @@
 var Login = Login || {},
     Login = {
-        refreshAllMData: function (isRefresh, successFn) {
-
-            Log.write("isRefresh: " + isRefresh + " / isAutoSyncData: " + FnSystem.isAutoSyncData, 'Login refreshAllMData');
-
-            if (isRefresh === "N") {
-                Log.write("return", 'Login refreshAllMData');
-                return false;
-            }
-
-            Log.write("Start", 'Login refreshAllMData');
+        refreshAllMData: function (isRefresh) {
 
             //更新雲端資料
             WiseScripts.Tool.ShowLoading(true, $.i18n("下載雲端資料中..."));
-            Measure.refresh("All", function () { //successFn
-                if (successFn) {
-                    successFn();
+
+            return new Promise(function (resolve, reject) {
+                Log.write("isRefresh: " + isRefresh + " / isAutoSyncData: " + FnSystem.isAutoSyncData, 'Login refreshAllMData');
+
+                if (isRefresh === "N") {
+                    Log.write("return", 'Login refreshAllMData');
+                    return false;
                 }
-                WiseScripts.Tool.ShowLoading(false, '', '', function () {
-                    FnCtrl.toast($.i18n('雲端資料同步成功!'), 'short', 'center');
+
+                Log.write("Start", 'Login refreshAllMData');
+
+                Measure.refresh("All", function () { //successFn
+
+                    resolve();
+
+                    WiseScripts.Tool.ShowLoading(false, '', '', function () {
+                        FnCtrl.toast($.i18n('雲端資料同步成功!'), 'short', 'center');
+                    });
+
+                }, function (err) { //errFn
+                    WiseScripts.Tool.ShowLoading(false);
                 });
-            }, function (err) { //errFn
-                WiseScripts.Tool.ShowLoading(false);
             });
+
         },
         confirmRefresh: function () {
             var message = $.i18n('是否確定同步伺服器上所有資料') + $.i18n('手機上資料將會清除並重新載入');

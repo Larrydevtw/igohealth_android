@@ -824,7 +824,7 @@ var Member = {
                 setTimeout(function () {
                     var isCheckMData = "N";
                     MeasureManual.insertMData(MData, UserID, isCheckMData);
-                }, 1000);
+                }, 500);
             });
 
         });

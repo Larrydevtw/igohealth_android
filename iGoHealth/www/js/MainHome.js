@@ -101,12 +101,15 @@ var MainHome = MainHome || {},
                         });
                     }], function () {
                         //更新雲端資料
-                        Login.refreshAllMData("Y", function () {});
-                        Member.showDisplayName();
-                        FnBT.iniBT(function () {
-                            Log.write("更新使用者資料 FnBT success", 'mainHome');
-                            BandMate.init();
-                        });
+                        Login.refreshAllMData("Y").then(function(){
+
+                            Member.showDisplayName();
+                            FnBT.iniBT(function () {
+                                Log.write("更新使用者資料 FnBT success", 'mainHome');
+                                BandMate.init();
+                            });
+
+                        });                  
 
                         //第一次登入，前往使用者資料輸入畫面(有體重項目才需要前往個人資料畫面)
                         Log.write("localStorage[UserDataSet]" + localStorage["UserDataSet_" + UserID], 'mainHome');
@@ -122,12 +125,7 @@ var MainHome = MainHome || {},
                         }
                     });
                 } else {
-                    ProjectFn.Wait([function (next) { //TODO   
-                        FnBT.iniBT(function () {
-                            Log.write("not first FnBT success", 'mainHome');
-                            next();
-                        });
-                    }, function (next) {
+                    ProjectFn.Wait([function (next) {
                         Member.GetUserData(UserID, function () {
                             Log.write("GetUserData", 'mainHome 更新UserData');
                             next();
@@ -141,7 +139,11 @@ var MainHome = MainHome || {},
                         });
                     }], function () {
                         //更新雲端資料
-                        Login.refreshAllMData(FnSystem.isAutoSyncData, function () {});
+                        Login.refreshAllMData(FnSystem.isAutoSyncData).then(function () {
+                            FnBT.iniBT(function () {
+                                Log.write("not first FnBT success", 'mainHome');
+                            });
+                        });
                         Member.UpdateUserData(UserID, function () { //successFn
                             Member.showDisplayName();
                             Measure.readAll(); //綁定最新一筆量測資料至初始畫面中     
