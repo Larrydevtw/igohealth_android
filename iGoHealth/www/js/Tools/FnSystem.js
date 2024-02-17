@@ -1,6 +1,64 @@
 var FnSystem = {
   LastSyncTime: "",
   isAutoSyncData: "N",
+  DebugMode: "N",
+  UploadAppInfo: function (successFn, errFn) {
+    Log.write("UploadAppInfo", "FnSystem UploadAppInfo");
+
+    Log.write(
+      "isEnabledSyncAppInfo:" + localStorage.isEnabledSyncAppInfo,
+      "FnSystem"
+    );
+    Log.write(
+      "SyncAppInfo NetStatusFn.getNetFlag()" + NetStatusFn.getNetFlag(),
+      "FnSystem"
+    );
+
+    if (
+      localStorage.isEnabledSyncAppInfo === "N" ||
+      !NetStatusFn.getNetFlag()
+    ) {
+      if (successFn) {
+        successFn();
+      }
+      return false;
+    }
+
+    NetStatusFn.getNetInfo(function (NetInfo) {
+      Log.write(JSON.stringify(NetInfo), "FnSystem UploadAppInfo");
+
+      var UploadData = {
+        ID: localStorage.UserID,
+        Platform: DeviceInfo.GetOS() + "^" + DeviceInfo.GetModel(),
+        Version: Domain.Version,
+        VersionNo: Domain.VersionNo,
+        NetInfo: NetInfo,
+      };
+
+      var UData = {
+        UploadData: JSON.stringify(UploadData),
+      };
+
+      var PostInfo = {
+        Url: AppConfig.AppServices + "/UploadAppInfo",
+        UploadData: UData,
+        async: true,
+      };
+
+      Log.write(PostInfo.Url, "FnSystem UploadAppInfo");
+
+      $.ajax({
+        url: PostInfo.Url, //AppConfig.AppServices + "/UploadMData",
+        data: PostInfo.UploadData,
+        type: "POST",
+        timeout: 20000, // in milliseconds
+        async: PostInfo.async,
+        success: function (clsReturn) {
+          //200:回傳值正常，進行後續動作
+        },
+      });
+    });
+  },
   SyncAppInfo: function (successFn, errFn) {
     Log.write(
       "isEnabledSyncAppInfo:" + localStorage.isEnabledSyncAppInfo,
@@ -21,41 +79,45 @@ var FnSystem = {
       return false;
     }
 
-    FnSystem.GetLastSyncTime().then(function (LastSyncTime) {
-      var UploadData = {
-        Platform: DeviceInfo.GetPlatform() + "^" + DeviceInfo.OSVersion,
-        Version: Domain.Version,
-        VersionNo: Domain.VersionNo,
-        LastSyncTime: LastSyncTime,
-      };
+    NetStatusFn.getNetInfo(function (NetInfo) {
+      FnSystem.GetLastSyncTime().then(function (LastSyncTime) {
+        var UploadData = {
+          ID: localStorage.UserID,
+          Platform: DeviceInfo.GetOS(),
+          Version: Domain.Version,
+          VersionNo: Domain.VersionNo,
+          LastSyncTime: LastSyncTime,
+          NetInfo: NetInfo,
+        };
 
-      var PostInfo = {
-        Url: AppConfig.AppServices + "/SyncAppInfo",
-        UploadData: UploadData,
-        async: true,
-      };
+        var PostInfo = {
+          Url: AppConfig.AppServices + "/SyncAppInfo",
+          UploadData: UploadData,
+          async: true,
+        };
 
-      WSCall.Post(
-        PostInfo,
-        function (result) {
-          //成功
-          var LastSyncTime = DateTimeFun.getNow();
-          FnSystem.SetLastSyncTime(LastSyncTime);
+        WSCall.Post(
+          PostInfo,
+          function (result) {
+            //成功
+            var LastSyncTime = DateTimeFun.getNow();
+            FnSystem.SetLastSyncTime(LastSyncTime);
 
-          FnSystem.ShowByGroup(result);
+            FnSystem.ShowByGroup(result);
 
-          if (successFn) {
-            successFn(result);
+            if (successFn) {
+              successFn(result);
+            }
+          },
+          function (err) {
+            //失敗
+            Log.write("SyncAppInfo err:" + err, "FnSystem");
+            if (errFn) {
+              errFn();
+            }
           }
-        },
-        function (err) {
-          //失敗
-          Log.write("SyncAppInfo err:" + err, "FnSystem");
-          if (errFn) {
-            errFn();
-          }
-        }
-      );
+        );
+      });
     });
   },
   SyncAuthority: function (successFn, errFn) {
@@ -79,7 +141,7 @@ var FnSystem = {
     }
     FnSystem.GetLastSyncTime().then(function (LastSyncTime) {
       var UploadData = {
-        Platform: DeviceInfo.GetPlatform(),
+        Platform: DeviceInfo.GetOS(),
         Version: Domain.Version,
         VersionNo: Domain.VersionNo,
         LastSyncTime: LastSyncTime,
@@ -176,6 +238,9 @@ var FnSystem = {
         case "CheckDeviceINS":
           FnSystem.CheckDeviceINS(message);
           break;
+        case "DebugMode":
+          FnSystem.DebugMode = message + "";
+          break;
         default: //
           //FnCtrl.alert(strResult);
           break;
@@ -190,37 +255,34 @@ var FnSystem = {
 
     Log.write(VersionNo, "CheckUpdate");
     Log.write(NowVersionNo, "CheckUpdate");
+    if (VersionNo > NowVersionNo) {
+      var message = $.i18n("發現新版本:$1，建議前往更新。", displayVersionNo);
+      var buttonLabels = [$.i18n("好"), $.i18n("關閉")];
+      navigator.notification.confirm(
+        message,
+        confirmCallback,
+        $.i18n("系統訊息"),
+        buttonLabels
+      );
 
-    if (VersionNo <= NowVersionNo) {
-      return;
-    }
-
-    var message = $.i18n("發現新版本:$1，建議前往更新。", displayVersionNo);
-    var buttonLabels = [$.i18n("好"), $.i18n("關閉")];
-    navigator.notification.confirm(
-      message,
-      confirmCallback,
-      $.i18n("系統訊息"),
-      buttonLabels
-    );
-
-    function confirmCallback(btnIndex) {
-      switch (btnIndex) {
-        case 1:
-          var OS = DeviceInfo.GetOS();
-          if (OS === "iOS") {
-            window.open(
-              "https://apps.apple.com/tw/app/i%E9%A1%A7%E5%81%A5%E5%BA%B7/id1576044908"
-            );
-          } else {
-            window.open(
-              "https://play.google.com/store/apps/details?id=tw.com.ethink.iGoHealth"
-            );
-          }
-          break;
-        case 0:
-        case 2:
-          break;
+      function confirmCallback(btnIndex) {
+        switch (btnIndex) {
+          case 1:
+            var OS = DeviceInfo.GetOS();
+             var url = "";
+               
+             window.open(url);
+            if (OS === "iOS") {
+              url = "itms-apps://itunes.apple.com/us/app/i%E9%A1%A7%E5%81%A5%E5%BA%B7/id1576044908";
+            } else {
+              url = "https://play.google.com/store/apps/details?id=tw.com.ethink.iGoHealth";
+            }
+            window.open(url);
+            break;
+          case 0:
+          case 2:
+            break;
+        }
       }
     }
   },
@@ -268,7 +330,7 @@ var FnSystem = {
   },
   UpdateStandardValue: function (successFn, errFn) {
     var UploadData = {
-      Platform: DeviceInfo.GetPlatform(),
+      Platform: DeviceInfo.GetOS(),
       Version: Domain.Version,
       VersionNo: Domain.VersionNo,
       StandardVersion: localStorage.StandardVersion,
@@ -333,13 +395,14 @@ var FnSystem = {
     Log.write(isUpdateUserInfo, "FnSystem isUpdateUserInfo");
   },
   CheckDevFunction: function (strJson) {
-    Log.write(strJson, "FnSystem CheckDevFunction");
+    Log.write(strJson + " / " + Domain.VersionNo, "FnSystem CheckDevFunction");
 
     try {
       var lDevFunction = JSON.parse(strJson);
+
       Domain.lDevFunction = lDevFunction;
 
-      CustomInfo.switchByDomain();
+      CustomInfo.setFunction();
     } catch (error) {
       Log.write(error, "FnSystem CheckDevFunction");
     }
@@ -380,5 +443,43 @@ var FnSystem = {
     } catch (error) {
       Log.write(error, "FnSystem CheckDeviceINS");
     }
+  },
+  Log: function (message, action, successFn) {
+    if (FnSystem.DebugMode == "" || FnSystem.DebugMode == "N") {
+      //console.log("FnSystemLog" + action + ":" + message);
+    } else {
+      FnSystem.CallLog(message, action, successFn);
+    }
+  },
+  CallLog: function (message, action, successFn) {
+    var UploadData = {
+      Platform: DeviceInfo.GetPlatform() + "^" + DeviceInfo.GetModel(),
+      Version: Domain.Version,
+      VersionNo: Domain.VersionNo,
+      ID: localStorage.UserID,
+      Action: action,
+      Message: message,
+    };
+    var PostInfo = {
+      Url: AppConfig.AppServices + "/AppInfoLog",
+      UploadData: UploadData,
+      async: true,
+    };
+
+    WSCall.Post(
+      PostInfo,
+      function (result) {
+        if (successFn) {
+          successFn();
+        }
+      },
+      function (err) {
+        //失敗
+        Log.write("Log err:" + err, "Log");
+        if (errFn) {
+          errFn();
+        }
+      }
+    );
   },
 };

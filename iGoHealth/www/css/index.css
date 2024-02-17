@@ -24,7 +24,7 @@
 
 
 /*初始設定*/
-body,html{height: 100%;}
+body,html{height: 100vh;}
 body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
@@ -342,11 +342,11 @@ input:checked + .slider:before {
 #privacy_page .privacy_content{
     overflow-y: scroll;
     height: 100%;
-    max-height: 300px;
+    /* max-height: 300px; */
     min-height: 100px;
     width: 100%;
     max-width:400px;
-    margin: 0 20px;
+    margin: 0 20px 75px 20px;
 }
 
 #privacy_page .privacy_content ul li{

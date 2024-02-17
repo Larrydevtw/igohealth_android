@@ -41,6 +41,13 @@ var FnBT = {
             DeviceName: "FORA 耳溫槍",
             DeviceBrand: "FORA",
           },
+          {
+            //歐瑟若體脂
+            DeviceReceiveItem: "BW",
+            DeviceModel: "FLG-756",
+            DeviceName: "歐瑟若體脂機",
+            DeviceBrand: "Oserio",
+          },
         ];
 
         DAOFn.MutiInsertData(
@@ -156,6 +163,10 @@ var FnBT = {
       });
     });
   },
+  GetBTSatatus: function () {
+    var BTStatus = cordova.plugins.BluetoothStatus.BTenabled ? "Y" : "N";
+    return BTStatus;
+  },
   iniBT: function (successFn, errFn) {
     //初始化藍牙
     Log.alert("初始化藍牙", "FnBT iniBT");
@@ -224,13 +235,32 @@ var FnBT = {
       });
       Log.alert("MSCordovaBLE.InitSetting");
       //Scan確定間隔，如果超過時間就重啟模組(0:代表不檢查)
-      MSCordovaBLE.checkBLE = 10000;
+      MSCordovaBLE.checkBLE = 0;
       //最大連線數
       MSCordovaBLE.MaxConnCnt = 6;
       //設定初始化
       MSCordovaBLE.InitSetting();
 
       //藍牙初始化
+      FnBT.initBTProcess();
+
+      if (successFn) {
+        successFn();
+      }
+    } catch (err) {
+      Log.alert("BT" + err);
+      FnBT.switchBTStatus("N");
+      if (errFn) {
+        errfn();
+      }
+    }
+  },
+  initBTProcess: function () {
+    var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
+    Log.write("BT_Init_OK:" + BT_Init_OK, "FnBT initBTProcess");
+
+    if (!BT_Init_OK) {
+      Log.write("BT_Init NO", "FnBT initBTProcess");
       setTimeout(function () {
         if (MSCordovaBLE.MySetting.SingleDevicePoolingMode == false) {
           MSCordovaBLE.btInitialize(); //false -> 正常的 scan 模式
@@ -238,22 +268,6 @@ var FnBT = {
           SingleDevicePooling.btInitialize(); //true -> pooling 單一藍牙設備模式
         }
       }, 100);
-
-      if (successFn) {
-        successFn();
-      }
-
-      // FnBT.OpenBT(function () {
-      //     if (successFn) {
-      //         successFn();
-      //     }
-      // });
-    } catch (err) {
-      Log.alert("BT" + err);
-      FnBT.switchBTStatus("N");
-      if (errFn) {
-        errfn();
-      }
     }
   },
   initBTSuccess: function () {
@@ -265,8 +279,6 @@ var FnBT = {
       FnBT.switchBTStatus("N");
       return;
     }
-
-    FnBT.switchBTStatus("Y");
 
     //藍牙狀態套件初始化 (BluetoothStatus) 抓取手機目前藍牙狀態(開啟或關閉)
     cordova.plugins.BluetoothStatus.initPlugin();
@@ -290,6 +302,15 @@ var FnBT = {
       Log.alert("藍牙已關閉", "藍牙監聽事件");
       localStorage.setItem("BT_Enable", "N");
     });
+
+    FnBT.bluetoothStatus = FnBT.GetBTSatatus();
+    if (FnBT.bluetoothStatus == "Y") {
+      Log.write("藍牙已開啟", "FnBT initBTSuccess");
+      FnBT.switchBTStatus("Y");
+    } else {
+      Log.write("藍牙關閉狀態", "FnBT initBTSuccess");
+      FnBT.switchBTStatus("N");
+    }
   },
   SetBTMode: function (successFn) {
     var BTMode = AppConfig.BTPairMode;
@@ -311,78 +332,107 @@ var FnBT = {
   },
   OpenBT: function (successFn, errFn) {
     //開啟藍牙掃描功能 //TODO 開關藍牙
-    Log.write("藍牙已關閉");
+    Log.write("藍牙已關閉", "FnBT OpenBT");
     //sessionStorage["BTenabled"] = "0";
     // if (BTWinHasOpen) //todo 目前不知道功用為何
     //     return;
     //BTWinHasOpen = true;
-    var OS = WiseScripts.Tool.MobileType.IsAndroid() ? "android" : "iOS";
-    if (OS === "android") {
-      //android 格式
+    var OS = DeviceInfo.GetOS();
+    Log.write(
+      "OS:" +
+        OS +
+        "\ncordova.plugins.BluetoothStatus.BTenabled:" +
+        cordova.plugins.BluetoothStatus.BTenabled +
+        "\ncordova.plugins.BluetoothStatus.hasBTLE" +
+        cordova.plugins.BluetoothStatus.hasBTLE +
+        "\ncordova.plugins.BluetoothStatus.hasBT" +
+        cordova.plugins.BluetoothStatus.hasBT,
+      "FnBT OpenBT"
+    );
 
-      cordova.plugins.BluetoothStatus.enableBT(); //開啟藍牙(Android Only)
-      if (successFn) {
-        successFn();
+    Log.write(
+      OS + " / FnBT.bluetoothStatus: " + FnBT.bluetoothStatus + " / OpenBT",
+      "FnBT"
+    );
+
+    if (FnBT.bluetoothStatus === "N") {
+      if (OS === "android") {
+        cordova.plugins.BluetoothStatus.enableBT(); //開啟藍牙(Android Only)
+        // ExitAPP.disableBT(function(){ //TODO Cordova6.5.0可能不支援此寫法
+        //     //alert("藍牙關閉成功");
+
+        //     setTimeout(function () {
+        //         cordova.plugins.BluetoothStatus.enableBT();//開啟藍牙(Android Only)
+        //         //alert("藍牙開啟成功");
+        //     }, 2000);
+
+        //     if(successFn){
+        //         successFn();
+        //     }
+        // }, function(){
+        //     alert("藍牙關閉失敗");
+        //     if(errFn){
+        //         errFn();
+        //     }
+        // });
+      } else {
+        //ios 格式,ios很嚴謹,如果格式不對則無法 connect !
+        // alert("iosAuthorized"+cordova.plugins.BluetoothStatus.iosAuthorized); //TODO IOS藍牙要求權限
+        if (AppConfig.askBTTimes < 1) {
+          FnCtrl.alert($.i18n("請開啟藍牙，以接收藍牙設備量測資料。"), "");
+          AppConfig.askBTTimes = 1;
+        }
+        // navigator.notification.confirm(
+        //     '目前藍牙未開啟，請開啟藍牙。',
+        //     function (button) {
+        //         //alert(button);
+        //         //BTWinHasOpen = false;
+        //         if (button == 1) {
+        //             if (typeof cordova.plugins.settings.openSetting != undefined) {
+        //                 if (WiseScripts.Tool.MobileType.IsAndroid()) {
+        //                     ble.showBluetoothSettings();
+        //                 }
+        //                 else {
+        //                     //alert("IOS設定畫面");
+        //                     cordova.plugins.settings.open();
+        //                 }
+        //             }
+        //         }
+        //         if (successFn) {
+        //             successFn();
+        //         }
+        //     },
+        //     $.i18n('系統訊息'), '設定,取消');
       }
-      // ExitAPP.disableBT(function(){ //TODO Cordova6.5.0可能不支援此寫法
-      //     //alert("藍牙關閉成功");
+    }
 
-      //     setTimeout(function () {
-      //         cordova.plugins.BluetoothStatus.enableBT();//開啟藍牙(Android Only)
-      //         //alert("藍牙開啟成功");
-      //     }, 2000);
-
-      //     if(successFn){
-      //         successFn();
-      //     }
-      // }, function(){
-      //     alert("藍牙關閉失敗");
-      //     if(errFn){
-      //         errFn();
-      //     }
-      // });
-    } else {
-      //ios 格式,ios很嚴謹,如果格式不對則無法 connect !
-      //TODO
-      // if (AppConfig.askBTTimes < 1) {
-      //     AppConfig.askBTTimes = 1;
-      // }
-      if (successFn) {
-        successFn();
-      }
-      // navigator.notification.confirm(
-      //     '目前藍牙未開啟，請開啟藍牙。',
-      //     function (button) {
-      //         //alert(button);
-      //         //BTWinHasOpen = false;
-      //         if (button == 1) {
-      //             if (typeof cordova.plugins.settings.openSetting != undefined) {
-      //                 if (WiseScripts.Tool.MobileType.IsAndroid()) {
-      //                     ble.showBluetoothSettings();
-      //                 }
-      //                 else {
-      //                     //alert("IOS設定畫面");
-      //                     cordova.plugins.settings.open();
-      //                 }
-      //             }
-      //         }
-      //         if (successFn) {
-      //             successFn();
-      //         }
-      //     },
-      //     $.i18n('系統訊息'), '設定,取消');
+    if (successFn) {
+      successFn();
     }
   },
   StartScan: function (isStartScan, isClearBTResult, ScanOpen) {
     //isStartScan:Y/N, isClearBTResult:Y/N,ScanOpen:Y/N
+    //MSCordovaBLE.checkBLE = 10000;
 
     var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
     Log.write("BT_Init_OK:" + BT_Init_OK, "FnBT StartScan");
 
     if (!BT_Init_OK) {
       Log.write("BT_Init false. Return Scan", "FnBT StartScan");
+      FnBT.initBTProcess();
+      // FnBT.iniBT(function(){
+      //   FnBT.StartScan(isStartScan, isClearBTResult, ScanOpen);
+      // });
       return;
     }
+
+    if (FnBT.bluetoothStatus == "N") {
+      Log.write("bt is closed. Return Scan", "FnBT StartScan");
+      FnBT.OpenBT();
+      return;
+    }
+
+    MSCordovaBLE.NowStep = "";
 
     //alert("start Scan:"+isStartScan);
     MSCordovaBLE.MySetting.ScanCallBackFn = FnBT.ScanCallBack;
@@ -466,50 +516,10 @@ var FnBT = {
           localStorage["BTScanActive"] = "Y"; //開啟掃描功能
           localStorage["BTConnect"] = "N";
 
-          var os = window.cordova.platformId;
-          Log.alert(
-            "os:" +
-              os +
-              "\ncordova.plugins.BluetoothStatus.BTenabled:" +
-              cordova.plugins.BluetoothStatus.BTenabled +
-              "\ncordova.plugins.BluetoothStatus.hasBTLE" +
-              cordova.plugins.BluetoothStatus.hasBTLE +
-              "\ncordova.plugins.BluetoothStatus.hasBT" +
-              cordova.plugins.BluetoothStatus.hasBT
-          );
-          FnBT.bluetoothStatus = cordova.plugins.BluetoothStatus.BTenabled;
-          if (os === "android") {
-            //android 格式
-            // alert("android");
-            if (!cordova.plugins.BluetoothStatus.BTenabled) {
-              cordova.plugins.BluetoothStatus.enableBT(); //開啟藍牙(Android Only)
-            }
-            MSCordovaBLE.startScan();
-            FnBT.switchBTStatus("Y");
-          } else if (os === "ios") {
-            //ios 格式,ios很嚴謹,如果格式不對則無法 connect !
-            // alert("iosAuthorized"+cordova.plugins.BluetoothStatus.iosAuthorized); //TODO IOS藍牙要求權限
-            if (!cordova.plugins.BluetoothStatus.BTenabled) {
-              if (AppConfig.askBTTimes < 1) {
-                FnCtrl.alert(
-                  $.i18n("請開啟藍牙，以接收藍牙設備量測資料。"),
-                  ""
-                );
-                AppConfig.askBTTimes = 1;
-              }
-              FnBT.switchBTStatus("N");
-            } else {
-              MSCordovaBLE.startScan();
-              FnBT.switchBTStatus("Y");
-            }
+          MSCordovaBLE.startScan();
+          FnBT.switchBTStatus("Y");
 
-            // alert("iosAuthorized");
-            // if(cordova.plugins.BluetoothStatus.iosAuthorized){
-            //     alert(cordova.plugins.BluetoothStatus.iosAuthorized);
-            // }else{
-            //     alert(cordova.plugins.BluetoothStatus.iosAuthorized);
-            // }//藍牙(IOS Only)
-          }
+          FnBT.bluetoothStatus = FnBT.GetBTSatatus();
         } else {
           FnBT.StopScan();
         }
@@ -526,21 +536,27 @@ var FnBT = {
           "onclick",
           "FnBTPair.ShowPage(1);FnBT.StopScan();"
         );
+      } else {
+        $("#aBluetooth").attr("onclick", "");
       }
     }
 
     var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
     var BT_ErrMsg = MSCordovaBLE.BT_ErrMsg ? MSCordovaBLE.BT_ErrMsg : "";
 
-    Log.write("BT_Init_OK:" + BT_Init_OK, "FnBT StopScan");
+    Log.write(
+      "BT_Init_OK:" + BT_Init_OK + " / status: " + status,
+      "FnBT switchBTStatus"
+    );
 
-    if (status === "Y" && BT_Init_OK) {
+    if (status == "Y" && BT_Init_OK) {
       $("#aBluetooth").attr("src", "./images/bluetooth_on.svg");
+      $("#aBluetooth").css("color", "blue");
       //BandMate.switch("Y");
       FnBT.bluetoothStatus = "Y";
     } else {
       $("#aBluetooth").attr("src", "./images/bluetooth_off.svg");
-
+      $("#aBluetooth").css("color", "white");
       $("#aBluetooth").attr(
         "onclick",
         "FnCtrl.alert($.i18n('請開啟藍牙，以接收藍牙設備量測資料。" +
@@ -562,6 +578,7 @@ var FnBT = {
     }
   },
   StopScan: function (successFn) {
+    //MSCordovaBLE.checkBLE = 0;
     var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
     Log.write("BT_Init_OK:" + BT_Init_OK, "FnBT StopScan");
 
@@ -570,23 +587,29 @@ var FnBT = {
       return;
     }
 
-    FnBT.switchBTStatus("N");
-    bluetoothle.stopScan(
-      //停止 scan 模式
-      function () {
-        //success
-        localStorage["BTScanActive"] = "N"; //關閉掃描功能
-        Log.write("success", "FnBT STOPScan");
+    localStorage["BTScanActive"] = "N"; //關閉掃描功能
+    Log.write("success", "FnBT STOPScan");
 
-        if (successFn) {
-          successFn();
-        }
-      },
-      function (err) {
-        localStorage["BTScanActive"] = "N"; //關閉掃描功能
-        Log.write("err" + err, "FnBT STOPScan");
-      }
-    );
+    if (successFn) {
+      successFn();
+    }
+
+    // bluetoothle.stopScan(
+    //   //停止 scan 模式
+    //   function () {
+    //     //success
+    //     localStorage["BTScanActive"] = "N"; //關閉掃描功能
+    //     Log.write("success", "FnBT STOPScan");
+
+    //     if (successFn) {
+    //       successFn();
+    //     }
+    //   },
+    //   function (err) {
+    //     localStorage["BTScanActive"] = "N"; //關閉掃描功能
+    //     Log.write("err" + JSON.stringify(err), "FnBT STOPScan");
+    //   }
+    // );
   },
   GetBTMode: function (successFn) {
     //取得目前藍牙設定模式 Y:配對模式；N:一般掃描模式
@@ -1031,7 +1054,7 @@ var FnBT = {
     }
 
     MSCordovaBLE.MySetting.AutoConnect = true;
-    console.log(JSON.stringify(Device));
+
     FnBT.GetBTMode(function (BTMode) {
       if (BTMode == "Y") {
         //判斷是否為配對模式

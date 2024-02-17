@@ -1,20 +1,11 @@
 var CustomInfo = {
   PID_Validate: "N", //註冊時身分證字號是否必填(N:選填，Y:必填)
   EMail_Validate: "N", //註冊時EMail是否必填(N:選填，Y:必填)
+  Nick_Validate: "Y", //註冊時暱稱是否必填(N:選填，Y:必填)
   Member_CheckType: "03", //01:生日 02:EMail 03:手機號碼
   MainHome_scrollIntoView: "N", //是否自動移至量測項目區塊(三個以上量測項目使用)
   switchByDomain: function () {
     return new Promise(function (resolve, reject) {
-      var lFunction = Domain.lFunction;
-      var lDevFunction = Domain.lDevFunction;
-      lFunction.forEach(function (item, idx) {
-        var isEnabled = true;
-        if (lDevFunction.indexOf(item) > -1) {
-          isEnabled = false;
-        }
-        CustomInfo.enableFunction(item, isEnabled);
-      });
-
       switch (Domain.Address) {
         case "ocics.cn/Beta":
         case "test.ocics.cn":
@@ -57,12 +48,29 @@ var CustomInfo = {
       Log.write(err, checkDevMode);
     }
   },
+  setFunction: function () {
+    var lFunction = Domain.lFunction;
+    var lDevFunction = Domain.lDevFunction;
+    lFunction.forEach(function (item, idx) {
+      var isEnabled = true;
+      if (lDevFunction.indexOf(item) > -1) {
+        isEnabled = false;
+      }
+      CustomInfo.enableFunction(item, isEnabled);
+    });
+  },
   setValidate: function () {
     return new Promise(function (resolve, reject) {
       if (CustomInfo.PID_Validate === "Y") {
         $("#txtSignup_PID").html("<b style='color:red;'> *</b>");
       } else {
         $("#txtSignup_PID").html("(<span data-i18n='選填'></span>)");
+      }
+
+      if (CustomInfo.Nick_Validate === "Y") {
+        $("#txtsignup_Nick").html("<b style='color:red;'> *</b>");
+      } else {
+        $("#txtsignup_Nick").html("(<span></span>)");
       }
 
       if (CustomInfo.EMail_Validate === "Y") {
@@ -125,6 +133,13 @@ var CustomInfo = {
         }
         break;
       case "SyncAppInfo":
+        break;
+      case "LoginGuest":
+        if (isEnabled) {
+          $("#btnLoginGuest").show();
+        } else {
+          $("#btnLoginGuest").hide();
+        }
         break;
     }
   },

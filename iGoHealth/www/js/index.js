@@ -28,6 +28,9 @@ var app = {
     // Bind any cordova events here. Common events are:
     // 'pause', 'resume', etc.
     onDeviceReady: function () {
+
+        WiseScripts.Tool.ShowLoading(true);
+
         //保持螢幕恆亮
         if (window.plugins.insomnia) {
             window.plugins.insomnia.keepAwake();
@@ -49,6 +52,7 @@ var app = {
                 Log.write(device.serial.toString(), 'deviceid');
                 AppConfig.EquipmentID = device.serial.toString();
             } else {
+                window.open = cordova.InAppBrowser.open;
                 window.plugins.uniqueDeviceID.get(
                     function (serialID) {
                         AppConfig.EquipmentID = serialID;

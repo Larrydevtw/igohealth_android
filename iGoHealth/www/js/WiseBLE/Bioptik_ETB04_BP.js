@@ -292,16 +292,12 @@ var Bioptik_ETB04 = Bioptik_ETB04 || {},
                         "改flag後，連接還存在，立即斷開！",
                         "status"
                       );
-                      MSCordovaBLE.disconnectSuccess({
-                        address: address,
-                      });
+                      MSCordovaBLE.disconnectSuccess({ address: address });
                     },
                     function () {
                       //已斷開連接
                     },
-                    {
-                      address: address,
-                    }
+                    { address: address }
                   );
                 }
               }, 3000);
@@ -488,19 +484,21 @@ var Bioptik_ETB04 = Bioptik_ETB04 || {},
         //Bioptik_ETB04.linkResending = false;
       }, MSCordovaBLE.handleErrorAndToClose);
       //-----------------------------------------------------------
+
+      var maxResendTimes = 20; //重送 Link Pack
+
       setTimeout(function () {
         if (
           Bioptik_ETB04.linkResending == true &&
           Bioptik_ETB04.poweroffIng == false
         ) {
-          if (Bioptik_ETB04.resendingCount < 99) {
-            //重送 Link Pack 12次
+          if (Bioptik_ETB04.resendingCount < maxResendTimes) {
             WriteLog.write("重新發送Link Pack...", "status");
             Bioptik_ETB04.resendingCount++;
 
             Bioptik_ETB04.sendLink(address, serviceUuid, characteristicsUuid);
-          } else if (Bioptik_ETB04.resendingCount >= 99) {
-            //如果重送 Link Pack 12次以上還無法跟設備進行溝通,就自動斷開藍牙,讓設備重新連線...
+          } else if (Bioptik_ETB04.resendingCount >= maxResendTimes) {
+            //如果重送 Link Pack 5次以上還無法跟設備進行溝通,就自動斷開藍牙,讓設備重新連線...
             new Promise(function (resolve, reject) {
               bluetoothle.close(resolve, reject, {
                 address: address,

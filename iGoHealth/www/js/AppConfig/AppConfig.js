@@ -8,7 +8,7 @@ var Domain = {
     AppName: "i顧健康",
 
     //App功能 
-    lFunction: ["Point", "Product", "MeasureScan", "SyncAppInfo"],
+  lFunction: ["Point", "Product", "MeasureScan", "SyncAppInfo", "LoginGuest"],
     //App開發中功能，陣列中有的功能項目不會啟用
     lDevFunction: [],
 
@@ -24,12 +24,12 @@ var Domain = {
     Chk_AddressNT: "RXFvd3FxQ2Q0UUk1RXc3S1MxdzZLRG9JWjQydjlrNGt3ZUFqaE9Nd2Uzdz0=",
     Chk_AddressCN: "Z0pHekFXRWRZZTRHMWZ0T01hRlRwSlhNUU1JQ3R5ZE5SSm1PK2lHbklyTT0=",
 
-    CheckDomain:function(){
+  CheckDomain: function () {
         switch (Domain.Version) {
             case "IGH":
                 Domain.Address = "https://apps.igohealth.com.tw";
                 Domain.ServiceRoot = "";
-                Domain.ServiceApi = "/HATM_Services/api/HATMApp";
+                Domain.ServiceApi = "/HATM_Services_B/api/HATMApp";
                 break;
             case "IGH_eThink":
                 Domain.Address = "https://demosite.ethink.com.tw";
@@ -61,7 +61,6 @@ var Domain = {
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
                 Domain.ServiceApi = "/HATM_Services/api/HATMApp";
                 break;
-
             case "IGH_150":
                 Domain.Address = "http://10.168.199.150";
                 Domain.ServiceRoot = "/Wise_Cloud_Service/AppCloudServices";
@@ -85,15 +84,15 @@ var AppConfig = {
     StandardVersion: 1.0,
     StandardDisplay: "N",
     //血糖接收量測資料是否強制選擇時段
-    BGTimeTypeConfirm:"Y",
+    BGTimeTypeConfirm: "Y",
     //儲存設備號碼
-    EquipmentID:"",   
+    EquipmentID: "",
     //藍牙模組使用開關
     isAutoConnect: true, //是否自動連線
     //站點類別
     SystemModel: "IGH", //5050 App
-    HRSSNo: "1000",         //量測資料介接系統註冊編號
-    StationNo: "1000",      //站點編號
+  HRSSNo: "1000", //量測資料介接系統註冊編號
+  StationNo: "1000", //站點編號
 
     //會員帳號類別
     UserKind: "7",
@@ -106,7 +105,7 @@ var AppConfig = {
     //第一次載入資料的距今天數(載入雲端所有端點一個月的量測資料) //未來會有頁面給使用者選擇下載的區間
     day: -180,
     //藍牙詢問次數
-    askBTTimes:0,
+    askBTTimes: 0,
     //只開放藍牙配對模式:Y
     BTPairMode: "N",
     //上傳金鑰 //TODO
@@ -118,8 +117,8 @@ var AppConfig = {
     MAesIV: "health",
 
     //APP服務私用金鑰
-    ASKey1: "6D0A1324B695428CB7410C5D4D2AEE3F",
-    ASKey2: "93C474F29BDB4E138081DFFE7F524573",
+    ASKey1: "9V*68oa#fICbwr3dMJ^pkdorARiWwk",
+    ASKey2: "cFJ#iRAu98rDj9@@yR$iYrfaRU4@#9",
     //聊天服務
     ASKeyChat:"cN9aOdaM4YbRGwhc12cvYne+hqsgWtVS",
 
@@ -136,12 +135,11 @@ var AppConfig = {
     //逾時返回首頁時間
     TimeOutSec: 180,
     DownloadPath: "file:///sdcard/Download",
-
     //聊天服務
     ChatServices:Domain.AddressLocal_A+Domain.ServiceRoot+"/HATM_Services/api/ChatRoom",
     //APP私用服務
     AppServices: Domain.Address + Domain.ServiceRoot + Domain.ServiceApi, //"http://ocics.tw/WISE_Cloud_Service/AppServices/index.aspx",
-    MemberServices: Domain.Address+Domain.ServiceRoot + Domain.ServiceApi,
+    MemberServices: Domain.Address + Domain.ServiceRoot + Domain.ServiceApi,
     //使用服務名稱、Url設定 
     serviceFromLocal: true, //站點服務資訊是本機或雲端下載；App端預設為本機設定。 //Table: ServicesInfo
     serviceVer:"20002",  //站點服務資訊版本號

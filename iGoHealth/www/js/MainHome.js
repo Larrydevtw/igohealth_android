@@ -99,6 +99,13 @@ var MainHome = MainHome || {},
           ProjectFn.Wait(
             [
               function (next) {
+                //TODO
+                FnBT.iniBT(function () {
+                  Log.write("first FnBT success", "mainHome");
+                  next();
+                });
+              },
+              function (next) {
                 Login.saveUserInfo(
                   UserID,
                   "",
@@ -129,15 +136,8 @@ var MainHome = MainHome || {},
             ],
             function () {
               //更新雲端資料
-              Login.refreshAllMData("Y").then(function () {
-                Member.showDisplayName();
-                FnBT.iniBT(function () {
-                  Log.write("更新使用者資料 FnBT success", "mainHome");
-                  BandMate.init();
-                });
-              });
-
-              //第一次登入，前往使用者資料輸入畫面(有體重項目才需要前往個人資料畫面)
+              Login.refreshAllMData("Y", function () {});
+              //第一次登入，前往使用者資料輸入畫面
               Log.write(
                 "localStorage[UserDataSet]" +
                   localStorage["UserDataSet_" + UserID],
@@ -147,10 +147,6 @@ var MainHome = MainHome || {},
                 MainHome.goToProfile(true, function () {
                   Log.write("goToProfile", "mainHome");
                   Member.showDisplayName();
-                  FnBT.iniBT(function () {
-                    Log.write("更新使用者資料 FnBT success", "mainHome");
-                    BandMate.init();
-                  });
                 });
               }
             }
@@ -158,6 +154,13 @@ var MainHome = MainHome || {},
         } else {
           ProjectFn.Wait(
             [
+              function (next) {
+                //TODO
+                FnBT.iniBT(function () {
+                  Log.write("not first FnBT success", "mainHome");
+                  next();
+                });
+              },
               function (next) {
                 Member.GetUserData(UserID, function () {
                   Log.write("GetUserData", "mainHome 更新UserData");
@@ -179,11 +182,7 @@ var MainHome = MainHome || {},
             ],
             function () {
               //更新雲端資料
-              Login.refreshAllMData(FnSystem.isAutoSyncData).then(function () {
-                FnBT.iniBT(function () {
-                  Log.write("not first FnBT success", "mainHome");
-                });
-              });
+              Login.refreshAllMData(FnSystem.isAutoSyncData, function () {});
               Member.UpdateUserData(UserID, function () {
                 //successFn
                 Member.showDisplayName();
@@ -192,6 +191,9 @@ var MainHome = MainHome || {},
                 BandMate.init();
                 FnPoint.showPointTotal();
                 Log.write("not first", "mainHome");
+
+                if (localStorage.UserID.toLowerCase() != "demo") {
+                }
               });
             }
           );
@@ -364,6 +366,7 @@ var MainHome = MainHome || {},
         "MainHome",
         null,
         function () {
+          MainHome.fadeOutPage("Home");
           RecView = [];
           RecView.push("MainHome");
           sessionStorage.WhereAmI = "MainHome";

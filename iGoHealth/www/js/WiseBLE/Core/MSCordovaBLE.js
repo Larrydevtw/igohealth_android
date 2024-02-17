@@ -202,11 +202,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
                 "check scan!" + dDay1 + "," + dDay2 + "," + vDif,
                 "status"
               );
-              WriteLog.write("啟動修復!", "error");
-              //MSCordovaBLE.btInitialize();
-
-              MSCordovaBLE.startScan();
-              WriteLog.write("藍牙scan逾時，重啟scan!", "error");
+              MSCordovaBLE.RepairBLE();
             }
             //else {
             //    //WriteLog.write("check scan!" + dDay1 + "," + dDay2 + "," + vDif, "status");
@@ -217,6 +213,13 @@ var MSCordovaBLE = MSCordovaBLE || {},
         var myTimer = setInterval(vCheckScan, MSCordovaBLE.checkBLE);
       }
       //確認是否啟動修復↑↑↑
+    },
+    RepairBLE: function () {
+      WriteLog.write("啟動修復!", "error");
+      //MSCordovaBLE.btInitialize();
+      MSCordovaBLE.startScan();
+      WriteLog.write("藍牙錯誤，重啟scan!", "error");
+      //啟動修復↑↑↑
     },
     //掃瞄藍牙設備
     startScan: function () {
@@ -307,6 +310,10 @@ var MSCordovaBLE = MSCordovaBLE || {},
     },
 
     startScanSuccess: function (result) {
+      if (localStorage["BTScanActive"] == "N") {
+        return;
+      }
+
       if (result.name == null) {
         return;
       }
@@ -321,6 +328,16 @@ var MSCordovaBLE = MSCordovaBLE || {},
       if (result.status === "scanStarted") {
         WriteLog.write("掃瞄藍牙設備中...", "status");
       } else if (result.status === "scanResult") {
+        var devices = MSCordovaBLE.connDevices;
+        //alert(JSON.stringify(result)+" / "+JSON.stringify(devices));
+        if (devices > 0) {
+          $.each(devices, function (i, item) {
+            if (item.address == result.address) {
+              FnSystem.Log("address相同:" + result.address, "");
+              return;
+            }
+          });
+        }
         //debug
         //if (
         //    result.name.toString() == "DS3"
@@ -463,6 +480,22 @@ var MSCordovaBLE = MSCordovaBLE || {},
     }, //連線藍牙設備
 
     connect: function (result) {
+      var devices = MSCordovaBLE.connDevices;
+      var nowStep = MSCordovaBLE.NowStep;
+      FnSystem.Log(
+        JSON.stringify(nowStep) +
+          " / " +
+          JSON.stringify(result) +
+          " / devices:" +
+          JSON.stringify(devices),
+        "connectB"
+      );
+
+      setTimeout(function () {
+        MSCordovaBLE.connectProc(result);
+      }, 10);
+    },
+    connectProc: function (result) {
       MSCordovaBLE.NowStep = "connect";
       if (window.cordova.platformId === "android") {
         if (result.name === "FLG-756") {
@@ -614,11 +647,10 @@ var MSCordovaBLE = MSCordovaBLE || {},
         }
       }
     },
-
     connectSuccess: function (result) {
       MSCordovaBLE.NowStep = "connectSuccess";
       WriteLog.write(result);
-
+      //alert("connectSuccess:"+JSON.stringify(result));
       if (result.status === "connected") {
         //記錄已連接設備
         //name,address,status
@@ -919,14 +951,14 @@ var MSCordovaBLE = MSCordovaBLE || {},
 
       //確認 Discover
       var vCheckScanAD = function () {
-        WriteLog.write("5秒後判斷是否修復 Android discover!", "error");
+        WriteLog.write("5秒後判斷是否修復 discover!", "error");
         setTimeout(function () {
           var tDate = new Date();
           var dDay1 = tDate.getTime();
           if (
             sessionStorage.getItem("checkDiscover_" + result.address) == null
           ) {
-            WriteLog.write("啟動修復 Android discover!", "error");
+            WriteLog.write("啟動修復 discover!", "error");
 
             //MSCordovaBLE.btInitialize();
             //再確認是否還連線著
@@ -1005,7 +1037,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
     discoverSuccess: function (result) {
       MSCordovaBLE.NowStep = "discoverSuccess";
       WriteLog.write("Discover 回傳狀態: " + result.status, "status");
-
+      //alert("discoverSuccess:"+JSON.stringify(result));
       if (result.status === "discovered") {
         //確認是否啟動修復↓↓↓
         var dDay1 = new Date();
@@ -1038,10 +1070,11 @@ var MSCordovaBLE = MSCordovaBLE || {},
     }, //For iOS 的 discover ==> 設備的 服務資訊。
 
     iOSServicesSuccess: function (result) {
-      WriteLog.write("Services 回傳狀態: " + result.status, "status");
+      WriteLog.write("iOS Services 回傳狀態: " + result.status, "status");
 
       if (result.status === "services") {
-        for (var key in result.services) { //foreach 的等價寫法
+        for (var key in result.services) {
+          //foreach 的等價寫法
           //for (var key in objs) ... 其中宣告一個key變數,然後走訪services陣列,key顯示出來會是陣列索引
           var sItem = result.services[key].toString().toUpperCase();
           WriteLog.write("sItem: " + sItem, "status");
@@ -1092,7 +1125,8 @@ var MSCordovaBLE = MSCordovaBLE || {},
           MSCordovaBLE.MySetting.DiscoverCallBackFn(result); //呼叫外部的 ConnectCallBackFn
         }
 
-        for (var key in result.characteristics) { //foreach 的等價寫法
+        for (var key in result.characteristics) {
+          //foreach 的等價寫法
           //for (var key in objs) ... 其中宣告一個key變數,然後走訪characteristics物件,key顯示出來會是物件的屬性名稱
           var cItem = result.characteristics[key];
           WriteLog.write("cItem.uuid: " + cItem.uuid, "status");
@@ -1121,7 +1155,16 @@ var MSCordovaBLE = MSCordovaBLE || {},
       characteristicsUuid
     ) {
       MSCordovaBLE.NowStep = "receiveData"; //★
-
+      // alert(
+      //   "receiveData:" +
+      //     deviceName +
+      //     "/" +
+      //     address +
+      //     "/" +
+      //     serviceUuid +
+      //     "/" +
+      //     characteristicsUuid
+      // );
       //debug:
       //WriteLog.write("address: " + address, "status");
       //WriteLog.write("serviceUuid: " + serviceUuid, "status");
@@ -1758,6 +1801,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
         msg = error;
       }
       WriteLog.write(msg, "error");
+      FnSystem.Log(JSON.stringify(msg), "handleError");
 
       if (error.error === "read" && error.service && error.characteristic) {
         MSCordovaBLE.reportValue(
@@ -1769,6 +1813,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
     },
 
     handleErrorAndToClose: function (error) {
+      //alert(MSCordovaBLE.NowStep + ":" + JSON.stringify(error));
       if (MSCordovaBLE.NowStep == "receiveData") {
         //在訂閱時出錯，為了解決service not found問題!延遲下一次訂閱時間
         if (
