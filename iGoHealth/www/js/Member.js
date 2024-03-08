@@ -28,7 +28,7 @@ var Member = {
         );
         return;
       } else {
-        if (!WiseScripts.Validate.chkAccount(UserID)) {
+        if (UserID != "demo" && !WiseScripts.Validate.chkAccount(UserID)) {
           navigator.notification.alert(
             $.i18n("無法接受的帳號格式"),
             null,
@@ -1265,5 +1265,23 @@ var Member = {
         });
       }
     );
+  },
+  LoginGuest: function () {
+    // NowCardID = "";
+    isBounding = false;
+
+    var UserID = "demo";
+    var Pwd = "cTVtS1Q2RG50WkJzNEcvU3R0SGFlUT09";
+    WiseAES.decryptAES(Pwd, AppConfig.ASKey1, AppConfig.ASKey2, "T", function (result) {
+      Pwd = result;
+      console.log("demo:"+result);
+    });
+   
+    $("#login_userId").val(UserID);
+    $("#login_userPwd").val(Pwd);
+    Login.checkService(UserID, Pwd, function () {
+      //切換服務功能
+      Member.LoginCheck(UserID, Pwd); //進入登入流程
+    });
   },
 };

@@ -128,7 +128,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
               );
 
               if (!result) {
-                MSCordovaBLE.BT_ErrMsg = "未取得藍牙鄰近裝置權限";
+                MSCordovaBLE.BT_ErrMsg = ""; //"未取得藍牙鄰近裝置權限";
                 reject();
                 return;
               }
@@ -139,7 +139,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
                 );
 
                 if (!result) {
-                  MSCordovaBLE.BT_ErrMsg = "未取得藍牙鄰近裝置權限";
+                  MSCordovaBLE.BT_ErrMsg = ""; //"未取得藍牙鄰近裝置權限";
                   reject();
                   return;
                 }

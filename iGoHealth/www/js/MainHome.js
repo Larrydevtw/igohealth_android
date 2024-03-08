@@ -366,6 +366,9 @@ var MainHome = MainHome || {},
         "MainHome",
         null,
         function () {
+
+          FnBT.StartScan("Y");
+          
           MainHome.fadeOutPage("Home");
           RecView = [];
           RecView.push("MainHome");

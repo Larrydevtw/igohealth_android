@@ -228,6 +228,10 @@
                     <button class="IPbtn full gotoPage round" data-pagename="#MainHome" onclick="Member.Login();">
                         送出
                     </button>
+                    <br/>
+                    <button id="btnLoginGuest" style="display:none;" class="IPbtn full gotoPage round" data-pagename="#MainHome" onclick="Member.LoginGuest();">
+                        訪客登入
+                    </button>
                 </div>
                 <div class="f-center-between w-100 mt-1">
                     <div>
@@ -395,7 +399,7 @@
                 <div class="container f-center-between">
                     <div>
                         <img id="mainMenu" class="menu modalOpen" data-modalcontent="#MD_Test" src="./images/Menu.svg" />
-                        <img class="" id="backBtn" data-modalcontent="" src="./images/back-arrow.svg" />
+                        <img id="backBtn" width="50px;" class="menu" src="./images/back-arrow.svg" />
                     </div>
                     <div>
                         <h2 id="navTitle">標頭</h2>
@@ -423,22 +427,22 @@
 
                 <!-- 測試 -->
                 <div id="MD_Test" class="MD_content" style="display:none;">
-                    <button class="IPbtn gotoPage modalClose" onclick="MainHome.goToTimenotice();"
+                    <button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToTimenotice();"
                         data-pagename="#Timenotice">血糖量測提醒</button>
 
-                    <button class="IPbtn gotoPage modalClose" onclick="MainHome.goToDeviceINS();"
+                    <button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToDeviceINS();"
                         data-pagename="#Instructions">三高機操作說明</button>
 
-                    <button class="IPbtn gotoPage modalClose" onclick="MainHome.goToStandardInfo();"
+                    <button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToStandardInfo();"
                         data-pagename="#StandardInfo">三高量測標準值範圍</button>
 
-                    <button class="IPbtn gotoPage modalClose" onclick="MainHome.goToMeasureScan();"
+                    <button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToMeasureScan();"
                         data-pagename="#divMeasureScan">主要照護者量測三高</button>
 
                     <button class="IPbtn parent" id="txtDisplayName">林小花（顯示姓名）</button>
 
                     <ul>
-                        <li><button class="IPbtn gotoPage modalClose" onclick="MainHome.goToProfile();" data-pagename="#profile">個人資料</button></li>
+                        <li><button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToProfile();" data-pagename="#profile">個人資料</button></li>
                         <li><button onclick="Member.Logout();" class="IPbtn ">登出</button></li>
                     </ul>
 
