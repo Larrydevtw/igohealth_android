@@ -58,13 +58,14 @@ var WSCall = WSCall || {},
                 }
             ], function () {
                 var UData = {
-                    CheckCode: encodeURI(CheckCode),
-                    EquipmentID: encodeURI(EquipmentID),
-                    UploadData: encodeURI(UploadData),
-                    SystemModel: encodeURI(SystemModel),
-                    Platform: DeviceInfo.GetOS(),
-                    Version: Domain.Version,
-                    VersionNo: Domain.VersionNo
+                  CheckCode: encodeURI(CheckCode),
+                  EquipmentID: encodeURI(EquipmentID),
+                  UploadData: encodeURI(UploadData),
+                  SystemModel: encodeURI(SystemModel),
+                  Platform: DeviceInfo.GetOS(),
+                  PlatformVersion: DeviceInfo.GetPlatformVersion(),
+                  Version: Domain.Version,
+                  VersionNo: Domain.VersionNo,
                 };
 
                 $.ajax({

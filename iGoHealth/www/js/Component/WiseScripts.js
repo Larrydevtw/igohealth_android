@@ -392,6 +392,7 @@ var WiseScripts = WiseScripts || {}, WiseScripts = {
                     if (sessionStorage.NowIsLoading != showText) {
                         if (sessionStorage.NowIsLoading != "") {
                             $.isLoading("hide");
+                            $(".isloading-overlay").hide();
                             sessionStorage.NowIsLoading = "";
                         }
 
@@ -454,6 +455,7 @@ var WiseScripts = WiseScripts || {}, WiseScripts = {
 
                     if (sessionStorage.NowIsLoading != "") {
                         $.isLoading("hide");
+                        $(".isloading-overlay").hide();
                         sessionStorage.NowIsLoading = "";
                     }
                     if (successFn) {

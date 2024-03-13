@@ -485,7 +485,7 @@ var Bioptik_ETB04 = Bioptik_ETB04 || {},
       }, MSCordovaBLE.handleErrorAndToClose);
       //-----------------------------------------------------------
 
-      var maxResendTimes = 20; //重送 Link Pack
+      var maxResendTimes = 100; //重送 Link Pack
 
       setTimeout(function () {
         if (

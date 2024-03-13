@@ -14,6 +14,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
     connDevices: [],
     delayReceive: 100, //延遲接收資料 by sinclair
     checkBLE: 10000, //Scan確定間隔，如果超過時間就重啟模組(0:代表不檢查)by sinclair
+    checkBleTimer: null,
     NowStep: "", //記錄目前執行到的函數
     sUUID: "",
     cUUID: "",
@@ -128,7 +129,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
               );
 
               if (!result) {
-                MSCordovaBLE.BT_ErrMsg = ""; //"未取得藍牙鄰近裝置權限";
+                MSCordovaBLE.BT_ErrMsg = "未取得藍牙鄰近裝置權限";
                 reject();
                 return;
               }
@@ -139,7 +140,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
                 );
 
                 if (!result) {
-                  MSCordovaBLE.BT_ErrMsg = ""; //"未取得藍牙鄰近裝置權限";
+                  MSCordovaBLE.BT_ErrMsg = "未取得藍牙鄰近裝置權限";
                   reject();
                   return;
                 }
@@ -186,8 +187,15 @@ var MSCordovaBLE = MSCordovaBLE || {},
     autoRepairBLE: function () {
       //確認是否啟動修復,每隔10(checkBLE)秒檢查scan間隔有沒有超過10秒
       //，有的代表藍牙被lock，重啟!↓↓↓
+      FnSystem.Log("autoRepairBLE:" + MSCordovaBLE.checkBLE);
       if (MSCordovaBLE.checkBLE > 0) {
         var vCheckScan = function () {
+          FnSystem.Log(
+            "vCheckScan:" +
+              MSCordovaBLE.connDevices.length +
+              "/" +
+              MSCordovaBLE.MaxConnCnt
+          );
           if (MSCordovaBLE.connDevices.length < MSCordovaBLE.MaxConnCnt) {
             var tDate = new Date();
             var dDay1 = tDate.getTime();
@@ -202,6 +210,10 @@ var MSCordovaBLE = MSCordovaBLE || {},
                 "check scan!" + dDay1 + "," + dDay2 + "," + vDif,
                 "status"
               );
+              FnSystem.Log(
+                "check scan!RepairBLE" + dDay1 + "," + dDay2 + "," + vDif,
+                "status"
+              );
               MSCordovaBLE.RepairBLE();
             }
             //else {
@@ -210,7 +222,21 @@ var MSCordovaBLE = MSCordovaBLE || {},
             //}
           }
         };
+
+        FnSystem.Log(
+          "autoRepairBLE:MSCordovaBLE.checkBleTimer:" +
+            MSCordovaBLE.checkBleTimer
+        );
+
+        if (MSCordovaBLE.checkBleTimer) {
+          clearInterval(MSCordovaBLE.checkBleTimer);
+          FnSystem.Log("clearInterval A");
+        }
         var myTimer = setInterval(vCheckScan, MSCordovaBLE.checkBLE);
+        MSCordovaBLE.checkBleTimer = myTimer;
+      } else {
+        FnSystem.Log("clearInterval B");
+        clearInterval(MSCordovaBLE.checkBleTimer);
       }
       //確認是否啟動修復↑↑↑
     },
@@ -482,14 +508,14 @@ var MSCordovaBLE = MSCordovaBLE || {},
     connect: function (result) {
       var devices = MSCordovaBLE.connDevices;
       var nowStep = MSCordovaBLE.NowStep;
-      FnSystem.Log(
-        JSON.stringify(nowStep) +
-          " / " +
-          JSON.stringify(result) +
-          " / devices:" +
-          JSON.stringify(devices),
-        "connectB"
-      );
+      // FnSystem.Log(
+      //   JSON.stringify(nowStep) +
+      //     " / " +
+      //     JSON.stringify(result) +
+      //     " / devices:" +
+      //     JSON.stringify(devices),
+      //   "connectB"
+      // );
 
       setTimeout(function () {
         MSCordovaBLE.connectProc(result);
@@ -1801,7 +1827,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
         msg = error;
       }
       WriteLog.write(msg, "error");
-      FnSystem.Log(JSON.stringify(msg), "handleError");
+      //FnSystem.Log(JSON.stringify(msg), "handleError");
 
       if (error.error === "read" && error.service && error.characteristic) {
         MSCordovaBLE.reportValue(

@@ -95,4 +95,7 @@ var DeviceInfo = {
   GetPlatform: function () {
     return DeviceInfo.GetOS() + "_" + DeviceInfo.OSVersion;
   },
+  GetPlatformVersion: function () {
+    return DeviceInfo.GetPlatform() + "^" + DeviceInfo.GetModel();
+  },
 };

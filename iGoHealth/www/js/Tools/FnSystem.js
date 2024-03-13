@@ -29,7 +29,8 @@ var FnSystem = {
 
       var UploadData = {
         ID: localStorage.UserID,
-        Platform: DeviceInfo.GetOS() + "^" + DeviceInfo.GetModel(),
+        Platform: DeviceInfo.GetOS(),
+        PlatformVersion: DeviceInfo.GetPlatformVersion(),
         Version: Domain.Version,
         VersionNo: Domain.VersionNo,
         NetInfo: NetInfo,
@@ -84,6 +85,7 @@ var FnSystem = {
         var UploadData = {
           ID: localStorage.UserID,
           Platform: DeviceInfo.GetOS(),
+          PlatformVersion: DeviceInfo.GetPlatformVersion(),
           Version: Domain.Version,
           VersionNo: Domain.VersionNo,
           LastSyncTime: LastSyncTime,
@@ -142,6 +144,7 @@ var FnSystem = {
     FnSystem.GetLastSyncTime().then(function (LastSyncTime) {
       var UploadData = {
         Platform: DeviceInfo.GetOS(),
+        PlatformVersion: DeviceInfo.GetPlatformVersion(),
         Version: Domain.Version,
         VersionNo: Domain.VersionNo,
         LastSyncTime: LastSyncTime,
@@ -240,6 +243,11 @@ var FnSystem = {
           break;
         case "DebugMode":
           FnSystem.DebugMode = message + "";
+          if (FnSystem.DebugMode === "Y") {
+            $("#aCallQueueLog").show();
+          } else {
+            $("#aCallQueueLog").hide();
+          }
           break;
         default: //
           //FnCtrl.alert(strResult);
@@ -269,13 +277,15 @@ var FnSystem = {
         switch (btnIndex) {
           case 1:
             var OS = DeviceInfo.GetOS();
-             var url = "";
-               
-             window.open(url);
+            var url = "";
+
+            window.open(url);
             if (OS === "iOS") {
-              url = "itms-apps://itunes.apple.com/us/app/i%E9%A1%A7%E5%81%A5%E5%BA%B7/id1576044908";
+              url =
+                "itms-apps://itunes.apple.com/us/app/i%E9%A1%A7%E5%81%A5%E5%BA%B7/id1576044908";
             } else {
-              url = "https://play.google.com/store/apps/details?id=tw.com.ethink.iGoHealth";
+              url =
+                "https://play.google.com/store/apps/details?id=tw.com.ethink.iGoHealth";
             }
             window.open(url);
             break;
@@ -331,6 +341,7 @@ var FnSystem = {
   UpdateStandardValue: function (successFn, errFn) {
     var UploadData = {
       Platform: DeviceInfo.GetOS(),
+      PlatformVersion: DeviceInfo.GetPlatformVersion(),
       Version: Domain.Version,
       VersionNo: Domain.VersionNo,
       StandardVersion: localStorage.StandardVersion,
@@ -448,12 +459,56 @@ var FnSystem = {
     if (FnSystem.DebugMode == "" || FnSystem.DebugMode == "N") {
       //console.log("FnSystemLog" + action + ":" + message);
     } else {
-      FnSystem.CallLog(message, action, successFn);
+      FnSystem.QueueLog(message, action, successFn);
     }
   },
-  CallLog: function (message, action, successFn) {
+  QueueLog: function (message, action) {
+    var LogData = {
+      Platform: DeviceInfo.GetOS(),
+      PlatformVersion: DeviceInfo.GetPlatformVersion(),
+      Version: Domain.Version,
+      VersionNo: Domain.VersionNo,
+      ID: localStorage.UserID,
+      Action: action,
+      Message: message,
+    };
+
+    var arrLogData = localStorage.arrLogData + "";
+    if (arrLogData != "") {
+      arrLogData += "^" + JSON.stringify(LogData);
+    } else {
+      arrLogData = JSON.stringify(LogData);
+    }
+    localStorage.arrLogData = arrLogData;
+  },
+  CallQueueLog: function (successFn, errFn) {
+    if (FnSystem.DebugMode == "" || FnSystem.DebugMode == "N") {
+      // alert("FnSystem.DebugMode:" + FnSystem.DebugMode);
+      return;
+    }
+    // alert("FnSystem.DebugMode:" + FnSystem.DebugMode);
+    var action = "QueueLog";
+    var message = localStorage.arrLogData + "";
+    FnSystem.CallLog(
+      action,
+      message,
+      function () {
+        localStorage.arrLogData = "";
+        if (successFn) {
+          successFn();
+        }
+      },
+      function () {
+        if (errFn) {
+          errFn();
+        }
+      }
+    );
+  },
+  CallLog: function (action, message, successFn, errFn) {
     var UploadData = {
-      Platform: DeviceInfo.GetPlatform() + "^" + DeviceInfo.GetModel(),
+      Platform: DeviceInfo.GetOS(),
+      PlatformVersion: DeviceInfo.GetPlatformVersion(),
       Version: Domain.Version,
       VersionNo: Domain.VersionNo,
       ID: localStorage.UserID,

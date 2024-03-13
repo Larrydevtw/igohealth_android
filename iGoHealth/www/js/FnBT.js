@@ -235,7 +235,7 @@ var FnBT = {
       });
       Log.alert("MSCordovaBLE.InitSetting");
       //Scan確定間隔，如果超過時間就重啟模組(0:代表不檢查)
-      MSCordovaBLE.checkBLE = 0;
+      MSCordovaBLE.checkBLE = 10000;
       //最大連線數
       MSCordovaBLE.MaxConnCnt = 6;
       //設定初始化
@@ -412,7 +412,6 @@ var FnBT = {
   },
   StartScan: function (isStartScan, isClearBTResult, ScanOpen) {
     //isStartScan:Y/N, isClearBTResult:Y/N,ScanOpen:Y/N
-    //MSCordovaBLE.checkBLE = 10000;
 
     var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
     Log.write("BT_Init_OK:" + BT_Init_OK, "FnBT StartScan");
@@ -578,7 +577,7 @@ var FnBT = {
     }
   },
   StopScan: function (successFn) {
-    //MSCordovaBLE.checkBLE = 0;
+
     var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
     Log.write("BT_Init_OK:" + BT_Init_OK, "FnBT StopScan");
 
