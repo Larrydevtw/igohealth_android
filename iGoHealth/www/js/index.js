@@ -263,8 +263,8 @@ var app = {
                         Measure.showHistory(MeasureInfo.MType, "N");
                         break;
                     case "MainHome":
-                        FnBT.StartScan("Y");
                         FnBT.AppMode = "People";
+                        FnBT.StartScan("Y");
                         MeasureScan.CheckUserID = "";
                         break;
                     case "Points":

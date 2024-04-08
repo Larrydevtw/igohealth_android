@@ -366,6 +366,8 @@ var MainHome = MainHome || {},
         "MainHome",
         null,
         function () {
+
+          FnBT.AppMode = "People";
           FnBT.StartScan("Y");
 
           MainHome.fadeOutPage("Home");

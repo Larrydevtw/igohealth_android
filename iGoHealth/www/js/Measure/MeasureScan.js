@@ -3,6 +3,7 @@ var MeasureScan = {
     txtCheckCodeId: "txtMeasureScanU_Code",
     MeasureScanModeId: "divMeasureScanMode",
     MeasureScan_tbResultId: "MeasureScan_tbResult",
+    MeasureScan_tbResultHeaderId: "MeasureScan_tbResultHeader",
     btnScanId: "MeasureScanMode_Manual",
     profileId: "MeasureScanMode_Profile",
     confirmId: "MeasureScanMode_Confirm",
@@ -112,7 +113,8 @@ var MeasureScan = {
         header += '<div>量測類型</div>';
         header += '</div>';
 
-        $("#" + MeasureScan.MeasureScan_tbResultId).html(header);
+        $("#" + MeasureScan.MeasureScan_tbResultHeaderId).html(header);
+        $("#" + MeasureScan.MeasureScan_tbResultId).html("");
 
         //Test
         // var MType = "BG";
@@ -124,7 +126,7 @@ var MeasureScan = {
 
         MeasureScan.showByStep(3);
         FnBT.AppMode = "Scan";   
-        FnBT.StartScan();
+        FnBT.StartScan("Y");
     },
     testBTData: function (AppMode) {
         FnBT.AppMode = AppMode;
@@ -273,7 +275,7 @@ var MeasureScan = {
             var tr2 = $("<div>").addClass("row seperate");
             tr2.append($("<div>").addClass("left").html(DisplayMValue));
 
-            $("#" + MeasureScan.MeasureScan_tbResultId).append(tr1).append(tr2);
+            $("#" + MeasureScan.MeasureScan_tbResultId).prepend(tr2).prepend(tr1);
 
         });
     },
