@@ -9,8 +9,12 @@ var DeviceInfo = {
     DeviceInfo.GetModel();
   },
   GetOS: function () {
+    var OS = "android"; 
     //Android iOS
-    var OS = device.platform;
+    if (typeof device !== "undefined") {
+      OS = device.platform;
+    }
+    
     if (OS == "Android") {
       OS = "android";
     }

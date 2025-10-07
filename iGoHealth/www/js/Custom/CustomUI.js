@@ -92,6 +92,15 @@ var CustomUI = {
                     case "C":
                         target = $$("#userHistory .chartvalues.C");
                         break;
+                    case "UA":
+                        target = $$("#userHistory .chartvalues.UA");
+                        break;
+                    case "TG":
+                        target = $$("#userHistory .chartvalues.TG");
+                        break;
+                    case "HB":
+                        target = $$("#userHistory .chartvalues.HB");
+                        break;
                 }
                 target.classList.add("active");
                 chartValues = target.dataset.chartvalues.split(",");
@@ -257,5 +266,129 @@ var CustomUI = {
             }
 
         }
-    }
+    },
+    setTabTypes: function () {
+        console.log("setTabTypes");
+        // 2. 為每一個按鈕添加點擊事件監聽器
+        navButtons.forEach((button) => {
+        button.addEventListener("click", function (event) {
+            // (可選) 如果您的按鈕有 href="#"，可以用這行防止頁面跳轉
+            // event.preventDefault();
+            console.log($(this));
+            // 我們需要操作的是 a 標籤的父層 div，因為它的 offsetLeft 是相對於容器的
+            const targetElement = this.parentElement;
+
+            // --- 核心計算邏輯 ---
+
+            // a. 獲取容器的可見寬度
+            const containerWidth = scrollContainer.clientWidth;
+
+            // b. 獲取被點擊元素的寬度
+            const targetWidth = targetElement.offsetWidth;
+
+            // c. 獲取被點擊元素相對於容器左側的距離
+            const targetOffsetLeft = targetElement.offsetLeft;
+
+            // d. 計算要滾動到的目標位置
+            //    目標 = (元素左側距離 + 元素寬度的一半) - (容器寬度的一半)
+            const scrollToPosition =
+            targetOffsetLeft + targetWidth / 2 - containerWidth / 2;
+
+            // --- 執行平滑滾動 ---
+            scrollContainer.scrollTo({
+            left: scrollToPosition,
+            behavior: "smooth",
+            });
+
+            // (可選) 為被點擊的按鈕添加一個 'active' class，並移除其他按鈕的
+            // 這可以讓您用 CSS 來突顯當前選項
+            navButtons.forEach((btn) => btn.classList.remove("active"));
+            this.classList.add("active");
+        });
+        });
+    },
+    /**
+     * 將指定 ID 的元素在其滾動容器中置中顯示。
+     * @param {string} containerId - 滾動容器的 ID。
+     * @param {string} targetElementId - 要置中的目標元素（通常是 <a> 標籤）的 ID。
+     */
+    centerElementInView: function (containerId, targetElementId) {
+        console.log("centerElementInView");
+        // 1. 獲取 DOM 元素
+        const scrollContainer = document.getElementById(containerId);
+        const targetLink = document.getElementById(targetElementId);
+        console.log(scrollContainer);
+        console.log(targetLink);
+        // 2. 防呆處理：如果找不到元素，就在控制台報錯並終止函數
+        if (!scrollContainer) {
+        console.error(
+            `Error: Scroll container with ID "#${containerId}" not found.`
+        );
+        return;
+        }
+        if (!targetLink) {
+        console.error(
+            `Error: Target element with ID "#${targetElementId}" not found.`
+        );
+        return;
+        }
+
+        // 3. 獲取目標元素的父級 div，因為我們需要計算它的 offset
+        const targetWrapper = targetLink.parentElement;
+        if (!targetWrapper || !scrollContainer.contains(targetWrapper)) {
+        console.error(
+            "Error: Target element is not a direct child of a wrapper inside the container."
+        );
+        return;
+        }
+
+        // 4. 核心計算邏輯
+        const containerWidth = scrollContainer.clientWidth;
+        const targetWidth = targetWrapper.offsetWidth;
+        const targetOffsetLeft = targetWrapper.offsetLeft;
+        console.log(containerWidth);
+        console.log(targetWidth);
+        console.log(targetOffsetLeft);
+        // 計算滾動位置，使目標元素的中心對齊容器的中心
+        const scrollToPosition =
+        targetOffsetLeft + targetWidth / 2 - containerWidth / 2;
+
+        // 5. 執行平滑滾動
+        scrollContainer.scrollTo({
+        left: scrollToPosition,
+        behavior: "smooth",
+        });
+        console.log(scrollToPosition);
+
+        // 6. 更新 'active' 狀態，突顯當前選項
+        const allLinks = scrollContainer.querySelectorAll("a.btn");
+        allLinks.forEach((btn) => btn.classList.remove("active")); // 移除所有按鈕的 active class
+        targetLink.classList.add("active"); // 為當前點擊的按鈕添加 active class
+    },
+
+    /**
+     * 初始化一個滾動容器，使其內部所有 class 為 'btn' 的 <a> 元素在點擊後都能置中。
+     * @param {string} containerId - 滾動容器的 ID。
+     */
+    setupClickToCenter: function (containerId) {
+        console.log("setupClickToCenter");
+        const scrollContainer = document.getElementById(containerId);
+        if (!scrollContainer) {
+        console.error(
+            `Initialization failed: Scroll container with ID "#${containerId}" not found.`
+        );
+        return;
+        }
+
+        const navButtons = scrollContainer.querySelectorAll("a.btn");
+        navButtons.forEach((button) => {
+            console.log(button);
+        // 為每個按鈕添加點擊事件監聽
+        button.addEventListener("click", function (event) {
+            // 點擊時，調用我們的核心函數
+            // this.id 就是被點擊的 <a> 標籤的 ID，例如 "tbtnBP"
+            CustomUI.centerElementInView(containerId, this.id);
+        });
+        });
+    },
 };

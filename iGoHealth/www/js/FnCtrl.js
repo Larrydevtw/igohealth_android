@@ -147,6 +147,8 @@ var FnCtrl = {
                 break;
             case "BG":
             case "UA":
+            case "TG":
+            case "HB":
             case "CHOL":
                 result = MeasureInfo.convertMValue(type, MData[3]) + "(" + FnCtrl.showTimeType(MData[4].toString()) + ")";
                 break;

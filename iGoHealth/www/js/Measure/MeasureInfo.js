@@ -2,8 +2,8 @@ var MeasureInfo={
     MType: "", //暫存 量測類別 
     Interval: "7", //查詢區間
     Gender: "", //M:男 F:女 //TODO No Use
-    Age: "",  //TODO No Use
-    lConvertMType:["BG","UA","CHOL"],
+  Age: "", //TODO No Use
+  lConvertMType: ["BG", "UA", "TG", "CHOL"],
     DisplayRange: { //顯示數值高低區間
         BG: {
             Min: 0,
@@ -17,6 +17,14 @@ var MeasureInfo={
             Min: 0,
             Max: 250
         },
+        TG: {
+            Min: 0,
+            Max: 999,
+        },
+        HB: {
+            Min: 0,
+            Max: 20,
+        },
     },
     Range: { //輸入範圍限制
         BG: {
@@ -26,6 +34,14 @@ var MeasureInfo={
         UA: {
             Min: 0,
             Max: 20
+        },
+    TG: {
+      Min: 0,
+      Max: 999,
+    },
+    HB: {
+      Min: 0,
+      Max: 20,
         },
         CHOL: {
             Min: 0,
@@ -68,7 +84,15 @@ var MeasureInfo={
     UA_Convert_Num:59.5, //轉換數值
     UA_Display_Num:1, //顯示小數點以下第幾位 (tw:不顯示小數點；cn:顯示小數點一位))
 
-    CHOL_Unit:" mg/dL", //尿酸單位: tw(t):mg/dL；cn(c):mmol/L t/38.67=c (小數下一位，無條件捨去)
+  TG_Unit: " mg/dL", //單位
+  TG_Convert_Num: 1, //轉換數值
+  TG_Display_Num: 0, //顯示小數點以下第幾位
+
+  HB_Unit: " g/dL", //單位
+  HB_Convert_Num: 1, //轉換數值
+  HB_Display_Num: 0, //顯示小數點以下第幾位
+
+  CHOL_Unit:" mg/dL", //單位: tw(t):mg/dL；cn(c):mmol/L t/38.67=c (小數下一位，無條件捨去)
     CHOL_Convert_Num:1, //轉換數值
     CHOL_Display_Num:0, //顯示小數點以下第幾位 (tw:不顯示小數點；cn:顯示小數點一位))
 
@@ -251,6 +275,7 @@ var MeasureInfo={
         switch(MType){
             case "BG":
             case "UA":
+            case "TG":
             case "CHOL":
                 Convert_Num = MeasureInfo[MType+"_Convert_Num"];
                 Display_Num=Math.pow(10,MeasureInfo[MType+"_Display_Num"]);

@@ -42,7 +42,7 @@ var WiseFlot = WiseFlot || {}, WiseFlot = {
                                 break;
                             case "STEP":
                                 return;
-                            default: //BT, BG, UA, CHOL, BW, BF, BO, HR
+                            default: //BT, BG, UA, TG, HB CHOL, BW, BF, BO, HR
                                 $("#M" + Type + "_bg").height(counter.value);
                                 break;
                         }
@@ -70,7 +70,7 @@ var WiseFlot = WiseFlot || {}, WiseFlot = {
                     break;
                 case "STEP":
                     return;
-                default: //BT, BG, UA, CHOL, BW, BF, BO, HR
+                default: //BT, BG, UA, TG, HB CHOL, BW, BF, BO, HR
                     $("#M" + Type + "_bg").height(TheValue);
                     break;
             }

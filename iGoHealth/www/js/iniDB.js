@@ -244,6 +244,46 @@ var iniDB = iniDB || {},
                     "Memo TEXT" + //雲端Service的流水號，未來Service會去掉流水號，目前先暫存至Memo欄位 20180306新增
                     " );"
                 );
+                //三酸甘油脂資料 20250901新增
+                tx.executeSql(
+                  "CREATE TABLE IF NOT EXISTS Management_TG ( " +
+                    "MRowID INTEGER PRIMARY KEY AUTOINCREMENT," + //流水號
+                    "Account TEXT, " + //帳號
+                    "MTimeStamp TEXT," + //檢測時間 yyyy/mm/dd
+                    "DeviceModel TEXT," +
+                    "DeviceId TEXT," +
+                    "UploadStatus TEXT," +
+                    "MRowKey TEXT," +
+                    "MRowSId TEXT," +
+                    "TG TEXT," + //三酸甘油脂(mg/dL)
+                    "StandardLevel TEXT," +
+                    "Warnings TEXT," +
+                    "MFlag TEXT," +
+                    "RedItem TEXT," +
+                    "M_UP_Date TEXT," +
+                    "Memo TEXT" + //雲端Service的流水號，未來Service會去掉流水號，目前先暫存至Memo欄位 20180306新增
+                    " );"
+                );
+                //血紅素資料 20250901新增
+                tx.executeSql(
+                  "CREATE TABLE IF NOT EXISTS Management_HB ( " +
+                    "MRowID INTEGER PRIMARY KEY AUTOINCREMENT," + //流水號
+                    "Account TEXT, " + //帳號
+                    "MTimeStamp TEXT," + //檢測時間 yyyy/mm/dd
+                    "DeviceModel TEXT," +
+                    "DeviceId TEXT," +
+                    "UploadStatus TEXT," +
+                    "MRowKey TEXT," +
+                    "MRowSId TEXT," +
+                    "HB TEXT," + //血紅素(g/dL)
+                    "StandardLevel TEXT," +
+                    "Warnings TEXT," +
+                    "MFlag TEXT," +
+                    "RedItem TEXT," +
+                    "M_UP_Date TEXT," +
+                    "Memo TEXT" + //雲端Service的流水號，未來Service會去掉流水號，目前先暫存至Memo欄位 20180306新增
+                    " );"
+                );
                 //膽固醇資料 20181212新增
                 tx.executeSql(
                     "CREATE TABLE IF NOT EXISTS Management_CHOL ( " +

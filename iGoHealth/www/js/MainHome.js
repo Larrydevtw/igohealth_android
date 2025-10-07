@@ -16,11 +16,15 @@ var MainHome = MainHome || {},
   MainHome = {
     onLoad: function () {
       //初始化 主頁面顯示
-      $("#MBG_bg").height(0);
-      $("#MBT_bg").height(0);
-      $("#MUA_bg").height(0);
-      $("#MCHOL_bg").height(0);
-      $("#MBO_bg").height(0);
+      // $("#MBG_bg").height(0);
+      // $("#MBT_bg").height(0);
+      // $("#MUA_bg").height(0);
+      
+      // $("#MTG_bg").height(0);
+      // $("#MHB_bg").height(0);
+
+      // $("#MCHOL_bg").height(0);
+      // $("#MBO_bg").height(0);
 
       $("#MBG_Value1").html("--");
       $("#MBG_Value2").html("&nbsp;");
@@ -31,6 +35,9 @@ var MainHome = MainHome || {},
       $("#MBT_Value1").html("--");
 
       $("#MUA_Value1").html("--");
+      $("#MTG_Value1").html("--");
+      $("#MHB_Value1").html("--");
+
       $("#MCHOL_Value1").html("--");
       $("#MBO_Value1").html("--");
       $("#MSTEP_Value1").html("--");

@@ -193,11 +193,6 @@
     <script src="js/MainHome.js"></script>
     <script src="js/WaitQueue.js"></script>
     <script src="js/FnDeviceINS.js"></script>
-    <script>
-        $(function(){
-            //CustomStyle.adjustStatus_H();
-        })
-    </script>
 </head>
 <body style="height:100vh;">
     <!--
@@ -213,7 +208,7 @@
         </div>
 
         <!-- 登入-->
-        <div id="login_page" class="block">
+        <div id="login_page" class="block" style="">
             <div class="h-center-center">
                 <img class="logo" src="./images/logo_2.svg" />
                 <div class="input login-input">
@@ -520,7 +515,55 @@
                         </div>
                     </div>
                 </div>
-
+                
+                <div id="MUA" class="card gotoPage" onclick="Measure.showHistory('UA');" data-pagename="#userHistory" data-state="C">
+                    <div class="f-start-center">
+                        <div class="h-start-center card-left">
+                            <div class="title">
+                                <label>尿酸</label>
+                            </div>
+                            <img src="./images/cholesterol.svg">
+                        </div>
+                        <div class="h-start-center card-right">
+                            <div>
+                                <label class="value" id="MUA_Value1">--</label><span id="UA_Unit">mg/dL</span>
+                            </div>
+                            <p id="MP_NDate_UA">----/--/-- --:--</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="MTG" class="card gotoPage" onclick="Measure.showHistory('TG');" data-pagename="#userHistory" data-state="C">
+                    <div class="f-start-center">
+                        <div class="h-start-center card-left">
+                            <div class="title">
+                                <label>三酸甘油脂</label>
+                            </div>
+                            <!-- <img src="./images/cholesterol.svg"> -->
+                        </div>
+                        <div class="h-start-center card-right">
+                            <div>
+                                <label class="value" id="MTG_Value1">--</label><span id="TG_Unit">mg/dL</span>
+                            </div>
+                            <p id="MP_NDate_TG">----/--/-- --:--</p>
+                        </div>
+                    </div>
+                </div>
+                <div id="MHB" class="card gotoPage" onclick="Measure.showHistory('HB');" data-pagename="#userHistory" data-state="C">
+                    <div class="f-start-center">
+                        <div class="h-start-center card-left">
+                            <div class="title">
+                                <label>血紅素</label>
+                            </div>
+                            <img src="./images/diabetes-test.svg">
+                        </div>
+                        <div class="h-start-center card-right">
+                            <div>
+                                <label class="value" id="MHB_Value1">--</label><span id="HB_Unit">g/dL</span>
+                            </div>
+                            <p id="MP_NDate_HB">----/--/-- --:--</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -531,11 +574,14 @@
                         這兩個皆由【,逗號】分隔，JS部分會處理成陣列
                         當使用者點選以下chartvalues, chartvalues的按鈕時後會自動刷新圖表的內容                         
         -->
-        <div id="userHistory" class="block" data-navname="測量記錄" data-parent="#MainHome" style="display:none;">
-            <div class="chartType f-center-center">
-                <div><a id="tabHistory_btnBG" onclick="Measure.showHistory('BG','N');" class="B color-MBG chartvalues btn" data-chartvalues="91,95,96,110,108,89,92,94,96,111">血糖</a></div>
+        <div id="userHistory" class="block" data-navname="測量記錄" data-parent="#MainHome" class="" style="display:none;">
+            <div id="tabMTypes" class="chartType f-center-center tabMTypes">
+                <div class=""><a id="tabHistory_btnBG" onclick="Measure.showHistory('BG','N');" class="B color-MBG chartvalues btn" data-chartvalues="91,95,96,110,108,89,92,94,96,111">血糖</a></div>
                 <div><a id="tabHistory_btnBP" onclick="Measure.showHistory('BP','N');" class="D color-MBP chartvalues btn" data-chartvalues="100,102,103,95,96,110,108,103,92,94,96,111,107,102">血壓</a></div>
                 <div><a id="tabHistory_btnCHOL" onclick="Measure.showHistory('CHOL','N');" class="C color-MCHOL chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">膽固醇</a></div>
+                <div><a id="tabHistory_btnUA" onclick="Measure.showHistory('UA','N');" class="UA color-MUA chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">尿酸</a></div>
+                <div><a id="tabHistory_btnTG" onclick="Measure.showHistory('TG','N');" class="TG color-MTG chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">三酸甘油脂</a></div>
+                <div><a id="tabHistory_btnHB" onclick="Measure.showHistory('HB','N');" class="HB color-MHB chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">血紅素</a></div>
             </div>
             <div class="chartContainer">
                 <div class="chartDays">
@@ -650,10 +696,13 @@
 
         <!--新增手動輸入紀錄 血壓、血糖、膽固醇-->
         <div id="MeasurePage_Manual" class="block" data-navname="新增手動輸入紀錄" data-parent="#userHistory" style="display:none;">
-            <div id="ulManual" class="chartType f-center-center">
+            <div id="ulManual" class="chartType f-center-center tabMTypes">
                 <div><a id="tabManual_btnBG" onclick="MeasureManual.showByMType('BG');" class="btn color-MBG">血糖</a></div>
                 <div><a id="tabManual_btnBP" onclick="MeasureManual.showByMType('BP');" class="btn color-MBP">血壓</a></div>
                 <div><a id="tabManual_btnCHOL" onclick="MeasureManual.showByMType('CHOL');" class="btn color-MCHOL">膽固醇</a></div>
+                <div><a id="tabManual_btnUA" onclick="MeasureManual.showByMType('UA');" class="btn color-MUA">尿酸</a></div>
+                <div><a id="tabManual_btnTG" onclick="MeasureManual.showByMType('TG');" class="btn color-MTG">三酸甘油脂</a></div>
+                <div><a id="tabManual_btnHB" onclick="MeasureManual.showByMType('HB');" class="btn color-MHB">血紅素</a></div>
             </div>
             <div class="chartContainer">
                 <div class="info h-center-center">
@@ -703,6 +752,24 @@
                             <div class="input login-input mb-1">
                                 <span>膽固醇 mg/dL：</span>
                                 <input type="number" class="mt-1" id="txtMPM_CHOL" placeholder="請輸入膽固醇值" />
+                            </div>
+                        </div>
+                        <div id="tabManual_UA" style="display:none">
+                            <div class="input login-input mb-1">
+                                <span>尿酸 mg/dL：</span>
+                                <input type="number" class="mt-1" id="txtMPM_UA" placeholder="請輸入尿酸值" />
+                            </div>
+                        </div>
+                        <div id="tabManual_TG" style="display:none">
+                            <div class="input login-input mb-1">
+                                <span>三酸甘油脂 mg/dL：</span>
+                                <input type="number" class="mt-1" id="txtMPM_TG" placeholder="請輸入數值" />
+                            </div>
+                        </div>
+                        <div id="tabManual_HB" style="display:none">
+                            <div class="input login-input mb-1">
+                                <span>血紅素 g/dL：</span>
+                                <input type="number" class="mt-1" id="txtMPM_HB" placeholder="請輸入數值" />
                             </div>
                         </div>
                         <div id="tabManualMemo" style="">
@@ -1298,5 +1365,15 @@
             </div>
         </div>
     </div>
+    <script>
+        // 1. 選擇我們的滑動容器和所有可點擊的按鈕
+        const scrollContainer = document.querySelector('.chartType.tabMTypes');
+        const navButtons = scrollContainer.querySelectorAll('a.btn');
+        $(function () {
+            //CustomStyle.adjustStatus_H();
+            CustomUI.setupClickToCenter('tabMTypes');
+            CustomUI.setupClickToCenter('ulManual');
+        })
+    </script>
 </body>
 </html>

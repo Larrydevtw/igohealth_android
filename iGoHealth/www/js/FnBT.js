@@ -14,6 +14,13 @@ var FnBT = {
       DAOFn.Query("", strSQL, function ResultFun(qResult) {
         var InsertArray = [
           {
+            //聿新 血糖/膽固醇/尿酸/血紅素/三酸甘油脂
+            DeviceReceiveItem: "BG,CHOL,UA,TG,HB",
+            DeviceModel: "ETB05",
+            DeviceName: "易立測五功機",
+            DeviceBrand: "Bioptik",
+          },
+          {
             //聿新易立測/中山瑞福(大陸)血糖/尿酸/膽固醇三合一
             DeviceReceiveItem: "BG,UA,CHOL",
             DeviceModel: "ETB04",
@@ -1176,7 +1183,7 @@ var FnBT = {
           function (next) {
             //MValue數值轉換
             //alert("MValue數值轉換");
-            if (MType === "BG" || MType === "UA" || MType === "CHOL") {
+            if (MType === "BG" || MType === "UA" || MType === "CHOL" || MType === "TG") {
               lMData[3] = MeasureInfo.convertSaveMValue(MType, lMData[3], "Y");
               next();
             } else {

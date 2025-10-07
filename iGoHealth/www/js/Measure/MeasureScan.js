@@ -285,6 +285,8 @@ var MeasureScan = {
             switch (MType) {
                 case "BG":
                 case "UA":
+                case "TG":
+                case "HB":
                 case "CHOL":
                     toFixedNum = MeasureInfo[MType + "_Display_Num"];
                     break;

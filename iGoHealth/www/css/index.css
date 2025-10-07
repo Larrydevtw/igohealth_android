@@ -363,9 +363,15 @@ input:checked + .slider:before {
 #MBG{border-color:#0BA29A ;}
 #MBP{border-color:#FF7E86}
 #MCHOL{border-color:#3797F0}
+#MUA{border-color:#0BA29A ;}
+#MTG{border-color:#3797F0}
+#MHB{border-color:#FF7E86}
 #MBG .title, .color-MBG{color:#0BA29A ;}
 #MBP .title, .color-MBP{color:#FF7E86}
 #MCHOL .title, .color-MCHOL{color:#3797F0}
+#MUA .title, .color-MUA{color:#0BA29A ;}
+#MTG .title, .color-MTG{color:#3797F0}
+#MHB .title, .color-MHB{color:#FF7E86}
 #MBP .subCard {padding: 10px;}
 #MBP .subCard label{color: #FF7E86;}
 #MBP .subCard .value{font-size: 2em;}
@@ -380,6 +386,50 @@ input:checked + .slider:before {
 .chartDays > div >div{flex:1 1 90px; text-align: center;}
 .chartDays {-ms-overflow-style: none;}
 .chartDays::-webkit-scrollbar {display: none;}
+
+/* 1. 設定容器的樣式 */
+.chartType.tabMTypes {
+  /* 使用 Flexbox 進行水平佈局 */
+  display: flex; 
+  
+  /* 【關鍵】防止裡面的按鈕換行，強制它們排成一行 */
+  flex-wrap: nowrap;
+  
+  /* 【關鍵】當內容超出容器寬度時，顯示水平滑動軸 */
+  overflow-x: auto;
+  
+  /* 為了讓置中效果在滑動時更自然，可以將 justify-content 改為 flex-start */
+  /* 如果您原本的 f-center-center 是 justify-content: center;，可以覆蓋它 */
+  justify-content: flex-start;
+  
+  /* 讓容器寬度充滿父元素 */
+  width: 100%;
+
+  /* --- 以下是為了在行動裝置上獲得更好體驗的優化 (可選) --- */
+  
+  /* 隱藏預設的水平滾動條，因為在手機上用戶是透過滑動操作 */
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* 針對 WebKit 核心的瀏覽器 (Chrome, Safari) 隱藏滾動條 */
+.chartType.tabMTypes::-webkit-scrollbar {
+  display: none;
+}
+
+
+/* 2. 設定容器內元素的樣式 */
+.chartType.tabMTypes > div {
+  /* 【關鍵】防止 flex item (按鈕的容器) 被壓縮變形 */
+  flex-shrink: 0;
+}
+
+/* 3. 確保按鈕文字不會斷行 (可選，但建議) */
+.chartType.tabMTypes > div > a {
+  /* 防止 "三酸甘油脂" 這類較長的文字被斷成兩行 */
+  white-space: nowrap; 
+}
+
 .chartxaxis{color:#0BA29A;background-color: #fff; padding:5px 20px; border: 1px solid #0BA29A; border-radius: 30px; min-width:70px;}
 .chartxaxis.active{color:#fff;background-color: #0BA29A; }
 .chartType .btn{font-size: 2em;color:#aaa;transition: .4s;border-bottom-width: 3px;border-bottom-style: solid;color: #aaa;display: block; }
@@ -387,6 +437,10 @@ input:checked + .slider:before {
 .chartType > div .btn.active.color-MBG {color:#0BA29A;border-color:#0BA29A ;}
 .chartType > div .btn.active.color-MBP{color:#FF7E86;border-color:#FF7E86 ;}
 .chartType > div .btn.active.color-MCHOL{color:#3797F0;border-color:#3797F0 ;}
+.chartContainer{margin-top: 60px;}
+.chartType > div .btn.active.color-MUA {color:#0BA29A;border-color:#0BA29A ;}
+.chartType > div .btn.active.color-MTG{color:#3797F0;border-color:#3797F0 ;}
+.chartType > div .btn.active.color-MHB{color:#FF7E86;border-color:#FF7E86 ;}
 .chartContainer{margin-top: 60px;}
 
 

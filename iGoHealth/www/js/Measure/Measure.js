@@ -30,7 +30,8 @@ var Measure = {
             document.getElementById("tabHistory_btn" + lMType[i]).classList.remove("active");
 
             if (i == lMType.length - 1) {
-                document.getElementById("tabHistory_btn" + MType).classList.add("active");
+                var tabId = "tabHistory_btn" + MType;
+                document.getElementById(tabId).classList.add("active");
             }
         }
 
@@ -43,6 +44,9 @@ var Measure = {
 
                 FnBT.StopScan();
                 Measure.searchByInterval(MeasureInfo.Interval);
+
+                var tabId = "tabHistory_btn" + MType;
+                CustomUI.centerElementInView("tabMTypes", tabId);
                 //document.getElementById("tabHistory_btn" + MType).scrollIntoView();
             }, null, 'T');
         } else {
@@ -66,6 +70,8 @@ var Measure = {
         var day = _day ? _day : -6;
         var setMode = "D"; //M月/D日
         day = (day - 1) * (-1);
+
+        console.log("searchByInterval:" + _day);
 
         $("#History_Time .btnSearchDate").removeClass("active");
         $("#History_Time_" + _day + setMode).addClass("active");
@@ -150,6 +156,8 @@ var Measure = {
         });
     },
     getPersonalData: function (DS, DE, MType, successFn) {
+
+        Log.write("getPersonalData");
         var UserID = localStorage.UserID;
 
         var strSQL = "";
@@ -215,6 +223,12 @@ var Measure = {
             case "UA":
                 HtmlStr += '<div>' + $.i18n('尿酸') + '</div>';
                 break;
+            case "TG":
+                HtmlStr += '<div>' + $.i18n('三酸甘油脂') + '</div>';
+                break;
+            case "HB":
+                HtmlStr += '<div>' + $.i18n('血紅素') + '</div>';
+                break;
             case "CHOL":
                 HtmlStr += '<div>' + $.i18n('膽固醇') + '</div>';
                 break;
@@ -275,7 +289,7 @@ var Measure = {
                     result.xyAxisName = ["MTimeStamp", $.i18n('體重'), $.i18n('BMI')];
                     result.chartDataKey = ["Weight", "BMI"];
                     break;
-                default: //BT, UA, CHOL, HR, BO
+                default: //BT, UA,TG,HB CHOL, HR, BO
                     switch (MType) {
                         case "BO":
                             MType = "SPO2";
@@ -656,10 +670,12 @@ var Measure = {
         var DateE = ProjectFn.currentDate('', 'D', 0, 'N') + " 23:59:59";
 
         //TODO
-        $("#MBG_bg").height(0);
-        $("#MBT_bg").height(0);
-        $("#MUA_bg").height(0);
-        $("#MCHOL_bg").height(0);
+        // $("#MBG_bg").height(0);
+        // $("#MBT_bg").height(0);
+        // $("#MUA_bg").height(0);
+        // $("#MTG_bg").height(0);
+        // $("#MHB_bg").height(0);
+        // $("#MCHOL_bg").height(0);
 
         setTimeout(function () {
             if (Type == "All") {
@@ -769,6 +785,8 @@ var Measure = {
         switch (MType) {
             case "BG": //1    
             case "UA": //1  
+            case "TG": //1  
+            case "HB": //1  
             case "CHOL": //TODO 
                 var MRange = MeasureInfo.DisplayRange[MType];
                 toFixedNum = MeasureInfo[MType + "_Display_Num"];
@@ -866,7 +884,7 @@ var Measure = {
                 break;
         }
 
-        if (MType === "BG" || MType === "UA" || MType === "CHOL") {
+        if (MType === "BG" || MType === "UA" || MType === "TG" || MType === "CHOL") {
             ValueArr[0] = MeasureInfo.convertMValue(MType, ValueArr[0], DeviceModel);
         }
         //alert(ValueArr+"Measure showValue " + MType+isAnimate+MTimeStamp);
@@ -883,6 +901,8 @@ var Measure = {
             switch (MType) {
                 case "BG":
                 case "UA":
+                case "TG":
+                case "HB":
                 case "CHOL":
                     Start_i = 0;
                     End_i = 1;
