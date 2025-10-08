@@ -21,6 +21,9 @@ var Log = Log || {},
         // if (docName == "checkService") {
         //   console.log(msgLog);
         // }
+        // if (docName == "BTDebug") {
+        //   console.log(msgLog);
+        // }
       } else {
         msgLog = a;
         //console.log(msgLog);

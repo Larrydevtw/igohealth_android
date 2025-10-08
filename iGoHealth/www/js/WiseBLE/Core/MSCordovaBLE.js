@@ -13,7 +13,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
     foundDevices: [],
     connDevices: [],
     delayReceive: 100, //延遲接收資料 by sinclair
-    checkBLE: 10000, //Scan確定間隔，如果超過時間就重啟模組(0:代表不檢查)by sinclair
+    checkBLE: 0, //Scan確定間隔，如果超過時間就重啟模組(0:代表不檢查)by sinclair
     checkBleTimer: null,
     NowStep: "", //記錄目前執行到的函數
     sUUID: "",
@@ -205,9 +205,9 @@ var MSCordovaBLE = MSCordovaBLE || {},
             var dDay2 = sessionStorage["checkBLETime"];
             var vDif = dDay1 - dDay2;
             //sessionStorage["checkBLETime"] = dDay1.getTime();
-            if (vDif > MSCordovaBLE.checkBLE) {
+            if (MSCordovaBLE.checkBLE !=0 && vDif > MSCordovaBLE.checkBLE) {
               WriteLog.write(
-                "check scan!" + dDay1 + "," + dDay2 + "," + vDif,
+                "check scan!" + dDay1 + "," + dDay2 + "," + vDif + " / MSCordovaBLE.checkBLE:" + MSCordovaBLE.checkBLE,
                 "status"
               );
               FnSystem.Log(

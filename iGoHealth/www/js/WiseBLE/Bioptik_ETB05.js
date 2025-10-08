@@ -10,6 +10,7 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
     //放總紀錄筆數的全域變數
     storageNumberOfData: 0,
 
+    TestFlag: false, //測試checksum用Flag
     //控制重送 Link 封包的全域變數
     linkResending: true, //true:重送 / false:不重送
     offResending: true, //true:重送 / false:不重送
@@ -17,7 +18,7 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
     resendingCount: 0, //重送次數
 
     LastPowerOff: true, //收到量測後是否關閉ETB05
-    ThisType: "", //此筆記錄類別//0:血糖 1:膽固醇 2:尿酸 3:三酸 4:血紅素
+    ThisType: "", //此筆記錄類別//1:血糖 2:膽固醇 0:血壓
 
     procReturn: function (
       deviceName,
@@ -42,6 +43,7 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
           ) {
             sessionStorage["DeviceSerial_" + address] = ""; //宣告出存放設備序號的全域變數,並給空字串為初值
             sessionStorage["DeviceTime" + address] = ""; //宣告出存放設備系統時間的全域變數,並給空字串為初值
+            sessionStorage["ReturnValue" + address] = "";
 
             Bioptik_ETB05.currentRecordIndex = 0; //清空全域變數
             Bioptik_ETB05.storageNumberOfData = 0; //清空全域變數
@@ -136,7 +138,7 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
             //五合一
             var dataBuffer = Bionime.parseHexStringToByteArr(returnData);
             var vMD_tmp = Bionime.binArrToString(dataBuffer);
-            //WriteLog.write("量測值字串: " + vMD_tmp, "info");
+            WriteLog.write("量測值字串: " + vMD_tmp, "info");
 
             Bioptik_ETB05.linkResending = false;
             //-----------------------------------
@@ -176,9 +178,95 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
             returnData.indexOf("7B,44,") == 0
           ) {
             //五合一機
+            Log.write(returnData, "ETB05 Data");
             //var dataBuffer = Bionime.parseHexStringToByteArr(returnData);
             //var vMD_tmp = Bionime.binArrToString(dataBuffer);
             //WriteLog.write("量測值字串: " + vMD_tmp, "info");
+
+            if (returnData.substr(returnData.length - 3, 2) == "7D") {
+              ////從收到的資料中取出量測數據(或錯誤訊息) //資料正確會分兩部分傳輸，如果此階段結尾已有7D，才開始接收解析資料
+              Bioptik_ETB05.getMeasurementData(deviceName, address, returnData);
+            } else {
+              sessionStorage["ReturnValue" + address] = returnData;
+            }
+
+            ////-----------------------------------
+
+            ////發送設備關機指令
+            //if (Bioptik_ETB05.LastPowerOff) {
+            //    Bioptik_ETB05.offResending = true;           //清空全域變數
+            //    Bioptik_ETB05.resendingCount = 0;            //清空全域變數
+
+            //    Bioptik_ETB05.poweroffIng = true;
+            //    setTimeout(function () {
+            //        if (Bioptik_ETB05.poweroffIng) {
+            //            //3秒後沒完成關機，直接勿略進到下一筆
+            //            WriteLog.write("3秒等不到關機ACK回應直接改flag ", "debug");
+            //            Bioptik_ETB05.poweroffIng = false;
+
+            //            //再確認是否還連線著
+            //            bluetoothle.isConnected(
+            //                function () {
+            //                    //已連接
+            //                    WriteLog.write("改flag後，連接還存在，立即斷開！", "status");
+            //                    MSCordovaBLE.disconnectSuccess({ address: address });
+
+            //                }
+            //                , function () {
+            //                    //已斷開連接
+
+            //                }, { address: address });
+            //        }
+            //    }, 3000);
+
+            //    //解除資料訂閱
+            //    MSCordovaBLE.unReceiveData(address, serviceUuid, characteristicsUuid);
+
+            //    Bioptik_ETB05.powerOff(address, serviceUuid, characteristicsUuid);
+
+            // }
+          } else if (
+            !Bioptik_ETB05.poweroffIng &&
+            sessionStorage["ReturnValue" + address].toString() != "" &&
+            returnData.substr(returnData.length - 3, 2) == "7D"
+          ) {
+            //三合一血壓機
+            Log.write(returnData, "ETB05 Data");
+            returnData =
+              sessionStorage["ReturnValue" + address].toString() + returnData;
+            sessionStorage["ReturnValue" + address] = returnData;
+
+            //===========驗證checksum start =============================
+            //先把傳入的Hex文字串轉成byte陣列
+            var dataBuffer = Bionime.parseHexStringToByteArr(returnData);
+            var vChkSum = Bioptik_ETB05.ETB_CheckSum(dataBuffer);
+            if (
+              Bioptik_ETB05.TestFlag ||
+              vChkSum != dataBuffer[dataBuffer.length - 2]
+            ) {
+              //alert("CheckSum Error");
+              Bioptik_ETB05.TestFlag = false;
+
+              //MSCordovaBLE.MySetting.ResultCallBackFn(""); //呼叫外部的 ResultCallBackFn
+              MSCordovaBLE.MySetting.ErrorCallBackFn("CheckSum Error");
+
+              ////斷開藍牙再重新連接一次
+              //var vResult = {
+              //    address: address
+              //    , MEMO: "ETB05不關機直接斷開藍牙!"
+              //};
+              //MSCordovaBLE.disconnectSuccess(vResult);
+
+              Bioptik_ETB05.sendLinkD(
+                address,
+                serviceUuid,
+                characteristicsUuid,
+                "D"
+              );
+
+              return;
+            }
+            //===========驗證checksum end =============================
 
             //從收到的資料中取出量測數據(或錯誤訊息)
             Bioptik_ETB05.getMeasurementData(deviceName, address, returnData);
@@ -204,16 +292,12 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
                         "改flag後，連接還存在，立即斷開！",
                         "status"
                       );
-                      MSCordovaBLE.disconnectSuccess({
-                        address: address,
-                      });
+                      MSCordovaBLE.disconnectSuccess({ address: address });
                     },
                     function () {
                       //已斷開連接
                     },
-                    {
-                      address: address,
-                    }
+                    { address: address }
                   );
                 }
               }, 3000);
@@ -380,10 +464,10 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
       //var LinkCmd = '01' + WiseScripts.Format.Date_yyyyMMddHHmmss(new Date(), true).substr(2, 14);
       var LinkCmd = "01" + DateTimeFun.getNow().substr(2, 14);
 
-      var CkNo = Bioptik_ETB05.checksumByte(LinkCmd);
-      LinkCmd = "{" + LinkCmd + "#" + CkNo + "}"; //LinkCmd: {01170331145030#42}
+      //var CkNo = Bioptik_ETB05.checksumByte(LinkCmd);
+      //LinkCmd = "{" + LinkCmd + "#" + CkNo + "}";  //LinkCmd: {01170331145030#42}
 
-      WriteLog.write("Link指令：" + LinkCmd, "status");
+      //WriteLog.write("Link指令：" + LinkCmd, "status");
       //-----------------------------------------------------------
       var buffer = Bioptik.StrToUint8Arr(LinkCmd);
       buffer = new Uint8Array([0x7b, 0x4c, 0x23, 0xef, 0x7d]);
@@ -403,19 +487,21 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
         //Bioptik_ETB05.linkResending = false;
       }, MSCordovaBLE.handleErrorAndToClose);
       //-----------------------------------------------------------
+
+      var maxResendTimes = 100; //重送 Link Pack
+
       setTimeout(function () {
         if (
           Bioptik_ETB05.linkResending == true &&
           Bioptik_ETB05.poweroffIng == false
         ) {
-          if (Bioptik_ETB05.resendingCount < 99) {
-            //重送 Link Pack 12次
+          if (Bioptik_ETB05.resendingCount < maxResendTimes) {
             WriteLog.write("重新發送Link Pack...", "status");
             Bioptik_ETB05.resendingCount++;
 
             Bioptik_ETB05.sendLink(address, serviceUuid, characteristicsUuid);
-          } else if (Bioptik_ETB05.resendingCount >= 99) {
-            //如果重送 Link Pack 12次以上還無法跟設備進行溝通,就自動斷開藍牙,讓設備重新連線...
+          } else if (Bioptik_ETB05.resendingCount >= maxResendTimes) {
+            //如果重送 Link Pack 5次以上還無法跟設備進行溝通,就自動斷開藍牙,讓設備重新連線...
             new Promise(function (resolve, reject) {
               bluetoothle.close(resolve, reject, {
                 address: address,
@@ -434,10 +520,10 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
       //var LinkCmd = '01' + WiseScripts.Format.Date_yyyyMMddHHmmss(new Date(), true).substr(2, 14);
       var LinkCmd = inputLinkCmd;
 
-      var CkNo = Bioptik_ETB05.checksumByte(LinkCmd);
-      LinkCmd = "{" + LinkCmd + "#" + CkNo + "}"; //LinkCmd: {01170331145030#42}
+      //var CkNo = Bioptik_ETB05.checksumByte(LinkCmd);
+      //LinkCmd = "{" + LinkCmd + "#" + CkNo + "}";  //LinkCmd: {01170331145030#42}
 
-      WriteLog.write("Link指令：" + LinkCmd, "status");
+      //WriteLog.write("Link指令：" + LinkCmd, "status");
       //-----------------------------------------------------------
       var buffer = null; //Bioptik.StrToUint8Arr(LinkCmd);
       if (inputLinkCmd == "S") {
@@ -499,7 +585,7 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
       //WriteLog.write('轉16進位後，驗證碼為' + CkNo, "debug");
 
       return CkNo;
-    }, //發送ReSend
+    }, //發送ReSend  (目前已無使用)
     reSend: function (address, serviceUuid, characteristicsUuid) {
       var LinkCmd = "04";
 
@@ -605,5 +691,29 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
       //-----------------------------------
 
       return rv;
+    },
+    /*
+    var buffer = new Uint8Array([0x7B, 0x4C, 0x23, 0xEF, 0x7D]);
+    ETB05.ETB_CheckSum(buffer);
+   傳回16進制checksum
+    */
+    ETB_CheckSum: function (mBuffer) {
+      var xLeft = 0x7b; //{
+      var xRight = 0x23; //#
+      var vXOR_Result = null;
+      for (var i = 0; i < mBuffer.length; i++) {
+        if (mBuffer[i] == xLeft) {
+          i++;
+          vXOR_Result = mBuffer[i];
+        } else if (mBuffer[i] == xRight) {
+          vXOR_Result = vXOR_Result ^ mBuffer[i]; //XOR
+          vXOR_Result = vXOR_Result | 0x80; //OR
+          break;
+        } else if (vXOR_Result != null) {
+          vXOR_Result = vXOR_Result ^ mBuffer[i]; //XOR
+        }
+      }
+      return vXOR_Result;
+      //return vXOR_Result.toString(16).toUpperCase();
     },
   };

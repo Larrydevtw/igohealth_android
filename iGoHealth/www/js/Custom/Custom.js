@@ -2,6 +2,10 @@
 var Custom = {
     init: function (successFn) {
 
+        Log.write("init", "Custom init");
+
+        localStorage["MainHome_scrollIntoView"] = "N";
+
         CustomInfo.switchByDomain().then(function () {
             return CustomInfo.setValidate();
         }).then(function () {
@@ -24,9 +28,9 @@ var Custom = {
         return new Promise(function (resolve, reject) {
             var lMType = AppConfiglMType;
 
-
             for (var i = 0; i < lMType.length; i++) {
                 var mType = lMType[i];
+                Log.write(mType, "Custom setMType");
                 $("#M" + mType).show();
                 $("#tabHistory_btn" + mType).show();
                 $("#tabManual_btn" + mType).show();

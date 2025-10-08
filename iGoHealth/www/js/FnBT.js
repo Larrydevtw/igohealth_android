@@ -152,6 +152,45 @@ var FnBT = {
                 DeviceReceiveItem = "Err";
                 break;
             }
+          } else if (DeviceModel == "ETB05") {
+            switch (Data.length) {
+              case 6:
+                switch (Data[5]) {
+                  case "G":
+                    DeviceReceiveItem = "BG";
+                    break;
+                  case "C":
+                    DeviceReceiveItem = "CHOL";
+                    break;
+                  case "U":
+                    DeviceReceiveItem = "UA";
+                    break;
+                  case "H":
+                    DeviceReceiveItem = "HB";
+                    break;
+                  case "T":
+                    DeviceReceiveItem = "TG";
+                    break;
+                  case "Err":
+                    Log.write(
+                      "Data.length: " + Data.length + ", Data" + Data,
+                      "ETB05 Data err"
+                    );
+                    DeviceReceiveItem = "Err";
+                    break;
+                }
+                break;
+              // case 8:
+              //   DeviceReceiveItem = "BP";
+              //   break;
+              default:
+                Log.write(
+                  "Data.length: " + Data.length + ", Data" + Data,
+                  "ETB05 Data err"
+                );
+                DeviceReceiveItem = "Err";
+                break;
+            }
           } else if (
             DeviceModel == "FORA D40" ||
             DeviceModel == "UniTai TD3261"
@@ -172,12 +211,25 @@ var FnBT = {
   },
   GetBTSatatus: function () {
     var BTStatus = cordova.plugins.BluetoothStatus.BTenabled ? "Y" : "N";
+    Log.write("BTStatus:" + BTStatus,"BTDebug");
     return BTStatus;
   },
   iniBT: function (successFn, errFn) {
     //初始化藍牙
-    Log.alert("初始化藍牙", "FnBT iniBT");
+    Log.write("iniBT 初始化藍牙", "BTDebug");
     try {
+
+      var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
+      Log.write("iniBT BT_Init_OK:" + BT_Init_OK, "BTDebug");
+      if (BT_Init_OK) {
+        Log.write("iniBT 已經有初始化過 直接開啟藍牙掃描", "BTDebug");
+        FnBT.StartScan("Y");
+        if(successFn){
+          successFn();
+        }
+        return;
+      }
+
       //設定藍牙操作時所需使用到的變數
       FnBT.ScandDevices = []; //把已掃過的設備清空
       localStorage["BTScanConfirm"] = "N"; //設定目前 是否正在詢問連線至設備的對話框
@@ -234,18 +286,18 @@ var FnBT = {
 
       FnBT.GetBTMode(function (BTMode) {
         //判斷使用者目前是設定配對模式還是智能掃描模式
-        Log.write("BTMode:" + BTMode, "FnBT iniBT");
+        Log.write("iniBT BTMode:" + BTMode, "BTDebug");
         if (BTMode == "Y") {
           BTSetting.AutoConnect = true;
           BTSetting.ForcePair = true;
         }
       });
-      Log.alert("MSCordovaBLE.InitSetting");
       //Scan確定間隔，如果超過時間就重啟模組(0:代表不檢查)
       MSCordovaBLE.checkBLE = 10000;
       //最大連線數
       MSCordovaBLE.MaxConnCnt = 6;
       //設定初始化
+      Log.write("iniBT MSCordovaBLE.InitSetting", "BTDebug");
       MSCordovaBLE.InitSetting();
 
       //藍牙初始化
@@ -264,10 +316,10 @@ var FnBT = {
   },
   initBTProcess: function () {
     var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
-    Log.write("BT_Init_OK:" + BT_Init_OK, "FnBT initBTProcess");
+    Log.write("BT_Init_OK:" + BT_Init_OK, "BTDebug");
 
     if (!BT_Init_OK) {
-      Log.write("BT_Init NO", "FnBT initBTProcess");
+      Log.write("BT_Init NO", "BTDebug");
       setTimeout(function () {
         if (MSCordovaBLE.MySetting.SingleDevicePoolingMode == false) {
           MSCordovaBLE.btInitialize(); //false -> 正常的 scan 模式
@@ -421,10 +473,10 @@ var FnBT = {
     //isStartScan:Y/N, isClearBTResult:Y/N,ScanOpen:Y/N
 
     var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
-    Log.write("BT_Init_OK:" + BT_Init_OK, "FnBT StartScan");
+    Log.write("FnBT StartScan BT_Init_OK:" + BT_Init_OK, "BTDebug");
 
     if (!BT_Init_OK) {
-      Log.write("BT_Init false. Return Scan", "FnBT StartScan");
+      Log.write("FnBT StartScan BT_Init false. Return Scan", "BTDebug");
       FnBT.initBTProcess();
       // FnBT.iniBT(function(){
       //   FnBT.StartScan(isStartScan, isClearBTResult, ScanOpen);
@@ -433,11 +485,12 @@ var FnBT = {
     }
 
     if (FnBT.bluetoothStatus == "N") {
-      Log.write("bt is closed. Return Scan", "FnBT StartScan");
+      Log.write("FnBT StartScan bt is closed. Return Scan", "BTDebug");
       FnBT.OpenBT();
       return;
     }
 
+    MSCordovaBLE.checkBLE = 10000;
     MSCordovaBLE.NowStep = "";
 
     //alert("start Scan:"+isStartScan);
@@ -586,7 +639,7 @@ var FnBT = {
   StopScan: function (successFn) {
 
     var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
-    Log.write("BT_Init_OK:" + BT_Init_OK, "FnBT StopScan");
+    Log.write("FnBT StopScan BT_Init_OK:" + BT_Init_OK, "BTDebug");
 
     if (!BT_Init_OK) {
       Log.write("BT_Init false. Return StopScan", "FnBT StopScan");
@@ -594,7 +647,8 @@ var FnBT = {
     }
 
     localStorage["BTScanActive"] = "N"; //關閉掃描功能
-    Log.write("success", "FnBT STOPScan");
+    MSCordovaBLE.checkBLE = 0;
+    Log.write("FnBT STOP Scansuccess", "BTDebug");
 
     if (successFn) {
       successFn();
@@ -931,7 +985,7 @@ var FnBT = {
     );
   },
   SetDeviceTime: function (device, successFn, errFn) {
-    if (device.name != "ETB04") {
+    if (device.name != "ETB04" && device.name != "ETB05") {
       //聿新科的三合一接收資料就會做時間校正，所以配對時不做
       //WiseScripts.Tool.ShowLoading(true, "設備時間校正中..");
       var OS = WiseScripts.Tool.MobileType.IsAndroid() ? "android" : "iOS";
@@ -1318,6 +1372,7 @@ var FnBT = {
     var result = "";
     var errMsg = "";
     switch (DeviceModel) {
+      case "ETB05":
       case "ETB04":
         switch (errCode) {
           case "01":

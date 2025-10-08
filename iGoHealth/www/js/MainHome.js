@@ -128,18 +128,18 @@ var MainHome = MainHome || {},
                   next();
                 });
               },
-              function (next) {
-                //同步App權限
-                FnSystem.SyncAuthority(
-                  function () {
-                    next();
-                  },
-                  function () {
-                    //同步有錯
-                    next();
-                  }
-                );
-              },
+              // function (next) {
+              //   //同步App權限
+              //   FnSystem.SyncAuthority(
+              //     function () {
+              //       next();
+              //     },
+              //     function () {
+              //       //同步有錯
+              //       next();
+              //     }
+              //   );
+              // },
             ],
             function () {
               //更新雲端資料
@@ -174,18 +174,18 @@ var MainHome = MainHome || {},
                   next();
                 });
               },
-              function (next) {
-                //同步App權限
-                FnSystem.SyncAuthority(
-                  function () {
-                    next();
-                  },
-                  function () {
-                    //同步有錯
-                    next();
-                  }
-                );
-              },
+              // function (next) {
+              //   //同步App權限
+              //   FnSystem.SyncAuthority(
+              //     function () {
+              //       next();
+              //     },
+              //     function () {
+              //       //同步有錯
+              //       next();
+              //     }
+              //   );
+              // },
             ],
             function () {
               //更新雲端資料

@@ -391,4 +391,36 @@ var CustomUI = {
         });
         });
     },
+    /**
+     * 將元素滾動到視窗中央，並可選添加垂直偏移
+     * @param {HTMLElement} element - 要滾動到的目標 DOM 元素
+     * @param {number} [offset=0] - 垂直偏移量 (px)，正數向下，負數向上
+     */
+    scrollToCenterWithOffset: function (element, offset = 0) {
+        if (!element) return;
+
+        element.scrollIntoView({
+          block: "center",
+        });
+        return;
+        // 1. 計算元素中心點在文件中的絕對位置
+        const elementRect = element.getBoundingClientRect();
+        const elementTop = elementRect.top + window.scrollY; // or window.pageYOffset
+        const elementHeight = elementRect.height;
+        const elementCenter = elementTop - elementHeight / 2;
+
+        // 2. 計算視窗的中心點
+        const viewportHeight = window.innerHeight;
+        const viewportCenter = viewportHeight / 2;
+
+        // 3. 計算最終要滾動到的目標 Y 座標
+        // 目標是讓元素的中心點對齊視窗的中心點，然後再加上偏移
+        const targetY = elementCenter - viewportCenter + elementHeight / 2 + offset;
+        console.log("targetY" + targetY);
+        // 4. 執行滾動
+        window.scrollTo({
+            top: targetY,
+            // behavior: "smooth",
+        });
+    },
 };

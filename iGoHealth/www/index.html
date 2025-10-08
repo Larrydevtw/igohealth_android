@@ -516,7 +516,7 @@
                     </div>
                 </div>
                 
-                <div id="MUA" class="card gotoPage" onclick="Measure.showHistory('UA');" data-pagename="#userHistory" data-state="C">
+                <div id="MUA" class="card gotoPage" onclick="Measure.showHistory('UA');" data-pagename="#userHistory" data-state="C" style="display:none;">
                     <div class="f-start-center">
                         <div class="h-start-center card-left">
                             <div class="title">
@@ -532,7 +532,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="MTG" class="card gotoPage" onclick="Measure.showHistory('TG');" data-pagename="#userHistory" data-state="C">
+                <div id="MTG" class="card gotoPage" onclick="Measure.showHistory('TG');" data-pagename="#userHistory" data-state="C" style="display:none;">
                     <div class="f-start-center">
                         <div class="h-start-center card-left">
                             <div class="title">
@@ -548,7 +548,7 @@
                         </div>
                     </div>
                 </div>
-                <div id="MHB" class="card gotoPage" onclick="Measure.showHistory('HB');" data-pagename="#userHistory" data-state="C">
+                <div id="MHB" class="card gotoPage" onclick="Measure.showHistory('HB');" data-pagename="#userHistory" data-state="C" style="display:none;">
                     <div class="f-start-center">
                         <div class="h-start-center card-left">
                             <div class="title">
@@ -579,9 +579,9 @@
                 <div class=""><a id="tabHistory_btnBG" onclick="Measure.showHistory('BG','N');" class="B color-MBG chartvalues btn" data-chartvalues="91,95,96,110,108,89,92,94,96,111">血糖</a></div>
                 <div><a id="tabHistory_btnBP" onclick="Measure.showHistory('BP','N');" class="D color-MBP chartvalues btn" data-chartvalues="100,102,103,95,96,110,108,103,92,94,96,111,107,102">血壓</a></div>
                 <div><a id="tabHistory_btnCHOL" onclick="Measure.showHistory('CHOL','N');" class="C color-MCHOL chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">膽固醇</a></div>
-                <div><a id="tabHistory_btnUA" onclick="Measure.showHistory('UA','N');" class="UA color-MUA chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">尿酸</a></div>
-                <div><a id="tabHistory_btnTG" onclick="Measure.showHistory('TG','N');" class="TG color-MTG chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">三酸甘油脂</a></div>
-                <div><a id="tabHistory_btnHB" onclick="Measure.showHistory('HB','N');" class="HB color-MHB chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">血紅素</a></div>
+                <div><a id="tabHistory_btnUA" onclick="Measure.showHistory('UA','N');" class="UA color-MUA chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168" style="display: none;">尿酸</a></div>
+                <div><a id="tabHistory_btnTG" onclick="Measure.showHistory('TG','N');" class="TG color-MTG chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168" style="display: none;">三酸甘油脂</a></div>
+                <div><a id="tabHistory_btnHB" onclick="Measure.showHistory('HB','N');" class="HB color-MHB chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168" style="display: none;">血紅素</a></div>
             </div>
             <div class="chartContainer">
                 <div class="chartDays">
@@ -700,9 +700,9 @@
                 <div><a id="tabManual_btnBG" onclick="MeasureManual.showByMType('BG');" class="btn color-MBG">血糖</a></div>
                 <div><a id="tabManual_btnBP" onclick="MeasureManual.showByMType('BP');" class="btn color-MBP">血壓</a></div>
                 <div><a id="tabManual_btnCHOL" onclick="MeasureManual.showByMType('CHOL');" class="btn color-MCHOL">膽固醇</a></div>
-                <div><a id="tabManual_btnUA" onclick="MeasureManual.showByMType('UA');" class="btn color-MUA">尿酸</a></div>
-                <div><a id="tabManual_btnTG" onclick="MeasureManual.showByMType('TG');" class="btn color-MTG">三酸甘油脂</a></div>
-                <div><a id="tabManual_btnHB" onclick="MeasureManual.showByMType('HB');" class="btn color-MHB">血紅素</a></div>
+                <div><a id="tabManual_btnUA" onclick="MeasureManual.showByMType('UA');" class="btn color-MUA" style="display: none;">尿酸</a></div>
+                <div><a id="tabManual_btnTG" onclick="MeasureManual.showByMType('TG');" class="btn color-MTG" style="display: none;">三酸甘油脂</a></div>
+                <div><a id="tabManual_btnHB" onclick="MeasureManual.showByMType('HB');" class="btn color-MHB" style="display: none;">血紅素</a></div>
             </div>
             <div class="chartContainer">
                 <div class="info h-center-center">

@@ -29,6 +29,8 @@ var app = {
     // 'pause', 'resume', etc.
     onDeviceReady: function () {
 
+        Log.write("onDeviceReady", "index.js");
+        
         WiseScripts.Tool.ShowLoading(true);
 
         //保持螢幕恆亮
@@ -65,10 +67,6 @@ var app = {
 
         ProjectFn.Wait([function (next) {
             CustomUI.init(function () {
-                next();
-            });
-        }, function (next) {
-            Custom.init(function () {
                 next();
             });
         }, function (next) {
@@ -131,6 +129,10 @@ var app = {
             FnSystem.SyncAppInfo(function () {
                 next();
             }, function () { //同步有錯
+                next();
+            });
+        }, function (next) {
+            Custom.init(function () {
                 next();
             });
         }], function () {

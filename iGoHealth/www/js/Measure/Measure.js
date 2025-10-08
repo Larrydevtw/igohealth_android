@@ -539,10 +539,20 @@ var Measure = {
     },
     //讀資料
     readAll: function () {
+        localStorage["MainHome_scrollIntoView"] = "N";
         var lMType = [].concat(AppConfig.lMType);
         lMType.reverse();
         for (var i = 0; i < lMType.length; i++) {
             Measure.readByMType(lMType[i]);
+            if(i == lMType.length-1){
+                setTimeout(() => {
+                    localStorage["MainHome_scrollIntoView"] = "Y";
+                    Log.write(
+                      localStorage["MainHome_scrollIntoView"],
+                      "MainHome_scrollIntoView"
+                    );
+                }, 2000);         
+            }
         }
     },
     readByMType: function (MType) {
@@ -890,8 +900,13 @@ var Measure = {
         //alert(ValueArr+"Measure showValue " + MType+isAnimate+MTimeStamp);
 
         //移至量測項目
-        if (CustomInfo.MainHome_scrollIntoView === "Y") {
-            document.getElementById("M" + MType).scrollIntoView();
+        Log.write(localStorage["MainHome_scrollIntoView"],"MainHome_scrollIntoView");
+        if (localStorage["MainHome_scrollIntoView"] === "Y") {
+            // 獲取你的元素
+            const myElement = document.getElementById("M" + MType);
+
+            // 滾動到畫面正中央
+            CustomUI.scrollToCenterWithOffset(myElement,100);
         }
 
         var Start_i = 0;

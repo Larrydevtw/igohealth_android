@@ -8,7 +8,7 @@ var Domain = {
     AppName: "i顧健康",
 
     //App功能 
-  lFunction: ["Point", "Product", "MeasureScan", "SyncAppInfo", "LoginGuest"],
+    lFunction: ["Point", "Product", "MeasureScan", "SyncAppInfo", "LoginGuest"],
     //App開發中功能，陣列中有的功能項目不會啟用
     lDevFunction: [],
 
@@ -24,12 +24,12 @@ var Domain = {
     Chk_AddressNT: "RXFvd3FxQ2Q0UUk1RXc3S1MxdzZLRG9JWjQydjlrNGt3ZUFqaE9Nd2Uzdz0=",
     Chk_AddressCN: "Z0pHekFXRWRZZTRHMWZ0T01hRlRwSlhNUU1JQ3R5ZE5SSm1PK2lHbklyTT0=",
 
-  CheckDomain: function () {
+    CheckDomain: function () {
         switch (Domain.Version) {
             case "IGH":
                 Domain.Address = "https://apps.igohealth.com.tw";
                 Domain.ServiceRoot = "";
-                Domain.ServiceApi = "/HATM_Services_B/api/HATMApp";
+                Domain.ServiceApi = "/HATM_Services/api/HATMApp";
                 break;
             case "IGH_eThink":
                 Domain.Address = "https://demosite.ethink.com.tw";
@@ -91,13 +91,13 @@ var AppConfig = {
     isAutoConnect: true, //是否自動連線
     //站點類別
     SystemModel: "IGH", //5050 App
-  HRSSNo: "1000", //量測資料介接系統註冊編號
-  StationNo: "1000", //站點編號
+    HRSSNo: "1000", //量測資料介接系統註冊編號
+    StationNo: "1000", //站點編號
 
     //會員帳號類別
     UserKind: "7",
     //有使用的量測功能
-    lMType: ["BG", "BP", "CHOL"], //, "BO","HR","STEP", "BT", "BW", "UA", 
+    lMType: ["BG", "BP", "CHOL", "UA", "TG", "HB"], //, "BO","HR","STEP", "BT", "BW", "UA", "TG","HB",
     //是否使用手環功能
     BandMateActive: "N",
     //第一次載入資料的起始日期(為確保載入所有量測資料)

@@ -811,6 +811,8 @@ var Member = {
 
     function confirmCallback(btnIndex) {
       if (btnIndex == 1) {
+        FnBT.StopScan();
+        localStorage["MainHome_scrollIntoView"] = "N";
         if ($$) {
           //選單收合
           $$("#IP_Modal").style.display = "none";

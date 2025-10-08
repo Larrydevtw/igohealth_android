@@ -105,11 +105,11 @@ var FnSystem = {
             var LastSyncTime = DateTimeFun.getNow();
             FnSystem.SetLastSyncTime(LastSyncTime);
 
-            FnSystem.ShowByGroup(result);
-
-            if (successFn) {
-              successFn(result);
-            }
+            FnSystem.ShowByGroup(result,function(){           
+              if (successFn) {
+                successFn(result);
+              }
+            });
           },
           function (err) {
             //失敗
@@ -164,11 +164,12 @@ var FnSystem = {
           var LastSyncTime = DateTimeFun.getNow();
           FnSystem.SetLastSyncTime(LastSyncTime);
 
-          FnSystem.ShowByGroup(result);
-
-          if (successFn) {
-            successFn(result);
-          }
+          FnSystem.ShowByGroup(result,function() {
+            if (successFn) {
+              successFn(result);
+            }
+          });
+        
         },
         function (err) {
           //失敗
@@ -206,7 +207,7 @@ var FnSystem = {
       });
     });
   },
-  ShowByGroup: function (strResult) {
+  ShowByGroup: function (strResult, successFn) {
     var lAppInfo = JSON.parse(strResult);
 
     lAppInfo.forEach(function (appInfo, idx) {
@@ -238,6 +239,13 @@ var FnSystem = {
         case "CheckDevFunction":
           FnSystem.CheckDevFunction(message);
           break;
+        case "CheckMType":
+          FnSystem.CheckMType(message,function(){
+            if(successFn){
+              successFn();
+            }
+          });
+          break;
         case "CheckDeviceINS":
           FnSystem.CheckDeviceINS(message);
           break;
@@ -253,6 +261,8 @@ var FnSystem = {
           //FnCtrl.alert(strResult);
           break;
       }
+
+      Log.write(idx, "FnSystem ShowByGroup idx");
     });
   },
   CheckUpdate: function (VersionNo) {
@@ -416,6 +426,25 @@ var FnSystem = {
       CustomInfo.setFunction();
     } catch (error) {
       Log.write(error, "FnSystem CheckDevFunction");
+    }
+  },
+  CheckMType: function (strJson, successFn) {
+    Log.write(strJson + " / " + Domain.VersionNo, "FnSystem CheckMType");
+
+    try {
+
+      var lMType = JSON.parse(strJson);
+      if(lMType.indexOf("BG") > 0){
+        AppConfig.lMType = lMType;
+        // Custom.setMType(lMType);
+      }
+
+      if(successFn){
+        successFn();
+      }
+
+    } catch (error) {
+      Log.write(error, "FnSystem CheckMType error");
     }
   },
   CheckDeviceINS: function (strJson) {
