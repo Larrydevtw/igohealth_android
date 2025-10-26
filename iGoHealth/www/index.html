@@ -426,15 +426,15 @@
                         data-pagename="#Timenotice">血糖量測提醒</button>
 
                     <button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToDeviceINS();"
-                        data-pagename="#Instructions">三高機操作說明</button>
+                        data-pagename="#Instructions">設備操作說明</button>
 
                     <button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToStandardInfo();"
-                        data-pagename="#StandardInfo">三高量測標準值範圍</button>
+                        data-pagename="#StandardInfo">量測標準值範圍</button>
 
                     <button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToMeasureScan();"
-                        data-pagename="#divMeasureScan">主要照護者量測三高</button>
+                        data-pagename="#divMeasureScan">主要照護者量測</button>
 
-                    <button class="IPbtn parent" id="txtDisplayName">林小花（顯示姓名）</button>
+                    <button class="IPbtn parent" id="txtDisplayName"></button>
 
                     <ul>
                         <li><button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToProfile();" data-pagename="#profile">個人資料</button></li>
@@ -456,7 +456,7 @@
                             <div class="title">
                                 <label>血糖</label>
                             </div>
-                            <img src="./images/diabetes-test.svg">
+                            <img src="./images/icon/main_BG.svg">
                         </div>
                         <div class="h-start-center card-right">
                             <div>
@@ -474,7 +474,7 @@
                             <div class="title">
                                 <label>血壓</label>
                             </div>
-                            <img src="./images/blood-pressure.svg">
+                            <img alt="" src="./images/icon/main_BP.svg" />
                         </div>
                         <div class="h-start-center card-right">
                             <div class="f-center-between">
@@ -505,11 +505,11 @@
                             <div class="title">
                                 <label>膽固醇</label>
                             </div>
-                            <img src="./images/cholesterol.svg">
+                            <img src="./images/icon/main_CHOL.svg">
                         </div>
                         <div class="h-start-center card-right">
                             <div>
-                                <label class="value" id="MCHOL_Value1">--</label><span  id="CHOL_Unit">mg/dL</span>
+                                <label class="value" id="MCHOL_Value1">--</label><span  id="CHOL_Unit"> mg/dL</span>
                             </div>
                             <p id="MP_NDate_CHOL">----/--/-- --:--</p>
                         </div>
@@ -522,11 +522,11 @@
                             <div class="title">
                                 <label>尿酸</label>
                             </div>
-                            <img src="./images/cholesterol.svg">
+                            <img src="./images/icon/main_UA.svg">
                         </div>
                         <div class="h-start-center card-right">
                             <div>
-                                <label class="value" id="MUA_Value1">--</label><span id="UA_Unit">mg/dL</span>
+                                <label class="value" id="MUA_Value1">--</label><span id="UA_Unit"> mg/dL</span>
                             </div>
                             <p id="MP_NDate_UA">----/--/-- --:--</p>
                         </div>
@@ -536,13 +536,13 @@
                     <div class="f-start-center">
                         <div class="h-start-center card-left">
                             <div class="title">
-                                <label>三酸甘油脂</label>
+                                <label>三甘油酯</label>
                             </div>
-                            <!-- <img src="./images/cholesterol.svg"> -->
+                            <img src="./images/icon/main_TG.svg">
                         </div>
                         <div class="h-start-center card-right">
                             <div>
-                                <label class="value" id="MTG_Value1">--</label><span id="TG_Unit">mg/dL</span>
+                                <label class="value" id="MTG_Value1">--</label><span id="TG_Unit"> mg/dL</span>
                             </div>
                             <p id="MP_NDate_TG">----/--/-- --:--</p>
                         </div>
@@ -554,11 +554,11 @@
                             <div class="title">
                                 <label>血紅素</label>
                             </div>
-                            <img src="./images/diabetes-test.svg">
+                            <img src="./images/icon/main_HB.svg">
                         </div>
                         <div class="h-start-center card-right">
                             <div>
-                                <label class="value" id="MHB_Value1">--</label><span id="HB_Unit">g/dL</span>
+                                <label class="value" id="MHB_Value1">--</label><span id="HB_Unit"> g/dL</span>
                             </div>
                             <p id="MP_NDate_HB">----/--/-- --:--</p>
                         </div>
@@ -580,7 +580,7 @@
                 <div><a id="tabHistory_btnBP" onclick="Measure.showHistory('BP','N');" class="D color-MBP chartvalues btn" data-chartvalues="100,102,103,95,96,110,108,103,92,94,96,111,107,102">血壓</a></div>
                 <div><a id="tabHistory_btnCHOL" onclick="Measure.showHistory('CHOL','N');" class="C color-MCHOL chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">膽固醇</a></div>
                 <div><a id="tabHistory_btnUA" onclick="Measure.showHistory('UA','N');" class="UA color-MUA chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168" style="display: none;">尿酸</a></div>
-                <div><a id="tabHistory_btnTG" onclick="Measure.showHistory('TG','N');" class="TG color-MTG chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168" style="display: none;">三酸甘油脂</a></div>
+                <div><a id="tabHistory_btnTG" onclick="Measure.showHistory('TG','N');" class="TG color-MTG chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168" style="display: none;">三酸甘油酯</a></div>
                 <div><a id="tabHistory_btnHB" onclick="Measure.showHistory('HB','N');" class="HB color-MHB chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168" style="display: none;">血紅素</a></div>
             </div>
             <div class="chartContainer">
@@ -701,7 +701,7 @@
                 <div><a id="tabManual_btnBP" onclick="MeasureManual.showByMType('BP');" class="btn color-MBP">血壓</a></div>
                 <div><a id="tabManual_btnCHOL" onclick="MeasureManual.showByMType('CHOL');" class="btn color-MCHOL">膽固醇</a></div>
                 <div><a id="tabManual_btnUA" onclick="MeasureManual.showByMType('UA');" class="btn color-MUA" style="display: none;">尿酸</a></div>
-                <div><a id="tabManual_btnTG" onclick="MeasureManual.showByMType('TG');" class="btn color-MTG" style="display: none;">三酸甘油脂</a></div>
+                <div><a id="tabManual_btnTG" onclick="MeasureManual.showByMType('TG');" class="btn color-MTG" style="display: none;">三酸甘油酯</a></div>
                 <div><a id="tabManual_btnHB" onclick="MeasureManual.showByMType('HB');" class="btn color-MHB" style="display: none;">血紅素</a></div>
             </div>
             <div class="chartContainer">
@@ -762,7 +762,7 @@
                         </div>
                         <div id="tabManual_TG" style="display:none">
                             <div class="input login-input mb-1">
-                                <span>三酸甘油脂 mg/dL：</span>
+                                <span>三酸甘油酯 mg/dL：</span>
                                 <input type="number" class="mt-1" id="txtMPM_TG" placeholder="請輸入數值" />
                             </div>
                         </div>
@@ -944,8 +944,8 @@
             </div>
         </div>
 
-        <!--主要照護者量測三高-->
-        <div id="divMeasureScan" class="block" data-navname="主要照護者量測三高" style="display:none">
+        <!--主要照護者量測-->
+        <div id="divMeasureScan" class="block" data-navname="主要照護者量測" style="display:none">
             <div class="h-center-center">
                 <div class="mt-1 mb-1">
                     <span>
@@ -972,8 +972,8 @@
         
             </div>
         </div>
-        <!--主要照護者測量三高 民眾手機-->
-        <div id="divMeasureScanMode" class="block" data-navname="主要照護者量測三高" style="display:none;">
+        <!--主要照護者測量 民眾手機-->
+        <div id="divMeasureScanMode" class="block" data-navname="主要照護者量測" style="display:none;">
             <div id="MeasureScanMode_Manual" class="h-center-center" >
                 <div class="mt-1 mb-1">
                     <span>
@@ -1025,12 +1025,12 @@
             <div id="MeasureScanMode_Confirm" class="h-center-center" style="display: none;">
                 <p data-i18n="掃碼量測確認_Info">* 確認身分無誤後，點選下方開始量測按鈕開始進行量測。</p>
                 <div class="w-100 mt-1">
-                    <button onclick="MeasureScan.startMeasure();" class="IPbtn full round gotoPage" data-pagename="#主要照護者測量三高" data-i18n="開始量測">
+                    <button onclick="MeasureScan.startMeasure();" class="IPbtn full round gotoPage" data-pagename="#主要照護者測量" data-i18n="開始量測">
                         開始量測
                     </button>
                 </div>
                 <div class="w-100 mt-1">
-                    <button onclick="MeasureScan.backToScan();" class="IPbtn full round gotoPage" data-pagename="#主要照護者測量三高">
+                    <button onclick="MeasureScan.backToScan();" class="IPbtn full round gotoPage" data-pagename="#主要照護者測量">
                         返回至輸入民眾帳號
                     </button>
                 </div>
@@ -1039,19 +1039,19 @@
                 <div id="MeasureScanMode_Test" style="display: none;">
                     <div class="w-100 mt-1">
                         <button onclick="MeasureScan.testBTData('People');" class="IPbtn full round gotoPage"
-                            data-pagename="#主要照護者測量三高">
+                            data-pagename="#主要照護者測量">
                             藍牙測試(People)
                         </button>
                     </div>
                     <div class="w-100 mt-1">
                         <button onclick="MeasureScan.testBTData('Scan');" class="IPbtn full round gotoPage"
-                            data-pagename="#主要照護者測量三高">
+                            data-pagename="#主要照護者測量">
                             藍牙測試(Scan)
                         </button>
                     </div>
                 </div>             
                 <div class="w-100 mt-1">
-                    <button onclick="MeasureScan.backToScan();" class="IPbtn full round gotoPage" data-pagename="#主要照護者測量三高">
+                    <button onclick="MeasureScan.backToScan();" class="IPbtn full round gotoPage" data-pagename="#主要照護者測量">
                         返回至輸入民眾帳號
                     </button>
                 </div>
@@ -1083,8 +1083,8 @@
                 </div>
             </div>
         </div>
-         <!--主要照護者測量三高 開始測量-->
-         <div id="measure_2-7" class="block" data-navname="三高量測標準值範圍" style="display:none;">
+         <!--主要照護者測量 開始測量-->
+         <div id="measure_2-7" class="block" data-navname="量測標準值範圍" style="display:none;">
             <div class="h-center-center">
                 <div class="mt-1 mb-1">
                     <span>
@@ -1122,8 +1122,8 @@
                 </div>
             </div>
         </div>
-        <!--主要照護者測量三高 開始測量-->
-        <div id="measure_2-8" class="block" data-navname="主要照護者量測三高" style="display:none;">
+        <!--主要照護者測量 開始測量-->
+        <div id="measure_2-8" class="block" data-navname="主要照護者量測" style="display:none;">
             <div class="h-center-center">
                 <div class="h-center-center w-100">
                     <div class="rData">
@@ -1163,8 +1163,8 @@
             </div>
         </div>
 
-        <!--三高機操作說明-->
-        <div id="Instructions" class="block" data-navname="三高機操作說明" data-parent="#MainHome" style="display:none;">
+        <!--設備操作說明-->
+        <div id="Instructions" class="block" data-navname="設備操作說明" data-parent="#MainHome" style="display:none;">
             <div class="h-center-center">
                 <img src="./images/step1.png" />
                 <h3>血壓/血糖/膽固醇監測系統</h3>
@@ -1192,8 +1192,8 @@
             </div>
         </div>
 
-        <!--三高量測標準值範圍-->
-        <div id="StandardInfo" class="block" data-navname="三高量測標準值範圍" data-parent="#MainHome" style="display:none;">
+        <!--量測標準值範圍-->
+        <div id="StandardInfo" class="block" data-navname="量測標準值範圍" data-parent="#MainHome" style="display:none;">
             <!-- <h3 class='color-MBG'>非糖友標準值</h3>
             <div class='h-center-center'>
                 <div class='rData'>

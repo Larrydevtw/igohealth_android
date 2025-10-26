@@ -244,7 +244,7 @@ var iniDB = iniDB || {},
                     "Memo TEXT" + //雲端Service的流水號，未來Service會去掉流水號，目前先暫存至Memo欄位 20180306新增
                     " );"
                 );
-                //三酸甘油脂資料 20250901新增
+                //三酸甘油酯資料 20250901新增
                 tx.executeSql(
                   "CREATE TABLE IF NOT EXISTS Management_TG ( " +
                     "MRowID INTEGER PRIMARY KEY AUTOINCREMENT," + //流水號
@@ -255,7 +255,7 @@ var iniDB = iniDB || {},
                     "UploadStatus TEXT," +
                     "MRowKey TEXT," +
                     "MRowSId TEXT," +
-                    "TG TEXT," + //三酸甘油脂(mg/dL)
+                    "TG TEXT," + //三酸甘油酯(mg/dL)
                     "StandardLevel TEXT," +
                     "Warnings TEXT," +
                     "MFlag TEXT," +

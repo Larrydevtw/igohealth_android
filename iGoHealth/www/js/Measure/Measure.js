@@ -224,7 +224,7 @@ var Measure = {
                 HtmlStr += '<div>' + $.i18n('尿酸') + '</div>';
                 break;
             case "TG":
-                HtmlStr += '<div>' + $.i18n('三酸甘油脂') + '</div>';
+                HtmlStr += '<div>' + $.i18n('三酸甘油酯') + '</div>';
                 break;
             case "HB":
                 HtmlStr += '<div>' + $.i18n('血紅素') + '</div>';

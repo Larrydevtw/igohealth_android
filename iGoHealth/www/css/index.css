@@ -363,15 +363,15 @@ input:checked + .slider:before {
 #MBG{border-color:#0BA29A ;}
 #MBP{border-color:#FF7E86}
 #MCHOL{border-color:#3797F0}
-#MUA{border-color:#0BA29A ;}
-#MTG{border-color:#3797F0}
-#MHB{border-color:#FF7E86}
+#MUA{border-color:#ef7f1a ;}
+#MTG{border-color:#6d2267}
+#MHB{border-color:#df436a}
 #MBG .title, .color-MBG{color:#0BA29A ;}
 #MBP .title, .color-MBP{color:#FF7E86}
 #MCHOL .title, .color-MCHOL{color:#3797F0}
-#MUA .title, .color-MUA{color:#0BA29A ;}
-#MTG .title, .color-MTG{color:#3797F0}
-#MHB .title, .color-MHB{color:#FF7E86}
+#MUA .title, .color-MUA{color:#ef7f1a ;}
+#MTG .title, .color-MTG{color:#6d2267}
+#MHB .title, .color-MHB{color:#df436a}
 #MBP .subCard {padding: 10px;}
 #MBP .subCard label{color: #FF7E86;}
 #MBP .subCard .value{font-size: 2em;}
@@ -426,7 +426,7 @@ input:checked + .slider:before {
 
 /* 3. 確保按鈕文字不會斷行 (可選，但建議) */
 .chartType.tabMTypes > div > a {
-  /* 防止 "三酸甘油脂" 這類較長的文字被斷成兩行 */
+  /* 防止 "三酸甘油酯" 這類較長的文字被斷成兩行 */
   white-space: nowrap; 
 }
 
@@ -438,9 +438,9 @@ input:checked + .slider:before {
 .chartType > div .btn.active.color-MBP{color:#FF7E86;border-color:#FF7E86 ;}
 .chartType > div .btn.active.color-MCHOL{color:#3797F0;border-color:#3797F0 ;}
 .chartContainer{margin-top: 60px;}
-.chartType > div .btn.active.color-MUA {color:#0BA29A;border-color:#0BA29A ;}
-.chartType > div .btn.active.color-MTG{color:#3797F0;border-color:#3797F0 ;}
-.chartType > div .btn.active.color-MHB{color:#FF7E86;border-color:#FF7E86 ;}
+.chartType > div .btn.active.color-MUA {color:#ef7f1a;border-color:#ef7f1a ;}
+.chartType > div .btn.active.color-MTG{color:#6d2267;border-color:#6d2267 ;}
+.chartType > div .btn.active.color-MHB{color:#df436a;border-color:#df436a ;}
 .chartContainer{margin-top: 60px;}
 
 

@@ -14,7 +14,7 @@ var FnBT = {
       DAOFn.Query("", strSQL, function ResultFun(qResult) {
         var InsertArray = [
           {
-            //聿新 血糖/膽固醇/尿酸/血紅素/三酸甘油脂
+            //聿新 血糖/膽固醇/尿酸/血紅素/三酸甘油酯
             DeviceReceiveItem: "BG,CHOL,UA,TG,HB",
             DeviceModel: "ETB05",
             DeviceName: "易立測五功機",

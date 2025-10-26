@@ -1418,7 +1418,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
             );
           }
           break;
-        case "ETB05": //聿新科血糖、尿酸、膽固醇、三酸甘油脂、血紅素 五合一
+        case "ETB05": //聿新科血糖、尿酸、膽固醇、三酸甘油酯、血紅素 五合一
           //無 "回傳多筆紀錄" 的功能
           if (MSCordovaBLE.MySetting.OnlyLastestData == true) {
             //true -> 只回傳最新的一筆紀錄
