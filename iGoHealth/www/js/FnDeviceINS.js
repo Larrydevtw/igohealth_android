@@ -65,8 +65,20 @@ var FnDeviceINS = {
             alert(e);
         }
     },
+    showByDevice: function (device) {
+        Log.write(device, "showByDevice");
+        $(".devicecard").hide();
+        switch(device){
+            case "B04":
+            case "B05":
+                $("#device_detail_" + device).show();
+                break;
+        }
+    },
     showByGroup: function (group) {
         Log.write(group, "showByGroup");
+        $(".devicecard").show();
+        $(".devicecard_detail").hide();
         FnDeviceINS.BindData(group, function () {
             Log.write("BindData success", "showByGroup");
         });

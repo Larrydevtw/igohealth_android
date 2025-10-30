@@ -563,7 +563,7 @@ var MainHome = MainHome || {},
       WiseScripts.Tool.NextPop(
         "StandardInfo",
         function () {
-          FnDeviceINS.showByGroup("");
+          //FnDeviceINS.showByGroup("");
         },
         null,
         "T"

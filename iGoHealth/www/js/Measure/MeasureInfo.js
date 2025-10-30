@@ -3,15 +3,15 @@ var MeasureInfo={
     Interval: "7", //查詢區間
     Gender: "", //M:男 F:女 //TODO No Use
   Age: "", //TODO No Use
-  lConvertMType: ["BG", "UA", "TG", "CHOL"],
+  lConvertMType: ["BG", "UA", "TG", "CHOL","HB"],
     DisplayRange: { //顯示數值高低區間
         BG: {
             Min: 0,
             Max: 250
         },
         UA: {
-            Min: 90,
-            Max: 550
+            Min: 0,
+            Max: 30
         },
         CHOL: {
             Min: 0,
@@ -23,7 +23,7 @@ var MeasureInfo={
         },
         HB: {
             Min: 0,
-            Max: 20,
+            Max: 25,
         },
     },
     Range: { //輸入範圍限制
@@ -41,7 +41,7 @@ var MeasureInfo={
     },
     HB: {
       Min: 0,
-      Max: 20,
+      Max: 30,
         },
         CHOL: {
             Min: 0,
@@ -90,7 +90,7 @@ var MeasureInfo={
 
   HB_Unit: " g/dL", //單位
   HB_Convert_Num: 1, //轉換數值
-  HB_Display_Num: 0, //顯示小數點以下第幾位
+  HB_Display_Num: 1, //顯示小數點以下第幾位
 
   CHOL_Unit:" mg/dL", //單位: tw(t):mg/dL；cn(c):mmol/L t/38.67=c (小數下一位，無條件捨去)
     CHOL_Convert_Num:1, //轉換數值
@@ -157,14 +157,6 @@ var MeasureInfo={
             Max: 999
         };
 
-        var UA_Unit = "";
-        var UA_Convert_Num=1;
-        var UA_Display_Num=1;
-        var Range_UA = { //輸入範圍限制
-            Min: 0,
-            Max: 20
-        };
-
         var CHOL_Unit = "";
         var CHOL_Convert_Num=1;
         var CHOL_Display_Num=0;
@@ -172,6 +164,33 @@ var MeasureInfo={
             Min: 0,
             Max: 999
         };
+
+        var UA_Unit = "";
+        var UA_Convert_Num = 1;
+        var UA_Display_Num = 1;
+        var Range_UA = {
+          //輸入範圍限制
+          Min: 0,
+          Max: 20,
+        };
+
+        var TG_Unit = "";
+        var TG_Convert_Num = 1;
+        // var TG_Display_Num = 0;
+        // var Range_TG = {
+        //   //輸入範圍限制
+        //   Min: 0,
+        //   Max: 999,
+        // };
+
+        var HB_Unit = "";
+        var HB_Convert_Num = 1;
+        // var HB_Display_Num = 0;
+        // var Range_HB = {
+        //   //輸入範圍限制
+        //   Min: 0,
+        //   Max: 20,
+        // };
 
         switch (localLang) {
             case "zh-hans":
@@ -184,15 +203,6 @@ var MeasureInfo={
                 };
                 BG_Display_Num=1;
 
-                UA_Unit = " umol/L";
-                UA_Convert_Num=1.0;
-
-                Range_UA = { //輸入範圍限制
-                    Min: 0,
-                    Max: 1000
-                };
-                UA_Display_Num=0;
-
                 CHOL_Unit = " mmol/L";
                 CHOL_Convert_Num=38.67;
 
@@ -201,16 +211,51 @@ var MeasureInfo={
                     Max: 30
                 };
                 CHOL_Display_Num=1;
+
+                UA_Unit = " umol/L";
+                UA_Convert_Num = 1.0;
+
+                Range_UA = {
+                  //輸入範圍限制
+                  Min: 0,
+                  Max: 1000,
+                };
+                UA_Display_Num = 0;
+
+                TG_Unit = " mmol/L";
+                TG_Convert_Num=88.57;
+
+                // Range_TG = { //輸入範圍限制
+                //     Min: 0,
+                //     Max: 1000
+                // };
+                // TG_Display_Num=0;
+
+                HB_Unit = " g/dL";
+                HB_Convert_Num = 1.0;
+
+                // Range_HB = {
+                //   //輸入範圍限制
+                //   Min: 0,
+                //   Max: 1000,
+                // };
+                // HB_Display_Num = 0;
                 break;
             default: //zh-hant
                 BG_Unit = " mg/dL";
                 BG_Convert_Num=1;
 
-                UA_Unit = " mg/dL";
-                UA_Convert_Num=59.5;
-
                 CHOL_Unit = " mg/dL";
-                CHOL_Convert_Num=1;
+                CHOL_Convert_Num = 1;
+
+                UA_Unit = " mg/dL";
+                UA_Convert_Num = 59.5;
+
+                TG_Unit = " mg/dL";
+                TG_Convert_Num = 1;
+
+                HB_Unit = " g/dL";
+                HB_Convert_Num = 10;          
                 break;
         }
         //alert(BG_Unit);
@@ -220,17 +265,29 @@ var MeasureInfo={
         MeasureInfo.Range.BG=Range_BG;
         MeasureInfo.BG_Display_Num=BG_Display_Num;
 
+        $("#CHOL_Unit").text(CHOL_Unit);
+        MeasureInfo.CHOL_Unit = CHOL_Unit;
+        MeasureInfo.CHOL_Convert_Num=CHOL_Convert_Num;
+        MeasureInfo.Range.CHOL=Range_CHOL;
+        MeasureInfo.CHOL_Display_Num=CHOL_Display_Num;
+
         $("#UA_Unit").text(UA_Unit);
         MeasureInfo.UA_Unit = UA_Unit;
         MeasureInfo.UA_Convert_Num=UA_Convert_Num;
         MeasureInfo.Range.UA=Range_UA;
         MeasureInfo.UA_Display_Num=UA_Display_Num;
 
-        $("#CHOL_Unit").text(CHOL_Unit);
-        MeasureInfo.CHOL_Unit = CHOL_Unit;
-        MeasureInfo.CHOL_Convert_Num=CHOL_Convert_Num;
-        MeasureInfo.Range.CHOL=Range_CHOL;
-        MeasureInfo.CHOL_Display_Num=CHOL_Display_Num;
+        $("#TG_Unit").text(TG_Unit);
+        MeasureInfo.TG_Unit = TG_Unit;
+        MeasureInfo.TG_Convert_Num = TG_Convert_Num;
+        // MeasureInfo.Range.TG = Range_TG;
+        // MeasureInfo.TG_isplay_Num = TG_Display_Num;
+
+        $("#HB_Unit").text(HB_Unit);
+        MeasureInfo.HB_Unit = HB_Unit;
+        MeasureInfo.HB_Convert_Num = HB_Convert_Num;
+        // MeasureInfo.Range.HB = Range_HB;
+        // MeasureInfo.HB_Display_Num = HB_Display_Num;
 
         if(localeChangeType === "change"){
             MeasureInfo.reloadMValue();
@@ -277,6 +334,7 @@ var MeasureInfo={
             case "UA":
             case "TG":
             case "CHOL":
+            case "HB":
                 Convert_Num = MeasureInfo[MType+"_Convert_Num"];
                 Display_Num=Math.pow(10,MeasureInfo[MType+"_Display_Num"]);
                 Log.write(Convert_Num+","+Display_Num,'convertMValue');
@@ -313,6 +371,20 @@ var MeasureInfo={
                     Convert_Num =1;
                 }else{
                     Convert_Num =MeasureInfo.CHOL_Convert_Num;
+                }          
+                break;
+            case "TG": 
+                if(isFromDevice==="Y"){
+                    Convert_Num =1;
+                }else{
+                    Convert_Num =MeasureInfo.TG_Convert_Num;
+                }          
+                break;
+            case "HB": 
+                if(isFromDevice==="Y"){
+                    Convert_Num =1;
+                }else{
+                    Convert_Num =MeasureInfo.HB_Convert_Num;
                 }          
                 break;
             default:

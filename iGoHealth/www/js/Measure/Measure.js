@@ -894,7 +894,7 @@ var Measure = {
                 break;
         }
 
-        if (MType === "BG" || MType === "UA" || MType === "TG" || MType === "CHOL") {
+        if (MType === "BG" || MType === "UA" || MType === "TG" || MType === "CHOL" || MType === "HB") {
             ValueArr[0] = MeasureInfo.convertMValue(MType, ValueArr[0], DeviceModel);
         }
         //alert(ValueArr+"Measure showValue " + MType+isAnimate+MTimeStamp);

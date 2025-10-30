@@ -1164,10 +1164,36 @@
         </div>
 
         <!--設備操作說明-->
-        <div id="Instructions" class="block" data-navname="設備操作說明" data-parent="#MainHome" style="display:none;">
+        <div id="Instructions" class="block" data-navname="設備操作說明" data-parent="#MainHome" style="display: none;">
             <div class="h-center-center">
-                <img src="./images/step1.png" />
+                <div class="card devicecard" onclick="FnDeviceINS.showByDevice('B04');">
+                    <div class="f-start-center card-left">
+                        <div class="h-start-center">
+                            <!-- <img src="./images/icon/main_BG.svg" /> -->
+                        </div>
+                        <div class="h-start-center card-right">
+                            <div>
+                                <h3 class="value">血壓/血糖/膽固醇監測系統</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card devicecard" onclick="FnDeviceINS.showByDevice('B05');">
+                    <div class="f-start-center card-left">
+                        <div class="h-start-center">
+                            <!-- <img src="./images/icon/main_BG.svg" /> -->
+                        </div>
+                        <div class="h-start-center card-right">
+                            <div>
+                                <h3 class="value">五功機</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="device_detail_B04" class="h-center-center devicecard_detail" style="display:none;">
                 <h3>血壓/血糖/膽固醇監測系統</h3>
+                <img src="./images/step1.png" />
                 <p>藍牙智能傳輸：</p>
                 <ul>
                     <li>手機開啟APP與藍牙功能</li>
@@ -1189,6 +1215,10 @@
                         <img src="./images/step3.png" />
                     </li>
                 </ul>
+            </div>
+            <div id="device_detail_B05" class="h-center-center devicecard_detail" style="display:none;">
+                <h3>五功機</h3>
+                <img style="width: 100%;" src="./images/devices/5050/B05/Step_01.jpg" />                  
             </div>
         </div>
 
