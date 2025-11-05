@@ -20,6 +20,7 @@ var app = {
     onBackFlag: "Y",
     // Application Constructor
     initialize: function () {
+        Log.write("initialize", "index.js");
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
     },
 
@@ -40,32 +41,33 @@ var app = {
             Log.write("window.plugins.insomnia is undefined", 'onDeviceReady');
         }
 
-        var OS = DeviceInfo.GetOS();
-        //IOS頂部狀態列設定
-        CustomStyle.adjustStatus_H();
-
         FnGeo.arrTargets = ["signup_twzipcode", "profile_twzipcode"];
         FnGeo.init(function () { //successFn
         });
         
-        try { //抓取設備機碼  
-            Log.write(OS, 'deviceid');
-            if (OS == "Android") {
-                Log.write(device.serial.toString(), 'deviceid');
-                AppConfig.EquipmentID = device.serial.toString();
-            } else {
-                window.open = cordova.InAppBrowser.open;
-                window.plugins.uniqueDeviceID.get(
-                    function (serialID) {
-                        AppConfig.EquipmentID = serialID;
-                    });
-            }
-        } catch (err) {
-            Log.write(err, 'deviceid');
-            AppConfig.EquipmentID = "errEquipmentID";
-        }
+        DeviceInfo.init(function () {
+            Log.write(DeviceInfo.OS, "index.js DeviceInfo.init");
+            Custom.init(function(){
+                Log.write("Custom.init success", "index.js Custom.init");
+            });
+        });
+
+        DeviceInfo.GetUniqueId().then((uuid) => {
+          Log.write(
+            "My unique ID for this installation is:" + uuid,
+            "index.js GetUniqueId"
+          );
+        });
 
         ProjectFn.Wait([function (next) {
+
+            Log.write(DeviceInfo.OS, "index.js deviceOS");
+            //IOS頂部狀態列設定
+            CustomStyle.adjustStatus_H();
+            next();
+
+        },function (next) {
+            Log.write("CustomUI.init", "index.js CustomUI.init");
             CustomUI.init(function () {
                 next();
             });
@@ -75,25 +77,14 @@ var app = {
                 next();
             });
         }, function (next) {
-            cordova.getAppVersion.getVersionNumber(function (VersionNo) {
-                Domain.Version = Domain.Version + "_" + VersionNo;
-                Domain.VersionNo = VersionNo;
-                //alert("Domain.Version"+Domain.Version+"Domain.VersionNo"+Domain.VersionNo);
-                next();
-            });
-        },function(next){
-            DeviceInfo.GetOSVerion(function (OSVersion){
-
-                Log.write(OSVersion, 'OSVersion');
-                DeviceInfo.OSVersion = OSVersion;
-                DeviceInfo.OSVersionNo = OSVersion.split('.')[0];
-
-                next();
-
-            });
+            Log.write(Domain.Version, "index.js Domain.Version");
+            Log.write(Domain.VersionNo, "index.js Domain.VersionNo");
+            Domain.Version = Domain.Version + "_" + Domain.VersionNo;
+            // Domain.VersionNo = VersionNo;
+            next();
         }, function (next) {
             //使用$.i18n初始化
-            Log.write(Lang.locale, 'Lang.locale');
+            Log.write(Lang.locale, 'index.js Lang.locale');
             if (localStorage.Lang) {
                 Log.write(localStorage.Lang, 'localStorage.Lang');
             }
@@ -126,16 +117,16 @@ var app = {
             });
         }, function (next) {
             //同步App訊息
+            Log.write("FnSystem.SyncAppInfo", "index.js FnSystem.SyncAppInfo");
             FnSystem.SyncAppInfo(function () {
                 next();
             }, function () { //同步有錯
-                next();
-            });
-        }, function (next) {
-            Custom.init(function () {
+                Log.write("FnSystem.SyncAppInfo 同步有錯", "index.js FnSystem.SyncAppInfo");
                 next();
             });
         }], function () {
+
+            Log.write("PJ Success", "index.js PJ Success");
             //alert("PJ Success");
 
             //TODO:
@@ -170,7 +161,7 @@ var app = {
         document.addEventListener('pause', app.onPause.bind(this), false);
         document.addEventListener('resume', app.onResume.bind(this), false);
 
-        if (OS == "Android") { //android才有返回按鈕
+        if (DeviceInfo.OS == "android") { //android才有返回按鈕
             document.addEventListener("backbutton", app.onBack, false);
         }
 

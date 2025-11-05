@@ -287,10 +287,10 @@ var DateTimeFun = DateTimeFun || {}, DateTimeFun =
         iniDate: function (id_Date, id_Time, date) {
             var d = new Date();
             //alert(d);
-            var OS = DeviceInfo.GetOS();
+            var OS = DeviceInfo.OS;
 
             if (date !== undefined) {
-                if(OS === "iOS"){
+                if(OS === "ios"){
                     date = date.substring(0,19).replace(/-/g,'/');
                 }
                 d = new Date(date);

@@ -10,8 +10,8 @@ var FnCtrl = {
     focus: function (targetID) {
         //$("#btnSave_MPM").addEventListener('click',function(){
         //});    
-        var platform = DeviceInfo.GetOS();
-        if (platform === "Android") {
+        var platform = DeviceInfo.OS;
+        if (platform === "android") {
             $("#" + targetID).focus();
         } else {
             Log.write(platform + "平台focus無法運作", "FnCtrl.focus");
@@ -26,7 +26,7 @@ var FnCtrl = {
         return P_ID;
     },
     alert: function (message, title, fn, _buttonName) {
-        // if(device.platform === "iOS"){
+        // if(device.platform === "ios"){
         //     alert(message);
         //     return;
         // }

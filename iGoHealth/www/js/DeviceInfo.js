@@ -3,18 +3,22 @@ var DeviceInfo = {
   OS: "",
   OSVersion: "",
   OSVersionNo: 0,
-  init: function () {
-    DeviceInfo.GetOS();
-    DeviceInfo.GetOSVerion();
-    DeviceInfo.GetModel();
+  init: function (successFn) {
+    DeviceInfo.GetOS(function () {
+      DeviceInfo.GetOSVerion();
+      DeviceInfo.GetModel();
+      if (successFn) {
+        successFn();
+      }
+    });
   },
-  GetOS: function () {
-    var OS = "android"; 
-    //Android iOS
+  GetOS: function (successFn) {
+    var OS = "android";
+    //Android ios
     if (typeof device !== "undefined") {
       OS = device.platform;
     }
-    
+
     if (OS == "Android") {
       OS = "android";
     }
@@ -22,10 +26,12 @@ var DeviceInfo = {
 
     Log.write(OS, "DeviceInfo OS");
 
-    return OS;
+    if (successFn) {
+      successFn();
+    }
   },
   GetModel: function () {
-    //Android iOS
+    //Android ios
 
     var model = "";
 
@@ -33,7 +39,7 @@ var DeviceInfo = {
       model = device.model;
       Log.write(model, "DeviceInfo model");
 
-      if (DeviceInfo.OS == "iOS") {
+      if (DeviceInfo.OS == "ios") {
         model = model.substr(6, model.indexOf(",") - 6) - 1;
       }
     } catch (error) {
@@ -47,8 +53,8 @@ var DeviceInfo = {
   },
   GetOSVerion: function (successFn) {
     var OSVersion = "";
-    switch (DeviceInfo.GetOS()) {
-      case "iOS":
+    switch (DeviceInfo.OS) {
+      case "ios":
         var iOSVersion;
         var v;
         if (/iP(hone|od|ad)/.test(navigator.platform)) {
@@ -89,7 +95,7 @@ var DeviceInfo = {
 
     DeviceInfo.OSVersion = OSVersion;
     DeviceInfo.OSVersionNo = OSVersion.split(".")[0];
-
+    
     Log.write(OSVersion, "DeviceInfo");
 
     if (successFn) {
@@ -97,9 +103,43 @@ var DeviceInfo = {
     }
   },
   GetPlatform: function () {
-    return DeviceInfo.GetOS() + "_" + DeviceInfo.OSVersion;
+    return DeviceInfo.OS + "_" + DeviceInfo.OSVersion;
   },
   GetPlatformVersion: function () {
     return DeviceInfo.GetPlatform() + "^" + DeviceInfo.GetModel();
+  },
+  GetUniqueId: function () {
+    return new Promise((resolve) => {
+      let instanceId = window.localStorage.getItem("ig_app_id");
+
+      if (instanceId) {
+        Log.write(
+          "Found existing Instance ID:" + instanceId,
+          "DeviceInfo GetUniqueId"
+        );
+        resolve(instanceId);
+        return;
+      }
+
+      if (window.crypto && window.crypto.randomUUID) {
+        instanceId = window.crypto.randomUUID();
+      } else {
+        instanceId = "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(
+          /[xy]/g,
+          function (c) {
+            var r = (Math.random() * 16) | 0,
+              v = c === "x" ? r : (r & 0x3) | 0x8;
+            return v.toString(16);
+          }
+        );
+      }
+
+      window.localStorage.setItem("ig_app_id", instanceId);
+      Log.write(
+        "Generated new Instance ID:" + instanceId,
+        "DeviceInfo GetUniqueId"
+      );
+      resolve(instanceId);
+    });
   },
 };

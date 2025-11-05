@@ -172,7 +172,7 @@ var FnPoint = {
     getPointInfoData: function (UserID, successFn) {
         // Log.alert(UserID,"WSCall Measurement GET");
         var UploadData = {
-            "Platform": DeviceInfo.GetOS(),
+            "Platform": DeviceInfo.OS,
             "Version": Domain.Version,
             "VersionNo": Domain.VersionNo,
             "ID": UserID,

@@ -4,7 +4,7 @@ var Domain = {
     ServiceRoot: "/Wise_Cloud_Service/AppCloudServices",
     ServiceApi: "/HATM_Services/api/HATMApp",
     Version: "IGH", //6 版本號: tw:IGH_x.x.x cn:HCCN_x.x.x IGH_TEST_ IGH_eThink_
-    VersionNo: "", //版本號(只有號碼部分)
+    VersionNo: "1.1.1.00", //版本號(只有號碼部分)
     AppName: "i顧健康",
 
     //App功能 

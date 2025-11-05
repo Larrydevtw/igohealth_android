@@ -92,16 +92,16 @@ var MeasureScan = {
                     app.onBackFlag = "Y";
                 }, 1000);
             }, {
-                preferFrontCamera: false, // iOS and Android
-                showFlipCameraButton: false, // iOS and Android
-                showTorchButton: true, // iOS and Android
+                preferFrontCamera: false, // ios and Android
+                showFlipCameraButton: false, // ios and Android
+                showTorchButton: true, // ios and Android
                 torchOn: false, // Android, launch with the torch switched on (if available)
                 //prompt: $.i18n("請將條碼或QRCode置于取景框內"), // Android
                 resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
                 //formats: "QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
                 orientation: "portrait" // Android only (portrait|landscape), default unset so it rotates with the device
-                //,disableAnimations: true, // iOS
-                //disableSuccessBeep: false // iOS
+                //,disableAnimations: true, // ios
+                //disableSuccessBeep: false // ios
             }
         );
     },

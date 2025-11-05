@@ -13,9 +13,9 @@ var Custom = {
         }).then(function () {
             return Custom.setFontSize();
         }).then(function () {
-            var platform = DeviceInfo.GetOS();
-
-            if (platform === "iOS") {
+            var platform = DeviceInfo.OS;
+            Log.write("init success:" + platform, "Custom init");
+            if (platform === "ios") {
                 Custom.iOSKeyboardBlur();
             }
 
@@ -40,8 +40,8 @@ var Custom = {
     },
     setFontSize: function () {
         return new Promise(function (resolve, reject) {
-            if(DeviceInfo.GetOS() === "iOS"){
-                Log.write("iOS don't need to setFontSize", 'Custom setFontSize');
+            if(DeviceInfo.OS === "ios"){
+                Log.write("ios don't need to setFontSize", 'Custom setFontSize');
                 resolve();
                 return;
             }

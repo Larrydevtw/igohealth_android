@@ -3,7 +3,7 @@
 //"V_Type" = "Personal"; //Personal:民眾端、Care:照護者
 var FnDT = {
     init: function (successFn) {
-        if(DeviceInfo.GetOS()!=="Android"){
+        if(DeviceInfo.OS!=="android"){
             //alert("FnDT 非Android設備");
             return;
         }

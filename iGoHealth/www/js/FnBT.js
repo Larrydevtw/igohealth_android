@@ -263,7 +263,7 @@ var FnBT = {
       //Pooling 單一藍牙設備模式
       BTSetting.SingleDevicePoolingMode = false; //false -> 正常的scan模式, true -> pooling 單一藍牙設備模式
 
-      var OS = DeviceInfo.GetOS();
+      var OS = DeviceInfo.OS;
 
       //在單一模式下要被Pooling 的藍牙設備位址
       if (OS === "android") {
@@ -396,7 +396,7 @@ var FnBT = {
     // if (BTWinHasOpen) //todo 目前不知道功用為何
     //     return;
     //BTWinHasOpen = true;
-    var OS = DeviceInfo.GetOS();
+    var OS = DeviceInfo.OS;
     Log.write(
       "OS:" +
         OS +

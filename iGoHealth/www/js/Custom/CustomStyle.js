@@ -6,11 +6,10 @@ var CustomStyle = {
             bannerHeight = CustomStyle.banner_H;
         }
 
-        if (DeviceInfo.GetOS() === "Android") { //android
+        if (DeviceInfo.OS === "android") { //android
             $(".MD_full").hide();
             $(".MD_nav").show();
             Log.write("android平台 " + bannerHeight, "index.js 頂部狀態列設定");
-            return;
         } else { //ios
             $(".MD_full").show();
             $(".MD_nav").hide();
@@ -46,7 +45,7 @@ var CustomStyle = {
         // var statusBarHeight="0px";
         // var headerHeight = $(".header").css("height");
         // //TODO
-        // if (DeviceInfo.GetOS() === "Android") { //android
+        // if (DeviceInfo.OS === "android") { //android
         //     Log.write("android平台 " + bannerHeight, "index.js 頂部狀態列設定");
         //     return;
         // } else { //ios

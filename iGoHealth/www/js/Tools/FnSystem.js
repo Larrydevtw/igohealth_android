@@ -29,7 +29,7 @@ var FnSystem = {
 
       var UploadData = {
         ID: localStorage.UserID,
-        Platform: DeviceInfo.GetOS(),
+        Platform: DeviceInfo.OS,
         PlatformVersion: DeviceInfo.GetPlatformVersion(),
         Version: Domain.Version,
         VersionNo: Domain.VersionNo,
@@ -84,7 +84,7 @@ var FnSystem = {
       FnSystem.GetLastSyncTime().then(function (LastSyncTime) {
         var UploadData = {
           ID: localStorage.UserID,
-          Platform: DeviceInfo.GetOS(),
+          Platform: DeviceInfo.OS,
           PlatformVersion: DeviceInfo.GetPlatformVersion(),
           Version: Domain.Version,
           VersionNo: Domain.VersionNo,
@@ -143,7 +143,7 @@ var FnSystem = {
     }
     FnSystem.GetLastSyncTime().then(function (LastSyncTime) {
       var UploadData = {
-        Platform: DeviceInfo.GetOS(),
+        Platform: DeviceInfo.OS,
         PlatformVersion: DeviceInfo.GetPlatformVersion(),
         Version: Domain.Version,
         VersionNo: Domain.VersionNo,
@@ -210,8 +210,10 @@ var FnSystem = {
   ShowByGroup: function (strResult, successFn) {
     var lAppInfo = JSON.parse(strResult);
 
+    Log.write("lAppInfo length:" + lAppInfo.length, "FnSystem ShowByGroup");
+
     lAppInfo.forEach(function (appInfo, idx) {
-      Log.write(JSON.stringify(appInfo), "ShowByGroup");
+      Log.write(JSON.stringify(appInfo), "FnSystem ShowByGroup appInfo");
 
       var group = appInfo.Group;
       var message = appInfo.Message;
@@ -240,11 +242,7 @@ var FnSystem = {
           FnSystem.CheckDevFunction(message);
           break;
         case "CheckMType":
-          FnSystem.CheckMType(message,function(){
-            if(successFn){
-              successFn();
-            }
-          });
+          FnSystem.CheckMType(message);
           break;
         case "CheckDeviceINS":
           FnSystem.CheckDeviceINS(message);
@@ -261,8 +259,14 @@ var FnSystem = {
           //FnCtrl.alert(strResult);
           break;
       }
+      Log.write("group:" + group + ",idx:" + idx, "FnSystem ShowByGroup idx");
 
-      Log.write(idx, "FnSystem ShowByGroup idx");
+      if(idx == lAppInfo.length-1){
+        Log.write("success", "FnSystem ShowByGroup");
+        if (successFn) {
+          successFn();
+        }
+      }
     });
   },
   CheckUpdate: function (VersionNo) {
@@ -286,11 +290,11 @@ var FnSystem = {
       function confirmCallback(btnIndex) {
         switch (btnIndex) {
           case 1:
-            var OS = DeviceInfo.GetOS();
+            var OS = DeviceInfo.OS;
             var url = "";
 
             window.open(url);
-            if (OS === "iOS") {
+            if (OS === "ios") {
               url =
                 "itms-apps://itunes.apple.com/us/app/i%E9%A1%A7%E5%81%A5%E5%BA%B7/id1576044908";
             } else {
@@ -321,7 +325,7 @@ var FnSystem = {
 
     //Display StandardValue
     var displayStandardValue = appInfo.Data;
-    $("#StandardInfo").html(displayStandardValue);
+    $("#StandardInfo_Content").html(displayStandardValue);
 
     var StandardInfo = JSON.parse(strStandardInfo);
     var VersionNo = StandardInfo.VersionNo;
@@ -350,7 +354,7 @@ var FnSystem = {
   },
   UpdateStandardValue: function (successFn, errFn) {
     var UploadData = {
-      Platform: DeviceInfo.GetOS(),
+      Platform: DeviceInfo.OS,
       PlatformVersion: DeviceInfo.GetPlatformVersion(),
       Version: Domain.Version,
       VersionNo: Domain.VersionNo,
@@ -493,7 +497,7 @@ var FnSystem = {
   },
   QueueLog: function (message, action) {
     var LogData = {
-      Platform: DeviceInfo.GetOS(),
+      Platform: DeviceInfo.OS,
       PlatformVersion: DeviceInfo.GetPlatformVersion(),
       Version: Domain.Version,
       VersionNo: Domain.VersionNo,
@@ -536,7 +540,7 @@ var FnSystem = {
   },
   CallLog: function (action, message, successFn, errFn) {
     var UploadData = {
-      Platform: DeviceInfo.GetOS(),
+      Platform: DeviceInfo.OS,
       PlatformVersion: DeviceInfo.GetPlatformVersion(),
       Version: Domain.Version,
       VersionNo: Domain.VersionNo,
