@@ -247,6 +247,17 @@ var MSCordovaBLE = MSCordovaBLE || {},
       WriteLog.write("藍牙錯誤，重啟scan!", "error");
       //啟動修復↑↑↑
     },
+    StopScan: function() {
+        bluetoothle.stopScan(() => {
+            console.log("");
+            WriteLog.write("掃描已停止");
+        }, (error) => {
+            WriteLog.write(
+              "停止掃描失敗: " + JSON.stringify(error),
+              "StopScan"
+            );
+        });
+    },
     //掃瞄藍牙設備
     startScan: function () {
       if (!MSCordovaBLE.BT_Auth) {
@@ -317,18 +328,10 @@ var MSCordovaBLE = MSCordovaBLE || {},
             }
           };
 
-          bluetoothle.stopScan(
-            function () {
-              setTimeout(function () {
-                vStartFn();
-              }, 2000);
-            },
-            function () {
-              setTimeout(function () {
-                vStartFn();
-              }, 2000);
-            }
-          );
+          setTimeout(function () {
+            vStartFn();
+          }, 1000);
+
         } catch (error) {
           MSCordovaBLE.handleError(error);
         }
@@ -441,12 +444,13 @@ var MSCordovaBLE = MSCordovaBLE || {},
           //B設備模糊名:
           //...
 
-          //WriteLog.write("找到設備:" + result.name + "/" + result.address);
+          WriteLog.write("找到設備:" + result.name + "/" + result.address);
           MSCordovaBLE.inDeviceList(
             result.name,
             function (
               flag //避免一直open DB造成速度下降
             ) {
+              WriteLog.write("MSCordovaBLE.inDeviceList flag:" + flag);
               if (flag) {
                 //如果有在設備清單內
                 //document.getElementById("devices").innerHTML = "";
@@ -459,7 +463,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
                   "掃描到藍牙設備:" + result.name + "/" + result.address,
                   "status"
                 );
-                WriteLog.write(result);
+                WriteLog.write(JSON.stringify(result));
                 MSCordovaBLE.foundDevices.push(result);
 
                 MSCordovaBLE.MySetting.ScanCallBackFn(result); //呼叫外部的 ScanCallBackFn
@@ -517,12 +521,18 @@ var MSCordovaBLE = MSCordovaBLE || {},
       //   "connectB"
       // );
 
+      this.StopScan();
+
       setTimeout(function () {
         MSCordovaBLE.connectProc(result);
       }, 10);
     },
     connectProc: function (result) {
       MSCordovaBLE.NowStep = "connect";
+      WriteLog.write(
+        "連接到設備中... : " + JSON.stringify(result),
+        "connectProc"
+      );
       if (window.cordova.platformId === "android") {
         if (result.name === "FLG-756") {
           //歐瑟若體脂機需要先做硬體配對,不然讀寫資料會失敗!
@@ -630,8 +640,8 @@ var MSCordovaBLE = MSCordovaBLE || {},
               address: result.address,
             });
           }).then(
-            MSCordovaBLE.connectSuccess,
-            MSCordovaBLE.handleErrorAndToClose
+            this.connectSuccess,
+            this.handleErrorAndToClose
           );
         }
       } else if (window.cordova.platformId === "ios") {
@@ -675,7 +685,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
     },
     connectSuccess: function (result) {
       MSCordovaBLE.NowStep = "connectSuccess";
-      WriteLog.write(result);
+      WriteLog.write("connectSuccess:" + JSON.stringify(result));
       //alert("connectSuccess:"+JSON.stringify(result));
       if (result.status === "connected") {
         //記錄已連接設備
@@ -1867,6 +1877,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
     //Sqlite DB 處理函式
 
     inDeviceList: function (deviceName, callBack) {
+      WriteLog.write("inDeviceList check:" + deviceName);
       if (deviceName == null) {
         callBack(false);
         return;

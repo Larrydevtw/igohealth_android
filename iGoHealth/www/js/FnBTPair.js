@@ -200,7 +200,7 @@ var FnBTPair = {
       name: DevName,
       id: DevID
     };
-    var OS = WiseScripts.Tool.MobileType.IsAndroid() ? "android" : "iOS";
+    var OS = DeviceInfo.OS;
     //if(OS==="android"){//TODO IOS目前沒有關機指令，之後再做測試．
     FnBT.SetDeviceTime(device, function () {
       //success

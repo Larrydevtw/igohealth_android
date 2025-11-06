@@ -666,7 +666,8 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
       var rv = false;
       var index = 0;
       //-------------------------------------------------------------------------------
-      if (deviceName == undefined) {
+      WriteLog.write("deviceName:" + deviceName, "deviceNameSearching");
+      if (!deviceName || deviceName == undefined || deviceName == null) {
         return false;
       } //如果deviceName是空,就一律回傳 false!
 
@@ -695,7 +696,7 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
     /*
     var buffer = new Uint8Array([0x7B, 0x4C, 0x23, 0xEF, 0x7D]);
     ETB05.ETB_CheckSum(buffer);
-   傳回16進制checksum
+    傳回16進制checksum
     */
     ETB_CheckSum: function (mBuffer) {
       var xLeft = 0x7b; //{

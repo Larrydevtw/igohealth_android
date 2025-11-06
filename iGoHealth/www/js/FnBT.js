@@ -26,35 +26,35 @@ var FnBT = {
             DeviceModel: "ETB04",
             DeviceName: "易立測三高機",
             DeviceBrand: "Bioptik",
-          },
-          {
-            //泰博體溫(TAIDOC TD1261)
-            DeviceReceiveItem: "BT",
-            DeviceModel: "FORA IR20",
-            DeviceName: "FORA 耳溫槍",
-            DeviceBrand: "FORA",
-          },
-          {
-            //泰博體溫(TAIDOC TD1261)
-            DeviceReceiveItem: "BT",
-            DeviceModel: "FORA IR21",
-            DeviceName: "FORA 耳溫槍",
-            DeviceBrand: "FORA",
-          },
-          {
-            //泰博體溫
-            DeviceReceiveItem: "BT",
-            DeviceModel: "TAIDOC TD1261",
-            DeviceName: "FORA 耳溫槍",
-            DeviceBrand: "FORA",
-          },
-          {
-            //歐瑟若體脂
-            DeviceReceiveItem: "BW",
-            DeviceModel: "FLG-756",
-            DeviceName: "歐瑟若體脂機",
-            DeviceBrand: "Oserio",
-          },
+          }
+          // {
+          //   //泰博體溫(TAIDOC TD1261)
+          //   DeviceReceiveItem: "BT",
+          //   DeviceModel: "FORA IR20",
+          //   DeviceName: "FORA 耳溫槍",
+          //   DeviceBrand: "FORA",
+          // },
+          // {
+          //   //泰博體溫(TAIDOC TD1261)
+          //   DeviceReceiveItem: "BT",
+          //   DeviceModel: "FORA IR21",
+          //   DeviceName: "FORA 耳溫槍",
+          //   DeviceBrand: "FORA",
+          // },
+          // {
+          //   //泰博體溫
+          //   DeviceReceiveItem: "BT",
+          //   DeviceModel: "TAIDOC TD1261",
+          //   DeviceName: "FORA 耳溫槍",
+          //   DeviceBrand: "FORA",
+          // },
+          // {
+          //   //歐瑟若體脂
+          //   DeviceReceiveItem: "BW",
+          //   DeviceModel: "FLG-756",
+          //   DeviceName: "歐瑟若體脂機",
+          //   DeviceBrand: "Oserio",
+          // },
         ];
 
         DAOFn.MutiInsertData(
@@ -316,10 +316,14 @@ var FnBT = {
   },
   initBTProcess: function () {
     var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
-    Log.write("BT_Init_OK:" + BT_Init_OK, "BTDebug");
+    var NowStep = MSCordovaBLE.NowStep;
+    WriteLog.write(
+      "BTDebug BT_Init_OK:" + BT_Init_OK + " / NowStep:" + NowStep,
+      "BTDebug"
+    );
 
-    if (!BT_Init_OK) {
-      Log.write("BT_Init NO", "BTDebug");
+    if (!BT_Init_OK && NowStep !== "btInitialize") {
+      WriteLog.write("BT_Init NO", "BTDebug");
       setTimeout(function () {
         if (MSCordovaBLE.MySetting.SingleDevicePoolingMode == false) {
           MSCordovaBLE.btInitialize(); //false -> 正常的 scan 模式
@@ -332,7 +336,7 @@ var FnBT = {
   initBTSuccess: function () {
     var BT_Init_OK = MSCordovaBLE.BT_Init_OK;
 
-    Log.write("initBTSuccess:" + BT_Init_OK, "FnBT");
+    WriteLog.write("BTDebug FnBT.initBTSuccess:" + BT_Init_OK, "BTDebug");
 
     if (!BT_Init_OK) {
       FnBT.switchBTStatus("N");
@@ -416,7 +420,13 @@ var FnBT = {
 
     if (FnBT.bluetoothStatus === "N") {
       if (OS === "android") {
-        cordova.plugins.BluetoothStatus.enableBT(); //開啟藍牙(Android Only)
+        if (AppConfig.askBTTimes == 0) {
+          cordova.plugins.BluetoothStatus.enableBT(); //開啟藍牙(Android Only)
+          AppConfig.askBTTimes = 1;
+        }else{
+          FnCtrl.alert($.i18n("請開啟藍牙，以接收藍牙設備量測資料。"), "");
+        }
+
         // ExitAPP.disableBT(function(){ //TODO Cordova6.5.0可能不支援此寫法
         //     //alert("藍牙關閉成功");
 
@@ -988,7 +998,7 @@ var FnBT = {
     if (device.name != "ETB04" && device.name != "ETB05") {
       //聿新科的三合一接收資料就會做時間校正，所以配對時不做
       //WiseScripts.Tool.ShowLoading(true, "設備時間校正中..");
-      var OS = WiseScripts.Tool.MobileType.IsAndroid() ? "android" : "iOS";
+      var OS = DeviceInfo.OS;
       //if(OS==="android"){//TODO IOS目前沒有關機指令，之後再做測試．
       MSCordovaBLE.SetTimeAlone(
         "4.0",

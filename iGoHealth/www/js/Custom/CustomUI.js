@@ -195,7 +195,7 @@ var CustomUI = {
             if (page == "#stateManual") {
                 if (CustomUI.userHistory) {
                     page = page + CustomUI.userHistory;
-                    console.log(page);
+                    //console.log(page);
                 } else {
                     page = "#MainHome";
                 }
@@ -268,13 +268,13 @@ var CustomUI = {
         }
     },
     setTabTypes: function () {
-        console.log("setTabTypes");
+        //console.log("setTabTypes");
         // 2. 為每一個按鈕添加點擊事件監聽器
         navButtons.forEach((button) => {
         button.addEventListener("click", function (event) {
             // (可選) 如果您的按鈕有 href="#"，可以用這行防止頁面跳轉
             // event.preventDefault();
-            console.log($(this));
+            // console.log($(this));
             // 我們需要操作的是 a 標籤的父層 div，因為它的 offsetLeft 是相對於容器的
             const targetElement = this.parentElement;
 
@@ -313,52 +313,52 @@ var CustomUI = {
      * @param {string} targetElementId - 要置中的目標元素（通常是 <a> 標籤）的 ID。
      */
     centerElementInView: function (containerId, targetElementId) {
-        console.log("centerElementInView");
+        // console.log("centerElementInView");
         // 1. 獲取 DOM 元素
         const scrollContainer = document.getElementById(containerId);
         const targetLink = document.getElementById(targetElementId);
-        console.log(scrollContainer);
-        console.log(targetLink);
+        // console.log(scrollContainer);
+        // console.log(targetLink);
         // 2. 防呆處理：如果找不到元素，就在控制台報錯並終止函數
         if (!scrollContainer) {
-        console.error(
-            `Error: Scroll container with ID "#${containerId}" not found.`
-        );
-        return;
+            console.error(
+                `Error: Scroll container with ID "#${containerId}" not found.`
+            );
+            return;
         }
         if (!targetLink) {
-        console.error(
-            `Error: Target element with ID "#${targetElementId}" not found.`
-        );
-        return;
+            console.error(
+                `Error: Target element with ID "#${targetElementId}" not found.`
+            );
+            return;
         }
 
         // 3. 獲取目標元素的父級 div，因為我們需要計算它的 offset
         const targetWrapper = targetLink.parentElement;
         if (!targetWrapper || !scrollContainer.contains(targetWrapper)) {
-        console.error(
-            "Error: Target element is not a direct child of a wrapper inside the container."
-        );
-        return;
+            console.error(
+                "Error: Target element is not a direct child of a wrapper inside the container."
+            );
+            return;
         }
 
         // 4. 核心計算邏輯
         const containerWidth = scrollContainer.clientWidth;
         const targetWidth = targetWrapper.offsetWidth;
         const targetOffsetLeft = targetWrapper.offsetLeft;
-        console.log(containerWidth);
-        console.log(targetWidth);
-        console.log(targetOffsetLeft);
+        // console.log(containerWidth);
+        // console.log(targetWidth);
+        // console.log(targetOffsetLeft);
         // 計算滾動位置，使目標元素的中心對齊容器的中心
         const scrollToPosition =
         targetOffsetLeft + targetWidth / 2 - containerWidth / 2;
 
         // 5. 執行平滑滾動
         scrollContainer.scrollTo({
-        left: scrollToPosition,
-        behavior: "smooth",
+            left: scrollToPosition,
+            behavior: "smooth",
         });
-        console.log(scrollToPosition);
+        //console.log(scrollToPosition);
 
         // 6. 更新 'active' 狀態，突顯當前選項
         const allLinks = scrollContainer.querySelectorAll("a.btn");
@@ -371,24 +371,23 @@ var CustomUI = {
      * @param {string} containerId - 滾動容器的 ID。
      */
     setupClickToCenter: function (containerId) {
-        console.log("setupClickToCenter");
+        // console.log("setupClickToCenter");
         const scrollContainer = document.getElementById(containerId);
         if (!scrollContainer) {
-        console.error(
-            `Initialization failed: Scroll container with ID "#${containerId}" not found.`
-        );
-        return;
+            console.error(
+                `Initialization failed: Scroll container with ID "#${containerId}" not found.`
+            );
+            return;
         }
 
         const navButtons = scrollContainer.querySelectorAll("a.btn");
         navButtons.forEach((button) => {
-            console.log(button);
-        // 為每個按鈕添加點擊事件監聽
-        button.addEventListener("click", function (event) {
-            // 點擊時，調用我們的核心函數
-            // this.id 就是被點擊的 <a> 標籤的 ID，例如 "tbtnBP"
-            CustomUI.centerElementInView(containerId, this.id);
-        });
+            // 為每個按鈕添加點擊事件監聽
+            button.addEventListener("click", function (event) {
+                // 點擊時，調用我們的核心函數
+                // this.id 就是被點擊的 <a> 標籤的 ID，例如 "tbtnBP"
+                CustomUI.centerElementInView(containerId, this.id);
+            });
         });
     },
     /**
