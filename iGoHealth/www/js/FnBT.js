@@ -235,6 +235,7 @@ var FnBT = {
       localStorage["BTScanConfirm"] = "N"; //設定目前 是否正在詢問連線至設備的對話框
       localStorage["BTScanActive"] = "N"; //設定目前是開啟掃描功能
       localStorage["BTConnect"] = "N"; //設定目前藍牙是否正在連線中；Connect後設為Y，斷線後設為N
+      localStorage["checkBleTimer"] = null;
       //localStorage["isOnlyOneData"]=isOnlyOneData;//單筆模式 //TODO
 
       //設定各種CallBack(類似委派)
@@ -500,7 +501,6 @@ var FnBT = {
       return;
     }
 
-    MSCordovaBLE.checkBLE = 10000;
     MSCordovaBLE.NowStep = "";
 
     //alert("start Scan:"+isStartScan);
@@ -657,7 +657,7 @@ var FnBT = {
     }
 
     localStorage["BTScanActive"] = "N"; //關閉掃描功能
-    MSCordovaBLE.checkBLE = 0;
+    MSCordovaBLE.StopScan();
     Log.write("FnBT STOP Scansuccess", "BTDebug");
 
     if (successFn) {
@@ -1247,7 +1247,7 @@ var FnBT = {
           function (next) {
             //MValue數值轉換
             //alert("MValue數值轉換");
-            if (MType === "BG" || MType === "UA" || MType === "CHOL" || MType === "TG") {
+            if (MType === "BG" || MType === "UA" || MType === "HB" || MType === "CHOL" || MType === "TG") {
               lMData[3] = MeasureInfo.convertSaveMValue(MType, lMData[3], "Y");
               next();
             } else {
@@ -1255,11 +1255,12 @@ var FnBT = {
             }
           },
           function (next) {
-            Measure.checkMValue(lMData, MType, function (result) {
+            Measure.checkMValue(lMData, MType, DeviceModel, function (result) {
               if (result === "") {
                 next();
               } else {
                 FnCtrl.alert(result);
+                FnSystem.CallQueueLog();
               }
             });
           },

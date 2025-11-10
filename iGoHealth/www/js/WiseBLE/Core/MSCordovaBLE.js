@@ -14,8 +14,8 @@ var MSCordovaBLE = MSCordovaBLE || {},
     connDevices: [],
     delayReceive: 100, //延遲接收資料 by sinclair
     checkBLE: 0, //Scan確定間隔，如果超過時間就重啟模組(0:代表不檢查)by sinclair
-    checkBleTimer: null,
     NowStep: "", //記錄目前執行到的函數
+    isScanStart: false,
     sUUID: "",
     cUUID: "",
     MaxConnCnt: 1, //最大連線數
@@ -187,15 +187,32 @@ var MSCordovaBLE = MSCordovaBLE || {},
     autoRepairBLE: function () {
       //確認是否啟動修復,每隔10(checkBLE)秒檢查scan間隔有沒有超過10秒
       //，有的代表藍牙被lock，重啟!↓↓↓
-      FnSystem.Log("autoRepairBLE:" + MSCordovaBLE.checkBLE);
+      FnSystem.Log(
+        "autoRepairBLE:" + JSON.stringify(MSCordovaBLE.checkBLE),
+        "DevBLE"
+      );
       if (MSCordovaBLE.checkBLE > 0) {
+        var a = new Date();
+        var b = a.getTime();
         var vCheckScan = function () {
           FnSystem.Log(
-            "vCheckScan:" +
+            "time:" +
+              b +
+              "/" +
               MSCordovaBLE.connDevices.length +
               "/" +
-              MSCordovaBLE.MaxConnCnt
+              MSCordovaBLE.MaxConnCnt +
+              "/ BTScanActive:" +
+              localStorage["BTScanActive"],
+            "DevBLE"
           );
+          if (localStorage["BTScanActive"] == "N") {
+            FnSystem.Log(
+              "BTScanActive return success",
+              "DevBLE"
+            );
+            return;
+          }
           if (MSCordovaBLE.connDevices.length < MSCordovaBLE.MaxConnCnt) {
             var tDate = new Date();
             var dDay1 = tDate.getTime();
@@ -205,14 +222,22 @@ var MSCordovaBLE = MSCordovaBLE || {},
             var dDay2 = sessionStorage["checkBLETime"];
             var vDif = dDay1 - dDay2;
             //sessionStorage["checkBLETime"] = dDay1.getTime();
-            if (MSCordovaBLE.checkBLE !=0 && vDif > MSCordovaBLE.checkBLE) {
+            if (MSCordovaBLE.checkBLE != 0 && vDif > MSCordovaBLE.checkBLE) {
               WriteLog.write(
-                "check scan!" + dDay1 + "," + dDay2 + "," + vDif + " / MSCordovaBLE.checkBLE:" + MSCordovaBLE.checkBLE,
-                "status"
+                "check scan!" +
+                  dDay1 +
+                  "," +
+                  dDay2 +
+                  "," +
+                  vDif +
+                  " / MSCordovaBLE.checkBLE:" +
+                  JSON.stringify(MSCordovaBLE.checkBLE),
+                "DevBLE"
               );
               FnSystem.Log(
-                "check scan!RepairBLE" + dDay1 + "," + dDay2 + "," + vDif,
-                "status"
+                "check scan!RepairBLE" + dDay1 + "," + dDay2 + "," + vDif + " / MSCordovaBLE.checkBLE:" +
+                  JSON.stringify(MSCordovaBLE.checkBLE),
+                "DevBLE"
               );
               MSCordovaBLE.RepairBLE();
             }
@@ -224,54 +249,92 @@ var MSCordovaBLE = MSCordovaBLE || {},
         };
 
         FnSystem.Log(
-          "autoRepairBLE:MSCordovaBLE.checkBleTimer:" +
-            MSCordovaBLE.checkBleTimer
+          "autoRepairBLE:checkBleTimer:" + localStorage["checkBleTimer"],
+          "DevBLE"
         );
 
-        if (MSCordovaBLE.checkBleTimer) {
-          clearInterval(MSCordovaBLE.checkBleTimer);
-          FnSystem.Log("clearInterval A");
-        }
-        var myTimer = setInterval(vCheckScan, MSCordovaBLE.checkBLE);
-        MSCordovaBLE.checkBleTimer = myTimer;
+        MSCordovaBLE.ClearBleTimer(function () {
+
+          FnSystem.Log("clearInterval A success", "DevBLE");
+          var myTimer = setInterval(vCheckScan, MSCordovaBLE.checkBLE);
+          localStorage["checkBleTimer"] = myTimer;
+
+        });
+        
       } else {
-        FnSystem.Log("clearInterval B");
-        clearInterval(MSCordovaBLE.checkBleTimer);
+        
+        MSCordovaBLE.ClearBleTimer(function(){
+          FnSystem.Log("clearInterval B success", "DevBLE");
+        });
+
       }
       //確認是否啟動修復↑↑↑
     },
+    ClearBleTimer: function (successFn) {
+
+      var _timer = localStorage["checkBleTimer"];
+      if (_timer !== null) {
+        clearInterval(_timer);
+        FnSystem.Log(
+          "checkBleTimer 清除成功" + localStorage["checkBleTimer"],
+          "DevBLE"
+        );
+        localStorage["checkBleTimer"] = null;
+        if (successFn) {
+          successFn();
+        }
+      }else{
+        FnSystem.Log(
+          "checkBleTimer 為空" + localStorage["checkBleTimer"],
+          "DevBLE"
+        );
+      }     
+    },
     RepairBLE: function () {
+      FnSystem.Log("RepairBLE 啟動修復", "DevBLE");
       WriteLog.write("啟動修復!", "error");
+      WriteLog.write("藍牙錯誤，重啟scan!", "error");
       //MSCordovaBLE.btInitialize();
       MSCordovaBLE.startScan();
-      WriteLog.write("藍牙錯誤，重啟scan!", "error");
       //啟動修復↑↑↑
     },
-    StopScan: function() {
-        bluetoothle.stopScan(() => {
-            console.log("");
-            WriteLog.write("掃描已停止");
-        }, (error) => {
-            WriteLog.write(
-              "停止掃描失敗: " + JSON.stringify(error),
-              "StopScan"
-            );
-        });
+    StopScan: function () {
+      bluetoothle.stopScan(
+        () => {
+          console.log("");
+          WriteLog.write("掃描已停止");
+        },
+        (error) => {
+          WriteLog.write("停止掃描失敗: " + JSON.stringify(error), "StopScan");
+        }
+      );
     },
     //掃瞄藍牙設備
     startScan: function () {
+      WriteLog.write(
+        "MSCordovaBLE.BT_Auth:" +
+          MSCordovaBLE.BT_Auth +
+          " / startScan MSCordovaBLE.NowStep:" +
+          MSCordovaBLE.NowStep +
+          " / MSCordovaBLE.isScanStart: " +
+          MSCordovaBLE.isScanStart,
+        "startScan"
+      );
+
       if (!MSCordovaBLE.BT_Auth) {
         WriteLog.write("未取得藍牙權限！ 無法進入掃描", "startScan");
         return;
       }
 
-      if (MSCordovaBLE.NowStep === "startScan") {
+      if (MSCordovaBLE.NowStep === "startScan" && MSCordovaBLE.isScanStart) {
         WriteLog.write("藍牙已進入掃描！ 無法再次進入掃描", "startScan");
         return;
       }
 
       MSCordovaBLE.NowStep = "startScan";
+      MSCordovaBLE.isScanStart = true;
       MSCordovaBLE.foundDevices = [];
+      MSCordovaBLE.connDevices = [];
 
       if (window.cordova.platformId != "windows") {
         try {
@@ -330,8 +393,8 @@ var MSCordovaBLE = MSCordovaBLE || {},
 
           setTimeout(function () {
             vStartFn();
+            FnSystem.Log("BLE StartScan", "DevBLE");
           }, 1000);
-
         } catch (error) {
           MSCordovaBLE.handleError(error);
         }
@@ -521,7 +584,7 @@ var MSCordovaBLE = MSCordovaBLE || {},
       //   "connectB"
       // );
 
-      this.StopScan();
+      MSCordovaBLE.StopScan();
 
       setTimeout(function () {
         MSCordovaBLE.connectProc(result);
@@ -640,8 +703,8 @@ var MSCordovaBLE = MSCordovaBLE || {},
               address: result.address,
             });
           }).then(
-            this.connectSuccess,
-            this.handleErrorAndToClose
+            MSCordovaBLE.connectSuccess,
+            MSCordovaBLE.handleErrorAndToClose
           );
         }
       } else if (window.cordova.platformId === "ios") {

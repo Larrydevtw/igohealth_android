@@ -2,6 +2,7 @@ var FnSystem = {
   LastSyncTime: "",
   isAutoSyncData: "N",
   DebugMode: "N",
+  DevDebugMode:"Y",
   UploadAppInfo: function (successFn, errFn) {
     Log.write("UploadAppInfo", "FnSystem UploadAppInfo");
 
@@ -489,10 +490,17 @@ var FnSystem = {
     }
   },
   Log: function (message, action, successFn) {
-    if (FnSystem.DebugMode == "" || FnSystem.DebugMode == "N") {
+    if (FnSystem.DebugMode === "Y") {
       //console.log("FnSystemLog" + action + ":" + message);
-    } else {
       FnSystem.QueueLog(message, action, successFn);
+    } else {
+      if (FnSystem.DevDebugMode == "Y") {
+        if (action === "Measure") {
+          //(action === "ETB05 procReturn" || action === "DevBLE") {
+          //console.log(action + ":" + message);
+          FnSystem.QueueLog(message, action, successFn);
+        }
+      }
     }
   },
   QueueLog: function (message, action) {
@@ -515,10 +523,10 @@ var FnSystem = {
     localStorage.arrLogData = arrLogData;
   },
   CallQueueLog: function (successFn, errFn) {
-    if (FnSystem.DebugMode == "" || FnSystem.DebugMode == "N") {
-      // alert("FnSystem.DebugMode:" + FnSystem.DebugMode);
-      return;
-    }
+    // if (FnSystem.DebugMode == "" || FnSystem.DebugMode == "N") {
+    //   // alert("FnSystem.DebugMode:" + FnSystem.DebugMode);
+    //   return;
+    // }
     // alert("FnSystem.DebugMode:" + FnSystem.DebugMode);
     var action = "QueueLog";
     var message = localStorage.arrLogData + "";

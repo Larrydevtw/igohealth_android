@@ -1033,20 +1033,26 @@ var Measure = {
                 'ease': Expo.easeOut
             });
     },
-    checkMValue: function (lMdata, MType, successFn) {
+    checkMValue: function (lMdata, MType, source, successFn) {
         var result = "";
 
         try {
+            var MValue = parseFloat(lMdata[3]);
+            FnSystem.Log("MValue:" + MValue + " / MType:" + MType, "Measure");
             switch (MType) {
                 case "BP":
                 case "STEP":
-                    if (isNaN(parseFloat(lMdata[3])) || isNaN(parseFloat(lMdata[4])) || isNaN(parseFloat(lMdata[5]))) {
-                        result = $.i18n('設備傳送資料有誤，請重新上傳');
+                    if (
+                      isNaN(MValue) ||
+                      isNaN(parseFloat(lMdata[4])) ||
+                      isNaN(parseFloat(lMdata[5]))
+                    ) {
+                      result = $.i18n("設備傳送資料有誤，請重新上傳");
                     }
                     break;
                 case "BO":
-                    if (isNaN(parseFloat(lMdata[3])) || isNaN(parseFloat(lMdata[4]))) {
-                        result = $.i18n('設備傳送資料有誤，請重新上傳');
+                    if (isNaN(MValue) || isNaN(parseFloat(lMdata[4]))) {
+                      result = $.i18n("設備傳送資料有誤，請重新上傳");
                     }
                     break;
                     // case "BW":
@@ -1064,16 +1070,42 @@ var Measure = {
                     //     MType = "BW";
                     //     break;
                 default: //BT, UA, CHOL, HR, BG, BW
-                    if (isNaN(parseFloat(lMdata[3]))) {
-                        result = $.i18n('設備傳送資料有誤，請重新上傳');
+                    if (isNaN(MValue)) {
+                      result = $.i18n("設備傳送資料有誤，請重新上傳");
                     }
                     break;
+            }
+            FnSystem.Log("Measure result:" + result + " / MType:" + MType , "Measure");
+            if(result === ""){
+                var Min = MeasureInfo.DeviceRange[MType].Min;
+                var Max = MeasureInfo.DeviceRange[MType].Max;
+                FnSystem.Log("Min: " + Min + " / Max:" + Max, "Measure");
+                if (MValue > Max){
+                    result = $.i18n("超出設備量測範圍 請重新量測");
+                    FnSystem.Log(
+                      "超出設備量測範圍 請重新量測Max: " + result,
+                      "Measure"
+                    );
+                }
+                if(MValue < Min){
+                    result = $.i18n("超出設備量測範圍 請重新量測");
+                    FnSystem.Log(
+                      "超出設備量測範圍 請重新量測Min: " + result,
+                      "Measure"
+                    );
+                }
+                FnSystem.Log("Measure result end: " + result, "Measure");
+                // FnSystem.QueueLog(
+                //   "result: " + result+" / "+JSON.stringify(lMdata),
+                //   "Measure"
+                // );
             }
         } catch (error) {
             result = $.i18n('設備傳送資料有誤，請重新上傳');
             Log.write(error, 'Measure checkMValue');
         }
 
+        FnSystem.Log("Measure result successFn: " + result, "Measure");
         if (successFn) {
             successFn(result);
         }

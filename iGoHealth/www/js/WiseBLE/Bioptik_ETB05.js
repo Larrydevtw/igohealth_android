@@ -166,6 +166,14 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
             var dataBuffer = Bionime.parseHexStringToByteArr(returnData);
             var vMD_tmp = Bionime.binArrToString(dataBuffer);
             Bioptik_ETB05.ThisType = vMD_tmp.substr(2, 1);
+
+            FnSystem.Log(
+              "1 substr(2, 1) ETB05 procReturn" +
+                vMD_tmp +
+                " / " +
+                vMD_tmp.substr(2, 1),
+              "ETB05 procReturn"
+            );
             //下指令取得量測值
             Bioptik_ETB05.sendLinkD(
               address,
@@ -357,7 +365,11 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
       } else {
         //量測數據的值
         measurementValue = "";
-
+        FnSystem.Log(
+          "2 substr(3, 4) ETB05 procReturn"+ vMD_tmp +
+                " / " + + vMD_tmp.substr(3, 4),
+          "ETB05 procReturn"
+        );
         //量測數據的種類 0:血糖 1:膽固醇 2:尿酸 3:三酸 4:血紅素
         if (Bioptik_ETB05.ThisType == "0") {
           measurementKind = "G"; //0:血糖

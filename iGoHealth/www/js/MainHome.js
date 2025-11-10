@@ -99,7 +99,7 @@ var MainHome = MainHome || {},
         var UserID = localStorage.UserID;
         if (FTime == "") {
           //第一次登入
-          Log.write("FTime 第一次登入", "mainHome");
+          Log.write("FTime 第一次登入:" + FTime, "mainHome");
           FnBT.SetBTMode();
 
           //TODO://更新雲端資料到DB>畫面上綁定最新一筆資料
@@ -156,9 +156,12 @@ var MainHome = MainHome || {},
                   Member.showDisplayName();
                 });
               }
+
+              Measure.readAll();
             }
           );
         } else {
+          Log.write("非第一次登入:" + FTime, "mainHome");
           ProjectFn.Wait(
             [
               function (next) {

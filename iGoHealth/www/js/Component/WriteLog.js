@@ -110,7 +110,7 @@ var WriteLog = WriteLog || {},
         msgLog += "\n " + message + " \n";
         msgLog += "BTBTBTBTBTBTBTBTBTBTBTBTBTBTBTBTBTBTBTBTBTBTBTBT";
       }
-      console.log(msgLog);
+      //console.log(msgLog);
 
       // level = level || "log"; //設預設值為"log"
       // if (typeof message === "object")

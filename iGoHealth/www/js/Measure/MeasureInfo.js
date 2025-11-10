@@ -76,6 +76,28 @@ var MeasureInfo={
             Max: 200
         },
     },
+    DeviceRange: {
+        BG: {
+            Min: 20,
+            Max: 600
+        },
+        UA: {
+            Min: 3,
+            Max: 20
+        },
+        CHOL: {
+            Min: 100,
+            Max: 300
+        },
+        HB: {
+            Min: 7,
+            Max: 26
+        },
+        TG: {
+            Min: 70,
+            Max: 600
+        }
+    },
     BG_Unit:" mg/dL", //血糖單位: tw(t):mg/dL；cn(c):mmol/L t/18=c (小數下一位，無條件捨去)
     BG_Convert_Num:1, //轉換數值
     BG_Display_Num:0, //顯示小數點以下第幾位 (tw:不顯示小數點；cn:顯示小數點一位))
@@ -89,7 +111,7 @@ var MeasureInfo={
   TG_Display_Num: 0, //顯示小數點以下第幾位
 
   HB_Unit: " g/dL", //單位
-  HB_Convert_Num: 1, //轉換數值
+  HB_Convert_Num: 10, //轉換數值
   HB_Display_Num: 1, //顯示小數點以下第幾位
 
   CHOL_Unit:" mg/dL", //單位: tw(t):mg/dL；cn(c):mmol/L t/38.67=c (小數下一位，無條件捨去)
@@ -231,7 +253,7 @@ var MeasureInfo={
                 // };
                 // TG_Display_Num=0;
 
-                HB_Unit = " g/dL";
+                HB_Unit = " g/L";
                 HB_Convert_Num = 1.0;
 
                 // Range_HB = {
@@ -382,7 +404,7 @@ var MeasureInfo={
                 break;
             case "HB": 
                 if(isFromDevice==="Y"){
-                    Convert_Num =1;
+                    Convert_Num =10;
                 }else{
                     Convert_Num =MeasureInfo.HB_Convert_Num;
                 }          
