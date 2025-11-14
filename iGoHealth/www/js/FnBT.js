@@ -17,7 +17,7 @@ var FnBT = {
             //聿新 血糖/膽固醇/尿酸/血紅素/三酸甘油脂
             DeviceReceiveItem: "BG,CHOL,UA,TG,HB",
             DeviceModel: "ETB05",
-            DeviceName: "易立測五功機",
+            DeviceName: "易美測五功機",
             DeviceBrand: "Bioptik",
           },
           {
@@ -26,7 +26,7 @@ var FnBT = {
             DeviceModel: "ETB04",
             DeviceName: "易立測三高機",
             DeviceBrand: "Bioptik",
-          }
+          },
           // {
           //   //泰博體溫(TAIDOC TD1261)
           //   DeviceReceiveItem: "BT",
@@ -634,7 +634,7 @@ var FnBT = {
       );
 
       if (BT_ErrMsg !== "") {
-        FnCtrl.toast(BT_ErrMsg);
+        //FnCtrl.toast(BT_ErrMsg);
       }
 
       if (FnBT.isOpenBTMode === "Y") {

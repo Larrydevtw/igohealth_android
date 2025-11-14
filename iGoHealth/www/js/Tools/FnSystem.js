@@ -522,7 +522,11 @@ var FnSystem = {
       Message: message,
     };
 
-    var arrLogData = localStorage.arrLogData + "";
+    if (!localStorage.arrLogData){
+      localStorage.arrLogData = "";
+    }
+
+    var arrLogData = localStorage.arrLogData;
     if (arrLogData != "") {
       arrLogData += "`" + JSON.stringify(LogData);
     } else {

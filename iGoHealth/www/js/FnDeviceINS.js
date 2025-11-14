@@ -6,8 +6,8 @@ var FnDeviceINS = {
             DAOFn.Query("", strSQL, function ResultFun(qResult) {
                 var InsertArray = [{ //聿新易立測/中山瑞福(大陸)血糖/尿酸/膽固醇三合一
                     'DI_Model': 'ETB04',
-                    'DI_Title': '易立測',
-                    'DI_Name': '血壓/血糖/膽固醇監測系統',
+                    'DI_Title': '【易立測】三高機',
+                    'DI_Name': '【易立測】傳輸型血壓/血糖/膽固醇監測系統',
                     'DI_Active': 'Y',
                     'DI_ImagePath': 'images/devices/5050/ETB04.jpg',
                     'DI_ImageDetailPath': 'images/devices/5050/ETB04.jpg',
