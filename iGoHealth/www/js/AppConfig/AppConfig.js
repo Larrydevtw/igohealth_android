@@ -81,7 +81,7 @@ var AppConfig = {
     //語言包版本
     LangVersion: 1,
     //標準值版本
-    StandardVersion: 1.0,
+    StandardVersion: 1.2,
     StandardDisplay: "N",
     //血糖接收量測資料是否強制選擇時段
     BGTimeTypeConfirm: "Y",

@@ -93,18 +93,18 @@ var FnCtrl = {
             } else {
                 Keyboard.hide();
             }
-            console.log("k E");
+            // console.log("k E");
         }, 100);
     },
     keyboardShow: function () { //TODO 目前暫時未用到
-        console.log("k S");
+        // console.log("k S");
         setTimeout(function () {
             if (device.platform.toLowerCase() === "ios") {
                 Keyboard.show();
             } else {
                 Keyboard.show();
             }
-            console.log("k Open");
+            // console.log("k Open");
         }, 100);
     },
     toast: function (message, duration, position, successFn, errFn) {

@@ -2,8 +2,8 @@ var MeasureInfo={
     MType: "", //暫存 量測類別 
     Interval: "7", //查詢區間
     Gender: "", //M:男 F:女 //TODO No Use
-  Age: "", //TODO No Use
-  lConvertMType: ["BG", "UA", "TG", "CHOL","HB"],
+    Age: "", //TODO No Use
+    lConvertMType: ["BG", "UA", "TG", "CHOL","HB"],
     DisplayRange: { //顯示數值高低區間
         BG: {
             Min: 0,
@@ -128,47 +128,106 @@ var MeasureInfo={
     iniStandardJSON:function(successFn,errFn){        
 
         var configVersion = AppConfig.StandardVersion;
-        var currentVersion;
+        var currentVersion = "";//localStorage.StandardVersion;
+        MeasureInfo.GetStandardVersion(function(result){
+            currentVersion = result;
 
-        if (!localStorage.StandardVersion) { //第一次安裝載入標準值
-            Log.write("Null", 'localStorage.StandardVersion');
-            HATMService.SaveStandardJSON(function(){
+            Log.write(
+              "configVersion : " +
+                configVersion +
+                " / currentVersion:" +
+                currentVersion,
+              "MeasureInfo StandardValue iniStandardJSON UploadLog"
+            );
+
+            if (
+              !currentVersion || currentVersion == "" ||
+              currentVersion == "undefined"
+            ) {
+              //第一次安裝載入標準值
+              Log.write(
+                "第一次安裝載入標準值",
+                "MeasureInfo StandardValue iniStandardJSON"
+              );
+              HATMService.SaveStandardJSON(function () {
                 Log.write("重新載入標準值，載入完畢。", "載入標準值");
-                if(successFn){
-                    successFn();
+                MeasureInfo.SetStandardVersion(configVersion); //目前標準值版號
+                Log.write(
+                  "重新載入標準值，載入完畢:" + configVersion,
+                  "MeasureInfo StandardValue iniStandardJSON"
+                );
+                if (successFn) {
+                  successFn();
                 }
-            });
-            localStorage.setItem("StandardVersion", configVersion); //目前標準值版號
-            return;
-        }
-
-        currentVersion = localStorage.StandardVersion;
-
-        Log.write("configVersion: " + configVersion + " ,currentVersion: " + currentVersion, 'iniStandardJSON');
-
-        if (configVersion <= currentVersion) {
-            Log.write("The same or lower Version", 'iniStandardJSON');
-            if(successFn){
-                successFn();
+              });
+              return;
             }
-        } else {
-            localStorage.StandardVersion = configVersion;
-            Log.write("Need to Update Version", 'iniStandardJSON');
-            HATMService.SaveStandardJSON(function(){
-                Log.write("重新載入標準值，載入完畢。", "載入標準值");
-                if(successFn){
-                    successFn();
-                }
-            });
-            // HATMService.SaveStandardJSON(function(){
-            //     Log.write("重新載入標準值，載入完畢。", "載入標準值");
-            //     if(successFn){
-            //         successFn();
-            //     }
-            // });
-        }
-    },
 
+            if (configVersion <= currentVersion) {
+              Log.write(
+                "The same or lower VersionNo, No need to upate. return.",
+                "MeasureInfo StandardValue iniStandardJSON"
+              );
+              if (successFn) {
+                successFn();
+              }
+            } else {
+              MeasureInfo.SetStandardVersion(configVersion); //目前標準值版號
+              Log.write(
+                "Need to Update Version / configVersion:" + configVersion,
+                "MeasureInfo StandardValue iniStandardJSON"
+              );
+              HATMService.SaveStandardJSON(function () {
+                Log.write(
+                  "重新載入標準值，載入完畢。",
+                  "MeasureInfo StandardValue iniStandardJSON"
+                );
+                if (successFn) {
+                  successFn();
+                }
+              });
+              // HATMService.SaveStandardJSON(function(){
+              //     Log.write("重新載入標準值，載入完畢。", "載入標準值");
+              //     if(successFn){
+              //         successFn();
+              //     }
+              // });
+            }
+        });
+    },
+    GetStandardVersion: function(successFn){
+        ProjectFn.getSysParams(
+          "mSys",
+          "StandardVersion",
+          function (currentVersion) {
+            localStorage.StandardVersion = currentVersion;
+            if (successFn) {
+              successFn(currentVersion);
+            }
+          }
+        );
+    },
+    SetStandardVersion:function(currentVersion, successFn){
+        ProjectFn.setSysParams(
+          "mSys",
+          "StandardVersion",
+          currentVersion,
+          function (result) {
+            localStorage.StandardVersion = currentVersion;
+            if(successFn){
+                successFn(result);
+            }
+            Log.write(
+              "result:" +
+                result +
+                " / currentVersion:" +
+                currentVersion +
+                "，儲存設定至SQLLite中",
+              "MeasureInfo SetStandardVersion UploadLog"
+            );
+          }
+        );
+    },
     init: function (localLang,localeChangeType) { //依據不同語系，做血糖顯示設定
         //alert(localLang);
         var BG_Unit = "";

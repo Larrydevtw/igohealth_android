@@ -127,6 +127,7 @@ var app = {
         }], function () {
 
             Log.write("PJ Success", "index.js PJ Success");
+            FnSystem.CallQueueLog();
             //alert("PJ Success");
 
             //TODO:

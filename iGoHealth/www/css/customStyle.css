@@ -13,6 +13,16 @@ input[type=text]{
   height:30px;
 } */
 
+.devicecard{
+  background-color: #ccc;
+}
+.devicecardon{
+  background-color: #0ba29a !important;
+}
+.devicecard_detail{
+
+}
+
 /*男女性別Checkbox*/
 .btn-group .active {
   color:#fff;

@@ -14,7 +14,7 @@ var FnBT = {
       DAOFn.Query("", strSQL, function ResultFun(qResult) {
         var InsertArray = [
           {
-            //聿新 血糖/膽固醇/尿酸/血紅素/三酸甘油酯
+            //聿新 血糖/膽固醇/尿酸/血紅素/三酸甘油脂
             DeviceReceiveItem: "BG,CHOL,UA,TG,HB",
             DeviceModel: "ETB05",
             DeviceName: "易立測五功機",
@@ -1219,7 +1219,7 @@ var FnBT = {
       }
 
       MType = _MType;
-
+      var _MValue = "";
       ProjectFn.Wait(
         [
           function (next) {
@@ -1247,6 +1247,7 @@ var FnBT = {
           function (next) {
             //MValue數值轉換
             //alert("MValue數值轉換");
+            _MValue = lMData[3];
             if (MType === "BG" || MType === "UA" || MType === "HB" || MType === "CHOL" || MType === "TG") {
               lMData[3] = MeasureInfo.convertSaveMValue(MType, lMData[3], "Y");
               next();
@@ -1255,12 +1256,11 @@ var FnBT = {
             }
           },
           function (next) {
-            Measure.checkMValue(lMData, MType, DeviceModel, function (result) {
+            Measure.checkMValue(lMData, MType, DeviceModel, _MValue, function (result) {
               if (result === "") {
                 next();
               } else {
                 FnCtrl.alert(result);
-                FnSystem.CallQueueLog();
               }
             });
           },
@@ -1679,7 +1679,7 @@ var FnBT = {
     strSql += "and HSV_Min<=" + MValue + " ";
     strSql += "and (IFNULL(HSV_Max,'')='' or HSV_Max>=" + MValue + ") ";
     strSql += "ORDER BY HSL_Level; ";
-    console.log(strSql);
+    // console.log(strSql);
 
     return strSql;
   },

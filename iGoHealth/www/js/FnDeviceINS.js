@@ -67,11 +67,13 @@ var FnDeviceINS = {
     },
     showByDevice: function (device) {
         Log.write(device, "showByDevice");
-        $(".devicecard").hide();
+        $(".devicecard_detail").hide();
+        $(".devicecard").removeClass("devicecardon");
         switch(device){
             case "B04":
             case "B05":
                 $("#device_detail_" + device).show();
+                $("#divDevice_" + device).addClass("devicecardon");
                 break;
         }
     },

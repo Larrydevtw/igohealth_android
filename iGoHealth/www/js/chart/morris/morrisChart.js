@@ -42,7 +42,6 @@ var morrisChart = {
     },
     line: function (chartID, title, chartData, chartDataKey, xyAxisName, chartStyle, fn1, fn2) {
         var lColors = ChartInfo.lColorsA;
-        console.log("draw morris");
 
         var xKey = xyAxisName[0];
         var yKeys = chartDataKey;
@@ -94,7 +93,6 @@ var morrisChart = {
     },
     bar: function (chartID, title, chartData, chartDataKey, xyAxisName, chartStyle, fn1, fn2) {
         var lColors = ChartInfo.lColorsA;
-        console.log("draw morris bar");
 
         var xKey = xyAxisName[0];
         var yKeys = chartDataKey;

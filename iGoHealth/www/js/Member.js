@@ -342,7 +342,7 @@ var Member = {
     }
 
     var Gender = $("#signup_s1").prop("checked") ? "M" : "F";
-    console.log("Gender" + Gender);
+    // console.log("Gender" + Gender);
 
     if (document.getElementById("signup_mail").value.length == 0) {
       if (CustomInfo.EMail_Validate === "Y") {
@@ -1276,7 +1276,7 @@ var Member = {
     var Pwd = "cTVtS1Q2RG50WkJzNEcvU3R0SGFlUT09";
     WiseAES.decryptAES(Pwd, AppConfig.ASKey1, AppConfig.ASKey2, "T", function (result) {
       Pwd = result;
-      console.log("demo:"+result);
+      // console.log("demo:"+result);
     });
    
     $("#login_userId").val(UserID);

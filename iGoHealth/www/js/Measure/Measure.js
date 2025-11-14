@@ -71,7 +71,7 @@ var Measure = {
         var setMode = "D"; //M月/D日
         day = (day - 1) * (-1);
 
-        console.log("searchByInterval:" + _day);
+        //console.log("searchByInterval:" + _day);
 
         $("#History_Time .btnSearchDate").removeClass("active");
         $("#History_Time_" + _day + setMode).addClass("active");
@@ -224,7 +224,7 @@ var Measure = {
                 HtmlStr += '<div>' + $.i18n('尿酸') + '</div>';
                 break;
             case "TG":
-                HtmlStr += '<div>' + $.i18n('三酸甘油酯') + '</div>';
+                HtmlStr += '<div>' + $.i18n('三酸甘油脂') + '</div>';
                 break;
             case "HB":
                 HtmlStr += '<div>' + $.i18n('血紅素') + '</div>';
@@ -506,8 +506,8 @@ var Measure = {
                 default: //BT, UA, CHOL, HR, BO
                     var MValue = objRow[MType];
 
-                    objRow[MType] = MeasureInfo.convertMValue(MType, MValue);
-
+                    //objRow[MType] = MeasureInfo.convertMValue(MType, MValue);
+                    (MValue);
                     Display.isRed(MType, MValue, "").then(function (result) {
                         MValue = MeasureInfo.convertMValue(MType, MValue);
                         var TheWar = result.Warnings;
@@ -1033,12 +1033,15 @@ var Measure = {
                 'ease': Expo.easeOut
             });
     },
-    checkMValue: function (lMdata, MType, source, successFn) {
+    checkMValue: function (lMdata, MType, source, _MValue, successFn) {
         var result = "";
 
         try {
-            var MValue = parseFloat(lMdata[3]);
-            FnSystem.Log("MValue:" + MValue + " / MType:" + MType, "Measure");
+            var MValue = parseFloat(_MValue);
+            Log.write(
+              "MValue:" + MValue + " / MType:" + MType,
+              "Measure checkMValue"
+            );
             switch (MType) {
                 case "BP":
                 case "STEP":
@@ -1075,37 +1078,54 @@ var Measure = {
                     }
                     break;
             }
-            FnSystem.Log("Measure result:" + result + " / MType:" + MType , "Measure");
+            Log.write(
+              "Measure result:" + result + " / MType:" + MType,
+              "Measure checkMValue"
+            );
             if(result === ""){
                 var Min = MeasureInfo.DeviceRange[MType].Min;
                 var Max = MeasureInfo.DeviceRange[MType].Max;
-                FnSystem.Log("Min: " + Min + " / Max:" + Max, "Measure");
+                Log.write(
+                  "Min: " + Min + " / Max:" + Max,
+                  "Measure checkMValue"
+                );
                 if (MValue > Max){
                     result = $.i18n("超出設備量測範圍 請重新量測");
-                    FnSystem.Log(
-                      "超出設備量測範圍 請重新量測Max: " + result,
-                      "Measure"
+                    var log = {
+                      msg: result + "(Max)",
+                      Max:Max,
+                      Min:Min,
+                      MValue: MValue,
+                      MType: MType,
+                      Data: JSON.stringify(lMdata),
+                    };
+                    Log.write(
+                      JSON.stringify(log),
+                      "Measure checkMValue UploadLog"
                     );
-                }
-                if(MValue < Min){
+                }else if(MValue < Min){
                     result = $.i18n("超出設備量測範圍 請重新量測");
-                    FnSystem.Log(
-                      "超出設備量測範圍 請重新量測Min: " + result,
-                      "Measure"
+                    var log = {
+                      msg: result + "(Min)",
+                      Max: Max,
+                      Min: Min,
+                      MValue: MValue,
+                      MType: MType,
+                      Data: JSON.stringify(lMdata),
+                    };
+                    Log.write(
+                      JSON.stringify(log),
+                      "Measure checkMValue UploadLog"
                     );
+                }else{
+                    result = "";
                 }
-                FnSystem.Log("Measure result end: " + result, "Measure");
-                // FnSystem.QueueLog(
-                //   "result: " + result+" / "+JSON.stringify(lMdata),
-                //   "Measure"
-                // );
             }
         } catch (error) {
             result = $.i18n('設備傳送資料有誤，請重新上傳');
             Log.write(error, 'Measure checkMValue');
         }
 
-        FnSystem.Log("Measure result successFn: " + result, "Measure");
         if (successFn) {
             successFn(result);
         }

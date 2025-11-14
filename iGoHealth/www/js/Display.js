@@ -127,22 +127,55 @@ var Display = {
             strSql += "and HSV_Min<=" + MValue + " ";
             strSql += "and (IFNULL(HSV_Max,'')='' or HSV_Max>=" + MValue + ") ";
             //strSql += "--BMI、DBP、SBP、SPO2、TBWPercentage、VisceralRate";
-            strSql += "union ";
-            strSql += "Select * From tmpTable ";
-            strSql += "Where HSV_Condition='X' ";
-            strSql += "and HSV_Min<=" + MValue + " ";
-            strSql += "and (IFNULL(HSV_Max,'')='' or HSV_Max>=" + MValue + ") ";
-            // strSql += "--BS";
-            strSql += "union ";
-            strSql += "Select * From tmpTable ";
-            strSql += "Where HSV_Condition='BGType' and HSV_CValueE='" + timeType + "' ";
-            strSql += "and HSV_Min<=" + MValue + " ";
-            strSql += "and (IFNULL(HSV_Max,'')='' or HSV_Max>=" + MValue + ") ";
+            switch (MType) {
+              case "BS":
+                // strSql += "--BS";
+                strSql += "union ";
+                strSql += "Select * From tmpTable ";
+                strSql +=
+                "Where HSV_Condition='BGType' and HSV_CValueE='" +
+                timeType +
+                "' ";
+                strSql += "and HSV_Min<=" + MValue + " ";
+                strSql +=
+                "and (IFNULL(HSV_Max,'')='' or HSV_Max>=" + MValue + ") ";
+                break;
+              case "UA":
+              case "HB":
+                strSql += "union ";
+                strSql += "Select * From tmpTable ";
+                strSql += "Where HSV_Gender='" + HSV_Gender + "' ";
+                strSql += "and HSV_Min<=" + MValue + " ";
+                strSql += "and (IFNULL(HSV_Max,'')='' or HSV_Max>=" + MValue + ") ";
+                break;
+              default:
+                strSql += "union ";
+                strSql += "Select * From tmpTable ";
+                strSql += "Where HSV_Condition='X' ";
+                strSql += "and HSV_Min<=" + MValue + " ";
+                strSql +=
+                  "and (IFNULL(HSV_Max,'')='' or HSV_Max>=" + MValue + ") ";
+                break;
+            }
 
             strSql += "ORDER BY HSL_Level; ";
-
+            Log.write(
+              "Display isRed:" +
+                HSV_Gender +
+                " / HSV_HMIItem:" +
+                HSV_HMIItem +
+                " / Age:" +
+                Age +
+                " / strSql:" +
+                strSql,
+              "Display isRed (Measure)"
+            );
             //Log.write(strSql, "DAOFn isRed");
             DAOFn.Query("", strSql, function (strResult) {
+                Log.write(
+                  "Display isRed:" + strResult,
+                  "Display isRed (Measure)"
+                );
                 var objList = JSON.parse(strResult);
                 var result = {
                     Warnings: "",

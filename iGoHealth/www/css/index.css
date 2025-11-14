@@ -426,7 +426,7 @@ input:checked + .slider:before {
 
 /* 3. 確保按鈕文字不會斷行 (可選，但建議) */
 .chartType.tabMTypes > div > a {
-  /* 防止 "三酸甘油酯" 這類較長的文字被斷成兩行 */
+  /* 防止 "三酸甘油脂" 這類較長的文字被斷成兩行 */
   white-space: nowrap; 
 }
 
@@ -462,7 +462,7 @@ input:checked + .slider:before {
 .info textarea{font-size :20px;width: 100%;height: 100px;  resize: none;margin-top: 10px; border-radius: 10px; }
 /*#optometry table td{padding: 2px;}*/
 
-/*血糖量測提醒*/
+/*量測鬧鐘提醒*/
 #Timenotice label{white-space: nowrap;}
 #Timenotice input{max-width: 200px;}
 #Timenotice .rData{border-bottom: 1px solid #ccc;margin-bottom: 10px;padding-bottom: 20px;}

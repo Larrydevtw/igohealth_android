@@ -451,9 +451,9 @@
         //     throw new Error('invalid plaintext size (must be multiple of 16 bytes)');
         // }
 
-        console.log(plaintext);
+        // console.log(plaintext);
         plaintext=pkcs7pad(plaintext);
-        console.log(plaintext);
+        // console.log(plaintext);
 
         var ciphertext = createArray(plaintext.length);
         var block = createArray(16);

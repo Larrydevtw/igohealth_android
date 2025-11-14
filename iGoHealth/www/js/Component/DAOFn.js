@@ -386,15 +386,15 @@ var DAOFn = DAOFn || {}, DAOFn =
                         if (res.rows.length > 0) {
                             //update
                             if (IsUpdate == "T") {
-                                console.log("MergeUpdate");
+                                // console.log("MergeUpdate");
                                 DAOFn.UpdateData(dbName, tableName, Params, PkColName, PkColValue, otherWhere, callback);
                             } else {
-                                console.log("MergeNoUpdate");
+                                // console.log("MergeNoUpdate");
                                 callback("NoUpdate");
                             }
                         } else {
                             //insert
-                            console.log("MergeInsert");
+                            // console.log("MergeInsert");
                             DAOFn.InsertData(dbName, tableName, Params, callback);
                         }
                     }
@@ -477,7 +477,7 @@ var DAOFn = DAOFn || {}, DAOFn =
                             if (res.rows.length > 0) {
                                 //update
                                 if (IsUpdate == "T") {
-                                    console.log("MergeUpdate");
+                                    // console.log("MergeUpdate");
                                     //var strSQL = "";
                                     var strCol = "";//欲寫入欄位名稱
                                     var valueArray_sub = [];//欲寫入的值
@@ -499,13 +499,13 @@ var DAOFn = DAOFn || {}, DAOFn =
                                         }
                                     );
                                 } else {
-                                    console.log("MergeNoUpdate");
+                                    // console.log("MergeNoUpdate");
                                     //callback("NoUpdate");
                                     strResult = "NoUpdate";
                                 }
                             } else {
                                 //insert
-                                console.log("MergeInsert");
+                                // console.log("MergeInsert");
                                 var strCol = "";//欲寫入欄位名稱
                                 var strQuNum = "";//sqlite 的value, 「?」個數
                                 var valueArray_sub = [];//欲寫入的值

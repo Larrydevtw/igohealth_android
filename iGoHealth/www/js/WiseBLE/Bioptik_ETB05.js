@@ -167,7 +167,7 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
             var vMD_tmp = Bionime.binArrToString(dataBuffer);
             Bioptik_ETB05.ThisType = vMD_tmp.substr(2, 1);
 
-            FnSystem.Log(
+            Log.write(
               "1 substr(2, 1) ETB05 procReturn" +
                 vMD_tmp +
                 " / " +
@@ -365,7 +365,7 @@ var Bioptik_ETB05 = Bioptik_ETB05 || {},
       } else {
         //量測數據的值
         measurementValue = "";
-        FnSystem.Log(
+        Log.write(
           "2 substr(3, 4) ETB05 procReturn"+ vMD_tmp +
                 " / " + + vMD_tmp.substr(3, 4),
           "ETB05 procReturn"

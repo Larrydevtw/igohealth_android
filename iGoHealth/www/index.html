@@ -423,7 +423,7 @@
                 <!-- 測試 -->
                 <div id="MD_Test" class="MD_content" style="display:none;">
                     <button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToTimenotice();"
-                        data-pagename="#Timenotice">血糖量測提醒</button>
+                        data-pagename="#Timenotice">量測鬧鐘提醒</button>
 
                     <button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToDeviceINS();"
                         data-pagename="#Instructions">設備操作說明</button>
@@ -536,7 +536,7 @@
                     <div class="f-start-center">
                         <div class="h-start-center card-left">
                             <div class="title">
-                                <label>三酸甘油酯</label>
+                                <label>三酸甘油脂</label>
                             </div>
                             <img src="./images/icon/main_TG.svg">
                         </div>
@@ -580,7 +580,7 @@
                 <div><a id="tabHistory_btnBP" onclick="Measure.showHistory('BP','N');" class="D color-MBP chartvalues btn" data-chartvalues="100,102,103,95,96,110,108,103,92,94,96,111,107,102">血壓</a></div>
                 <div><a id="tabHistory_btnCHOL" onclick="Measure.showHistory('CHOL','N');" class="C color-MCHOL chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168">膽固醇</a></div>
                 <div><a id="tabHistory_btnUA" onclick="Measure.showHistory('UA','N');" class="UA color-MUA chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168" style="display: none;">尿酸</a></div>
-                <div><a id="tabHistory_btnTG" onclick="Measure.showHistory('TG','N');" class="TG color-MTG chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168" style="display: none;">三酸甘油酯</a></div>
+                <div><a id="tabHistory_btnTG" onclick="Measure.showHistory('TG','N');" class="TG color-MTG chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168" style="display: none;">三酸甘油脂</a></div>
                 <div><a id="tabHistory_btnHB" onclick="Measure.showHistory('HB','N');" class="HB color-MHB chartvalues btn" data-chartvalues="160,155,162,159,154,161,165,168" style="display: none;">血紅素</a></div>
             </div>
             <div class="chartContainer">
@@ -701,7 +701,7 @@
                 <div><a id="tabManual_btnBP" onclick="MeasureManual.showByMType('BP');" class="btn color-MBP">血壓</a></div>
                 <div><a id="tabManual_btnCHOL" onclick="MeasureManual.showByMType('CHOL');" class="btn color-MCHOL">膽固醇</a></div>
                 <div><a id="tabManual_btnUA" onclick="MeasureManual.showByMType('UA');" class="btn color-MUA" style="display: none;">尿酸</a></div>
-                <div><a id="tabManual_btnTG" onclick="MeasureManual.showByMType('TG');" class="btn color-MTG" style="display: none;">三酸甘油酯</a></div>
+                <div><a id="tabManual_btnTG" onclick="MeasureManual.showByMType('TG');" class="btn color-MTG" style="display: none;">三酸甘油脂</a></div>
                 <div><a id="tabManual_btnHB" onclick="MeasureManual.showByMType('HB');" class="btn color-MHB" style="display: none;">血紅素</a></div>
             </div>
             <div class="chartContainer">
@@ -762,7 +762,7 @@
                         </div>
                         <div id="tabManual_TG" style="display:none">
                             <div class="input login-input mb-1">
-                                <span>三酸甘油酯 mg/dL：</span>
+                                <span>三酸甘油脂 mg/dL：</span>
                                 <input type="number" class="mt-1" id="txtMPM_TG" placeholder="請輸入數值" />
                             </div>
                         </div>
@@ -844,8 +844,8 @@
             </div>
         </div> -->
 
-        <!--血糖量測提醒-->
-        <div id="Timenotice" class="block" data-navname="血糖量測提醒" data-parent="#MainHome" style="display:none;">
+        <!--量測鬧鐘提醒-->
+        <div id="Timenotice" class="block" data-navname="量測鬧鐘提醒" data-parent="#MainHome" style="display:none;">
             <div class="rData h-center-center">
                 <h3>早餐</h3>
                 <div class="f-center-center w-100">
@@ -1164,35 +1164,20 @@
         </div>
 
         <!--設備操作說明-->
-        <div id="Instructions" class="block" data-navname="設備操作說明" data-parent="#MainHome" style="display: none;">
-            <div class="h-center-center">
-                <div class="card devicecard" onclick="FnDeviceINS.showByDevice('B04');">
-                    <div class="f-start-center card-left">
-                        <div class="h-start-center">
-                            <!-- <img src="./images/icon/main_BG.svg" /> -->
-                        </div>
-                        <div class="h-start-center card-right">
-                            <div>
-                                <h3 class="value">血壓/血糖/膽固醇監測系統</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card devicecard" onclick="FnDeviceINS.showByDevice('B05');">
-                    <div class="f-start-center card-left">
-                        <div class="h-start-center">
-                            <!-- <img src="./images/icon/main_BG.svg" /> -->
-                        </div>
-                        <div class="h-start-center card-right">
-                            <div>
-                                <h3 class="value">五功機</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+        <div id="Instructions" class="block" data-navname="設備操作說明" data-parent="#MainHome" style="display:none;">
+            <div class="w-100 mt-1">
+                <button id="divDevice_B05" class="IPbtn full round devicecard" onclick="FnDeviceINS.showByDevice('B05');">
+                    五功機
+                </button>
             </div>
+            <div class="w-100 mt-1">
+                <button id="divDevice_B04" class="IPbtn full round devicecard" onclick="FnDeviceINS.showByDevice('B04');">
+                    血壓/血糖/膽固醇監測系統
+                </button>
+            </div>
+            <br/>
             <div id="device_detail_B04" class="h-center-center devicecard_detail" style="display:none;">
-                <h3>血壓/血糖/膽固醇監測系統</h3>
+                <!-- <h3>血壓/血糖/膽固醇監測系統</h3> -->
                 <img src="./images/step1.png" />
                 <p>藍牙智能傳輸：</p>
                 <ul>
@@ -1201,7 +1186,7 @@
                     <li>量測完畢三高機會自動傳輸資料至手機APP保存</li>
                     <li>待數據傳輸完成後，即可拔除試紙或關閉三高機電源</li>
                 </ul>
-                <p>藍牙配對模式：</p>
+                <!-- <p>藍牙配對模式：</p>
                 <ul>
                     <li>手機開啟APP與藍牙功能</li>
                     <li>
@@ -1214,10 +1199,10 @@
                         出現配對成功訊息，關閉三高機。
                         <img src="./images/step3.png" />
                     </li>
-                </ul>
+                </ul> -->
             </div>
             <div id="device_detail_B05" class="h-center-center devicecard_detail" style="display:none;">
-                <h3>五功機</h3>
+                <!-- <h3>五功機</h3> -->
                 <img style="width: 100%;" src="./images/devices/5050/B05/Step_01.jpg" />                  
             </div>
         </div>

@@ -197,6 +197,7 @@ var MainHome = MainHome || {},
                 //successFn
                 Member.showDisplayName();
                 Measure.readAll(); //綁定最新一筆量測資料至初始畫面中
+                
                 //FnBT.StartScan("Y");
                 BandMate.init();
                 FnPoint.showPointTotal();
@@ -552,7 +553,8 @@ var MainHome = MainHome || {},
       WiseScripts.Tool.NextPop(
         "Instructions",
         function () {
-          FnDeviceINS.showByGroup("");
+          //FnDeviceINS.showByGroup("");
+          FnDeviceINS.showByDevice("B05");
         },
         null,
         "T"

@@ -21,6 +21,16 @@ var Log = Log || {},
         // if (docName == "checkService") {
         //   console.log(msgLog);
         // }
+
+        if (docName.indexOf("UploadLog") !== -1) {
+          FnSystem.Log(a, docName);
+        }
+
+        // if (docName.indexOf("FnSystem") !== -1){
+        //   console.log(msgLog);
+        // }else if(docName.indexOf("StandardValue") !== -1) {
+        //   console.log(msgLog);
+        // }
         // if (docName == "BTDebug") {
         //   console.log(msgLog);
         // }

@@ -256,6 +256,9 @@ var FnSystem = {
             $("#aCallQueueLog").hide();
           }
           break;
+        case "DevDebugMode":
+          FnSystem.DevDebugMode = message + "";
+          break;
         default: //
           //FnCtrl.alert(strResult);
           break;
@@ -312,10 +315,8 @@ var FnSystem = {
     }
   },
   CheckStandardValue: function (appInfo) {
-    Log.write(JSON.stringify(appInfo), "FnSystem CheckStandardValue");
 
     var strStandardInfo = appInfo.Message;
-
     if (strStandardInfo === undefined) {
       Log.write(
         "未取得雲端標準值版本資料，不進行後續檢查",
@@ -329,26 +330,32 @@ var FnSystem = {
     $("#StandardInfo_Content").html(displayStandardValue);
 
     var StandardInfo = JSON.parse(strStandardInfo);
-    var VersionNo = StandardInfo.VersionNo;
+    var VersionNo = StandardInfo.versionno;
 
     var CurrentVersionNo = localStorage.StandardVersion;
 
     Log.write(
       "VersionNo: " + VersionNo + " CurrentVersionNo: " + CurrentVersionNo,
-      "FnSystem CheckStandardValue"
+      "FnSystem StandardValue CheckStandardValue"
     );
 
     if (VersionNo <= CurrentVersionNo) {
-      Log.write("The same VersionNo", "FnSystem CheckStandardValue");
+      Log.write(
+        "The same or lower VersionNo, No need to upate. return.",
+        "FnSystem StandardValue CheckStandardValue"
+      );
     } else {
-      Log.write("Need to Update StandardValue", "FnSystem CheckStandardValue");
+      Log.write(
+        "Need to Update StandardValue",
+        "FnSystem StandardValue CheckStandardValue"
+      );
 
       FnSystem.UpdateStandardValue(
         function () {
-          localStorage.StandardVersion = VersionNo;
+          MeasureInfo.SetStandardVersion(VersionNo);
         },
         function (err) {
-          Log.write(err, "FnSystem CheckStandardValue");
+          Log.write(err, "FnSystem StandardValue CheckStandardValue");
         }
       );
     }
@@ -376,7 +383,7 @@ var FnSystem = {
       function (result) {
         //成功
 
-        Log.write(result, "FnSystem UpdateStandardValue");
+        Log.write(result, "FnSystem StandardValue UpdateStandardValue");
 
         var InsertArray = JSON.parse(result);
 
@@ -398,7 +405,10 @@ var FnSystem = {
       },
       function (err) {
         //失敗
-        Log.write("UpdateStandardValue err:" + err, "FnSystem");
+        Log.write(
+          "UpdateStandardValue err:" + err,
+          "FnSystem StandardValue UpdateStandardValue"
+        );
         if (errFn) {
           errFn();
         }
@@ -495,9 +505,7 @@ var FnSystem = {
       FnSystem.QueueLog(message, action, successFn);
     } else {
       if (FnSystem.DevDebugMode == "Y") {
-        if (action === "Measure") {
-          //(action === "ETB05 procReturn" || action === "DevBLE") {
-          //console.log(action + ":" + message);
+        if (action.indexOf("Upload") !== -1) {
           FnSystem.QueueLog(message, action, successFn);
         }
       }
@@ -516,7 +524,7 @@ var FnSystem = {
 
     var arrLogData = localStorage.arrLogData + "";
     if (arrLogData != "") {
-      arrLogData += "^" + JSON.stringify(LogData);
+      arrLogData += "`" + JSON.stringify(LogData);
     } else {
       arrLogData = JSON.stringify(LogData);
     }
@@ -528,18 +536,38 @@ var FnSystem = {
     //   return;
     // }
     // alert("FnSystem.DebugMode:" + FnSystem.DebugMode);
+    Log.write(
+      "localStorage.arrLogData: " + localStorage.arrLogData,
+      "FnSystem CallQueueLog"
+    );
+    if (!localStorage.arrLogData || localStorage.arrLogData == "") {
+      Log.write("沒有檔案需要上傳", "FnSystem CallQueueLog");
+      return;
+    }
+    Log.write(
+      "CallQueueLog：開始上傳" + localStorage.arrLogData.length,
+      "FnSystem CallQueueLog"
+    );
     var action = "QueueLog";
     var message = localStorage.arrLogData + "";
     FnSystem.CallLog(
       action,
       message,
-      function () {
+      function (result) {
         localStorage.arrLogData = "";
+        Log.write(
+          "上傳成功 / " + result,
+          "FnSystem CallQueueLog"
+        );
         if (successFn) {
           successFn();
         }
       },
-      function () {
+      function (err) {
+        Log.write(
+          "上傳失敗 / " + JSON.stringify(err),
+          "FnSystem CallQueueLog"
+        );
         if (errFn) {
           errFn();
         }
@@ -566,14 +594,14 @@ var FnSystem = {
       PostInfo,
       function (result) {
         if (successFn) {
-          successFn();
+          successFn(result);
         }
       },
       function (err) {
         //失敗
         Log.write("Log err:" + err, "Log");
         if (errFn) {
-          errFn();
+          errFn(err);
         }
       }
     );

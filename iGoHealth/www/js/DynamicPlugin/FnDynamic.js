@@ -1,7 +1,7 @@
 var FnDynamic = {
     createTable: function (targetId, data) { //動態產生Table
         // 使用 Object.keys() 取得包含所有 key 的陣列
-        console.log(data);
+        // console.log(data);
         var $thead = "<thead><tr>";
         var $tbody = "<tbody>";
         for (var i = 0; i < data.length; i++) {

@@ -10,8 +10,6 @@ var LocalNotify = LocalNotify || {},
         smallIcon: 'res://push_icon.png',
         icon: 'file://images/push_icon.png',
         init: function (successFn,errFn) { //依據帳戶切換提醒 暫時未使用            
-            console.log("S");
-
             LocalNotify.get().then(function (objResult) {
                 Log.write('success', 'init get');
                 Log.write(JSON.stringify(objResult), 'LocalNotify.get()');
@@ -26,7 +24,6 @@ var LocalNotify = LocalNotify || {},
                 if (successFn) {
                     successFn();
                 }
-                console.log("E");
             });
             
             // var d = moment().add(1, 'days').hours(10).minutes(0).seconds(0);
@@ -159,7 +156,7 @@ var LocalNotify = LocalNotify || {},
                     $(this).prop("checked",active);
 
                     $(this).attr("data-key",lKeys[i]);
-                    console.log($(this).prop("checked"));
+                    // console.log($(this).prop("checked"));
                });
                resolve();
             });
@@ -183,7 +180,7 @@ var LocalNotify = LocalNotify || {},
 
                     var startTime = moment().hours(HH).minutes(mm).format("YYYY/MM/DD HH:mm");
                     var endTime = moment().add(365, "days").hours(HH).minutes(mm).format("YYYY/MM/DD HH:mm");
-                    console.log(startTime);
+                    // console.log(startTime);
                     arrResult.push({
                         "UserID": userID,
                         "SA_Title": title,
