@@ -431,14 +431,14 @@
                     <button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToStandardInfo();"
                         data-pagename="#StandardInfo">量測標準值範圍</button>
 
-                    <button id="aMeasureScan" class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToMeasureScan();"
+                    <button id="btnMeasureScan" class="IPbtn gotoPage modalClose displaynone" onclick="FnBT.StopScan();MainHome.goToMeasureScan();"
                         data-pagename="#divMeasureScan">主要照護者量測</button>
 
                     <button class="IPbtn parent" id="txtDisplayName"></button>
 
                     <ul>
                         <li><button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToProfile();" data-pagename="#profile">個人資料</button></li>
-                        <li id="aCallQueueLog" style="display: none;"><button class="IPbtn" onclick="FnSystem.CallQueueLog();">上傳錯誤紀錄</button></li>
+                        <li id="aCallQueueLog" class="displaynone"><button class="IPbtn" onclick="FnSystem.CallQueueLog();">上傳錯誤紀錄</button></li>
                         <li><button onclick="Member.Logout();" class="IPbtn ">登出</button></li>
                     </ul>
 
