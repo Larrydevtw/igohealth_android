@@ -36,9 +36,6 @@
     <!-- <link href="css/switch.css" rel="stylesheet"> -->
     <link href="css/toggle.min.css" rel="stylesheet">
     
-    <!-- Cordova 主要js -->
-    <script type="text/javascript" src="cordova.js"></script>
-
     <!-- jQuery -->
     <script type="text/javascript" src="js/Component/jquery.min.js"></script>
     <!-- Bootstrap Core JavaScript -->
@@ -46,6 +43,9 @@
     <!-- jQuery isLoading -->
     <script src="js/jquery.isloading.min.js"></script>
     <link href="css/isLoading.min.css" rel="stylesheet" />
+
+    <!-- Cordova 主要js -->
+    <script type="text/javascript" src="cordova.js"></script>
 
     <!-- CSS3 動態效果 -->
     <link href="css/animate.min.css" rel="stylesheet">
@@ -134,8 +134,8 @@
     <!--AES-->
     <script src="js/md5.min.js"></script>
     <script src="js/aes.min.js"></script>
-    <script src="js/WiseAES.min.js"></script>
     <script src="js/jquery.base64.min.js"></script>
+    <script src="js/WiseAES.min.js"></script>
 
     <!--網路狀態-->
     <script src="js/NetStatus.min.js"></script>
@@ -174,9 +174,9 @@
     <script src="js/HATMService.min.js"></script>
 
     <!-- 點數 -->
-    <script src="js/Points/FnPoint.min.js"></script>
+    <script src="js/FnPoint.min.js"></script>
     <!-- 商品 -->
-    <script src="js/Points/FnProduct.min.js"></script>
+    <script src="js/FnProduct.min.js"></script>
     
     <!--台灣縣市下拉 -->
     <script src="js/jquery.twzipcode.min.js"></script>
@@ -431,7 +431,7 @@
                     <button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToStandardInfo();"
                         data-pagename="#StandardInfo">量測標準值範圍</button>
 
-                    <button class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToMeasureScan();"
+                    <button id="aMeasureScan" class="IPbtn gotoPage modalClose" onclick="FnBT.StopScan();MainHome.goToMeasureScan();"
                         data-pagename="#divMeasureScan">主要照護者量測</button>
 
                     <button class="IPbtn parent" id="txtDisplayName"></button>
