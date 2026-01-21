@@ -1150,10 +1150,15 @@
                         <div>血糖值</div>
                     </div>
                     <div class="row ">
-                        <div>2021-05-14 13:24*</div>
+                        <div class="time-cell">
+                            <span>2021-05-14 13:24*</span>
+                            <button class="icon-btn delete-btn" title="刪除">
+                                <img src="images/icon/delete.svg" alt="刪除" width="20" height="20">
+                            </button>
+                        </div>
                         <div>午餐後</div>
                         <div>120</div>
-                    </div>
+                    </div>     
                 </div>
                 <div class="w-100 mt-1">
                     <button class="IPbtn full round gotoPage" data-pagename="#measure_2-6">
@@ -1343,6 +1348,20 @@
                         <div id="profile_City" data-role="county" data-style="Style Name" data-value="110" class="selzipcode"></div>
                         <div id="profile_Chiu" data-role="district" data-style="Style Name" data-value="臺北市" class="selzipcode"></div>
                         <div data-role="zipcode" data-style="Style Name" data-value="信義區" style="display:none;" class="selzipcode"></div>
+                    </div>
+                </div>
+                <div id="divBindOrg" class="input login-input">
+                    <span>綁定</span>
+                    <div class="mt-1 bind-row">
+                        <input id="txtBindInfo" type="text" class="mt-1" disabled />
+                    </div>
+                    <!-- <div class="mt-1 bind-row">
+                        <input id="txtOrgId" type="text" placeholder="照護機構識別碼" />
+                        <button class="btn-bind" onclick="Member.BindOrg()">綁定</button>
+                    </div> -->
+                    <div class="mt-1 bind-row">
+                        <input id="txtOrgUserId" type="text" placeholder="請輸入照護者識別碼" />
+                        <button onclick="Member.BindOrgUser()"class="btn-bind">綁定</button>
                     </div>
                 </div>
             </div>
