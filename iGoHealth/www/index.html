@@ -1060,20 +1060,16 @@
                     <div class="header">
                         <div>量測時間</div>
                         <div>量測類型</div>
+                        <div>刪除</div>
                         <!-- <div>量測值</div> -->
                     </div>
                 </div>
                 <div id="MeasureScan_tbResult" class="stateTable h-center-center text-center w-100">
                    
-                    <div class="row seperate">
-                        <div class="left">
-                            120 (午餐後)
-                        </div>
-                    </div>
                     <div class="row">
                         <div>2021-05-14 13:24*</div>
                         <div>血壓</div>
-                        <div>120</div>
+                        <div>刪除</div>
                     </div>
                     <div class="row seperate">
                         <div class="left">
@@ -1351,17 +1347,17 @@
                     </div>
                 </div>
                 <div id="divBindOrg" class="input login-input">
-                    <span>綁定</span>
-                    <div class="mt-1 bind-row">
-                        <input id="txtBindInfo" type="text" class="mt-1" disabled />
-                    </div>
+                    <span>綁定照護者</span>
                     <!-- <div class="mt-1 bind-row">
                         <input id="txtOrgId" type="text" placeholder="照護機構識別碼" />
                         <button class="btn-bind" onclick="Member.BindOrg()">綁定</button>
                     </div> -->
                     <div class="mt-1 bind-row">
                         <input id="txtOrgUserId" type="text" placeholder="請輸入照護者識別碼" />
-                        <button onclick="Member.BindOrgUser()"class="btn-bind">綁定</button>
+                        <button onclick="Member.BindOrgUser()" class="btn-bind">綁定</button>
+                    </div>
+                    <div class="mt-1 bind-row">
+                        <input id="txtBindInfo" type="text" class="mt-1" placeholder="綁定照護者後即會自動帶入" disabled />
                     </div>
                 </div>
             </div>
@@ -1407,6 +1403,7 @@
         const scrollContainer = document.querySelector('.chartType.tabMTypes');
         const navButtons = scrollContainer.querySelectorAll('a.btn');
         $(function () {
+            //Measure.showHistory('TG');
             //CustomStyle.adjustStatus_H();
             CustomUI.setupClickToCenter('tabMTypes');
             CustomUI.setupClickToCenter('ulManual');
