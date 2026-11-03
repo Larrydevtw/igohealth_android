@@ -155,3 +155,6 @@ www/icon/images
 00_Info/core/js/Component/WiseDT/jszip.min.js
 00_Info/core/js/Component/WiseDT/SysTableUpd.js
 00_Info/core/js/Component/WiseDT/WiseDT.js
+
+# 排除 00_Info
+/00_Info/
