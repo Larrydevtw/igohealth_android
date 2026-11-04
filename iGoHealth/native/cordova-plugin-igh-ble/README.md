@@ -61,7 +61,7 @@ node iGoHealth/native/cordova-plugin-igh-ble/test/js/adapter.test.js
 |---|---|
 | Kotlin 協定核心 | ✅ JVM 單元測試通過 |
 | Android 外掛（GattSession / BleCentral / IghBlePlugin） | ✅ 已對 Android API 35（Robolectric android-all）與 cordova-android 14.0.1 編譯通過；**尚未在實機上執行** |
-| iOS Swift | ⚠️ 開發環境沒有 Xcode，**未編譯**；已逐行對照 cordova-ios 7.1.1 的標頭檔確認 API 名稱，需在 Xcode build 一次 |
+| iOS Swift | ⚠️ 開發環境沒有 Xcode，**未編譯**；已逐行對照 cordova-ios 7.1.1 與 8.1.1 的標頭檔確認 API 名稱（使用 `CDVCommandStatus.ok` 等 Swift enum 寫法，相容 cordova-ios 9 將移除的舊常數），需在 Xcode build 一次 |
 | JS adapter | ✅ node 模擬測試通過 |
 | 實機 BLE | ❌ 尚未測試，請依下方壓測方式驗證 |
 

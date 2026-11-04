@@ -17,24 +17,24 @@ class IghBlePlugin: CDVPlugin {
 
     private func send(_ evt: [String: Any]) {
         guard let id = listenerId else { return }
-        let r = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: evt)
+        let r = CDVPluginResult(status: CDVCommandStatus.ok, messageAs: evt)
         r?.setKeepCallbackAs(true)
         commandDelegate.send(r, callbackId: id)
     }
 
     private func ok(_ cmd: CDVInvokedUrlCommand, _ payload: Any? = nil) {
         let r: CDVPluginResult?
-        if let d = payload as? [String: Any] { r = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: d) }
-        else if let a = payload as? [Any] { r = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: a) }
-        else if let n = payload as? Int { r = CDVPluginResult(status: CDVCommandStatus_OK, messageAs: Int32(n)) }
-        else { r = CDVPluginResult(status: CDVCommandStatus_OK) }
+        if let d = payload as? [String: Any] { r = CDVPluginResult(status: CDVCommandStatus.ok, messageAs: d) }
+        else if let a = payload as? [Any] { r = CDVPluginResult(status: CDVCommandStatus.ok, messageAs: a) }
+        else if let n = payload as? Int { r = CDVPluginResult(status: CDVCommandStatus.ok, messageAs: Int32(n)) }
+        else { r = CDVPluginResult(status: CDVCommandStatus.ok) }
         commandDelegate.send(r, callbackId: cmd.callbackId)
     }
 
     @objc(setListener:)
     func setListener(_ cmd: CDVInvokedUrlCommand) {
         listenerId = cmd.callbackId
-        let r = CDVPluginResult(status: CDVCommandStatus_NO_RESULT)
+        let r = CDVPluginResult(status: CDVCommandStatus.noResult)
         r?.setKeepCallbackAs(true)
         commandDelegate.send(r, callbackId: cmd.callbackId)
         central?.queue.async { [weak self] in
