@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-igh-ble" version="0.1.0">
+    <name>IghBle</name>
+    <description>i顧健康 原生 BLE（Bioptik ETB04 / ETB05）：GATT 佇列、逾時、退避在原生端執行</description>
+    <license>Proprietary</license>
+
+    <engines>
+        <engine name="cordova-android" version=">=12.0.0" />
+        <engine name="cordova-ios" version=">=7.0.0" />
+    </engines>
+
+    <js-module src="www/ighBle.js" name="IghBle">
+        <clobbers target="window.IghBle" />
+    </js-module>
+
+    <!-- ===================== Android ===================== -->
+    <platform name="android">
+        <!-- Kotlin 原始碼需要 cordova-android 啟用 Kotlin（App 的 config.xml 也請加上同一行 preference） -->
+        <config-file target="config.xml" parent="/*">
+            <preference name="GradlePluginKotlinEnabled" value="true" />
+            <feature name="IghBle">
+                <param name="android-package" value="tw.com.ethink.ighble.IghBlePlugin" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <config-file target="AndroidManifest.xml" parent="/manifest">
+            <uses-permission android:name="android.permission.BLUETOOTH" />
+            <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
+            <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+            <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />
+            <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />
+            <uses-feature android:name="android.hardware.bluetooth_le" android:required="false" />
+        </config-file>
+
+        <source-file src="src/android/core/EtbProtocol.kt" target-dir="app/src/main/java/tw/com/ethink/ighble" />
+        <source-file src="src/android/core/DeviceCooldown.kt" target-dir="app/src/main/java/tw/com/ethink/ighble" />
+        <source-file src="src/android/GattSession.kt" target-dir="app/src/main/java/tw/com/ethink/ighble" />
+        <source-file src="src/android/BleCentral.kt" target-dir="app/src/main/java/tw/com/ethink/ighble" />
+        <source-file src="src/android/PendingStore.kt" target-dir="app/src/main/java/tw/com/ethink/ighble" />
+        <source-file src="src/android/IghBlePlugin.kt" target-dir="app/src/main/java/tw/com/ethink/ighble" />
+    </platform>
+
+    <!-- ===================== iOS ===================== -->
+    <platform name="ios">
+        <preference name="BLUETOOTH_USAGE_DESCRIPTION" default="需要使用藍牙以接收量測設備的資料" />
+
+        <config-file target="config.xml" parent="/*">
+            <feature name="IghBle">
+                <param name="ios-package" value="IghBlePlugin" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="NSBluetoothAlwaysUsageDescription">
+            <string>$BLUETOOTH_USAGE_DESCRIPTION</string>
+        </config-file>
+        <config-file target="*-Info.plist" parent="NSBluetoothPeripheralUsageDescription">
+            <string>$BLUETOOTH_USAGE_DESCRIPTION</string>
+        </config-file>
+
+        <source-file src="src/ios/EtbProtocol.swift" />
+        <source-file src="src/ios/IghBleCentral.swift" />
+        <source-file src="src/ios/IghBlePlugin.swift" />
+        <framework src="CoreBluetooth.framework" />
+    </platform>
+</plugin>

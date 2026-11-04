@@ -64,6 +64,10 @@ Thumbs.db
 */*
 !*/www
 !*/res
+!*/native
+*/native/**/build/
+*/native/**/.gradle/
+*/native/**/.kotlin/
 !00_Info/*
 *.xcuserstate
 
